@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealSpell : AoESpell
+public class MeteorSpell : AoESpell
 {
-    private float _recovery;
+    private float _damage;
 
     private void OnEnable()
     {
@@ -17,9 +17,9 @@ public class HealSpell : AoESpell
         Dispelled -= OnDispelled;
     }
 
-    public void Init(float recovery)
+    public void Init(float damage)
     {
-        _recovery = recovery;
+        _damage = damage;
     }
 
     protected override void Affect()

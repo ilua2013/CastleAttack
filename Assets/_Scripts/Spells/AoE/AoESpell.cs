@@ -5,7 +5,9 @@ using UnityEngine;
 
 public abstract class AoESpell : MonoBehaviour
 {
-    [SerializeField] private float _duration;
+    private const float Interval = 1f;
+
+    [SerializeField] private float _lifetime;
 
     public event Action Dispelled;
 
@@ -14,22 +16,28 @@ public abstract class AoESpell : MonoBehaviour
         StartCoroutine(Live(onEndCallback));
     }
 
-    private void Dispel()
-    {
-        Dispelled?.Invoke();
-    }
+    protected abstract void Affect();
 
     private IEnumerator Live(Action onDeathCallback)
     {
         float elapsed = 0;
+        float ticks = 0;
 
-        while (elapsed < _duration)
+        while (elapsed < _lifetime)
         {
+            if (ticks >= Interval)
+            {
+                ticks = 0;
+                Affect();
+            }
+
+            ticks += Time.deltaTime;
             elapsed += Time.deltaTime;
+
             yield return null;
         }
 
         onDeathCallback?.Invoke();
-        Dispel();
+        Dispelled?.Invoke();
     }
 }

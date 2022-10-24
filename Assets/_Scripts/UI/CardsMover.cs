@@ -45,40 +45,34 @@ public class CardsMover : MonoBehaviour
 
     private void OnEndDrag(Vector3 mousePosition, Card card)
     {
-        if (IsCardApplicable(out ICardApplicable cardApplicable, out Vector3 hitPoint, mousePosition))
-        {
-            if (cardApplicable.TryApply(card.Description, hitPoint))
-            {
-                UnRegister(card);
-                card.DropOut();
+        bool result = TryApply(card, mousePosition);
 
-                return;
-            }
-        }
-
-        card.transform.SetParent(transform);
+        if (result == false)
+            card.transform.SetParent(transform);
     }
 
-    private bool IsCardApplicable(out ICardApplicable cardApplicable, out Vector3 hitPoint, Vector3 mousePosition)
+    private bool TryApply(Card card, Vector3 mousePosition)
     {
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
 
-        if (hits.Length > 0)
+        if (hits.Length == 0)
+            return false;
+
+        foreach (var hit in hits)
         {
-            foreach (var hit in hits)
+            if (hit.collider.TryGetComponent(out ICardApplicable applicable))
             {
-                if (hit.collider.TryGetComponent(out ICardApplicable applicable))
+                if (applicable.TryApply(card.Description, hit.point))
                 {
-                    hitPoint = hit.point;
-                    cardApplicable = applicable;
+                    UnRegister(card);
+                    card.DropOut();
+
                     return true;
                 }
             }
         }
 
-        hitPoint = Vector3.zero;
-        cardApplicable = null;
         return false;
     }
 }
