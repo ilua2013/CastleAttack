@@ -88,7 +88,9 @@ public class CardsMover : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.collider.TryGetComponent(out ICardApplicable applicable))
+            ICardApplicable[] applicables = hit.collider.GetComponents<ICardApplicable>();
+
+            foreach (var applicable in applicables)
             {
                 if (applicable.TryApply(card.Description, hit.point))
                 {

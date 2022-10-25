@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 
-public class ProbaMonstr : MonoBehaviour, IMonstr
+public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 {
     [SerializeField] private Transform _transformPoint;
     [SerializeField] private TriggerZoneMonster _zoneMonster;
@@ -20,9 +20,10 @@ public class ProbaMonstr : MonoBehaviour, IMonstr
 
     public Vector3 TransformPosition => transform.position;
 
+    public Transform TransformPoint => _transformPoint;
+
     public event UnityAction<IMonstr> CameOut;
     public event UnityAction<IMonstr> Deaded;
-
 
     private void OnEnable()
     {
@@ -32,7 +33,6 @@ public class ProbaMonstr : MonoBehaviour, IMonstr
     private void OnDisable()
     {
         _zoneMonster.Entered -= StartAttack;
-
     }
 
     public void Init()
@@ -43,6 +43,11 @@ public class ProbaMonstr : MonoBehaviour, IMonstr
     private void Start()
     {
         _meshAgent = GetComponent<NavMeshAgent>();
+    }
+
+    public void Init(Transform transformPoint)
+    {
+        _transformPoint = transformPoint;
     }
 
     private void StartAttack(IMob mob)

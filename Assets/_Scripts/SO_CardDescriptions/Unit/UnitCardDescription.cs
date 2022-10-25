@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UnitCardDescription : CardDescription
 {
-    [SerializeField] private GameObject _unitTemplate;
+    [SerializeField] private ProbaMonstr _unitTemplate;
 
-    public GameObject UnitTemplate => _unitTemplate;
+    public ProbaMonstr UnitTemplate => _unitTemplate;
 }
