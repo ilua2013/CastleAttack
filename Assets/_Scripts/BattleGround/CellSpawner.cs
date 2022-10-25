@@ -3,17 +3,23 @@ using UnityEngine;
 
 public class CellSpawner : MonoBehaviour
 {
+    [SerializeField] private Transform _targetPoint;
     [SerializeField] private Transform _pointSpawn;
     [SerializeField] private Cell _cell;
     [SerializeField] private Vector2 _grid;
     [SerializeField] private Vector2 _offset;
+    [Header("SpawnCell")]
+    [SerializeField] private bool _activeSpawnCell;
 
     private List<Cell> _cells = new List<Cell>();
 
     private void OnValidate()
     {
-        Clear();
-        SpawnCell();
+        if(_activeSpawnCell && _cells.Count == 0)
+        {
+            _activeSpawnCell = false;
+            SpawnCell();
+        }
     }
 
     public void Clear()
