@@ -5,35 +5,90 @@ using UnityEngine.Events;
 
 public class MobTriggeredZone : MonoBehaviour
 {
-    [SerializeField] private Mob _mob;
+    private List<IMonstr> _monstres = new List<IMonstr>();
 
-    //private List<IMonstr> _monsters = new List<IMonstr>();
+    public List<IMonstr> Monstres => _monstres;
 
-    public event UnityAction<IMonstr> Attacked;
-    public event UnityAction Entered;
+    public event UnityAction<IMonstr> Entered;
+
+    private bool _isActivEnemy = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out IMonstr triggered))
         {
-            Attacked?.Invoke(triggered);
-            Entered?.Invoke();
-            //_monsters.Add(triggered);
-            //_mob.Init(_monsters[0]);
-            //triggered.Deaded += StopAttack;
+            if (_isActivEnemy == false)
+            {
+                Entered?.Invoke(triggered);
+                _isActivEnemy = true;
+            }
+
+            _monstres.Add(triggered);
+            triggered.Deaded += StopAttack;
         }
     }
 
-    //private void StopAttack(IMonstr monstr)
+    private void StopAttack(IMonstr mob)
+    {
+        _monstres.Remove(mob);
+
+        if (_monstres.Count == 0)
+        {
+            _isActivEnemy = false;
+        }
+        mob.Deaded -= StopAttack;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //[SerializeField] private Mob _mob;
+
+    ////private List<IMonstr> _monsters = new List<IMonstr>();
+
+    //public event UnityAction<IMonstr> Attacked;
+    //public event UnityAction Entered;
+
+    //private void OnTriggerEnter(Collider other)
     //{
-
-    //    _monsters.Remove(monstr);
-    //    monstr.Deaded -= StopAttack;
-    //    if (_monsters.Count > 0)
+    //    if (other.TryGetComponent(out IMonstr triggered))
     //    {
-    //        _mob.Init(_monsters[0]);
+    //        Attacked?.Invoke(triggered);
+    //        Entered?.Invoke();
+    //        //_monsters.Add(triggered);
+    //        //_mob.Init(_monsters[0]);
+    //        //triggered.Deaded += StopAttack;
     //    }
-
-
     //}
+
+    ////private void StopAttack(IMonstr monstr)
+    ////{
+
+    ////    _monsters.Remove(monstr);
+    ////    monstr.Deaded -= StopAttack;
+    ////    if (_monsters.Count > 0)
+    ////    {
+    ////        _mob.Init(_monsters[0]);
+    ////    }
+
+
+    ////}
 }

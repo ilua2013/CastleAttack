@@ -1,59 +1,74 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
-public class Mob : MonoBehaviour
+public class Mob : MonoBehaviour,IMob
 {
-    [SerializeField] private float _speed = 2f;
-    [SerializeField] private int _healt;
-    [SerializeField] private MobTriggeredZone _mobTriggeredZone;
-    [SerializeField] private MobEnemies _mobEnemy;
-    private IMonstr _target = null;
-    protected int _damage = 2;
-    private bool _isAttack = false;
-    private int _index = 0;
+    //[SerializeField] private Transform _transformPoint;
+    [SerializeField] private MobTriggeredZone _zoneMob;
+    [SerializeField] private float _reloadAttackInterval=2;
+    [SerializeField] private float _speedAttack = 5;
+    [SerializeField] private int _healt = 40;
+    [SerializeField] private int _damage = 10;
+
+    private Coroutine _coroutine;
+
+    private NavMeshAgent _meshAgent;
+    private IMonstr _target;
+    private bool _isActivAttack = false;
+
+    public Vector3 TransformPosition => transform.position;
+
+    public event UnityAction<IMob> CameOut;
+    public event UnityAction<IMob> Deaded;
+
 
     private void OnEnable()
     {
-        _mobTriggeredZone.Entered += Init;
+        _zoneMob.Entered += StartAttack;
     }
 
     private void OnDisable()
     {
-        _mobTriggeredZone.Entered -= Init;
+        _zoneMob.Entered -= StartAttack;
+
     }
 
-    public void Init()
+    private void Start()
     {
+        _meshAgent = GetComponent<NavMeshAgent>();
+    }
 
-        if (_isAttack == false)
+    private void StartAttack(IMonstr mob)
+    {
+        mob.Deaded += ContinionAttack;
+        _target = mob;
+        _isActivAttack = true;
+        //_coroutine = StartCoroutine(Attack());
+    }
+
+    private void ContinionAttack(IMonstr mob)
+    {
+        if (_zoneMob.Monstres.Count > 0)
         {
-            if (_mobEnemy.Monsters[_index] != null)
-            {
-                _target = _mobEnemy.Monsters[_index];
-                _isAttack = true;
-                ++_index;
-                _target.Deaded += StopAttack;
-            }
+            Debug.Log(_zoneMob.Monstres[_zoneMob.Monstres.Count - 1]);
+            _target = _zoneMob.Monstres[_zoneMob.Monstres.Count - 1];
+            _target.Deaded += ContinionAttack;
         }
-    }
-
-    private void Update()
-    {
-        if (_target != null)
+        else
         {
-            float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-
-            if (distance > 2)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speed * Time.deltaTime);
-            }
+            StopAttack();
         }
+        mob.Deaded -= ContinionAttack;
     }
 
-    private void StopAttack(IMonstr monstr)
+    private void StopAttack()
     {
-        _isAttack = false;
-        Init();
-        _target.Deaded -= StopAttack;
+        _target.Deaded -= ContinionAttack;
+        _target = null;
+        _isActivAttack = false;
+        StopCoroutine(_coroutine);
     }
 
     public void TakeDamage(int damage)
@@ -61,20 +76,131 @@ public class Mob : MonoBehaviour
         _healt -= damage;
         if (_healt <= 0)
         {
+            Deaded?.Invoke(this);
             gameObject.SetActive(false);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private IEnumerator Attack()
+    //{
+    //    float time = 0;
+
+    //    while (time < _reloadAttackInterval)
+    //    {
+    //        time += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    if (_isActivAttack == true)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, _target.TransformPosition);
+    //        if (distance < 2)
+    //        {
+    //            _target.TakeDamage(_damage);
+    //        }
+    //    }
+    //    StartCoroutine(Attack());
+    //}
+
+    private void Update()
     {
-        if (other.TryGetComponent(out IMonstr monstr))
+        if (_isActivAttack == true)
         {
-            DamageEnemy(_target);
+
+            transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
+        }
+        else
+        {
+            
         }
     }
 
-    private void DamageEnemy(IMonstr monstr)
-    {
-        monstr.TakeDamage(_damage);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //[SerializeField] private float _speed = 2f;
+    //[SerializeField] private int _healt;
+    //[SerializeField] private MobTriggeredZone _mobTriggeredZone;
+    //[SerializeField] private MobEnemies _mobEnemy;
+    //private IMonstr _target = null;
+    //protected int _damage = 2;
+    //private bool _isAttack = false;
+    //private int _index = 0;
+
+    //private void OnEnable()
+    //{
+    //    _mobTriggeredZone.Entered += Init;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    _mobTriggeredZone.Entered -= Init;
+    //}
+
+    //public void Init()
+    //{
+
+    //    if (_isAttack == false)
+    //    {
+    //        if (_mobEnemy.Monsters[_index] != null)
+    //        {
+    //            _target = _mobEnemy.Monsters[_index];
+    //            _isAttack = true;
+    //            ++_index;
+    //            _target.Deaded += StopAttack;
+    //        }
+    //    }
+    //}
+
+    //private void Update()
+    //{
+    //    if (_target != null)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, _target.TransformPosition);
+
+    //        if (distance > 2)
+    //        {
+    //            transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speed * Time.deltaTime);
+    //        }
+    //    }
+    //}
+
+    //private void StopAttack(IMonstr monstr)
+    //{
+    //    _isAttack = false;
+    //    Init();
+    //    _target.Deaded -= StopAttack;
+    //}
+
+    //public void TakeDamage(int damage)
+    //{
+    //    _healt -= damage;
+    //    if (_healt <= 0)
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.TryGetComponent(out IMonstr monstr))
+    //    {
+    //        DamageEnemy(_target);
+    //    }
+    //}
+
+    //private void DamageEnemy(IMonstr monstr)
+    //{
+    //    monstr.TakeDamage(_damage);
+    //}
 }

@@ -1,36 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class TriggerZoneMonster : MonoBehaviour
-{   
+{
     private List<IMob> _mobes = new List<IMob>();
 
     public List<IMob> Mobes => _mobes;
 
-    //public event UnityAction<IMob> Attacked;
-    //public event UnityAction Entered;
+    public event UnityAction<IMob> Entered;
+
+    private bool _isActivEnemy = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out IMob triggered))
         {
-            //Attacked?.Invoke(triggered);
-            //Entered?.Invoke();
-            Debug.Log("вход"+_mobes.Count);
+            if (_isActivEnemy == false)
+            {
+                Entered?.Invoke(triggered);
+                _isActivEnemy = true;
+            }
+
             _mobes.Add(triggered);
-            Debug.Log("после вход"+_mobes.Count);
-            //_mob.Init(_monsters[0]);
             triggered.Deaded += StopAttack;
         }
     }
 
     private void StopAttack(IMob mob)
     {
-        Debug.Log("до удаления" +_mobes.Count);
         _mobes.Remove(mob);
-        Debug.Log("после удаления"+_mobes.Count);
+
+        if (_mobes.Count == 0)
+        {
+            _isActivEnemy = false;
+        }
         mob.Deaded -= StopAttack;
     }
 }
