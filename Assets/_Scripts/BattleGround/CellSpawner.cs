@@ -22,6 +22,15 @@ public class CellSpawner : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        foreach (var cell in GetComponentsInChildren<Cell>())
+        {
+            _cells.Add(cell);
+            cell.Init(_targetPoint);
+        }
+    }
+
     public void Clear()
     {
         if (_cells.Count > 0)
@@ -40,7 +49,9 @@ public class CellSpawner : MonoBehaviour
         {
             for (int y = 0; y < _grid.y; y++)
             {
-                _cells.Add(Instantiate(_cell, _pointSpawn.position + offset, Quaternion.identity, transform));
+                Cell cell = Instantiate(_cell, _pointSpawn.position + offset, Quaternion.identity, transform);
+
+                _cells.Add(cell);
                 offset.x += _offset.x;
             }
             offset.x = 0;

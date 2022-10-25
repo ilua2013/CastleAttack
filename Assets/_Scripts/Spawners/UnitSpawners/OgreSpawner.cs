@@ -9,7 +9,9 @@ public class OgreSpawner : UnitSpawner
         if (card is OgreCardDescription)
         {
             OgreCardDescription description = card as OgreCardDescription;
-            GameObject ogre = Instantiate(description.UnitTemplate, SpawnPoint.position, Quaternion.identity);
+            ProbaMonstr ogre = Instantiate(description.UnitTemplate, SpawnPoint.position, Quaternion.identity);
+
+            ogre.Init(TargetPoint);
 
             return true;
         }
