@@ -10,9 +10,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public CardDescription Description => _description;
 
-    public event Action<Vector3, Card> Drag;
-    public event Action<Vector3, Card> BeginDrag;
-    public event Action<Vector3, Card> EndDrag;
+    public event Action<PointerEventData, Card> Drag;
+    public event Action<PointerEventData, Card> BeginDrag;
+    public event Action<PointerEventData, Card> EndDrag;
 
     public void DropOut()
     {
@@ -21,16 +21,16 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        BeginDrag?.Invoke(eventData.position, this);
+        BeginDrag?.Invoke(eventData, this);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Drag?.Invoke(eventData.position, this);
+        Drag?.Invoke(eventData, this);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        EndDrag?.Invoke(eventData.position, this);
+        EndDrag?.Invoke(eventData, this);
     }
 }

@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CardsMover : MonoBehaviour
 {
     [SerializeField] private List<Card> _cards;
     [SerializeField] private Transform _draggingParent;
+
+    public event Action CardTaken;
+    public event Action CardDrop;
 
     private void OnEnable()
     {
@@ -33,22 +38,44 @@ public class CardsMover : MonoBehaviour
         card.EndDrag -= OnEndDrag;
     }
 
-    private void OnDrag(Vector3 mousePosition, Card card)
+    private void OnDrag(PointerEventData eventData, Card card)
     {
-        card.transform.position = mousePosition;
+        if (IsOverDraggingPanel(eventData))
+            card.transform.position = eventData.position;
     }
 
-    private void OnBeginDrag(Vector3 mousePosition, Card card)
+    private void OnBeginDrag(PointerEventData eventData, Card card)
     {
         card.transform.SetParent(_draggingParent);
+
+        CardTaken?.Invoke();
     }
 
-    private void OnEndDrag(Vector3 mousePosition, Card card)
+    private void OnEndDrag(PointerEventData eventData, Card card)
     {
-        bool result = TryApply(card, mousePosition);
+        bool result = TryApply(card, eventData.position);
 
         if (result == false)
             card.transform.SetParent(transform);
+
+        CardDrop?.Invoke();
+    }
+
+    private bool IsOverDraggingPanel(PointerEventData eventData)
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (var item in results)
+        {
+            if (!item.isValid)
+                continue;
+
+            if (item.gameObject.transform == _draggingParent)
+                return true;
+        }
+
+        return false;
     }
 
     private bool TryApply(Card card, Vector3 mousePosition)
