@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class Tower : MonoBehaviour
+public class Tower : MonoBehaviour, IMob
 {
     [SerializeField] private int _radiusAttack;
     [SerializeField] private int _healt;
@@ -15,7 +15,13 @@ public class Tower : MonoBehaviour
     private CapsuleCollider _collider;
     private List<IMonstr> _monsters = new List<IMonstr>();
 
+    public Vector3 TransformPosition => transform.position;
+
     public event UnityAction Reloaded;
+    public event UnityAction<IMob> CameOut;
+    public event UnityAction<IMob> Deaded;
+
+
 
     private void Start()
     {
@@ -28,8 +34,7 @@ public class Tower : MonoBehaviour
     {
         if (other.TryGetComponent(out IMonstr triggered))
         {
-            _monsters.Add(triggered);
-            Debug.Log("ggg");
+            _monsters.Add(triggered);           
             triggered.CameOut += StopAttack;
             triggered.Deaded += StopAttack;
         }
@@ -46,7 +51,8 @@ public class Tower : MonoBehaviour
 
     private void Destruction()
     {
-        //gameObject.SetActive(false);
+        Deaded?.Invoke(this);
+        gameObject.SetActive(false);
     }
 
     private void StopAttack(IMonstr monstr)
