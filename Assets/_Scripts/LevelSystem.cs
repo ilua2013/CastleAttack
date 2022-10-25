@@ -11,6 +11,11 @@ public class LevelSystem : MonoBehaviour
     public event Action ClickedStartFight;
     public event Action FightFinished; // надо чтоб это как-то вызывалось
 
+    private void OnValidate()
+    {
+
+    }
+
     private void OnEnable()
     {
         _buttonStartFight.onClick.AddListener(StartFight);
