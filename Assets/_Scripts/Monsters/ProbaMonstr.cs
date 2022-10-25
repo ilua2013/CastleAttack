@@ -35,6 +35,11 @@ public class ProbaMonstr : MonoBehaviour, IMonstr
 
     }
 
+    public void Init()
+    {
+        
+    }
+
     private void Start()
     {
         _meshAgent = GetComponent<NavMeshAgent>();
