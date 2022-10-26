@@ -11,7 +11,8 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
     [SerializeField] private int _healt = 40;
-    [SerializeField] private int _damage = 10;
+    [SerializeField] private int _damageTower = 10;
+    [SerializeField] private int _damageSecurity = 20;
 
     private Coroutine _coroutine;
     private Transform _targetPoint;
@@ -63,6 +64,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _target = mob;
         _isActivAttack = true;
         _coroutine = StartCoroutine(Attack());
+        Debug.Log(mob);
     }
 
     private void ContinionAttack(IMob mob)
@@ -114,10 +116,19 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         }
         if (_isActivAttack == true)
         {
+            int damage;
             float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-            if (distance < 2)
+            if (distance < 3)
             {
-                _target.TakeDamage(_damage);
+                if(_target.TypeMob == TypesMobs.TypeMob.Security)
+                {
+                    damage = _damageSecurity;
+                }
+                else
+                {
+                    damage = _damageTower;
+                }
+                _target.TakeDamage(damage);
             }
         }
         StartCoroutine(Attack());

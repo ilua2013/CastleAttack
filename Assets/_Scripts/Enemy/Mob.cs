@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using TypesMobs;
 
 public class Mob : MonoBehaviour,IMob
 {
@@ -12,6 +13,8 @@ public class Mob : MonoBehaviour,IMob
     [SerializeField] private int _healt = 40;
     [SerializeField] private int _damage = 10;
 
+    [SerializeField] private TypeMob _typesMobs;
+
     private Coroutine _coroutine;
 
     private NavMeshAgent _meshAgent;
@@ -19,6 +22,8 @@ public class Mob : MonoBehaviour,IMob
     private bool _isActivAttack = false;
 
     public Vector3 TransformPosition => transform.position;
+
+    public TypeMob TypeMob => _typesMobs;
 
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
@@ -45,7 +50,7 @@ public class Mob : MonoBehaviour,IMob
         mob.Deaded += ContinionAttack;
         _target = mob;
         _isActivAttack = true;
-        //_coroutine = StartCoroutine(Attack());
+        _coroutine = StartCoroutine(Attack());
     }
 
     private void ContinionAttack(IMonstr mob)
@@ -81,25 +86,25 @@ public class Mob : MonoBehaviour,IMob
         }
     }
 
-    //private IEnumerator Attack()
-    //{
-    //    float time = 0;
+    private IEnumerator Attack()
+    {
+        float time = 0;
 
-    //    while (time < _reloadAttackInterval)
-    //    {
-    //        time += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    if (_isActivAttack == true)
-    //    {
-    //        float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-    //        if (distance < 2)
-    //        {
-    //            _target.TakeDamage(_damage);
-    //        }
-    //    }
-    //    StartCoroutine(Attack());
-    //}
+        while (time < _reloadAttackInterval)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        if (_isActivAttack == true)
+        {
+            float distance = Vector3.Distance(transform.position, _target.TransformPosition);
+            if (distance < 2)
+            {
+                _target.TakeDamage(_damage);
+            }
+        }
+        StartCoroutine(Attack());
+    }
 
     private void Update()
     {

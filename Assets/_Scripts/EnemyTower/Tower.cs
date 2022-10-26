@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TypesMobs;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,11 +12,14 @@ public class Tower : MonoBehaviour, IMob
     [SerializeField] private Projectile _projectile;
     [SerializeField] private float _reloadInterval;
     [SerializeField] private Transform _spawnPointProjectile;
+    [SerializeField] private TypeMob _typesMobs;
 
     private CapsuleCollider _collider;
     private List<IMonstr> _monsters = new List<IMonstr>();
 
     public Vector3 TransformPosition => transform.position;
+
+    public TypeMob TypeMob => _typesMobs;
 
     public event UnityAction Reloaded;
     public event UnityAction<IMob> CameOut;
@@ -63,8 +67,7 @@ public class Tower : MonoBehaviour, IMob
     }
 
     private IEnumerator Spawn()
-    {
-        Debug.Log("ttt");
+    {       
         float time = 0;
 
         while (time < _reloadInterval)
