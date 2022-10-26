@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICardApplicable
 {
-    bool TryApply(CardDescription card, Vector3 place);
+    bool TryApply(Card card, Vector3 place);
 }
