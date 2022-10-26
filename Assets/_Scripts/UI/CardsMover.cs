@@ -12,6 +12,8 @@ public class CardsMover : MonoBehaviour
     public event Action CardTaken;
     public event Action CardDrop;
 
+    private List<Card> _usedCards = new List<Card>();
+
     private void OnEnable()
     {
         foreach (var card in _cards)
@@ -92,10 +94,11 @@ public class CardsMover : MonoBehaviour
 
             foreach (var applicable in applicables)
             {
-                if (applicable.TryApply(card.Description, hit.point))
+                if (applicable.TryApply(card, hit.point))
                 {
                     UnRegister(card);
                     card.DropOut();
+                    _usedCards.Add(card);
 
                     return true;
                 }
@@ -103,5 +106,13 @@ public class CardsMover : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnFinishGame()
+    {
+        //foreach (Card card in _usedCards)
+        //{
+        //    if (card.Description)
+        //}
     }
 }

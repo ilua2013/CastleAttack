@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HealSpellSpawners : SpellSpawner
 {
-    protected override bool TryApplySpell(CardDescription card, Vector3 place)
+    protected override bool TryApplySpell(Card card, Vector3 place)
     {
-        if (card is HealSpellCardDescription)
+        if (card.Description is HealSpellCardDescription)
         {
-            HealSpellCardDescription description = card as HealSpellCardDescription;
+            HealSpellCardDescription description = card.Description as HealSpellCardDescription;
             HealSpell spell = Instantiate(description.SpellPrefab, place, Quaternion.identity);
 
             spell.Cast();

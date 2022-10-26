@@ -16,7 +16,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void DropOut()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void ComeBack()
+    {
+        gameObject.SetActive(true);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
