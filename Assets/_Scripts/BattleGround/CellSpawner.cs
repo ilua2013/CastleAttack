@@ -9,6 +9,9 @@ public class CellSpawner : MonoBehaviour
     [SerializeField] private Cell _cell;
     [SerializeField] private Vector2 _grid;
     [SerializeField] private Vector2 _offset;
+    [Header("Extra offset")]
+    [SerializeField, Range(0, 9)] private int _offsetAfterCell;
+    [SerializeField] private float _offsetAfter;
     [Header("SpawnCell")]
     [SerializeField] private bool _activeSpawnCell;
 
@@ -34,8 +37,9 @@ public class CellSpawner : MonoBehaviour
         {
             foreach (var item in _cells)
                 Destroy(item.gameObject);
+
+            _cells.Clear();
         }
-        _cells.Clear();
     }
 
     public void SpawnCell()
@@ -46,6 +50,9 @@ public class CellSpawner : MonoBehaviour
         {
             for (int y = 0; y < _grid.y; y++)
             {
+                if (decimal.Round((decimal)y / _offsetAfterCell, 1) - y / _offsetAfterCell == 0)
+                    offset.x += _offsetAfter;
+
                 Cell cell = Instantiate(_cell, _pointSpawn.position + offset, Quaternion.identity, transform);
 
                 _cells.Add(cell);

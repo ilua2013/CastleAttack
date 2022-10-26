@@ -15,6 +15,7 @@ public abstract class UnitSpawner : MonoBehaviour, ICardApplicable
 
     private void OnValidate()
     {
+        _spawnPoint = transform;
         var cell = GetComponent<Cell>();
         _button = cell.ButtonStartFight;
         _targetPoint = cell.TargetPoint;

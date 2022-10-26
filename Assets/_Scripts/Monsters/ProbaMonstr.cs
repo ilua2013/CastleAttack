@@ -134,8 +134,8 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         {
             if (_isActivAttack == true)
             {
-
-                transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
+                _meshAgent.SetDestination(_target.TransformPosition);
+                //transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
             }
             else
             {
