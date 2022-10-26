@@ -118,7 +118,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         {
             int damage;
             float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-            if (distance < 3)
+            if (distance < 4)
             {
                 if(_target.TypeMob == TypesMobs.TypeMob.Security)
                 {
