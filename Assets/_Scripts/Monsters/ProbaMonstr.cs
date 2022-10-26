@@ -11,11 +11,11 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
     [SerializeField] private int _healt = 40;
-    [SerializeField] private int _damageTower = 10;
-    [SerializeField] private int _damageSecurity = 20;
+    [SerializeField] private int _damage = 10;
 
     private Coroutine _coroutine;
-    private Transform _targetPoint;
+    private Transform _transformPoint;
+    private Card _card;
     private NavMeshAgent _meshAgent;
     private Button _button;
     private IMob _target;
@@ -23,11 +23,12 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     private bool _isMove = false;
 
     public Vector3 TransformPosition => transform.position;
+    public Card Card => _card;
 
-    public Transform TransformPoint => _targetPoint;
+    public Transform TransformPoint => _transformPoint;
 
-    public event UnityAction<IMonstr> CameOut;
-    public event UnityAction<IMonstr> Deaded;
+    public event UnityAction<IMonstr, IUnit> CameOut;
+    public event UnityAction<IMonstr, IUnit> Deaded;
 
     private void OnEnable()
     {
@@ -46,16 +47,11 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _meshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public void Init(Transform transformPoint, Button button)
+    public void Init(Card card, Transform transformPoint, Button button)
     {
-        _targetPoint = transformPoint;
+        _card = card;
+        _transformPoint = transformPoint;
         _button = button;
-        _button.onClick.AddListener(Moved);
-    }
-
-    public void SetTargetPoint(Transform transform)
-    {
-        _targetPoint = transform;
     }
 
     private void StartAttack(IMob mob)
@@ -64,7 +60,6 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _target = mob;
         _isActivAttack = true;
         _coroutine = StartCoroutine(Attack());
-        Debug.Log(mob);
     }
 
     private void ContinionAttack(IMob mob)
@@ -100,7 +95,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _healt -= damage;
         if (_healt <= 0)
         {
-            Deaded?.Invoke(this);
+            Deaded?.Invoke(this, this);
             gameObject.SetActive(false);
         }
     }
@@ -116,19 +111,10 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         }
         if (_isActivAttack == true)
         {
-            int damage;
             float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-            if (distance < 4)
+            if (distance < 2)
             {
-                if(_target.TypeMob == TypesMobs.TypeMob.Security)
-                {
-                    damage = _damageSecurity;
-                }
-                else
-                {
-                    damage = _damageTower;
-                }
-                _target.TakeDamage(damage);
+                _target.TakeDamage(_damage);
             }
         }
         StartCoroutine(Attack());
@@ -145,10 +131,15 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
             }
             else
             {
-                _meshAgent.SetDestination(_targetPoint.position);
+                _meshAgent.SetDestination(_transformPoint.position);
             }
 
         }
         
+    }
+
+    public void ReurnToHand()
+    {
+        Destroy(gameObject);
     }
 }

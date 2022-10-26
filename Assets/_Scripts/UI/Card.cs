@@ -13,6 +13,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<PointerEventData, Card> Drag;
     public event Action<PointerEventData, Card> BeginDrag;
     public event Action<PointerEventData, Card> EndDrag;
+    public event Action<Card> CameBack;
 
     public void DropOut()
     {
@@ -22,6 +23,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void ComeBack()
     {
         gameObject.SetActive(true);
+        CameBack?.Invoke(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)

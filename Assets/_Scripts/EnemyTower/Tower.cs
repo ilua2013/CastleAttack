@@ -59,7 +59,7 @@ public class Tower : MonoBehaviour, IMob
         gameObject.SetActive(false);
     }
 
-    private void StopAttack(IMonstr monstr)
+    private void StopAttack(IMonstr monstr, IUnit unit)
     {
         _monsters.Remove(monstr);
         monstr.CameOut -= StopAttack;

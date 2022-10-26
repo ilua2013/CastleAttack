@@ -12,8 +12,6 @@ public class CardsMover : MonoBehaviour
     public event Action CardTaken;
     public event Action CardDrop;
 
-    private List<Card> _usedCards = new List<Card>();
-
     private void OnEnable()
     {
         foreach (var card in _cards)
@@ -63,6 +61,13 @@ public class CardsMover : MonoBehaviour
         CardDrop?.Invoke();
     }
 
+    private void OnCardComeBack(Card card)
+    {
+        RegisterCard(card);
+        card.CameBack -= OnCardComeBack;
+        card.transform.SetParent(transform);
+    }
+
     private bool IsOverDraggingPanel(PointerEventData eventData)
     {
         List<RaycastResult> results = new List<RaycastResult>();
@@ -97,8 +102,9 @@ public class CardsMover : MonoBehaviour
                 if (applicable.TryApply(card, hit.point))
                 {
                     UnRegister(card);
+
+                    card.CameBack += OnCardComeBack;
                     card.DropOut();
-                    _usedCards.Add(card);
 
                     return true;
                 }
@@ -106,13 +112,5 @@ public class CardsMover : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void OnFinishGame()
-    {
-        //foreach (Card card in _usedCards)
-        //{
-        //    if (card.Description)
-        //}
     }
 }
