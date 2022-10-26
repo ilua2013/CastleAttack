@@ -48,7 +48,7 @@ public class Mob : MonoBehaviour,IMob
         //_coroutine = StartCoroutine(Attack());
     }
 
-    private void ContinionAttack(IMonstr mob)
+    private void ContinionAttack(IMonstr mob, IUnit unit)
     {
         if (_zoneMob.Monstres.Count > 0)
         {

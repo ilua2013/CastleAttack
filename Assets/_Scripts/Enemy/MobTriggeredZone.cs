@@ -28,7 +28,7 @@ public class MobTriggeredZone : MonoBehaviour
         }
     }
 
-    private void StopAttack(IMonstr mob)
+    private void StopAttack(IMonstr mob, IUnit unit)
     {
         _monstres.Remove(mob);
 

@@ -22,8 +22,8 @@ public abstract class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public bool TryApply(Card card, Vector3 place)
     {
-        return TryApplySpell(card, place);
+        return TryApplyUnit(card, place);
     }
 
-    protected abstract bool TryApplySpell(Card card, Vector3 place);
+    protected abstract bool TryApplyUnit(Card card, Vector3 place);
 }

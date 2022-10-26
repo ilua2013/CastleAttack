@@ -4,16 +4,32 @@ using UnityEngine;
 
 public class OgreSpawner : UnitSpawner
 {
-    private List<ProbaMonstr> _units = new List<ProbaMonstr>();
+    private TestFinisher _finisher;
+    private List<IUnit> _units = new List<IUnit>();
 
-    protected override bool TryApplySpell(Card card, Vector3 place)
+    private void Awake()
+    {
+        _finisher = FindObjectOfType<TestFinisher>();
+    }
+
+    private void OnEnable()
+    {
+        _finisher.Finished += OnFinished;
+    }
+
+    private void OnDisable()
+    {
+        _finisher.Finished -= OnFinished;
+    }
+
+    protected override bool TryApplyUnit(Card card, Vector3 place)
     {
         if (card.Description is OgreCardDescription)
         {
             OgreCardDescription description = card.Description as OgreCardDescription;
             ProbaMonstr ogre = Instantiate(description.UnitTemplate, SpawnPoint.position, Quaternion.identity);
 
-            ogre.Init(TargetPoint, Button);
+            ogre.Init(card, TargetPoint, Button);
             ogre.Deaded += OnUnitDead;
 
             _units.Add(ogre);
@@ -24,8 +40,20 @@ public class OgreSpawner : UnitSpawner
         return false;
     }
 
-    private void OnUnitDead(IMonstr unit)
+    private void OnFinished()
     {
+        foreach (var unit in _units)
+        {
+            unit.Card.ComeBack();
+            unit.ReurnToHand();
+        }
 
+        _units.Clear();
+    }
+
+    private void OnUnitDead(IMonstr monstr, IUnit unit)
+    {
+        monstr.Deaded -= OnUnitDead;
+        _units.Remove(unit);
     }
 }

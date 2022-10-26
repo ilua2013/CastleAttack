@@ -6,5 +6,7 @@ using UnityEngine.UI;
 public interface IUnit
 {
     Transform TransformPoint { get; }
-    void Init(Transform transformPoint, Button button);
+    Card Card { get; }
+    void Init(Card card, Transform transformPoint, Button button);
+    void ReurnToHand();
 }

@@ -7,6 +7,6 @@ public interface IMonstr
 
     public Vector3 TransformPosition { get; }
 
-    public event UnityAction<IMonstr> CameOut;
-    public event UnityAction<IMonstr> Deaded;
+    public event UnityAction<IMonstr, IUnit> CameOut;
+    public event UnityAction<IMonstr, IUnit> Deaded;
 }

@@ -15,6 +15,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     private Coroutine _coroutine;
     private Transform _transformPoint;
+    private Card _card;
     private NavMeshAgent _meshAgent;
     private Button _button;
     private IMob _target;
@@ -22,17 +23,15 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     private bool _isMove = false;
 
     public Vector3 TransformPosition => transform.position;
+    public Card Card => _card;
 
     public Transform TransformPoint => _transformPoint;
 
-    public event UnityAction<IMonstr> CameOut;
-    public event UnityAction<IMonstr> Deaded;
-
-   
+    public event UnityAction<IMonstr, IUnit> CameOut;
+    public event UnityAction<IMonstr, IUnit> Deaded;
 
     private void OnEnable()
     {
-       
         _zoneMonster.Entered += StartAttack;
     }
 
@@ -48,8 +47,9 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _meshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public void Init(Transform transformPoint, Button button)
+    public void Init(Card card, Transform transformPoint, Button button)
     {
+        _card = card;
         _transformPoint = transformPoint;
         _button = button;
     }
@@ -95,7 +95,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _healt -= damage;
         if (_healt <= 0)
         {
-            Deaded?.Invoke(this);
+            Deaded?.Invoke(this, this);
             gameObject.SetActive(false);
         }
     }
@@ -136,5 +136,10 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
         }
         
+    }
+
+    public void ReurnToHand()
+    {
+        Destroy(gameObject);
     }
 }
