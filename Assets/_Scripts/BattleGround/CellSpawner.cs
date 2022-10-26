@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 public class CellSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform _targetPoint;
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _buttonStartFight;
     [SerializeField] private Transform _pointSpawn;
     [SerializeField] private Cell _cell;
     [SerializeField] private Vector2 _grid;
@@ -13,23 +12,19 @@ public class CellSpawner : MonoBehaviour
     [Header("SpawnCell")]
     [SerializeField] private bool _activeSpawnCell;
 
+    public Button ButtonStartFight => _buttonStartFight;
+
     private List<Cell> _cells = new List<Cell>();
 
     private void OnValidate()
     {
-        if(_activeSpawnCell && _cells.Count == 0)
+        if(_activeSpawnCell)
         {
+            if (_cells.Count > 0)
+                _cells.Clear();
+
             _activeSpawnCell = false;
             SpawnCell();
-        }
-    }
-
-    private void Awake()
-    {
-        foreach (var cell in GetComponentsInChildren<Cell>())
-        {
-            _cells.Add(cell);
-            cell.Init(_targetPoint, _button);
         }
     }
 

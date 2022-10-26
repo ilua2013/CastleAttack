@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public abstract class UnitSpawner : MonoBehaviour, ICardApplicable
 {
     [SerializeField] private Transform _spawnPoint;
-    
-    private Button _button;
-    private Transform _targetPoint;
+    [SerializeField] private Button _button;
+    [SerializeField] private Transform _targetPoint;
 
     public Transform SpawnPoint => _spawnPoint;
     public Transform TargetPoint => _targetPoint;
     public Button Button => _button;
 
-    public void Init(Transform targetPoint, Button button)
+    private void OnValidate()
     {
-        _targetPoint = targetPoint;
-        _button = button;
+        var cell = GetComponent<Cell>();
+        _button = cell.ButtonStartFight;
+        _targetPoint = cell.TargetPoint;
     }
 
     public bool TryApply(CardDescription card, Vector3 place)

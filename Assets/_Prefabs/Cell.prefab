@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2655742754161015897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -70.5, y: 1, z: 102.5}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 3, y: 0.2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetPoint: {fileID: 0}
+  _startFightButton: {fileID: 0}
   _unitSpawners:
   - {fileID: 6124523006430050382}
 --- !u!114 &6124523006430050382
@@ -126,3 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 2655742754161015876}
+  _button: {fileID: 0}
+  _targetPoint: {fileID: 0}

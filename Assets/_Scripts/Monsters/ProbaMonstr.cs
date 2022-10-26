@@ -14,7 +14,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private int _damage = 10;
 
     private Coroutine _coroutine;
-    private Transform _transformPoint;
+    private Transform _targetPoint;
     private NavMeshAgent _meshAgent;
     private Button _button;
     private IMob _target;
@@ -23,16 +23,13 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public Vector3 TransformPosition => transform.position;
 
-    public Transform TransformPoint => _transformPoint;
+    public Transform TransformPoint => _targetPoint;
 
     public event UnityAction<IMonstr> CameOut;
     public event UnityAction<IMonstr> Deaded;
 
-   
-
     private void OnEnable()
     {
-       
         _zoneMonster.Entered += StartAttack;
     }
 
@@ -50,8 +47,14 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public void Init(Transform transformPoint, Button button)
     {
-        _transformPoint = transformPoint;
+        _targetPoint = transformPoint;
         _button = button;
+        _button.onClick.AddListener(Moved);
+    }
+
+    public void SetTargetPoint(Transform transform)
+    {
+        _targetPoint = transform;
     }
 
     private void StartAttack(IMob mob)
@@ -131,7 +134,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
             }
             else
             {
-                _meshAgent.SetDestination(_transformPoint.position);
+                _meshAgent.SetDestination(_targetPoint.position);
             }
 
         }
