@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
 {
@@ -8,11 +9,11 @@ public class Cell : MonoBehaviour
     
     private Transform _targetCell;
 
-    public void Init(Transform targetPoint)
+    public void Init(Transform targetPoint, Button button)
     {
         foreach (var spawners in _unitSpawners)
         {
-            spawners.Init(targetPoint);
+            spawners.Init(targetPoint, button);
         }
     }
 }

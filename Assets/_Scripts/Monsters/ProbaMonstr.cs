@@ -2,10 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 {
-    [SerializeField] private Transform _transformPoint;
+   
     [SerializeField] private TriggerZoneMonster _zoneMonster;
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
@@ -13,10 +14,12 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private int _damage = 10;
 
     private Coroutine _coroutine;
-
+    private Transform _transformPoint;
     private NavMeshAgent _meshAgent;
+    private Button _button;
     private IMob _target;
     private bool _isActivAttack = false;
+    private bool _isMove = false;
 
     public Vector3 TransformPosition => transform.position;
 
@@ -25,29 +28,30 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public event UnityAction<IMonstr> CameOut;
     public event UnityAction<IMonstr> Deaded;
 
+   
+
     private void OnEnable()
     {
+       
         _zoneMonster.Entered += StartAttack;
     }
 
     private void OnDisable()
     {
+        _button.onClick.RemoveListener(Moved);
         _zoneMonster.Entered -= StartAttack;
-    }
-
-    public void Init()
-    {
-        
-    }
+    }   
 
     private void Start()
     {
+        _button.onClick.AddListener(Moved);
         _meshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public void Init(Transform transformPoint)
+    public void Init(Transform transformPoint, Button button)
     {
         _transformPoint = transformPoint;
+        _button = button;
     }
 
     private void StartAttack(IMob mob)
@@ -79,6 +83,11 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
         _target = null;
         _isActivAttack = false;
         StopCoroutine(_coroutine);
+    }
+
+    private void Moved()
+    {
+        _isMove = true;
     }
 
     public void TakeDamage(int damage)
@@ -113,14 +122,19 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     private void Update()
     {
-        if (_isActivAttack == true)
+        if(_isMove == true)
         {
+            if (_isActivAttack == true)
+            {
 
-            transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
+            }
+            else
+            {
+                _meshAgent.SetDestination(_transformPoint.position);
+            }
+
         }
-        else
-        {
-            _meshAgent.SetDestination(_transformPoint.position);
-        }
+        
     }
 }

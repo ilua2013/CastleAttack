@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CellSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _targetPoint;
+    [SerializeField] private Button _button;
     [SerializeField] private Transform _pointSpawn;
     [SerializeField] private Cell _cell;
     [SerializeField] private Vector2 _grid;
@@ -27,7 +29,7 @@ public class CellSpawner : MonoBehaviour
         foreach (var cell in GetComponentsInChildren<Cell>())
         {
             _cells.Add(cell);
-            cell.Init(_targetPoint);
+            cell.Init(_targetPoint, _button);
         }
     }
 
