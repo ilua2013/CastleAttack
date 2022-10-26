@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera[] _cameras;
+    [SerializeField] private LevelSystem _levelSystem;
 
     private int _next;
 
@@ -12,10 +13,18 @@ public class CameraSwitcher : MonoBehaviour
         Switch();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Switch();
+        _levelSystem.Wave1Finished += Switch;
+        _levelSystem.Wave2Finished += Switch;
+        _levelSystem.Wave3Finished += Switch;
+    }
+
+    private void OnDisable()
+    {
+        _levelSystem.Wave1Finished -= Switch;
+        _levelSystem.Wave2Finished -= Switch;
+        _levelSystem.Wave3Finished -= Switch;
     }
 
     private void Switch()

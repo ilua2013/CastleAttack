@@ -6,8 +6,8 @@ using UnityEngine;
 public class HealSpellCardDescription : AoESpellCardDescription
 {
     [SerializeField] private HealSpell _spellPrefab;
-    [SerializeField] private float _recoveryPerSecond;
+    [SerializeField] private int _recoveryPerSecond;
 
     public HealSpell SpellPrefab => _spellPrefab;
-    public float RecoveryPerSecond => _recoveryPerSecond;
+    public int RecoveryPerSecond => _recoveryPerSecond;
 }

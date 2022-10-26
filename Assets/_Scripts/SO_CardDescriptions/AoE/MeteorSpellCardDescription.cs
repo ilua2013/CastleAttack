@@ -6,8 +6,8 @@ using UnityEngine;
 public class MeteorSpellCardDescription : AoESpellCardDescription
 {
     [SerializeField] private MeteorSpell _spellPrefab;
-    [SerializeField] private float _damagePerSecond;
+    [SerializeField] private int _damagePerSecond;
 
     public MeteorSpell SpellPrefab => _spellPrefab;
-    public float DamagePerSecond => _damagePerSecond;
+    public int DamagePerSecond => _damagePerSecond;
 }

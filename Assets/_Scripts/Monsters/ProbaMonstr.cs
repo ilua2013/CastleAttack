@@ -10,11 +10,12 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private TriggerZoneMonster _zoneMonster;
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
-    [SerializeField] private int _healt = 40;
+    [SerializeField] private int _maxHealth = 40;
     [SerializeField] private int _damage = 10;
 
+    private int _health;
     private Coroutine _coroutine;
-    private Transform _transformPoint;
+    private Transform _targetPoint;
     private Card _card;
     private NavMeshAgent _meshAgent;
     private Button _button;
@@ -25,13 +26,14 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public Vector3 TransformPosition => transform.position;
     public Card Card => _card;
 
-    public Transform TransformPoint => _transformPoint;
+    public Transform TransformPoint => _targetPoint;
 
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
 
     private void OnEnable()
     {
+        _health = _maxHealth;
         _zoneMonster.Entered += StartAttack;
     }
 
@@ -50,8 +52,13 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public void Init(Card card, Transform transformPoint, Button button)
     {
         _card = card;
-        _transformPoint = transformPoint;
+        _targetPoint = transformPoint;
         _button = button;
+    }
+
+    public void SetTargetPoint(Transform transform)
+    {
+        _targetPoint = transform;
     }
 
     private void StartAttack(IMob mob)
@@ -92,8 +99,9 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public void TakeDamage(int damage)
     {
-        _healt -= damage;
-        if (_healt <= 0)
+        _health -= damage;
+
+        if (_health <= 0)
         {
             Deaded?.Invoke(this, this);
             gameObject.SetActive(false);
@@ -131,7 +139,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
             }
             else
             {
-                _meshAgent.SetDestination(_transformPoint.position);
+                _meshAgent.SetDestination(_targetPoint.position);
             }
 
         }
@@ -141,5 +149,10 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public void ReurnToHand()
     {
         Destroy(gameObject);
+    }
+
+    public void RecoveryHealth(int amount)
+    {
+        _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
     }
 }

@@ -70,6 +70,8 @@ public class LevelSystem : MonoBehaviour
                 RemoveUnit(_mobs3, _tower3, mob);
                 break;
         }
+
+        CheckWinWave();
     }
 
     private void CheckWinWave()
@@ -81,6 +83,7 @@ public class LevelSystem : MonoBehaviour
                 {
                     _currentWave++;
                     Wave1Finished?.Invoke();
+                    Debug.Log("Finished 1");
                 }
                 break;
 
@@ -89,6 +92,7 @@ public class LevelSystem : MonoBehaviour
                 {
                     _currentWave++;
                     Wave2Finished?.Invoke();
+                    Debug.Log("Finished 2");
                 }
                 break;
 
@@ -96,6 +100,7 @@ public class LevelSystem : MonoBehaviour
                 if (_mobs3.Count == 0 && _tower3.Count == 0)
                 {
                     Wave3Finished?.Invoke();
+                    Debug.Log("Finished 3");
                 }
                 break;
         }
@@ -117,7 +122,6 @@ public class LevelSystem : MonoBehaviour
         {
             if (towers[i] is IMob imob && imob == mob)
             {
-                print("tower is mob");
                 towers[i].Deaded -= RemoveDiedUnit;
                 towers.RemoveAt(i);
             }

@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class OgreSpawner : UnitSpawner
 {
-    private TestFinisher _finisher;
+    private LevelSystem _finisher;
     private List<IUnit> _units = new List<IUnit>();
 
     private void Awake()
     {
-        _finisher = FindObjectOfType<TestFinisher>();
+        _finisher = FindObjectOfType<LevelSystem>();
     }
 
     private void OnEnable()
     {
-        _finisher.Finished += OnFinished;
+        _finisher.Wave1Finished += OnFinished;
+        _finisher.Wave2Finished += OnFinished;
+        _finisher.Wave3Finished += OnFinished;
     }
 
     private void OnDisable()
     {
-        _finisher.Finished -= OnFinished;
+        _finisher.Wave1Finished -= OnFinished;
+        _finisher.Wave2Finished -= OnFinished;
+        _finisher.Wave3Finished -= OnFinished;
     }
 
     protected override bool TryApplyUnit(Card card, Vector3 place)
