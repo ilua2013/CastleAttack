@@ -30,6 +30,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
+    public event UnityAction Returned;
 
     private void OnEnable()
     {
@@ -148,6 +149,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public void ReurnToHand()
     {
+        Returned?.Invoke();
         Destroy(gameObject);
     }
 

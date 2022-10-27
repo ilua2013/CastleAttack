@@ -10,4 +10,5 @@ public interface IMonstr
 
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
+    public event UnityAction Returned;
 }
