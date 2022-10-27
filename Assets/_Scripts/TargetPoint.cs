@@ -7,7 +7,7 @@ public class TargetPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out ProbaMonstr probaMonstr))
+        if(other.TryGetComponent(out Unit probaMonstr))
         {
             if (_isLastPoint == false)
                 probaMonstr.SetTargetPoint(_nextPoint);

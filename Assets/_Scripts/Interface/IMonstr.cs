@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IMonstr
+public interface IMonstr : IDamageable
 {
-    public void TakeDamage(int damage);
     public void RecoveryHealth(int amount);
 
     public Vector3 TransformPosition { get; }

@@ -4,13 +4,14 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using TypesMobs;
 
-public class Mob : MonoBehaviour,IMob
+public class Mob : MonoBehaviour, IMob
 {
     //[SerializeField] private Transform _transformPoint;
     [SerializeField] private MobTriggeredZone _zoneMob;
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
     [SerializeField] private int _healt = 40;
+    [SerializeField] private int _maxHealt = 40;
     [SerializeField] private int _damage = 10;
 
     [SerializeField] private TypeMob _typesMobs;
@@ -22,12 +23,14 @@ public class Mob : MonoBehaviour,IMob
     private bool _isActivAttack = false;
 
     public Vector3 TransformPosition => transform.position;
-
     public TypeMob TypeMob => _typesMobs;
+    public int Health => _healt;
+    public int MaxHealth => _maxHealt;
 
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
-
+    public event UnityAction<IMonstr, int> Damaged;
+    public event UnityAction<IMonstr, int> Healed;
 
     private void OnEnable()
     {

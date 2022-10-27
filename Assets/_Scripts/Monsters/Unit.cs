@@ -3,15 +3,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using TypesMobs;
+using System.Linq;
 
-public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
+public class Unit : MonoBehaviour, IMonstr, IUnit
 {
-   
     [SerializeField] private TriggerZoneMonster _zoneMonster;
     [SerializeField] private float _reloadAttackInterval=2;
     [SerializeField] private float _speedAttack = 5;
     [SerializeField] private int _maxHealth = 40;
-    [SerializeField] private int _damage = 10;
+    [SerializeField] private Damage[] _damages;
 
     private int _health;
     private Coroutine _coroutine;
@@ -27,9 +28,13 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public Card Card => _card;
 
     public Transform TransformPoint => _targetPoint;
+    public int Health => _health;
+    public int MaxHealth => _maxHealth;
 
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
+    public event UnityAction<IMonstr, int> Damaged;
+    public event UnityAction<IMonstr, int> Healed;
 
     private void OnEnable()
     {
@@ -59,6 +64,22 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public void SetTargetPoint(Transform transform)
     {
         _targetPoint = transform;
+    }
+
+    private int CalculateDealtDamage(TypeMob mobe)
+    {
+        Damage damage = _damages.FirstOrDefault((damage)
+                    => damage.TypeMob == mobe);
+
+        return damage.Dealt;
+    }
+
+    private int CalculateTakenDamage(TypeMob mobe)
+    {
+        Damage damage = _damages.FirstOrDefault((damage)
+                    => damage.TypeMob == mobe);
+
+        return damage.Taken;
     }
 
     private void StartAttack(IMob mob)
@@ -99,7 +120,10 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
 
     public void TakeDamage(int damage)
     {
-        _health -= damage;
+        int totalDamage = CalculateTakenDamage(_target.TypeMob);
+
+        _health -= totalDamage;
+        Damaged?.Invoke(this, totalDamage);
 
         if (_health <= 0)
         {
@@ -122,7 +146,7 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
             float distance = Vector3.Distance(transform.position, _target.TransformPosition);
             if (distance < 2)
             {
-                _target.TakeDamage(_damage);
+                _target.TakeDamage(CalculateDealtDamage(_target.TypeMob));
             }
         }
         StartCoroutine(Attack());
@@ -154,5 +178,6 @@ public class ProbaMonstr : MonoBehaviour, IMonstr, IUnit
     public void RecoveryHealth(int amount)
     {
         _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
+        Healed?.Invoke(this, amount);
     }
 }

@@ -9,6 +9,7 @@ public class Tower : MonoBehaviour, IMob
 {
     [SerializeField] private int _radiusAttack;
     [SerializeField] private int _healt;
+    [SerializeField] private int _maxHealt;
     [SerializeField] private Projectile _projectile;
     [SerializeField] private float _reloadInterval;
     [SerializeField] private Transform _spawnPointProjectile;
@@ -18,14 +19,15 @@ public class Tower : MonoBehaviour, IMob
     private List<IMonstr> _monsters = new List<IMonstr>();
 
     public Vector3 TransformPosition => transform.position;
-
     public TypeMob TypeMob => _typesMobs;
+    public int Health => _healt;
+    public int MaxHealth => _maxHealt;
 
     public event UnityAction Reloaded;
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
-
-
+    public event UnityAction<IMonstr, int> Damaged;
+    public event UnityAction<IMonstr, int> Healed;
 
     private void Start()
     {
