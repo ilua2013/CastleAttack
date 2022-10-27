@@ -7,6 +7,13 @@ public class Projectile : MonoBehaviour
     private IMonstr _target;
     protected int _damage = 2;
 
+
+    private void OnEnable()
+    {
+        
+    }
+
+
     private void Start()
     {
         transform.SetParent(null);
@@ -15,6 +22,13 @@ public class Projectile : MonoBehaviour
     public void Init(IMonstr monstr)
     {
         _target = monstr;
+        _target.Deaded += NoTarget;
+    }
+
+    private void NoTarget(IMonstr monstr, IUnit unit)
+    {
+        _target = null;
+        _target.Deaded -= NoTarget;
     }
 
     private void Update()
