@@ -35,6 +35,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
     public event UnityAction<IMonstr, IUnit> Deaded;
     public event UnityAction<IMonstr, int> Damaged;
     public event UnityAction<IMonstr, int> Healed;
+    public event UnityAction Returned;
 
     private void OnEnable()
     {
@@ -172,6 +173,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
 
     public void ReurnToHand()
     {
+        Returned?.Invoke();
         Destroy(gameObject);
     }
 
