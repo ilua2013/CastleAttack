@@ -33,10 +33,12 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
     public int Health => _health;
     public int MaxHealth => _maxHealth;
 
+    public Damage[] Damages => _damages;
+
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
-    public event UnityAction<IMonstr, int> Damaged;
-    public event UnityAction<IMonstr, int> Healed;
+    public event UnityAction<IDamageable, int> Damaged;
+    public event UnityAction<IDamageable, int> Healed;
     public event UnityAction Returned;
 
     private void OnEnable()

@@ -31,13 +31,13 @@ public class HealthBar : MonoBehaviour
         _damageable.Healed -= OnRecovery;
     }
 
-    private void OnTakeDamage(IMonstr monstr, int damage)
+    private void OnTakeDamage(IDamageable monstr, int damage)
     {
         float remain = (float)monstr.Health / monstr.MaxHealth;
         StartCoroutine(LerpValue(remain, 1f));
     }
 
-    private void OnRecovery(IMonstr monstr, int amount)
+    private void OnRecovery(IDamageable monstr, int amount)
     {
         float remain = (float)monstr.Health / monstr.MaxHealth;
         StartCoroutine(LerpValue(remain, 1f));

@@ -26,8 +26,8 @@ public class Tower : MonoBehaviour, IMob
     public event UnityAction Reloaded;
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
-    public event UnityAction<IMonstr, int> Damaged;
-    public event UnityAction<IMonstr, int> Healed;
+    public event UnityAction<IDamageable, int> Damaged;
+    public event UnityAction<IDamageable, int> Healed;
 
     private void Start()
     {
@@ -49,6 +49,8 @@ public class Tower : MonoBehaviour, IMob
     public void TakeDamage(int damage)
     {
         _healt -= damage;
+        Damaged?.Invoke(this, damage);
+
         if (_healt <= 0)
         {
             Destruction();

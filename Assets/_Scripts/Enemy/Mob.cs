@@ -29,8 +29,8 @@ public class Mob : MonoBehaviour, IMob
 
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
-    public event UnityAction<IMonstr, int> Damaged;
-    public event UnityAction<IMonstr, int> Healed;
+    public event UnityAction<IDamageable, int> Damaged;
+    public event UnityAction<IDamageable, int> Healed;
 
     private void OnEnable()
     {
@@ -82,6 +82,8 @@ public class Mob : MonoBehaviour, IMob
     public void TakeDamage(int damage)
     {
         _healt -= damage;
+        Damaged?.Invoke(this, damage);
+
         if (_healt <= 0)
         {
             Deaded?.Invoke(this);

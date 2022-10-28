@@ -6,8 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class MeteorSpell : AoESpell
 {
-    private int _damage;
+    [SerializeField] private int _damage;
+
     private SphereCollider _collider;
+
+    public int Damage => _damage;
 
     private void Awake()
     {
@@ -22,11 +25,6 @@ public class MeteorSpell : AoESpell
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
-    }
-
-    public void Init(int damage)
-    {
-        _damage = damage;
     }
 
     protected override void Affect()

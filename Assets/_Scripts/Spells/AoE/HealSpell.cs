@@ -6,8 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class HealSpell : AoESpell
 {
+    [SerializeField] private int _recovery;
+
     private SphereCollider _collider;
-    private int _recovery;
+
+    public int Recovery => _recovery;
 
     private void Awake()
     {
@@ -22,11 +25,6 @@ public class HealSpell : AoESpell
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
-    }
-
-    public void Init(int recovery)
-    {
-        _recovery = recovery;
     }
 
     protected override void Affect()

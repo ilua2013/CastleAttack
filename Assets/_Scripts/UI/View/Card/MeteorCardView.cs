@@ -6,10 +6,10 @@ using UnityEngine;
 public class MeteorCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private MeteorSpellCardDescription _description;
+    [SerializeField] private MeteorSpell _description;
 
     private void Awake()
     {
-        _text.text = $"{_description.DamagePerSecond} {_text.text}";
+        _text.text = $"{_description.Damage} {_text.text}";
     }
 }

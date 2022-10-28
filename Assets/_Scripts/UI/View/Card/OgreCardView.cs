@@ -6,10 +6,10 @@ using UnityEngine;
 public class OgreCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private OgreCardDescription _description;
+    [SerializeField] private Unit _description;
 
     private void Awake()
     {
-        _text.text = $"{_description.DamagePerSecond} {_text.text}";
+        _text.text = $"{_description.Damages[0].Dealt} {_text.text}"; // Требует корректировки
     }
 }

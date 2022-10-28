@@ -9,6 +9,6 @@ public interface IDamageable
     public int MaxHealth { get; }
     public void TakeDamage(int damage);
 
-    public event UnityAction<IMonstr, int> Damaged;
-    public event UnityAction<IMonstr, int> Healed;
+    public event UnityAction<IDamageable, int> Damaged;
+    public event UnityAction<IDamageable, int> Healed;
 }
