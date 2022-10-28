@@ -80,7 +80,7 @@ public class Tower : MonoBehaviour, IMob
         if (_monsters.Count > 0)
         {
             Projectile projectile = Instantiate(_projectile, _spawnPointProjectile);
-            projectile.Init(_monsters[0]);
+            projectile.Init(_monsters[0],this);
         }
         StartCoroutine(Spawn());
     }

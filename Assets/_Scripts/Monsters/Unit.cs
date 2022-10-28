@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
     [SerializeField] private float _speedAttack = 5;
     [SerializeField] private int _maxHealth = 40;
     [SerializeField] private Damage[] _damages;
+    [SerializeField] private float _distanceAttack = 3;
 
     private int _health;
     private Coroutine _coroutine;
@@ -23,6 +24,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
     private IMob _target;
     private bool _isActivAttack = false;
     private bool _isMove = false;
+    private float _distance;
 
     public Vector3 TransformPosition => transform.position;
     public Card Card => _card;
@@ -143,9 +145,8 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
             yield return null;
         }
         if (_isActivAttack == true)
-        {
-            float distance = Vector3.Distance(transform.position, _target.TransformPosition);
-            if (distance < 2)
+        {            
+            if (DistanceCalculation() <= _distanceAttack)
             {
                 _target.TakeDamage(CalculateDealtDamage(_target.TypeMob));
             }
@@ -159,16 +160,26 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
         {
             if (_isActivAttack == true)
             {
+                if(DistanceCalculation() > _distanceAttack)
                 _meshAgent.SetDestination(_target.TransformPosition);
-                //transform.position = Vector3.MoveTowards(transform.position, _target.TransformPosition, _speedAttack * Time.deltaTime);
+
+                else
+                    _meshAgent.speed =0 ;                
             }
             else
             {
+                _meshAgent.speed = 3;
                 _meshAgent.SetDestination(_targetPoint.position);
             }
 
         }
         
+    }
+
+    private float DistanceCalculation()
+    {
+       _distance = Vector3.Distance(transform.position, _target.TransformPosition);
+        return _distance;
     }
 
     public void ReurnToHand()
