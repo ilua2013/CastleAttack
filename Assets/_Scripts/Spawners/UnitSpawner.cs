@@ -18,11 +18,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     private void OnValidate()
     {
-        var cell = GetComponent<Cell>();
-
         _spawnPoint = transform;
-        _button = cell.ButtonStartFight;
-        _targetPoint = cell.TargetPoint;
     }
 
     private void Awake()
@@ -46,9 +42,8 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public bool TryApply(Card card, Vector3 place)
     {
-        if (card is UnitCard)
+        if (card is UnitCard unitCard)
         {
-            UnitCard unitCard = card as UnitCard;
             Unit unit = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
 
             unit.Init(card, TargetPoint, Button);
