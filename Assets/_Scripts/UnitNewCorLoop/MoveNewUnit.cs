@@ -11,12 +11,11 @@ public class MoveNewUnit : MonoBehaviour
 
     private Cell _topCell;
     private Cell _currentCell;
-    private bool _isMove = false;
 
     private void Start()
     {
         _currentCell = _initCell;
-        _topCell = _currentCell.Top;
+        _topCell = _initCell;
     }
 
     private void OnEnable()
@@ -31,7 +30,6 @@ public class MoveNewUnit : MonoBehaviour
 
     private void AllowMovement()
     {
-        _isMove = true;
         _topCell = _currentCell.Top;
     }
 
@@ -40,26 +38,14 @@ public class MoveNewUnit : MonoBehaviour
         if (other.TryGetComponent(out Cell triggered))
         {
             _currentCell = triggered;
-            //_topCell = _currentCell.Top;
-
         }
     }
 
     private void Update()
     {
-        if(_isMove == true)
+        if (transform.position != _topCell.transform.position)
         {
             transform.position = Vector3.MoveTowards(transform.position, _topCell.transform.position, _moveSpeed * Time.deltaTime);
         }
-        if (transform.position == _topCell.transform.position)
-        {
-            _isMove = false;           
-        }
-
-
     }
-
-
-
-
 }
