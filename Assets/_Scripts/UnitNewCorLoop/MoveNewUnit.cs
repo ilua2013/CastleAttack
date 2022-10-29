@@ -5,7 +5,6 @@ using UnityEngine;
 public class MoveNewUnit : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
-
     [SerializeField] private Cell _initCell;
     [SerializeField] private FightSystem _fightSystem;
 
