@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 1710454381889582022}
   - component: {fileID: 1710454381889582021}
   - component: {fileID: 1710454381889582020}
-  - component: {fileID: 4088330068723333513}
+  - component: {fileID: 5369835969886056517}
+  - component: {fileID: 5701522734012855980}
+  - component: {fileID: 1596687216599000648}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -89,7 +91,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4088330068723333513
+--- !u!114 &5369835969886056517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,21 +100,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1710454381889582042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715a1ac66a8702849ad7664de7c598c8, type: 3}
+  m_Script: {fileID: 11500000, guid: fc593f50fa377714b9ecc2340b3ee122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoneMonster: {fileID: 1710454382197722559}
-  _reloadAttackInterval: 2
-  _speedAttack: 5
-  _maxHealth: 40
-  _damages:
-  - typeMob: 0
-    _taken: 10
-    _dealt: 5
-  - typeMob: 1
-    _taken: 15
-    _dealt: 20
-  _distanceAttack: 4
+  _speed: 5
+--- !u!114 &5701522734012855980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0a7a164d91d2d4fa5b22f349d97724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceAttack: 2
+  _damage: 3
+  _health: 5
+--- !u!114 &1596687216599000648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e31912512ef37f48b95a7b31b0dddfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxStep: 3
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitDamageable: {fileID: 4088330068723333513}
+  _unitDamageable: {fileID: 0}
   _bar: {fileID: 4581620883515003956}
 --- !u!1 &8814044131612141863
 GameObject:

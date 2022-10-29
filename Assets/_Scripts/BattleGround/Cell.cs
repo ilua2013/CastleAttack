@@ -13,11 +13,15 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
 
+    private UnitStep _currentUnit;
+
     public Cell Top => _top;
     public Cell Bot => _bot;
     public Cell Left => _left;
     public Cell Right => _right;
     public CellIs CellIs => _cellIs;
+    public UnitStep CurrentUnit => _currentUnit;
+    public bool IsFree => _currentUnit == null;
 
     private List<UnitSpawner> _unitSpawners = new List<UnitSpawner>();
 
@@ -31,23 +35,47 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void SetCell(Cell cell, Set set)
+    public void SetCell(Cell cell, CellNeighbor set)
     {
         switch (set)
         {
-            case Set.Top:
+            case CellNeighbor.Top:
                 _top = cell;
                 break;
-            case Set.Bot:
+            case CellNeighbor.Bot:
                 _bot = cell;
                 break;
-            case Set.Right:
+            case CellNeighbor.Right:
                 _right = cell;
                 break;
-            case Set.Left:
+            case CellNeighbor.Left:
                 _left = cell;
                 break;
         }
+    }
+
+    public void StateUnitOnCell(UnitStep unit)
+    {
+        _currentUnit = unit;
+    }
+
+    public void SetFree()
+    {
+        _currentUnit = null;
+    }
+
+    public List<Cell> GetForwardsCell(int countForward)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell currentCell = _top;
+
+        for (int i = 0; i < countForward; i++)
+        {
+            cells.Add(currentCell.Top);
+            currentCell = currentCell.Top;
+        }
+        print(cells.Count + " Count Cell Forward " + countForward);
+        return cells;
     }
 }
 

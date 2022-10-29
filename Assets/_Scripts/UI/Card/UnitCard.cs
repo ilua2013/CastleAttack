@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitCard : Card
 {
-    [SerializeField] private Unit _unitPrefab;
+    [SerializeField] private UnitStep _unitPrefab;
 
-    public Unit UnitPrefab => _unitPrefab;
+    public UnitStep UnitPrefab => _unitPrefab;
 }

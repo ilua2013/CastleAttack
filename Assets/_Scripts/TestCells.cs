@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestCells : MonoBehaviour
 {
     public Cell _cell;
-    public Set Set;
+    public CellNeighbor Set;
 
     private void OnValidate()
     {
@@ -20,7 +20,7 @@ public class TestCells : MonoBehaviour
         }
     }
 }
-public enum Set
+public enum CellNeighbor
 {
     Left, Top, Right, Bot
 }
