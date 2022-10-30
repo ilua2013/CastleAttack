@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -10,7 +11,9 @@ public class FightSystem : MonoBehaviour
     [SerializeField] private UnitSpawner[] _spawners;
     [SerializeField] private float _delayBeetwenStep;
 
-    public List<UnitStep> _unitsSpawned = new List<UnitStep>();
+    private List<UnitStep> _unitsSpawned = new List<UnitStep>();
+
+    public event Action StepFinished;
 
     private void OnValidate()
     {
@@ -43,10 +46,19 @@ public class FightSystem : MonoBehaviour
         while (CheckHaveStep())
         {
             foreach (var item in _unitsSpawned)
-                item.DoStep();
+                if (item.TeamUnit == TeamUnit.Friend)
+                    item.DoStep();
+
+            yield return new WaitForSeconds(_delayBeetwenStep);
+
+            foreach (var item in _unitsSpawned)
+                if (item.TeamUnit == TeamUnit.Enemy)
+                    item.DoStep();
 
             yield return new WaitForSeconds(_delayBeetwenStep);
         }
+
+        StepFinished?.Invoke();
 
         foreach (var item in _unitsSpawned)
             item.UpdateStep();

@@ -15,15 +15,19 @@ public class MoverOnCell : MonoBehaviour
         _currentCell = cell;
     }
 
-    public void MoveForward()
+    public void Move(TeamUnit teamUnit)
     {
-        if (_currentCell.Top.IsFree == false)
-            Debug.LogError("Forward Cell Is Not Free");
+        Cell target;
 
-        StartCoroutine(MoveTo(_currentCell.Top.transform));
+        if (teamUnit == TeamUnit.Friend)
+            target = _currentCell.Top;
+        else
+            target = _currentCell.Bot;
+
+        StartCoroutine(MoveTo(target.transform));
 
         _currentCell.SetFree();
-        _currentCell = _currentCell.Top;
+        _currentCell = target;
     }
 
     private IEnumerator MoveTo(Transform target)

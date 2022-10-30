@@ -20,14 +20,19 @@ public class Fighter : MonoBehaviour
         _mover = GetComponent<MoverOnCell>();
     }
 
-    public bool TryAttack()
+    public bool TryAttack(TeamUnit teamUnit)
     {
         List<Cell> cells = _mover.CurrentCell.GetForwardsCell(_distanceAttack);
 
         for (int i = 0; i < cells.Count; i++)
         {
+<<<<<<< Updated upstream
             if (cells[i].CurrentUnit != null)
             {
+=======
+            if (cells[i].CurrentUnit != null && cells[i].CurrentUnit.TeamUnit != teamUnit)
+            {                
+>>>>>>> Stashed changes
                 cells[i].CurrentUnit.Fighter.TakeDamage(_damage);
                 return true;
             }
