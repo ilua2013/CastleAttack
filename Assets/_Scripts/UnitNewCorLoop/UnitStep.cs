@@ -20,6 +20,8 @@ public class UnitStep : MonoBehaviour
     public int CurrentStep => _currentStep;
 
     public event Action Returned;
+    public event Action Attacked;
+    public event Action Moved;
 
     private void Awake()
     {
@@ -43,9 +45,15 @@ public class UnitStep : MonoBehaviour
     public void DoStep()
     {
         if (_fighter.TryAttack())
+        {            
+            Attacked?.Invoke();
             return;
+        }
         else
-            _moverOnCell.MoveForward();
+        {
+            Moved?.Invoke();
+            _moverOnCell.MoveForward();            
+        }
 
         _currentStep--;
     }

@@ -27,7 +27,7 @@ public class Fighter : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             if (cells[i].CurrentUnit != null)
-            {
+            {                
                 cells[i].CurrentUnit.Fighter.TakeDamage(_damage);
                 return true;
             }
