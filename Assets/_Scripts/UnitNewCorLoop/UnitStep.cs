@@ -7,16 +7,18 @@ using System;
 [RequireComponent(typeof(Fighter))]
 public class UnitStep : MonoBehaviour
 {
+    [SerializeField] private TeamUnit _team;
     [SerializeField] private int _maxStep = 3;
 
-    private MoverOnCell _moverOnCell;
+    private MoverOnCell _mover;
     private Fighter _fighter;
     private Card _card;
     private int _currentStep;
 
     public Fighter Fighter => _fighter;
-    public MoverOnCell Mover => _moverOnCell;
+    public MoverOnCell Mover => _mover;
     public Card Card => _card;
+    public TeamUnit TeamUnit => _team;
     public int CurrentStep => _currentStep;
 
     public event Action Returned;
@@ -25,15 +27,16 @@ public class UnitStep : MonoBehaviour
 
     private void Awake()
     {
-        _moverOnCell = GetComponent<MoverOnCell>();
+        _mover = GetComponent<MoverOnCell>();
         _fighter = GetComponent<Fighter>();
         _currentStep = _maxStep;
     }
 
-    public void Init(Card card, Cell currentCell)
+    public void Init(Card card, Cell currentCell, TeamUnit teamUnit)
     {
         _card = card;
-        _moverOnCell.SetCurrentCell(currentCell);
+        _mover.SetCurrentCell(currentCell);
+        _team = teamUnit;
     }
 
     public void ReturnToHand()
@@ -44,15 +47,15 @@ public class UnitStep : MonoBehaviour
 
     public void DoStep()
     {
-        if (_fighter.TryAttack())
-        {            
+        if (_fighter.TryAttack(_team))
+        {
             Attacked?.Invoke();
             return;
         }
         else
         {
             Moved?.Invoke();
-            _moverOnCell.MoveForward();            
+            _mover.Move(_team);            
         }
 
         _currentStep--;
@@ -62,4 +65,9 @@ public class UnitStep : MonoBehaviour
     {
         _currentStep = _maxStep;
     }
+}
+
+public enum TeamUnit
+{
+    Enemy, Friend
 }

@@ -46,7 +46,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         {
             UnitStep unit = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
 
-            unit.Init(card, GetComponent<Cell>());
+            unit.Init(card, GetComponent<Cell>(), TeamUnit.Friend);
             unit.Fighter.Died += OnUnitDead;
 
             _units.Add(unit);
