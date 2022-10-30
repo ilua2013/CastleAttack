@@ -22,6 +22,8 @@ public class UnitStep : MonoBehaviour
     public int CurrentStep => _currentStep;
 
     public event Action Returned;
+    public event Action Attacked;
+    public event Action Moved;
 
     private void Awake()
     {
@@ -45,23 +47,16 @@ public class UnitStep : MonoBehaviour
 
     public void DoStep()
     {
-<<<<<<< Updated upstream
-        if (_fighter.TryAttack())
-=======
         if (_fighter.TryAttack(_team))
-        {            
+        {
             Attacked?.Invoke();
->>>>>>> Stashed changes
             return;
+        }
         else
-<<<<<<< Updated upstream
-            _moverOnCell.MoveForward();
-=======
         {
             Moved?.Invoke();
             _mover.Move(_team);            
         }
->>>>>>> Stashed changes
 
         _currentStep--;
     }

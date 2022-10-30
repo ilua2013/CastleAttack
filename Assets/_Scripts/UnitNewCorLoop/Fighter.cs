@@ -26,13 +26,8 @@ public class Fighter : MonoBehaviour
 
         for (int i = 0; i < cells.Count; i++)
         {
-<<<<<<< Updated upstream
-            if (cells[i].CurrentUnit != null)
-            {
-=======
             if (cells[i].CurrentUnit != null && cells[i].CurrentUnit.TeamUnit != teamUnit)
             {                
->>>>>>> Stashed changes
                 cells[i].CurrentUnit.Fighter.TakeDamage(_damage);
                 return true;
             }
