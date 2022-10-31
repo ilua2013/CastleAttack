@@ -23,7 +23,8 @@ public class UnitStep : MonoBehaviour
 
     public event Action Returned;
     public event Action Attacked;
-    public event Action Moved;
+    public event Action Moved;    
+
 
     private void Awake()
     {
@@ -63,7 +64,7 @@ public class UnitStep : MonoBehaviour
 
     public void UpdateStep()
     {
-        _currentStep = _maxStep;
+        _currentStep = _maxStep;        
     }
 }
 

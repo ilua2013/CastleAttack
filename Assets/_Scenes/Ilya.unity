@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 138511871}
   - component: {fileID: 138511870}
   - component: {fileID: 138511869}
+  - component: {fileID: 138511872}
   m_Layer: 5
   m_Name: ButtonStatFight
   m_TagString: Untagged
@@ -287,6 +288,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138511867}
   m_CullTransparentMesh: 1
+--- !u!114 &138511872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138511867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d5b7212a8d4714587d56463b07bca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 138511869}
+  _imageButton: {fileID: 138511870}
+  _fightSystem: {fileID: 456796463}
 --- !u!114 &160365600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1175,7 +1191,6 @@ MonoBehaviour:
   - {fileID: 2126171242}
   - {fileID: 2136627525}
   _delayBeetwenStep: 2
-  _unitsSpawned: []
 --- !u!4 &456796464
 Transform:
   m_ObjectHideFlags: 0

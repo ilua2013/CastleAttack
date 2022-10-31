@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class FightSystem : MonoBehaviour
 {
-    [SerializeField] private Button _buttonStartFight;
+    [SerializeField] private Button _buttonStartFight;    
     [SerializeField] private UnitSpawner[] _spawners;
     [SerializeField] private float _delayBeetwenStep;
 
     private List<UnitStep> _unitsSpawned = new List<UnitStep>();
 
     public event Action StepFinished;
+    public event Action StepStarted;
 
     private void OnValidate()
     {
@@ -38,7 +39,12 @@ public class FightSystem : MonoBehaviour
 
     private void StartUnitsDoStep()
     {
-        StartCoroutine(UnitsDoStep());
+        if (_unitsSpawned.Count > 0)
+        {
+            StartCoroutine(UnitsDoStep());
+            StepStarted?.Invoke();
+        }
+        
     }
 
     private IEnumerator UnitsDoStep()
