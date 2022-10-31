@@ -29,8 +29,8 @@ public class Mob : MonoBehaviour, IMob
 
     public event UnityAction<IMob> CameOut;
     public event UnityAction<IMob> Deaded;
-    public event UnityAction<IDamageable, int> Damaged;
-    public event UnityAction<IDamageable, int> Healed;
+    public event UnityAction<int> Damaged;
+    public event UnityAction<int> Healed;
 
     private void OnEnable()
     {
@@ -82,7 +82,7 @@ public class Mob : MonoBehaviour, IMob
     public void TakeDamage(int damage)
     {
         _healt -= damage;
-        Damaged?.Invoke(this, damage);
+        Damaged?.Invoke(damage);
 
         if (_healt <= 0)
         {
@@ -105,7 +105,7 @@ public class Mob : MonoBehaviour, IMob
             float distance = Vector3.Distance(transform.position, _target.TransformPosition);
             if (distance < 2)
             {
-                _target.TakeDamage(_damage);
+                //_target.TakeDamage(_damage);
             }
         }
         StartCoroutine(Attack());

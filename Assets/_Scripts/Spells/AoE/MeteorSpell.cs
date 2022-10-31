@@ -36,7 +36,7 @@ public class MeteorSpell : AoESpell
             if (collider.TryGetComponent(out IMob triggered))
             {
                 Debug.Log("Affect " + triggered);
-                triggered.TakeDamage(_damage);
+                //triggered.TakeDamage(_damage);
             }
         }
     }

@@ -37,8 +37,8 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
 
     public event UnityAction<IMonstr, IUnit> CameOut;
     public event UnityAction<IMonstr, IUnit> Deaded;
-    public event UnityAction<IDamageable, int> Damaged;
-    public event UnityAction<IDamageable, int> Healed;
+    public event UnityAction<int> Damaged;
+    public event UnityAction<int> Healed;
     public event UnityAction Returned;
 
     private void OnEnable()
@@ -128,7 +128,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
         int totalDamage = CalculateTakenDamage(_target.TypeMob);
 
         _health -= totalDamage;
-        Damaged?.Invoke(this, totalDamage);
+        Damaged?.Invoke(totalDamage);
 
         if (_health <= 0)
         {
@@ -150,7 +150,7 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
         {            
             if (DistanceCalculation() <= _distanceAttack)
             {
-                _target.TakeDamage(CalculateDealtDamage(_target.TypeMob));
+                //_target.TakeDamage(CalculateDealtDamage(_target.TypeMob));
             }
         }
         StartCoroutine(Attack());
@@ -193,6 +193,6 @@ public class Unit : MonoBehaviour, IMonstr, IUnit
     public void RecoveryHealth(int amount)
     {
         _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
-        Healed?.Invoke(this, amount);
+        Healed?.Invoke(amount);
     }
 }

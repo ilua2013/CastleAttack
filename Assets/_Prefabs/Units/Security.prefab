@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitDamageable: {fileID: 6826271671814102174}
+  _fighter: {fileID: 2229400671118970051}
   _bar: {fileID: 3581323077504418451}
 --- !u!1 &5158730719246376089
 GameObject:
@@ -401,8 +401,8 @@ GameObject:
   - component: {fileID: 6826271671814102145}
   - component: {fileID: 6826271671814102144}
   - component: {fileID: 6826271671814102175}
-  - component: {fileID: 6826271671814102174}
   - component: {fileID: 6826271671814102173}
+  - component: {fileID: 2229400671118970051}
   m_Layer: 0
   m_Name: Security
   m_TagString: Untagged
@@ -457,25 +457,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6826271671814102174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6826271671814102172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a159ad0f8e2b22f43a144d02a6120573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _zoneMob: {fileID: 6826271671683165623}
-  _reloadAttackInterval: 2
-  _speedAttack: 5
-  _healt: 40
-  _maxHealt: 40
-  _damage: 5
-  _typesMobs: 0
 --- !u!195 &6826271671814102173
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -498,6 +479,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2229400671118970051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826271671814102172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0a7a164d91d2d4fa5b22f349d97724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceAttack: 0
+  _damage: 0
+  _maxHealth: 0
 --- !u!1 &6826271672733471847
 GameObject:
   m_ObjectHideFlags: 0

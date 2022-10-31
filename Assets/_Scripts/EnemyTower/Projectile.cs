@@ -63,7 +63,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void DamageEnemy(IMonstr monstr)
     {       
-        monstr.TakeDamage(_damage);      
+        //monstr.TakeDamage(_damage);      
         Destroy(gameObject);
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IMonstr : IDamageable
+public interface IMonstr
 {
     public void RecoveryHealth(int amount);
 

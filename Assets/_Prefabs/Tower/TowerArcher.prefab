@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitDamageable: {fileID: 5333739010638531432}
+  _fighter: {fileID: 1217095029087767147}
   _bar: {fileID: 1232164917277899752}
 --- !u!1 &4243248264521360415
 GameObject:
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 5333739010638531433}
   - component: {fileID: 5333739010638531446}
   - component: {fileID: 5333739010638531435}
-  - component: {fileID: 5333739010638531432}
+  - component: {fileID: 1217095029087767147}
   m_Layer: 0
   m_Name: TowerArcher
   m_TagString: Untagged
@@ -449,7 +449,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5333739010638531432
+--- !u!114 &1217095029087767147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,16 +458,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5333739010638531447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8309b45c00cc147b953aa5aec4ff4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d0a7a164d91d2d4fa5b22f349d97724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiusAttack: 4
-  _healt: 20
-  _maxHealt: 20
-  _projectile: {fileID: 3516634193794228348, guid: 33d07832700d5f648b1b5031e5d26646, type: 3}
-  _reloadInterval: 1
-  _spawnPointProjectile: {fileID: 5333739009777357557}
-  _typesMobs: 0
+  _distanceAttack: 0
+  _damage: 0
+  _maxHealth: 0
 --- !u!1 &5333739010864476047
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class ProjectileBomb : Projectile
         {
             if (collider.TryGetComponent(out IMonstr triggered))
             {
-                triggered.TakeDamage(_damage);
+                //triggered.TakeDamage(_damage);
                 Destroy(gameObject);
             }
         }

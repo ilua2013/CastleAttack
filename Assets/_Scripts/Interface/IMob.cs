@@ -2,7 +2,7 @@ using TypesMobs;
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IMob : IDamageable
+public interface IMob
 {
     public Vector3 TransformPosition { get; }
     public TypeMob TypeMob { get; }

@@ -9,7 +9,6 @@ public class UnitStep : MonoBehaviour
 {
     [SerializeField] private TeamUnit _team;
     [SerializeField] private int _maxStep = 3;
-    [SerializeField] private HealthBar _healthBar;
 
     private MoverOnCell _mover;
     private Fighter _fighter;
@@ -40,7 +39,6 @@ public class UnitStep : MonoBehaviour
 
     public void Init(Card card, Cell currentCell, TeamUnit teamUnit)
     {
-        _healthBar.Init(_fighter);
         _card = card;
         _mover.SetCurrentCell(currentCell);
         _team = teamUnit;
