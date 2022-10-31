@@ -9,11 +9,13 @@ public class UnitStep : MonoBehaviour
 {
     [SerializeField] private TeamUnit _team;
     [SerializeField] private int _maxStep = 3;
+    [SerializeField] private HealthBar _healthBar;
 
     private MoverOnCell _mover;
     private Fighter _fighter;
     private Card _card;
     private int _currentStep;
+    
 
     public Fighter Fighter => _fighter;
     public MoverOnCell Mover => _mover;
@@ -24,6 +26,7 @@ public class UnitStep : MonoBehaviour
     public event Action Returned;
     public event Action Attacked;
     public event Action Moved;
+    public event Action Inited;
 
 
     private void Awake()
@@ -31,10 +34,13 @@ public class UnitStep : MonoBehaviour
         _mover = GetComponent<MoverOnCell>();
         _fighter = GetComponent<Fighter>();
         _currentStep = _maxStep;
+       
+        Inited?.Invoke();
     }
 
     public void Init(Card card, Cell currentCell, TeamUnit teamUnit)
     {
+        _healthBar.Init(_fighter);
         _card = card;
         _mover.SetCurrentCell(currentCell);
         _team = teamUnit;

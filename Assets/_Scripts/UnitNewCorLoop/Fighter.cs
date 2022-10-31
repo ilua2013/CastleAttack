@@ -12,8 +12,10 @@ public class Fighter : MonoBehaviour
     private MoverOnCell _mover;
 
     public int Damage => _damage;
+    public int Healt => _health;
 
     public event Action<Fighter> Died;
+    public event Action<int> Damaged;
 
     private void Awake()
     {
@@ -39,7 +41,7 @@ public class Fighter : MonoBehaviour
     private void TakeDamage(int damage)
     {
         _health = _health - damage >= 0 ? -damage : 0;
-
+        Damaged?.Invoke(_health);
         if (_health == 0)
             Die();
     }

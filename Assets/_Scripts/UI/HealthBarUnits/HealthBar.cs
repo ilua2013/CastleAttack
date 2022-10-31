@@ -6,42 +6,47 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour _unitDamageable;
+    [SerializeField] private Fighter _unitDamageable;
     [SerializeField] private Slider _bar;
 
-    private IDamageable _damageable;
+    //private IDamageable _damageable;
 
-    private void Awake()
+    public void Init(Fighter unitHealt)
     {
-        if (_unitDamageable is IDamageable)
-            _damageable = _unitDamageable as IDamageable;
-        else
-            _unitDamageable = null;
+        _unitDamageable = unitHealt;
     }
+
+    //private void Awake()
+    //{
+    //    if (_unitDamageable is IDamageable)
+    //        _damageable = _unitDamageable as IDamageable;
+    //    else
+    //        _unitDamageable = null;
+    //}
 
     private void OnEnable()
     {
-        _damageable.Damaged += OnTakeDamage;
-        _damageable.Healed += OnRecovery;
+        _unitDamageable.Damaged += OnTakeDamage;
+        //_damageable.Healed += OnRecovery;
     }
 
     private void OnDisable()
     {
-        _damageable.Damaged -= OnTakeDamage;
-        _damageable.Healed -= OnRecovery;
+        _unitDamageable.Damaged -= OnTakeDamage;
+        //_damageable.Healed -= OnRecovery;
     }
 
-    private void OnTakeDamage(IDamageable monstr, int damage)
+    private void OnTakeDamage(int healt)
     {
-        float remain = (float)monstr.Health / monstr.MaxHealth;
-        StartCoroutine(LerpValue(remain, 1f));
+        
+        StartCoroutine(LerpValue(healt, 1f));
     }
 
-    private void OnRecovery(IDamageable monstr, int amount)
-    {
-        float remain = (float)monstr.Health / monstr.MaxHealth;
-        StartCoroutine(LerpValue(remain, 1f));
-    }
+    //private void OnRecovery( int healt)
+    //{
+        
+    //    StartCoroutine(LerpValue(remain, 1f));
+    //}
 
     private IEnumerator LerpValue(float to, float time)
     {
