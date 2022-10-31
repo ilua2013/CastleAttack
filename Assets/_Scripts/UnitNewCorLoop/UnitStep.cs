@@ -14,11 +14,7 @@ public class UnitStep : MonoBehaviour
     private Fighter _fighter;
     private Card _card;
     private int _currentStep;
-<<<<<<< Updated upstream
 
-=======
-    
->>>>>>> Stashed changes
     public Fighter Fighter => _fighter;
     public MoverOnCell Mover => _mover;
     public Card Card => _card;
@@ -28,6 +24,7 @@ public class UnitStep : MonoBehaviour
     public event Action Returned;
     public event Action Attacked;
     public event Action Moved;
+    public event Action Inited;
 
     private void Awake()
     {
@@ -51,6 +48,8 @@ public class UnitStep : MonoBehaviour
         _card = card;
         _mover.SetCurrentCell(currentCell);
         _team = teamUnit;
+
+        Inited?.Invoke();
     }
 
     public void ReturnToHand()

@@ -7,18 +7,19 @@ public class Fighter : MonoBehaviour
 {
     [SerializeField] private int _distanceAttack;
     [SerializeField] private int _damage;
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
 
+    private int _health;
     private MoverOnCell _mover;
 
     public int Damage => _damage;
-<<<<<<< Updated upstream
-=======
     public int Health => _health;
     public bool IsDead => _health < 1;
->>>>>>> Stashed changes
+    public int MaxHealth => _maxHealth;
 
     public event Action<Fighter> Died;
+    public event Action<int> Damaged;
+    public event Action<int> Healed;
 
     private void Awake()
     {
@@ -51,13 +52,9 @@ public class Fighter : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-<<<<<<< Updated upstream
-        _health = _health - damage >= 0 ? -damage : 0;
-=======
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
         print("TakeDamage " + gameObject.name);
         Damaged?.Invoke(_health);
->>>>>>> Stashed changes
 
         if (_health == 0)
             Die();

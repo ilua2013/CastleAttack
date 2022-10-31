@@ -15,6 +15,7 @@ public class FightSystem : MonoBehaviour
     private List<UnitStep> _unitEnemy = new List<UnitStep>();
 
     public event Action StepFinished;
+    public event Action StepStarted;
 
     private void OnValidate()
     {
@@ -39,15 +40,11 @@ public class FightSystem : MonoBehaviour
 
     private void StartUnitsDoStep()
     {
-<<<<<<< Updated upstream
-        StartCoroutine(UnitsDoStep());
-=======
         if (_unitFriend.Count > 0)
         {
             StartCoroutine(UnitsDoStep());
             StepStarted?.Invoke();
         }
->>>>>>> Stashed changes
     }
 
     private IEnumerator UnitsDoStep()
