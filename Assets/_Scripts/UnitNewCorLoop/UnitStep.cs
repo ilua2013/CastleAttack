@@ -23,7 +23,7 @@ public class UnitStep : MonoBehaviour
 
     public event Action Returned;
     public event Action Attacked;
-    public event Action Moved;    
+    public event Action Moved;
 
 
     private void Awake()
@@ -36,6 +36,12 @@ public class UnitStep : MonoBehaviour
     public void Init(Card card, Cell currentCell, TeamUnit teamUnit)
     {
         _card = card;
+        _mover.SetCurrentCell(currentCell);
+        _team = teamUnit;
+    }
+
+    public void EnemyInit(Cell currentCell, TeamUnit teamUnit)
+    {
         _mover.SetCurrentCell(currentCell);
         _team = teamUnit;
     }
@@ -56,7 +62,7 @@ public class UnitStep : MonoBehaviour
         else
         {
             Moved?.Invoke();
-            _mover.Move(_team);            
+            _mover.Move(_team);
         }
 
         _currentStep--;
@@ -64,7 +70,7 @@ public class UnitStep : MonoBehaviour
 
     public void UpdateStep()
     {
-        _currentStep = _maxStep;        
+        _currentStep = _maxStep;
     }
 }
 

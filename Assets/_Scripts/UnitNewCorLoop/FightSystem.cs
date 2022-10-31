@@ -9,7 +9,7 @@ public class FightSystem : MonoBehaviour
 {
     [SerializeField] private Button _buttonStartFight;    
     [SerializeField] private UnitSpawner[] _spawners;
-    [SerializeField] private float _delayBeetwenStep;
+    [SerializeField] private float _delayBeetwenStep;    
 
     private List<UnitStep> _unitsSpawned = new List<UnitStep>();
 
@@ -27,6 +27,7 @@ public class FightSystem : MonoBehaviour
 
         foreach (var spawner in _spawners)
             spawner.SpawnedUnit += AddUnit;
+       
     }
 
     private void OnDisable()
@@ -34,7 +35,8 @@ public class FightSystem : MonoBehaviour
         _buttonStartFight.onClick.RemoveListener(StartUnitsDoStep);
 
         foreach (var spawner in _spawners)
-            spawner.SpawnedUnit -= AddUnit;
+            spawner.SpawnedUnit -= AddUnit;    
+
     }
 
     private void StartUnitsDoStep()

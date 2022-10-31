@@ -7,7 +7,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Cell))]
 public class UnitSpawner : MonoBehaviour, ICardApplicable
 {
-    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform _spawnPoint; 
+
+    private List<UnitStep> _enemyUnits = new List<UnitStep>();
 
     private LevelSystem _finisher;
     private Cell _cell;
@@ -64,6 +66,15 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         return false;
     }
 
+    public void TryApplyEnemy(UnitStep unitStep)
+    {      
+        UnitStep unit = Instantiate(unitStep, SpawnPoint.position, Quaternion.identity);
+        unit.EnemyInit(_cell, TeamUnit.Enemy);
+        unit.Fighter.Died += OnEnemyUnitDead;
+        _enemyUnits.Add(unit);
+        SpawnedUnit?.Invoke(unit);      
+    }
+
     private void OnFinished()
     {
         foreach (var unit in _units)
@@ -73,6 +84,12 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         }
 
         _units.Clear();
+    }
+
+    private void OnEnemyUnitDead(Fighter fighter)
+    {
+        fighter.Died -= OnUnitDead;
+        _enemyUnits.Remove(fighter.GetComponent<UnitStep>());
     }
 
     private void OnUnitDead(Fighter fighter)

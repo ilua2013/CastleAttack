@@ -32,7 +32,7 @@ public class MoverOnCell : MonoBehaviour
 
     private IEnumerator MoveTo(Transform target)
     {
-        while(Vector3.Distance(transform.position, target.position) > 0.1f)
+        while (Vector3.Distance(transform.position, target.position) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
             yield return null;
