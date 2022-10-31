@@ -71,7 +71,7 @@ public class Cell : MonoBehaviour
 
         for (int i = 0; i < countForward; i++)
         {
-            if (currentCell != null)
+            if (currentCell != null && currentCell.Top != null)
             {
                 cells.Add(currentCell.Top);
                 currentCell = currentCell.Top != null ? currentCell.Top : null;
@@ -93,6 +93,23 @@ public class Cell : MonoBehaviour
                 currentCell = currentCell.Bot != null ? currentCell.Bot : null;
             }
         }
+        return cells;
+    }
+
+    public List<Cell> GetVerticalCells()
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell currentCell = this;
+
+        while(currentCell.Top != null)
+            currentCell = currentCell.Top;
+
+        while(currentCell != null)
+        {
+            cells.Add(currentCell);
+            currentCell = currentCell.Bot;
+        }
+
         return cells;
     }
 }

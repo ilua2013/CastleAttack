@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemySpawn()
     {
-        _cellsEnemySpawner[0].TryApplyEnemy(_enemyUnitsPrefab[0]);
+        _cellsEnemySpawner[Random.Range(0, _cellsEnemySpawner.Count)].TryApplyEnemy(_enemyUnitsPrefab[Random.Range(0, _enemyUnitsPrefab.Count)]);
     }
 
 }

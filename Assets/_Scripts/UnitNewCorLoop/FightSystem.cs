@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class FightSystem : MonoBehaviour
 {
     [SerializeField] private Button _buttonStartFight;
-    [SerializeField] private UnitSpawner[] _spawners;
     [SerializeField] private float _delayBeetwenStep;
+    [SerializeField] private UnitSpawner[] _spawners;
+    [SerializeField] private UnitStep[] _enemyInScene;
 
     private List<UnitStep> _unitFriend = new List<UnitStep>();
     private List<UnitStep> _unitEnemy = new List<UnitStep>();
@@ -20,6 +21,21 @@ public class FightSystem : MonoBehaviour
     private void OnValidate()
     {
         _spawners = FindObjectsOfType<UnitSpawner>();
+
+        var enemys = FindObjectsOfType<UnitStep>();
+        List<UnitStep> listEnemy = new List<UnitStep>();
+
+        foreach (var item in enemys)
+            if(item.TeamUnit == TeamUnit.Enemy)
+                listEnemy.Add(item);
+
+        _enemyInScene = listEnemy.ToArray();
+    }
+
+    private void Awake()
+    {
+        foreach (var item in _enemyInScene)
+            AddUnit(item);
     }
 
     private void OnEnable()

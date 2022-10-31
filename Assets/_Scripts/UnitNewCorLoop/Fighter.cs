@@ -5,6 +5,7 @@ using System;
 
 public class Fighter : MonoBehaviour
 {
+    [SerializeField] private FighterType _type;
     [SerializeField] private int _distanceAttack;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
@@ -16,6 +17,7 @@ public class Fighter : MonoBehaviour
     public int Health => _health;
     public bool IsDead => _health < 1;
     public int MaxHealth => _maxHealth;
+    public FighterType FighterType => _type;
 
     public event Action<Fighter> Died;
     public event Action<int> Damaged;
@@ -39,14 +41,12 @@ public class Fighter : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             UnitStep unit = cells[i].CurrentUnit;
-            print(cells[i].gameObject.name + " " + teamUnit);
-
-            if (unit != null)
-                print($"{unit.gameObject.name}  {unit.TeamUnit != teamUnit}  {unit.Fighter.IsDead == false}   teamUnit {teamUnit} unit.TeamUnit {unit.TeamUnit}");
 
             if (unit != null && unit.TeamUnit != teamUnit && unit.Fighter.IsDead == false)
             {
-                unit.Fighter.TakeDamage(_damage);
+                int damage = (int)DamageConditions.CalculateDamage(_type, unit.Fighter.FighterType, _damage);
+                unit.Fighter.TakeDamage(damage);
+
                 return true;
             }
         }
@@ -57,7 +57,7 @@ public class Fighter : MonoBehaviour
     private void TakeDamage(int damage)
     {
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
-        print("TakeDamage " + gameObject.name);
+
         Damaged?.Invoke(_health);
 
         if (_health == 0)
@@ -69,4 +69,9 @@ public class Fighter : MonoBehaviour
         Died?.Invoke(this);
         gameObject.SetActive(false);
     }
+}
+
+public enum FighterType
+{
+    Catapult, Archer, Warrior, Tower
 }
