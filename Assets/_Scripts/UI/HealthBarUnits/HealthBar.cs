@@ -23,7 +23,8 @@ public class HealthBar : MonoBehaviour
 
     private void OnHealthChanged(int amount)
     {
-        StartCoroutine(LerpValue(amount, 1f));
+        float remain = _fighter.Health / _fighter.MaxHealth;
+        StartCoroutine(LerpValue(remain, 1f));
     }
 
     private IEnumerator LerpValue(float to, float time)
