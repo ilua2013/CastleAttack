@@ -24,6 +24,7 @@ public class Fighter : MonoBehaviour
     private void Awake()
     {
         _mover = GetComponent<MoverOnCell>();
+        _health = _maxHealth;
     }
 
     public bool TryAttack(TeamUnit teamUnit)
@@ -37,12 +38,15 @@ public class Fighter : MonoBehaviour
 
         for (int i = 0; i < cells.Count; i++)
         {
-            print("Cells count - " + cells.Count + " " + cells[i].gameObject.name);
             UnitStep unit = cells[i].CurrentUnit;
+            print(cells[i].gameObject.name + " " + teamUnit);
+
+            if (unit != null)
+                print($"{unit.gameObject.name}  {unit.TeamUnit != teamUnit}  {unit.Fighter.IsDead == false}   teamUnit {teamUnit} unit.TeamUnit {unit.TeamUnit}");
 
             if (unit != null && unit.TeamUnit != teamUnit && unit.Fighter.IsDead == false)
-            {                
-                cells[i].CurrentUnit.Fighter.TakeDamage(_damage);
+            {
+                unit.Fighter.TakeDamage(_damage);
                 return true;
             }
         }

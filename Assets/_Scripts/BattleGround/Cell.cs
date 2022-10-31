@@ -67,30 +67,32 @@ public class Cell : MonoBehaviour
     public List<Cell> GetForwardsCell(int countForward)
     {
         List<Cell> cells = new List<Cell>();
-        Cell currentCell = _top;
+        Cell currentCell = this;
 
         for (int i = 0; i < countForward; i++)
         {
-            cells.Add(currentCell.Top);
-            currentCell = currentCell.Top;
+            if (currentCell != null)
+            {
+                cells.Add(currentCell.Top);
+                currentCell = currentCell.Top != null ? currentCell.Top : null;
+            }
         }
-        print(cells.Count + " Count Cell Forward " + countForward);
         return cells;
     }
 
     public List<Cell> GetBottomCell(int countForward)
     {
         List<Cell> cells = new List<Cell>();
-        Cell currentCell = _bot;
+        Cell currentCell = this;
 
         for (int i = 0; i < countForward; i++)
         {
             if (currentCell != null)
+            {
                 cells.Add(currentCell.Bot);
-
-            currentCell = currentCell.Bot != null ? currentCell.Bot : null;
+                currentCell = currentCell.Bot != null ? currentCell.Bot : null;
+            }
         }
-        print(cells.Count + " Count Cell Bot " + countForward);
         return cells;
     }
 }
