@@ -11,7 +11,8 @@ public class FightSystem : MonoBehaviour
     [SerializeField] private UnitSpawner[] _spawners;
     [SerializeField] private float _delayBeetwenStep;
 
-    private List<UnitStep> _unitsSpawned = new List<UnitStep>();
+    private List<UnitStep> _unitFriend = new List<UnitStep>();
+    private List<UnitStep> _unitEnemy = new List<UnitStep>();
 
     public event Action StepFinished;
 
@@ -38,20 +39,28 @@ public class FightSystem : MonoBehaviour
 
     private void StartUnitsDoStep()
     {
+<<<<<<< Updated upstream
         StartCoroutine(UnitsDoStep());
+=======
+        if (_unitFriend.Count > 0)
+        {
+            StartCoroutine(UnitsDoStep());
+            StepStarted?.Invoke();
+        }
+>>>>>>> Stashed changes
     }
 
     private IEnumerator UnitsDoStep()
     {
         while (CheckHaveStep())
         {
-            foreach (var item in _unitsSpawned)
+            foreach (var item in _unitFriend)
                 if (item.TeamUnit == TeamUnit.Friend)
                     item.DoStep();
 
             yield return new WaitForSeconds(_delayBeetwenStep);
 
-            foreach (var item in _unitsSpawned)
+            foreach (var item in _unitEnemy)
                 if (item.TeamUnit == TeamUnit.Enemy)
                     item.DoStep();
 
@@ -60,32 +69,49 @@ public class FightSystem : MonoBehaviour
 
         StepFinished?.Invoke();
 
-        foreach (var item in _unitsSpawned)
+        foreach (var item in _unitFriend)
             item.UpdateStep();
     }
 
     private void AddUnit(UnitStep unit)
     {
-        if (_unitsSpawned.Contains(unit) == false)
+        if (_unitFriend.Contains(unit) == false && unit.TeamUnit == TeamUnit.Friend)
         {
-            _unitsSpawned.Add(unit);
+            _unitFriend.Add(unit);
+            unit.Fighter.Died += RemoveUnit;
+        }
+        else if (_unitEnemy.Contains(unit) == false && unit.TeamUnit == TeamUnit.Enemy)
+        {
+            _unitEnemy.Add(unit);
             unit.Fighter.Died += RemoveUnit;
         }
     }
 
     private void RemoveUnit(Fighter fighter)
     {
-        if (_unitsSpawned.Contains(fighter.GetComponent<UnitStep>()) == true)
-            _unitsSpawned.Remove(fighter.GetComponent<UnitStep>());
+        fighter.TryGetComponent(out UnitStep unitStep);
+
+        if (_unitFriend.Contains(unitStep) == true)
+        {
+            unitStep.Fighter.Died -= RemoveUnit;
+            _unitFriend.Remove(unitStep);
+        }
+        else if (_unitEnemy.Contains(unitStep) == true)
+        {
+            unitStep.Fighter.Died -= RemoveUnit;
+            _unitEnemy.Remove(unitStep);
+        }
     }
 
     private bool CheckHaveStep()
     {
-        foreach (var item in _unitsSpawned)
-        {
+        foreach (var item in _unitFriend)
             if (item.CurrentStep > 0)
                 return true;
-        }
+
+        foreach (var item in _unitEnemy)
+            if (item.CurrentStep > 0)
+                return true;
 
         return false;
     }

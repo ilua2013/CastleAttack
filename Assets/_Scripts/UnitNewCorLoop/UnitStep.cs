@@ -14,7 +14,11 @@ public class UnitStep : MonoBehaviour
     private Fighter _fighter;
     private Card _card;
     private int _currentStep;
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
     public Fighter Fighter => _fighter;
     public MoverOnCell Mover => _mover;
     public Card Card => _card;
@@ -30,6 +34,16 @@ public class UnitStep : MonoBehaviour
         _mover = GetComponent<MoverOnCell>();
         _fighter = GetComponent<Fighter>();
         _currentStep = _maxStep;
+    }
+
+    private void OnEnable()
+    {
+        _fighter.Died += OnDie;
+    }
+
+    private void OnDisable()
+    {
+        _fighter.Died += OnDie;
     }
 
     public void Init(Card card, Cell currentCell, TeamUnit teamUnit)
@@ -50,12 +64,15 @@ public class UnitStep : MonoBehaviour
         if (_fighter.TryAttack(_team))
         {
             Attacked?.Invoke();
-            return;
         }
-        else
+        else if(_mover.CanMove(_team))
         {
             Moved?.Invoke();
             _mover.Move(_team);            
+        }
+        else
+        {
+            _currentStep++;
         }
 
         _currentStep--;
@@ -64,6 +81,11 @@ public class UnitStep : MonoBehaviour
     public void UpdateStep()
     {
         _currentStep = _maxStep;
+    }
+
+    private void OnDie(Fighter fighter = null)
+    {
+        _mover.Die();
     }
 }
 

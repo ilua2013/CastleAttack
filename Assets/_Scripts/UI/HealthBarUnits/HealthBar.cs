@@ -39,8 +39,14 @@ public class HealthBar : MonoBehaviour
 
     private void OnRecovery(IDamageable monstr, int amount)
     {
+<<<<<<< Updated upstream
         float remain = (float)monstr.Health / monstr.MaxHealth;
         StartCoroutine(LerpValue(remain, 1f));
+=======
+        float remain = (float)_fighter.Health / _fighter.MaxHealth;
+
+        StartCoroutine(LerpValue(remain, 5f));
+>>>>>>> Stashed changes
     }
 
     private IEnumerator LerpValue(float to, float time)

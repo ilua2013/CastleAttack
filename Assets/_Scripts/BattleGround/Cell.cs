@@ -77,6 +77,22 @@ public class Cell : MonoBehaviour
         print(cells.Count + " Count Cell Forward " + countForward);
         return cells;
     }
+
+    public List<Cell> GetBottomCell(int countForward)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell currentCell = _bot;
+
+        for (int i = 0; i < countForward; i++)
+        {
+            if (currentCell != null)
+                cells.Add(currentCell.Bot);
+
+            currentCell = currentCell.Bot != null ? currentCell.Bot : null;
+        }
+        print(cells.Count + " Count Cell Bot " + countForward);
+        return cells;
+    }
 }
 
 public enum CellIs
