@@ -6,25 +6,47 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Fighter _fighter;
+    [SerializeField] private MonoBehaviour _unitDamageable;
     [SerializeField] private Slider _bar;
+
+    private IDamageable _damageable;
+
+    private void Awake()
+    {
+        if (_unitDamageable is IDamageable)
+            _damageable = _unitDamageable as IDamageable;
+        else
+            _unitDamageable = null;
+    }
 
     private void OnEnable()
     {
-        _fighter.Damaged += OnHealthChanged;
-        _fighter.Healed += OnHealthChanged;
+        _damageable.Damaged += OnTakeDamage;
+        _damageable.Healed += OnRecovery;
     }
 
     private void OnDisable()
     {
-        _fighter.Damaged -= OnHealthChanged;
-        _fighter.Healed -= OnHealthChanged;
+        _damageable.Damaged -= OnTakeDamage;
+        _damageable.Healed -= OnRecovery;
     }
 
-    private void OnHealthChanged(int amount)
+    private void OnTakeDamage(IDamageable monstr, int damage)
     {
-        float remain = _fighter.Health / _fighter.MaxHealth;
+        float remain = (float)monstr.Health / monstr.MaxHealth;
         StartCoroutine(LerpValue(remain, 1f));
+    }
+
+    private void OnRecovery(IDamageable monstr, int amount)
+    {
+<<<<<<< Updated upstream
+        float remain = (float)monstr.Health / monstr.MaxHealth;
+        StartCoroutine(LerpValue(remain, 1f));
+=======
+        float remain = (float)_fighter.Health / _fighter.MaxHealth;
+
+        StartCoroutine(LerpValue(remain, 5f));
+>>>>>>> Stashed changes
     }
 
     private IEnumerator LerpValue(float to, float time)

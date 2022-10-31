@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class MoverOnCell : MonoBehaviour
 {
+    [SerializeField] private Cell _initCell;
     [SerializeField] private float _speed;
 
     private Cell _currentCell;
 
     public Cell CurrentCell => _currentCell;
 
+    private void Awake()
+    {
+        if (_initCell != null)
+            _currentCell = _initCell;
+    }
+
     public void SetCurrentCell(Cell cell)
     {
         _currentCell = cell;
+        _currentCell.StateUnitOnCell(GetComponent<UnitStep>());
     }
 
     public void Move(TeamUnit teamUnit)
@@ -28,6 +36,20 @@ public class MoverOnCell : MonoBehaviour
 
         _currentCell.SetFree();
         _currentCell = target;
+        _currentCell.StateUnitOnCell(GetComponent<UnitStep>());
+    }
+
+    public bool CanMove(TeamUnit teamUnit)
+    {
+        if (teamUnit == TeamUnit.Friend)
+            return _currentCell.Top.IsFree;
+        else
+            return _currentCell.Bot.IsFree;
+    }
+
+    public void Die()
+    {
+        _currentCell.SetFree();
     }
 
     private IEnumerator MoveTo(Transform target)

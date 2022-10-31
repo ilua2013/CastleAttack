@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 5369835969886056517}
   - component: {fileID: 5701522734012855980}
   - component: {fileID: 1596687216599000648}
-  - component: {fileID: 109085980406422160}
-  - component: {fileID: 3653883403159573783}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -105,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc593f50fa377714b9ecc2340b3ee122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initCell: {fileID: 0}
   _speed: 5
 --- !u!114 &5701522734012855980
 MonoBehaviour:
@@ -119,8 +118,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distanceAttack: 2
+<<<<<<< Updated upstream
   _damage: 3
-  _maxHealth: 0
+  _health: 5
+=======
+  _damage: 1
+  _maxHealth: 5
+>>>>>>> Stashed changes
 --- !u!114 &1596687216599000648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,42 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e31912512ef37f48b95a7b31b0dddfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 0
   _maxStep: 3
---- !u!114 &109085980406422160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1710454381889582042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32660107c55f7446ad21950f5917b3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 3653883403159573783}
-  _unitStep: {fileID: 1596687216599000648}
---- !u!95 &3653883403159573783
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1710454381889582042}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4a3e8d3db86d42f4eae1d2df27eb383a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5eeb1d4e1d8820f4fbfbbd9d090400b0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fighter: {fileID: 5701522734012855980}
+  _unitDamageable: {fileID: 0}
   _bar: {fileID: 4581620883515003956}
 --- !u!1 &8814044131612141863
 GameObject:

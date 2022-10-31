@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc593f50fa377714b9ecc2340b3ee122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initCell: {fileID: 0}
   _speed: 5
 --- !u!114 &6265881899677326290
 MonoBehaviour:
@@ -117,8 +118,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distanceAttack: 1
+<<<<<<< Updated upstream
   _damage: 5
-  _maxHealth: 0
+  _health: 20
+=======
+  _damage: 2
+  _maxHealth: 5
+>>>>>>> Stashed changes
 --- !u!114 &9173333324988753516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e31912512ef37f48b95a7b31b0dddfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 0
   _maxStep: 3
 --- !u!1 &1710454382197722558
 GameObject:
@@ -502,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fighter: {fileID: 6265881899677326290}
+  _unitDamageable: {fileID: 0}
   _bar: {fileID: 4581620883515003956}
 --- !u!1 &8814044131612141863
 GameObject:
