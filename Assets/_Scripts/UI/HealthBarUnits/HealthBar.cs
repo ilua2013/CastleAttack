@@ -6,47 +6,25 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Fighter _unitDamageable;
+    [SerializeField] private Fighter _fighter;
     [SerializeField] private Slider _bar;
-
-    //private IDamageable _damageable;
-
-    public void Init(Fighter unitHealt)
-    {
-        _unitDamageable = unitHealt;
-    }
-
-    //private void Awake()
-    //{
-    //    if (_unitDamageable is IDamageable)
-    //        _damageable = _unitDamageable as IDamageable;
-    //    else
-    //        _unitDamageable = null;
-    //}
 
     private void OnEnable()
     {
-        _unitDamageable.Damaged += OnTakeDamage;
-        //_damageable.Healed += OnRecovery;
+        _fighter.Damaged += OnHealthChanged;
+        _fighter.Healed += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _unitDamageable.Damaged -= OnTakeDamage;
-        //_damageable.Healed -= OnRecovery;
+        _fighter.Damaged -= OnHealthChanged;
+        _fighter.Healed -= OnHealthChanged;
     }
 
-    private void OnTakeDamage(int healt)
+    private void OnHealthChanged(int amount)
     {
-        
-        StartCoroutine(LerpValue(healt, 1f));
+        StartCoroutine(LerpValue(amount, 1f));
     }
-
-    //private void OnRecovery( int healt)
-    //{
-        
-    //    StartCoroutine(LerpValue(remain, 1f));
-    //}
 
     private IEnumerator LerpValue(float to, float time)
     {

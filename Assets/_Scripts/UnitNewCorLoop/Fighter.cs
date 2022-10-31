@@ -7,19 +7,23 @@ public class Fighter : MonoBehaviour
 {
     [SerializeField] private int _distanceAttack;
     [SerializeField] private int _damage;
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
 
+    private int _health;
     private MoverOnCell _mover;
 
+    public int MaxHealth => _maxHealth;
     public int Damage => _damage;
-    public int Healt => _health;
+    public int Health => _health;
 
     public event Action<Fighter> Died;
     public event Action<int> Damaged;
+    public event Action<int> Healed;
 
     private void Awake()
     {
         _mover = GetComponent<MoverOnCell>();
+        _health = _maxHealth;
     }
 
     public bool TryAttack(TeamUnit teamUnit)
@@ -40,8 +44,10 @@ public class Fighter : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        _health = _health - damage >= 0 ? -damage : 0;
+        _health = Math.Clamp(_health - damage, 0, _maxHealth);
+
         Damaged?.Invoke(_health);
+
         if (_health == 0)
             Die();
     }
