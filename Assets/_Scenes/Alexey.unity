@@ -187,25 +187,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonStartFight: {fileID: 689178742}
-  _mobs1:
-  - {fileID: 0}
-  _tower1:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _mobs2:
-  - {fileID: 0}
-  _tower2:
-  - {fileID: 0}
-  - {fileID: 0}
-  _mobs3:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _tower3: []
+  _building: []
+  _castleDoor: {fileID: 0}
+  _boss: {fileID: 0}
 --- !u!114 &49440051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023497}
   _speed: 0
+  _canMove: 1
 --- !u!54 &109311063
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -602,6 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023302}
   _speed: 0
+  _canMove: 1
 --- !u!54 &169935878
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -721,43 +707,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 5.7312
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 5.7312
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 5.7312
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.13
+      value: -13.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.8
+      value: 22.67
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.8080227
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.58915144
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -765,7 +751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 72.194
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe82d33a5b8522f478876b5f0bfc439c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -885,6 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023298}
   _speed: 0
+  _canMove: 1
 --- !u!54 &220455909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -995,6 +982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023299}
   _speed: 0
+  _canMove: 1
 --- !u!54 &225531858
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1752,6 +1740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023305}
   _speed: 0
+  _canMove: 1
 --- !u!54 &362954843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1862,6 +1851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023300}
   _speed: 0
+  _canMove: 1
 --- !u!54 &369196595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2047,6 +2037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023502}
   _speed: 0
+  _canMove: 1
 --- !u!54 &420466682
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2219,6 +2210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023504}
   _speed: 0
+  _canMove: 1
 --- !u!54 &484822211
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2557,6 +2549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023503}
   _speed: 0
+  _canMove: 1
 --- !u!54 &655054709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3172,6 +3165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023301}
   _speed: 0
+  _canMove: 1
 --- !u!54 &774984073
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3424,14 +3418,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833262842}
-  m_LocalRotation: {x: 0.56066275, y: -0, z: -0, w: 0.82804424}
-  m_LocalPosition: {x: 6.4, y: 37, z: 21}
+  m_LocalRotation: {x: 0.43786046, y: -0, z: -0, w: 0.89904296}
+  m_LocalPosition: {x: 6.4, y: 36.6, z: 1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 68.203, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 51.935, y: 0, z: 0}
 --- !u!1 &840039782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,6 +3477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023498}
   _speed: 0
+  _canMove: 1
 --- !u!54 &840039785
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3682,26 +3677,6 @@ MonoBehaviour:
   - {fileID: 2046686390}
   - {fileID: 2103638785}
   - {fileID: 2143149399}
-  _enemyInScene:
-  - {fileID: 109311061}
-  - {fileID: 420466685}
-  - {fileID: 484822214}
-  - {fileID: 655054712}
-  - {fileID: 840039788}
-  - {fileID: 1140570010}
-  - {fileID: 1718303678}
-  - {fileID: 1836706581}
-  - {fileID: 2074205210}
-  _wallFriedlyInScene:
-  - {fileID: 362954841}
-  - {fileID: 2140722231}
-  - {fileID: 169935876}
-  - {fileID: 1250419671}
-  - {fileID: 774984071}
-  - {fileID: 369196593}
-  - {fileID: 225531856}
-  - {fileID: 220455907}
-  - {fileID: 1948706135}
 --- !u!4 &849836882
 Transform:
   m_ObjectHideFlags: 0
@@ -4365,6 +4340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023501}
   _speed: 0
+  _canMove: 1
 --- !u!54 &1140570007
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4647,6 +4623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023304}
   _speed: 0
+  _canMove: 1
 --- !u!54 &1250419673
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5313,11 +5290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8867997677016019796, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
       propertyPath: _amount
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8867997678207057129, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
       propertyPath: _amount
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
@@ -5701,6 +5678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023318}
   _speed: 0
+  _canMove: 1
 --- !u!54 &1718303675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5903,6 +5881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023499}
   _speed: 0
+  _canMove: 1
 --- !u!54 &1836706578
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11215,6 +11194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023297}
   _speed: 0
+  _canMove: 1
 --- !u!54 &1948706134
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11580,6 +11560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023500}
   _speed: 0
+  _canMove: 1
 --- !u!54 &2074205207
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11839,6 +11820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initCell: {fileID: 1876023301}
   _speed: 0
+  _canMove: 1
 --- !u!54 &2140722233
 Rigidbody:
   m_ObjectHideFlags: 0
