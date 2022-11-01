@@ -6,6 +6,7 @@ public class MoverOnCell : MonoBehaviour
 {
     [SerializeField] private Cell _initCell;
     [SerializeField] private float _speed;
+    [SerializeField] private bool _canMove = true;
 
     protected Cell _currentCell;
 
@@ -23,8 +24,11 @@ public class MoverOnCell : MonoBehaviour
         _currentCell.StateUnitOnCell(GetComponent<UnitStep>());
     }
 
-    public virtual void Move(TeamUnit teamUnit)
+    public void Move(TeamUnit teamUnit)
     {
+        if (_canMove == false)
+            return;
+
         Cell target;
 
         if (teamUnit == TeamUnit.Friend)
@@ -41,6 +45,9 @@ public class MoverOnCell : MonoBehaviour
 
     public bool CanMove(TeamUnit teamUnit)
     {
+        if (_canMove == false)
+            return true;
+
         if (teamUnit == TeamUnit.Friend)
             return _currentCell.Top.IsFree;
         else

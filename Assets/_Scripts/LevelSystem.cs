@@ -8,14 +8,11 @@ public class LevelSystem : MonoBehaviour
 {
     [SerializeField] private Button _buttonStartFight;
     [Header("Wave 1")]
-    [SerializeField] private List<Mob> _mobs1;
-    [SerializeField] private List<Tower> _tower1;
+    [SerializeField] private List<UnitStep> _building;
     [Header("Wave 2")]
-    [SerializeField] private List<Mob> _mobs2;
-    [SerializeField] private List<Tower> _tower2;
+    [SerializeField] private UnitStep _castleDoor;
     [Header("Wave 3")]
-    [SerializeField] private List<Mob> _mobs3;
-    [SerializeField] private List<Tower> _tower3;
+    [SerializeField] private UnitStep _boss;
 
     private Wave _currentWave;
 
@@ -28,7 +25,14 @@ public class LevelSystem : MonoBehaviour
 
     private void OnValidate()
     {
+        var build = FindObjectsOfType<UnitStep>();
+        _building.Clear();
 
+        foreach (var item in build)
+        {
+            if (item.Fighter.FighterType == FighterType.Build)
+                _building.Add(item);
+        }
     }
 
     private void Awake()
@@ -39,9 +43,9 @@ public class LevelSystem : MonoBehaviour
     private void OnEnable()
     {
         _buttonStartFight.onClick.AddListener(StartFight);
-        RegisterDie(_mobs1, _tower1);
-        RegisterDie(_mobs2, _tower2);
-        RegisterDie(_mobs3, _tower3);
+        RegisterDie(_building);
+        RegisterDie(_castleDoor);
+        RegisterDie(_boss);
     }
 
     private void OnDisable()
@@ -54,20 +58,20 @@ public class LevelSystem : MonoBehaviour
         ClickedStartFight?.Invoke();
     }
 
-    private void RemoveDiedUnit(IMob mob)
+    private void RemoveDiedUnit(Fighter fighter)
     {
         switch (_currentWave)
         {
             case Wave.One:
-                RemoveUnit(_mobs1, _tower1, mob);
+                RemoveUnit(_building, fighter.GetComponent<UnitStep>());
                 break;
 
             case Wave.Two:
-                RemoveUnit(_mobs2, _tower2, mob);
+                RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
 
             case Wave.Three:
-                RemoveUnit(_mobs3, _tower3, mob);
+                RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
         }
 
@@ -79,7 +83,7 @@ public class LevelSystem : MonoBehaviour
         switch (_currentWave)
         {
             case Wave.One:
-                if(_mobs1.Count == 0 && _tower1.Count == 0)
+                if(_building.Count == 0)
                 {
                     _currentWave++;
                     Wave1Finished?.Invoke();
@@ -88,7 +92,7 @@ public class LevelSystem : MonoBehaviour
                 break;
 
             case Wave.Two:
-                if (_mobs2.Count == 0 && _tower2.Count == 0)
+                if (_castleDoor.Fighter.IsDead == true)
                 {
                     _currentWave++;
                     Wave2Finished?.Invoke();
@@ -97,7 +101,7 @@ public class LevelSystem : MonoBehaviour
                 break;
 
             case Wave.Three:
-                if (_mobs3.Count == 0 && _tower3.Count == 0)
+                if (_boss.Fighter.IsDead == true)
                 {
                     Wave3Finished?.Invoke();
                     Debug.Log("Finished 3");
@@ -106,35 +110,29 @@ public class LevelSystem : MonoBehaviour
         }
     }
 
-    private void RemoveUnit(List<Mob> mobs, List<Tower> towers, IMob mob)
+    private void RemoveUnit(List<UnitStep> units, UnitStep unitStep)
     {
-        for (int i = 0; i < mobs.Count; i++)
+        if (units.Contains(unitStep))
         {
-            if (mobs[i] is IMob imob && imob == mob)
-            {
-                print("mob is mob");
-                mobs[i].Deaded -= RemoveDiedUnit;
-                mobs.RemoveAt(i);
-            }
-        }
-
-        for (int i = 0; i < towers.Count; i++)
-        {
-            if (towers[i] is IMob imob && imob == mob)
-            {
-                towers[i].Deaded -= RemoveDiedUnit;
-                towers.RemoveAt(i);
-            }
+            units.Remove(unitStep);
+            unitStep.Fighter.Died -= RemoveDiedUnit;
         }
     }
 
-    private void RegisterDie(List<Mob> mobs, List<Tower> towers)
+    private void RemoveUnit(UnitStep unitStep)
     {
-        foreach (var mob in mobs)
-            mob.Deaded += RemoveDiedUnit;
+        unitStep.Fighter.Died -= RemoveDiedUnit;
+    }
 
-        foreach (var tower in towers)
-            tower.Deaded += RemoveDiedUnit;
+    private void RegisterDie(List<UnitStep> units)
+    {
+        foreach (var mob in units)
+            mob.Fighter.Died += RemoveDiedUnit;
+    }
+
+    private void RegisterDie(UnitStep unitStep)
+    {
+        unitStep.Fighter.Died += RemoveDiedUnit;
     }
 }
 
