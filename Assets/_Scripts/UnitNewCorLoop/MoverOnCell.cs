@@ -7,7 +7,7 @@ public class MoverOnCell : MonoBehaviour
     [SerializeField] private Cell _initCell;
     [SerializeField] private float _speed;
 
-    private Cell _currentCell;
+    protected Cell _currentCell;
 
     public Cell CurrentCell => _currentCell;
 
@@ -23,7 +23,7 @@ public class MoverOnCell : MonoBehaviour
         _currentCell.StateUnitOnCell(GetComponent<UnitStep>());
     }
 
-    public void Move(TeamUnit teamUnit)
+    public virtual void Move(TeamUnit teamUnit)
     {
         Cell target;
 

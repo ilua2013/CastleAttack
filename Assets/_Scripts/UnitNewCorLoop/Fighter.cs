@@ -58,7 +58,7 @@ public class Fighter : MonoBehaviour
     {
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
 
-        Damaged?.Invoke(_health);
+        Damaged?.Invoke(damage);
 
         if (_health == 0)
             Die();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(MoverOnCell))]
+//[RequireComponent(typeof(MoverOnCell))]
 [RequireComponent(typeof(Fighter))]
 public class UnitStep : MonoBehaviour
 {

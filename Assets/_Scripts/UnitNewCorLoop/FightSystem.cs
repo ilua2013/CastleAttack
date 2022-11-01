@@ -11,6 +11,7 @@ public class FightSystem : MonoBehaviour
     [SerializeField] private float _delayBeetwenStep;
     [SerializeField] private UnitSpawner[] _spawners;
     [SerializeField] private UnitStep[] _enemyInScene;
+    [SerializeField] private UnitStep[] _wallFriedlyInScene;
 
     private List<UnitStep> _unitFriend = new List<UnitStep>();
     private List<UnitStep> _unitEnemy = new List<UnitStep>();
@@ -36,6 +37,9 @@ public class FightSystem : MonoBehaviour
     {
         foreach (var item in _enemyInScene)
             AddUnit(item);
+        foreach (var item in _wallFriedlyInScene)
+            AddUnit(item);
+
     }
 
     private void OnEnable()
