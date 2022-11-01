@@ -9,8 +9,18 @@ public class CardsMover : MonoBehaviour
     [SerializeField] private List<Card> _cards;
     [SerializeField] private Transform _draggingParent;
 
+    private List<Card> _cardsInHand;
+
     public event Action CardTaken;
     public event Action CardDrop;
+
+    public IEnumerable<Card> CardsInHand => _cardsInHand;
+    public int CardsCount => _cardsInHand.Count;
+
+    private void Awake()
+    {
+        _cardsInHand = _cards;
+    }
 
     private void OnEnable()
     {
@@ -47,6 +57,7 @@ public class CardsMover : MonoBehaviour
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
         card.transform.SetParent(_draggingParent);
+        _cardsInHand.Remove(card);
 
         CardTaken?.Invoke();
     }
@@ -56,7 +67,10 @@ public class CardsMover : MonoBehaviour
         bool result = TryApply(card, eventData.position);
 
         if (result == false)
+        {
+            _cardsInHand.Add(card);
             card.transform.SetParent(transform);
+        }
 
         CardDrop?.Invoke();
     }
@@ -101,10 +115,14 @@ public class CardsMover : MonoBehaviour
             {
                 if (applicable.TryApply(card, hit.point))
                 {
-                    UnRegister(card);
+                    card.Amount--;
 
-                    card.CameBack += OnCardComeBack;
-                    card.DropOut();
+                    if (card.Amount <= 0)
+                    {
+                        UnRegister(card);
+                        card.DropOut();
+                        card.CameBack += OnCardComeBack;
+                    }
 
                     return true;
                 }
