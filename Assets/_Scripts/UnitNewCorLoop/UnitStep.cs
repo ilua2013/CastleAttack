@@ -66,8 +66,8 @@ public class UnitStep : MonoBehaviour
         }
         else if(_mover.CanMove(_team))
         {
-            Moved?.Invoke();
             _mover.Move(_team);            
+            Moved?.Invoke();
         }
         else
         {

@@ -23,6 +23,12 @@ public class Fighter : MonoBehaviour
     public event Action<int> Damaged;
     public event Action<int> Healed;
 
+    private void OnValidate()
+    {
+        if (_type == FighterType.Build)
+            _damage = 0;
+    }
+
     private void Awake()
     {
         _mover = GetComponent<MoverOnCell>();
@@ -73,5 +79,5 @@ public class Fighter : MonoBehaviour
 
 public enum FighterType
 {
-    Catapult, Archer, Warrior, Tower
+    Catapult, Archer, Warrior, Tower, Build
 }

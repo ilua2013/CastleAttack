@@ -10,11 +10,11 @@ public class FightSystem : MonoBehaviour
     [SerializeField] private Button _buttonStartFight;
     [SerializeField] private float _delayBeetwenStep;
     [SerializeField] private UnitSpawner[] _spawners;
-    [SerializeField] private UnitStep[] _enemyInScene;
-    [SerializeField] private UnitStep[] _wallFriedlyInScene;
 
     private List<UnitStep> _unitFriend = new List<UnitStep>();
     private List<UnitStep> _unitEnemy = new List<UnitStep>();
+
+    public int CountEnemy => _unitEnemy.Count;
 
     public event Action StepFinished;
     public event Action StepStarted;
@@ -22,24 +22,6 @@ public class FightSystem : MonoBehaviour
     private void OnValidate()
     {
         _spawners = FindObjectsOfType<UnitSpawner>();
-
-        var enemys = FindObjectsOfType<UnitStep>();
-        List<UnitStep> listEnemy = new List<UnitStep>();
-
-        foreach (var item in enemys)
-            if(item.TeamUnit == TeamUnit.Enemy)
-                listEnemy.Add(item);
-
-        _enemyInScene = listEnemy.ToArray();
-    }
-
-    private void Awake()
-    {
-        foreach (var item in _enemyInScene)
-            AddUnit(item);
-        foreach (var item in _wallFriedlyInScene)
-            AddUnit(item);
-
     }
 
     private void OnEnable()
