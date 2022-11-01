@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class CardsMover : MonoBehaviour
 {
-    [SerializeField] private List<Card> _cards;
     [SerializeField] private Transform _draggingParent;
 
+    private List<Card> _cards;
     private List<Card> _cardsInHand;
 
     public event Action CardTaken;
@@ -19,6 +19,11 @@ public class CardsMover : MonoBehaviour
 
     private void Awake()
     {
+        _cards = new List<Card>();
+
+        foreach (Card card in GetComponentsInChildren<Card>())
+            _cards.Add(card);
+
         _cardsInHand = _cards;
     }
 

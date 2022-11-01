@@ -63,7 +63,7 @@ public class CardsHandView : MonoBehaviour
                 lerpPosition = lerpPosition  + Vector3.down * _offsetY * number;
 
             card.transform.rotation = rotation;
-            card.LerpPosition(lerpPosition, 15f, () => card.InitPosition(lerpPosition));
+            card.LerpPosition(lerpPosition, 10f, () => card.InitPosition(lerpPosition));
 
             number++;
         }
