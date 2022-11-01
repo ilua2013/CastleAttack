@@ -67,9 +67,11 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public void TryApplyEnemy(UnitStep unitStep)
     {
-        UnitStep unit = Instantiate(unitStep, SpawnPoint.position, Quaternion.identity);
+        UnitStep unit = Instantiate(unitStep, SpawnPoint.position, Quaternion.AngleAxis(180, Vector3.up));
+
         unit.Init(unitStep.Card, GetComponent<Cell>(), TeamUnit.Enemy);
         unit.Fighter.Died += OnEnemyUnitDead;
+
         _enemyUnits.Add(unit);
         SpawnedUnit?.Invoke(unit);      
     }
