@@ -115,13 +115,18 @@ public class CardsMover : MonoBehaviour
             {
                 if (applicable.TryApply(card, hit.point))
                 {
-                    card.Amount--;
+                    card.UseOne();
 
                     if (card.Amount <= 0)
                     {
                         UnRegister(card);
                         card.DropOut();
                         card.CameBack += OnCardComeBack;
+                    }
+                    else
+                    {
+                        _cardsInHand.Add(card);
+                        card.transform.SetParent(transform);
                     }
 
                     return true;

@@ -19,7 +19,7 @@ public class CardsHandView : MonoBehaviour
         _offsetYLeft = -_offsetY;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         _cardsMover.CardTaken += Shuffling;
         _cardsMover.CardDrop += Shuffling;
@@ -29,6 +29,8 @@ public class CardsHandView : MonoBehaviour
             card.Enter += OnCardSelect;
             card.Exit += OnCardDeselect;
         }
+
+        Shuffling();
     }
 
     private void OnDisable()
@@ -41,11 +43,6 @@ public class CardsHandView : MonoBehaviour
             card.Enter -= OnCardSelect;
             card.Exit -= OnCardDeselect;
         }
-    }
-
-    private void Start()
-    {
-        Shuffling();
     }
 
     private void Shuffling()

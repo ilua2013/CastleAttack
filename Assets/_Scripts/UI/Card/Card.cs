@@ -15,24 +15,26 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public Vector3 InitialPosition => _initialPosition;
     public bool IsDragging => _isDragging;
 
-    public int Amount { get; set; }
+    public int Amount => _amount;
 
     public event Action<PointerEventData, Card> Drag;
     public event Action<PointerEventData, Card> BeginDrag;
     public event Action<PointerEventData, Card> EndDrag;
     public event Action<PointerEventData, Card> Enter;
     public event Action<PointerEventData, Card> Exit;
+    public event Action<int> Used;
     public event Action<Card> CameBack;
-
-    private void Awake()
-    {
-        Amount = _amount;
-    }
 
     public void InitPosition(Vector3 pos)
     {
         _initialPosition = pos;
         _isDragging = false;
+    }
+
+    public void UseOne()
+    {
+        _amount--;
+        Used?.Invoke(_amount);
     }
 
     public void DropOut()

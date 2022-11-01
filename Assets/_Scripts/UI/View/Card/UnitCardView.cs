@@ -3,22 +3,43 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(Card))]
 public class UnitCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private UnitStep _description;
+    [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private Fighter _fighter;
+
+    private Card _card;
+
+    private void Awake()
+    {
+        _card = GetComponent<Card>();
+    }
 
     private void OnEnable()
     {
-        _description.Inited += WriteText;
+        _card.Used += OnCardUse;
     }
+
     private void OnDisable()
     {
-        _description.Inited -= WriteText;
+        _card.Used -= OnCardUse;
+    }
+
+    private void Start()
+    {
+        WriteText();
+    }
+
+    private void OnCardUse(int amount)
+    {
+        WriteText();
     }
 
     private void WriteText()
     {
-        _text.text = $"{_description.Fighter.Damage} {_text.text}"; // Требует корректировки
+        _text.text = $"{_fighter.Damage} {_text.text}"; // Требует корректировки
+        _amountText.text = $"{_card.Amount}";
     }
 }
