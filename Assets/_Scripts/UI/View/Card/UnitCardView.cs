@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class OgreCardView : MonoBehaviour
+public class UnitCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private UnitStep _description;
