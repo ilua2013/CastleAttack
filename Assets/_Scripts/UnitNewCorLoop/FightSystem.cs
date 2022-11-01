@@ -25,12 +25,21 @@ public class FightSystem : MonoBehaviour
 
         var enemys = FindObjectsOfType<UnitStep>();
         List<UnitStep> listEnemy = new List<UnitStep>();
+        List<UnitStep> listFriend = new List<UnitStep>();
 
         foreach (var item in enemys)
-            if(item.TeamUnit == TeamUnit.Enemy)
+            if (item.TeamUnit == TeamUnit.Enemy)
                 listEnemy.Add(item);
 
         _enemyInScene = listEnemy.ToArray();
+
+        foreach (var item in enemys)
+            if (item.TeamUnit == TeamUnit.Friend)
+                listFriend.Add(item);
+
+        _wallFriedlyInScene = listFriend.ToArray();
+
+
     }
 
     private void Awake()

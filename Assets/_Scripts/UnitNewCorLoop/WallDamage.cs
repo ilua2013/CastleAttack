@@ -10,6 +10,8 @@ public class WallDamage : MonoBehaviour
 
     private int _health;
 
+    public event Action StopedGame;
+
     private void Awake()
     {
         _health = _maxHealth;
@@ -35,5 +37,9 @@ public class WallDamage : MonoBehaviour
     {
         Debug.Log(damage);
         _health = _health-damage;
+        if (_health < 0)
+        {
+            StopedGame?.Invoke();
+        }
     }
 }
