@@ -31,6 +31,7 @@ public class UnitStep : MonoBehaviour
         _mover = GetComponent<MoverOnCell>();
         _fighter = GetComponent<Fighter>();
         _currentStep = _maxStep;
+        Inited?.Invoke();
     }
 
     private void OnEnable()
@@ -48,8 +49,6 @@ public class UnitStep : MonoBehaviour
         _card = card;
         _mover.SetCurrentCell(currentCell);
         _team = teamUnit;
-
-        Inited?.Invoke();
     }
 
     public void ReturnToHand()
