@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellCard : Card
 {
-    [SerializeField] private AoESpell _spellPrefab;
+    [SerializeField] private Spell _spellPrefab;
 
-    public AoESpell SpellPrefab => _spellPrefab;
+    public Spell SpellPrefab => _spellPrefab;
 }

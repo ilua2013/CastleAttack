@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class HealSpell : AoESpell
+public class HealSpell : Spell
 {
     [SerializeField] private int _recovery;
 

@@ -6,10 +6,37 @@ using UnityEngine;
 public class HealCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text _amountText;
     [SerializeField] private HealSpell _description;
+    
+    private Card _card;
+    private string _descriptionTextBase;
 
     private void Awake()
     {
-        _text.text = $"{_description.Recovery} {_text.text}";
+        _card = GetComponent<Card>();
+        _descriptionTextBase = _text.text;
+        WriteText();
+    }
+
+    private void OnEnable()
+    {
+        _card.Used += OnCardUse;
+    }
+
+    private void OnDisable()
+    {
+        _card.Used -= OnCardUse;
+    }
+
+    private void OnCardUse(int amount)
+    {
+        WriteText();
+    }
+
+    private void WriteText()
+    {
+        _text.text = $"{_descriptionTextBase} {_description.Recovery}";
+        _amountText.text = $"{_card.Amount}";
     }
 }

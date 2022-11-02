@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class MeteorSpell : AoESpell
+public class MeteorSpell : Spell
 {
     [SerializeField] private int _damage;
 

@@ -11,8 +11,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private Coroutine _coroutine;
     private bool _isDragging;
     private Vector3 _initialPosition;
+    private int _initialIndex;
 
     public Vector3 InitialPosition => _initialPosition;
+    public int InitialIndex => _initialIndex;
     public bool IsDragging => _isDragging;
 
     public int Amount => _amount;
@@ -25,9 +27,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<int> Used;
     public event Action<Card> CameBack;
 
-    public void InitPosition(Vector3 pos)
+    public void InitPosition(Vector3 pos, int index)
     {
         _initialPosition = pos;
+        _initialIndex = index;
         _isDragging = false;
     }
 
@@ -93,6 +96,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(Lerp(transform, _initialPosition, time));
+        transform.SetSiblingIndex(_initialIndex);
     }
 
     private IEnumerator Lerp(Transform card, Vector3 to, float time, Action onEndCallback = null)

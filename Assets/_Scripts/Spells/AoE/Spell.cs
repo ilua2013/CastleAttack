@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AoESpell : MonoBehaviour
+public abstract class Spell : MonoBehaviour
 {
     private const float Interval = 1f;
 

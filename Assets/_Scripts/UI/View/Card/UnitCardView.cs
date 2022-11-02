@@ -11,10 +11,13 @@ public class UnitCardView : MonoBehaviour
     [SerializeField] private Fighter _fighter;
 
     private Card _card;
+    private string _descriptionTextBase;
 
     private void Awake()
     {
         _card = GetComponent<Card>();
+        _descriptionTextBase = _text.text;
+        WriteText();
     }
 
     private void OnEnable()
@@ -27,11 +30,6 @@ public class UnitCardView : MonoBehaviour
         _card.Used -= OnCardUse;
     }
 
-    private void Start()
-    {
-        WriteText();
-    }
-
     private void OnCardUse(int amount)
     {
         WriteText();
@@ -39,7 +37,7 @@ public class UnitCardView : MonoBehaviour
 
     private void WriteText()
     {
-        _text.text = $"{_fighter.Damage} {_text.text}"; // Требует корректировки
+        _text.text = $"{_descriptionTextBase} {_fighter.Damage}"; // Требует корректировки
         _amountText.text = $"{_card.Amount}";
     }
 }

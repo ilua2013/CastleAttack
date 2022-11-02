@@ -8,7 +8,7 @@ public class CardsHandView : MonoBehaviour
     [SerializeField] private CardsMover _cardsMover;
 
     private const float _offsetY = -4f;
-    private const float _offsetX = 100f;
+    private const float _offsetX = 150f;
     private const float _radius = 3.89f;
     private const float _angle = 1.33f;
 
@@ -63,7 +63,7 @@ public class CardsHandView : MonoBehaviour
                 lerpPosition = lerpPosition  + Vector3.down * _offsetY * number;
 
             card.transform.rotation = rotation;
-            card.LerpPosition(lerpPosition, 10f, () => card.InitPosition(lerpPosition));
+            card.LerpPosition(lerpPosition, 10f, () => card.InitPosition(lerpPosition, card.transform.GetSiblingIndex()));
 
             number++;
         }
@@ -85,7 +85,8 @@ public class CardsHandView : MonoBehaviour
         if (card.IsDragging)
             return;
 
-        card.LerpPosition(card.InitialPosition + Vector3.up * 20f, 500f);
+        card.LerpPosition(card.InitialPosition + Vector3.up * 30f, 500f);
+        card.transform.SetSiblingIndex(_cardsMover.transform.childCount - 1);
     }
 
     private void OnCardDeselect(PointerEventData eventData, Card card)
