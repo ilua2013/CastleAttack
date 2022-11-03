@@ -46,18 +46,30 @@ public class Fighter : MonoBehaviour
 
         for (int i = 0; i < cells.Count; i++)
         {
-            UnitStep unit = cells[i].CurrentUnit;
+            UnitStep unit = null;//cells[i].CurrentUnit;
 
             if (unit != null && unit.TeamUnit != teamUnit && unit.Fighter.IsDead == false)
             {
                 int damage = (int)DamageConditions.CalculateDamage(_type, unit.Fighter.FighterType, _damage);
                 unit.Fighter.TakeDamage(damage);
 
+                if (unit.Fighter.IsDead == false && unit.Fighter.FighterType == FighterType.MainWizzard)
+                    TakeDamage(unit.Fighter.Damage);
+
+                if (unit.Fighter.IsDead == false && unit.Fighter.FighterType == FighterType.MainTarget)
+                    TakeDamage(unit.Fighter.Damage);
+
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void Die()
+    {
+        Died?.Invoke(this);
+        gameObject.SetActive(false);
     }
 
     private void TakeDamage(int damage)
@@ -69,15 +81,4 @@ public class Fighter : MonoBehaviour
         if (_health == 0)
             Die();
     }
-
-    private void Die()
-    {
-        Died?.Invoke(this);
-        gameObject.SetActive(false);
-    }
-}
-
-public enum FighterType
-{
-    Catapult, Archer, Warrior, Tower, Build
 }

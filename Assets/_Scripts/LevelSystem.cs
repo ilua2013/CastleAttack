@@ -7,11 +7,21 @@ using System;
 public class LevelSystem : MonoBehaviour
 {
     [SerializeField] private Button _buttonStartFight;
+    [SerializeField] private Button _buttonStartFight2;
+    [SerializeField] private Button _buttonStartFight3;
     [Header("Wave 1")]
-    [SerializeField] private List<UnitStep> _building;
+    [SerializeField] private FightSystem _fightSystem1;
+    [SerializeField] private EnemySpawner _enemySpawner1;
+    //private List<UnitStep> _building = new List<UnitStep>();
+
     [Header("Wave 2")]
+    [SerializeField] private FightSystem _fightSystem2;
+    [SerializeField] private EnemySpawner _enemySpawner2;
     [SerializeField] private UnitStep _castleDoor;
+
     [Header("Wave 3")]
+    [SerializeField] private FightSystem _fightSystem3;
+    [SerializeField] private EnemySpawner _enemySpawner3;
     [SerializeField] private UnitStep _boss;
 
     private Wave _currentWave;
@@ -25,32 +35,44 @@ public class LevelSystem : MonoBehaviour
 
     private void OnValidate()
     {
-        var build = FindObjectsOfType<UnitStep>();
-        _building.Clear();
+        //var build = FindObjectsOfType<UnitStep>();
+        //_building.Clear();
 
-        foreach (var item in build)
-        {
-            if (item.Fighter.FighterType == FighterType.Build)
-                _building.Add(item);
-        }
+        //foreach (var item in build)
+        //{
+        //    if (item.Fighter.FighterType == FighterType.Build)
+        //        _building.Add(item);
+        //}
     }
 
     private void Awake()
     {
         _currentWave = Wave.One;
+
+        _buttonStartFight2.gameObject.SetActive(false);
+        _buttonStartFight3.gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
         _buttonStartFight.onClick.AddListener(StartFight);
-        RegisterDie(_building);
-        RegisterDie(_castleDoor);
-        RegisterDie(_boss);
+
+        _enemySpawner1.Spawned_get += TryAddBuilding;
+
+        _enemySpawner1.Spawned_get += RegisterDie;
+        _enemySpawner2.Spawned_get += RegisterDie;
+        _enemySpawner3.Spawned_get += RegisterDie;
     }
 
     private void OnDisable()
     {
         _buttonStartFight.onClick.RemoveListener(StartFight);
+
+        _enemySpawner1.Spawned_get -= TryAddBuilding;
+
+        _enemySpawner1.Spawned_get -= RegisterDie;
+        _enemySpawner2.Spawned_get -= RegisterDie;
+        _enemySpawner3.Spawned_get -= RegisterDie;
     }
 
     private void StartFight()
@@ -58,12 +80,22 @@ public class LevelSystem : MonoBehaviour
         ClickedStartFight?.Invoke();
     }
 
+    private void TryAddBuilding(UnitStep unitStep)
+    {
+        //print(unitStep == null);
+        //if (_building.Contains(unitStep) == true || unitStep.Fighter.FighterType != FighterType.Build)
+        //    return;
+
+        //_building.Add(unitStep);
+    }
+
     private void RemoveDiedUnit(Fighter fighter)
     {
         switch (_currentWave)
         {
             case Wave.One:
-                RemoveUnit(_building, fighter.GetComponent<UnitStep>());
+                //RemoveUnit(_building, fighter.GetComponent<UnitStep>());
+                RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
 
             case Wave.Two:
@@ -83,26 +115,40 @@ public class LevelSystem : MonoBehaviour
         switch (_currentWave)
         {
             case Wave.One:
-                if(_building.Count == 0)
+                if(_fightSystem1.CountEnemy == 0 && _enemySpawner1.HaveWave == false)
                 {
                     _currentWave++;
+                    _fightSystem1.StopDoStep();
+
+                    _buttonStartFight.gameObject.SetActive(false);
+                    _buttonStartFight2.gameObject.SetActive(true);
+                    _buttonStartFight3.gameObject.SetActive(false);
+
                     Wave1Finished?.Invoke();
                     Debug.Log("Finished 1");
                 }
                 break;
 
             case Wave.Two:
-                if (_castleDoor.Fighter.IsDead == true)
+                if (_castleDoor.Fighter.IsDead == true && _enemySpawner2.HaveWave == false && _fightSystem2.CountEnemy == 0)
                 {
                     _currentWave++;
+                    _fightSystem2.StopDoStep();
+
+                    _buttonStartFight.gameObject.SetActive(false);
+                    _buttonStartFight2.gameObject.SetActive(false);
+                    _buttonStartFight3.gameObject.SetActive(true);
+
                     Wave2Finished?.Invoke();
                     Debug.Log("Finished 2");
                 }
                 break;
 
             case Wave.Three:
-                if (_boss.Fighter.IsDead == true)
+                if (_boss.Fighter.IsDead == true && _fightSystem3.CountEnemy == 0 && _enemySpawner3.HaveWave == false)
                 {
+                    _fightSystem3.StopDoStep();
+
                     Wave3Finished?.Invoke();
                     Debug.Log("Finished 3");
                 }

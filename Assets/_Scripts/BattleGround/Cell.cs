@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
 
 public class Cell : MonoBehaviour
 {
@@ -13,27 +10,15 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
 
-    private UnitStep _currentUnit;
+    private NewIUnit _currentUnit;
 
     public Cell Top => _top;
     public Cell Bot => _bot;
     public Cell Left => _left;
     public Cell Right => _right;
     public CellIs CellIs => _cellIs;
-    public UnitStep CurrentUnit => _currentUnit;
+    public NewIUnit CurrentUnit => _currentUnit;
     public bool IsFree => _currentUnit == null;
-
-    private List<UnitSpawner> _unitSpawners = new List<UnitSpawner>();
-
-    private void OnValidate()
-    {
-        _unitSpawners.Clear();
-
-        foreach (var spawner in GetComponents<UnitSpawner>())
-        {
-            _unitSpawners.Add(spawner);
-        }
-    }
 
     public void SetCell(Cell cell, CellNeighbor set)
     {
@@ -54,14 +39,25 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void StateUnitOnCell(UnitStep unit)
+    public void StateUnitOnCell(NewIUnit IUnit)
     {
-        _currentUnit = unit;
+        _currentUnit = IUnit;
     }
 
     public void SetFree()
     {
         _currentUnit = null;
+    }
+
+    public List<NewIUnit> GetUnits(List<Cell> cells)
+    {
+        List<NewIUnit> units = new List<NewIUnit>();
+
+        foreach (var item in cells)
+            if (item.IsFree == false)
+                units.Add(item.CurrentUnit);
+
+        return units;
     }
 
     public List<Cell> GetForwardsCell(int countForward)
