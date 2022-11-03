@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CardsHandView : MonoBehaviour
 {
-    private const float _offsetY = -4f;
-    private const float _offsetX = 120f;
-    private const float _radius = 3.89f;
-    private const float _angle = 1.33f;
+    private const float OffsetY = -4f;
+    private const float OffsetX = 110f;
+    private const float Radius = 3.89f;
+    private const float Angle = 1.33f;
+    private const float ScaleFactor = 1.2f;
 
     private List<CardHoverView> _cards;
 
@@ -52,7 +53,9 @@ public class CardsHandView : MonoBehaviour
 
         foreach (CardHoverView card in _cards)
         {
-            Vector3 position = CalculatePosition(transform.position, _radius, number);
+            card.ResetToStartState();
+
+            Vector3 position = CalculatePosition(transform.position, Radius, number);
             Vector3 lerpPosition = CalculatePadding(number, position);
 
             Quaternion rotation = Quaternion.FromToRotation(Vector3.down, transform.position - position);
@@ -66,12 +69,12 @@ public class CardsHandView : MonoBehaviour
 
     private Vector3 CalculatePadding(int number, Vector3 position)
     {
-        Vector3 padding = position + Vector3.right * _offsetX * number;
+        Vector3 padding = position + Vector3.right * OffsetX * number;
 
         if (number > 0)
-            padding = padding + Vector3.down * -_offsetY * number;
+            padding = padding + Vector3.down * -OffsetY * number;
         else
-            padding = padding + Vector3.down * _offsetY * number;
+            padding = padding + Vector3.down * OffsetY * number;
 
         return padding;
     }
@@ -80,8 +83,8 @@ public class CardsHandView : MonoBehaviour
     {
         Vector3 position = new();
 
-        position.x = center.x + radius * _radius * Mathf.Sin(ang * _angle * Mathf.Deg2Rad);
-        position.y = center.y + radius * _radius * Mathf.Cos(ang * _angle * Mathf.Deg2Rad);
+        position.x = center.x + radius * Radius * Mathf.Sin(ang * Angle * Mathf.Deg2Rad);
+        position.y = center.y + radius * Radius * Mathf.Cos(ang * Angle * Mathf.Deg2Rad);
         position.z = center.z;
 
         return position;
@@ -94,6 +97,7 @@ public class CardsHandView : MonoBehaviour
             Vector3 hoverPosition = card.StartPosition + Vector3.up * 30f;
 
             card.MoveTo(hoverPosition);
+            card.ScaleTo(card.StartScaling * ScaleFactor);
             card.BringForward();
         }
     }

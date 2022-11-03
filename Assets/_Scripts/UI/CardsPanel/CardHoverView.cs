@@ -9,7 +9,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private const float LerpTime = 10f;
     private const float DistanceDelta = 0.1f;
 
-    private Coroutine _coroutine;
+    private Coroutine _coroutinePosition;
+    private Coroutine _coroutineScaling;
     private Card _card;
 
     public event Action<CardHoverView> Enter;
@@ -19,12 +20,14 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public event Action<CardHoverView> Drop;
 
     public Vector3 StartPosition { get; private set; }
+    public Vector3 StartScaling { get; private set; }
     public int StartIndex { get; private set; }
     public bool CanHover { get; private set; } = true;
 
     private void Awake()
     {
         _card = GetComponent<Card>();
+        StartScaling = transform.localScale;
     }
 
     private void OnEnable()
@@ -59,19 +62,32 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ResetToStartState()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_coroutinePosition != null)
+            StopCoroutine(_coroutinePosition);
 
-        _coroutine = StartCoroutine(Lerp(StartPosition));
+        if (_coroutineScaling != null)
+            StopCoroutine(_coroutineScaling);
+
+        _coroutinePosition = StartCoroutine(LerpPosition(StartPosition));
+        _coroutineScaling = StartCoroutine(LerpScale(StartScaling));
+
         transform.SetSiblingIndex(StartIndex);
     }
 
     public void MoveTo(Vector3 position, Action onEndCallback = null)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_coroutinePosition != null)
+            StopCoroutine(_coroutinePosition);
 
-        _coroutine = StartCoroutine(Lerp(position, onEndCallback));
+        _coroutinePosition = StartCoroutine(LerpPosition(position, onEndCallback));
+    }
+
+    public void ScaleTo(Vector3 scale)
+    {
+        if (_coroutineScaling != null)
+            StopCoroutine(_coroutineScaling);
+
+        _coroutineScaling = StartCoroutine(LerpScale(scale));
     }
 
     public void BringForward()
@@ -81,8 +97,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_coroutinePosition != null)
+            StopCoroutine(_coroutinePosition);
 
         CanHover = false;
         BeginDrag?.Invoke(this);
@@ -100,7 +116,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Drop?.Invoke(this);
     }
 
-    private IEnumerator Lerp(Vector3 to, Action onEndCallback = null)
+    private IEnumerator LerpPosition(Vector3 to, Action onEndCallback = null)
     {
         onEndCallback?.Invoke();
 
@@ -111,6 +127,17 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
 
         transform.position = to;
-        _coroutine = null;
+        _coroutinePosition = null;
+    }
+
+    private IEnumerator LerpScale(Vector3 to)
+    {
+        while (Vector3.Distance(transform.position, to) > DistanceDelta)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, to, LerpTime * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = to;
     }
 }
