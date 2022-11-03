@@ -17,12 +17,12 @@ public class LevelSystem : MonoBehaviour
     [Header("Wave 2")]
     [SerializeField] private FightSystem _fightSystem2;
     [SerializeField] private EnemySpawner _enemySpawner2;
-    [SerializeField] private UnitStep _castleDoor;
+    [SerializeField] private UnitEnemy _castleDoor;
 
     [Header("Wave 3")]
     [SerializeField] private FightSystem _fightSystem3;
     [SerializeField] private EnemySpawner _enemySpawner3;
-    [SerializeField] private UnitStep _boss;
+    [SerializeField] private UnitEnemy _boss;
 
     private Wave _currentWave;
 
@@ -57,22 +57,22 @@ public class LevelSystem : MonoBehaviour
     {
         _buttonStartFight.onClick.AddListener(StartFight);
 
-        _enemySpawner1.Spawned_get += TryAddBuilding;
+        //_enemySpawner1.Spawned_get += TryAddBuilding;
 
-        _enemySpawner1.Spawned_get += RegisterDie;
-        _enemySpawner2.Spawned_get += RegisterDie;
-        _enemySpawner3.Spawned_get += RegisterDie;
+        //_enemySpawner1.Spawned_get += RegisterDie;
+        //_enemySpawner2.Spawned_get += RegisterDie;
+        //_enemySpawner3.Spawned_get += RegisterDie;
     }
 
     private void OnDisable()
     {
         _buttonStartFight.onClick.RemoveListener(StartFight);
 
-        _enemySpawner1.Spawned_get -= TryAddBuilding;
+        //_enemySpawner1.Spawned_get -= TryAddBuilding;
 
-        _enemySpawner1.Spawned_get -= RegisterDie;
-        _enemySpawner2.Spawned_get -= RegisterDie;
-        _enemySpawner3.Spawned_get -= RegisterDie;
+        //_enemySpawner1.Spawned_get -= RegisterDie;
+        //_enemySpawner2.Spawned_get -= RegisterDie;
+        //_enemySpawner3.Spawned_get -= RegisterDie;
     }
 
     private void StartFight()
@@ -80,7 +80,7 @@ public class LevelSystem : MonoBehaviour
         ClickedStartFight?.Invoke();
     }
 
-    private void TryAddBuilding(UnitStep unitStep)
+    private void TryAddBuilding(UnitEnemy unitStep)
     {
         //print(unitStep == null);
         //if (_building.Contains(unitStep) == true || unitStep.Fighter.FighterType != FighterType.Build)
@@ -95,15 +95,15 @@ public class LevelSystem : MonoBehaviour
         {
             case Wave.One:
                 //RemoveUnit(_building, fighter.GetComponent<UnitStep>());
-                RemoveUnit(fighter.GetComponent<UnitStep>());
+                //RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
 
             case Wave.Two:
-                RemoveUnit(fighter.GetComponent<UnitStep>());
+                //RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
 
             case Wave.Three:
-                RemoveUnit(fighter.GetComponent<UnitStep>());
+               // RemoveUnit(fighter.GetComponent<UnitStep>());
                 break;
         }
 
@@ -156,29 +156,29 @@ public class LevelSystem : MonoBehaviour
         }
     }
 
-    private void RemoveUnit(List<UnitStep> units, UnitStep unitStep)
+    private void RemoveUnit(List<UnitEnemy> units, UnitEnemy unitStep)
     {
         if (units.Contains(unitStep))
         {
             units.Remove(unitStep);
-            unitStep.Fighter.Died -= RemoveDiedUnit;
+            unitStep.Fighter.Died_get -= RemoveDiedUnit;
         }
     }
 
-    private void RemoveUnit(UnitStep unitStep)
+    private void RemoveUnit(UnitEnemy unitStep)
     {
-        unitStep.Fighter.Died -= RemoveDiedUnit;
+        unitStep.Fighter.Died_get -= RemoveDiedUnit;
     }
 
-    private void RegisterDie(List<UnitStep> units)
+    private void RegisterDie(List<UnitEnemy> units)
     {
         foreach (var mob in units)
-            mob.Fighter.Died += RemoveDiedUnit;
+            mob.Fighter.Died_get += RemoveDiedUnit;
     }
 
-    private void RegisterDie(UnitStep unitStep)
+    private void RegisterDie(UnitEnemy unitStep)
     {
-        unitStep.Fighter.Died += RemoveDiedUnit;
+        unitStep.Fighter.Died_get += RemoveDiedUnit;
     }
 }
 

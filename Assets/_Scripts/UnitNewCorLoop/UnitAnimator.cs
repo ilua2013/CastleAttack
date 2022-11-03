@@ -5,23 +5,33 @@ using UnityEngine;
 public class UnitAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private UnitStep _unitStep;    
+
+    private IUnit _unit;
+    private Mover _mover;
+    private Fighter _fighter;
 
     enum State
     {
         Attack, Move
-    }   
+    }
+
+    private void Awake()
+    {
+        _unit = GetComponent<IUnit>();
+        _mover = _unit.Mover;
+        _fighter = _unit.Fighter;
+    }
 
     private void OnEnable()
     {
-        _unitStep.Moved += SetMove;       
-        _unitStep.Attacked += SetAttack;
+        _mover.Moved += SetMove;
+        _fighter.Attacked += SetAttack;
     }
 
     private void OnDisable()
     {
-        _unitStep.Moved -= SetMove;
-        _unitStep.Attacked -= SetAttack;
+        _mover.Moved -= SetMove;
+        _fighter.Attacked -= SetAttack;
     }   
 
     private void SetAttack()

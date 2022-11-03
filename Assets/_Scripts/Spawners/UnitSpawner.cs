@@ -10,14 +10,13 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
     [SerializeField] private SpawnerType _type;
     [SerializeField] private Transform _spawnPoint; 
 
-    private List<UnitStep> _enemyUnits = new List<UnitStep>();
-
     private LevelSystem _finisher;
-    private List<UnitStep> _units = new List<UnitStep>();
+    private List<UnitEnemy> _enemyUnits = new List<UnitEnemy>();
+    private List<UnitFriend> _friendUnits = new List<UnitFriend>();
 
     public Transform SpawnPoint => _spawnPoint;
 
-    public event Action<UnitStep> SpawnedUnit;
+    public event Action<IUnit> SpawnedUnit;
 
     private void OnValidate()
     {
@@ -43,21 +42,21 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         _finisher.Wave3Finished -= OnFinished;
     }
 
-    public bool TryApply(Card card, Vector3 place)
+    public bool TryApplyFriend(Card card, Vector3 place)
     {
         if (_type == SpawnerType.Enemy)
             return false;
 
         if (card is UnitCard unitCard)
         {
-            UnitStep unit = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
+            UnitFriend unitFriend = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
 
-            unit.Init(card, GetComponent<Cell>(), TeamUnit.Friend);
-            unit.Fighter.Died += OnUnitDead;
+            unitFriend.Init(card, GetComponent<Cell>());
+            unitFriend.Fighter.Died_get += OnFriendUnitDead;
 
-            _units.Add(unit);
+            _friendUnits.Add(unitFriend);
 
-            SpawnedUnit?.Invoke(unit);
+            SpawnedUnit?.Invoke(unitFriend);
 
             return true;
         }
@@ -65,12 +64,12 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         return false;
     }
 
-    public UnitStep TryApplyEnemy(UnitStep unitStep)
+    public UnitEnemy TryApplyEnemy(UnitEnemy unitEnemy)
     {
-        UnitStep unit = Instantiate(unitStep, SpawnPoint.position, Quaternion.AngleAxis(180, Vector3.up));
+        UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint.position, Quaternion.identity);
 
-        unit.Init(unitStep.Card, GetComponent<Cell>(), TeamUnit.Enemy);
-        unit.Fighter.Died += OnEnemyUnitDead;
+        unit.Init(unitEnemy.Card, GetComponent<Cell>());
+        unit.Fighter.Died_get += OnEnemyUnitDead;
 
         _enemyUnits.Add(unit);
         SpawnedUnit?.Invoke(unit);
@@ -80,25 +79,29 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     private void OnFinished()
     {
-        foreach (var unit in _units)
+        foreach (var unit in _friendUnits)
         {
             unit.Card.ComeBack();
             unit.ReturnToHand();
         }
 
-        _units.Clear();
+        _friendUnits.Clear();
     }
 
     private void OnEnemyUnitDead(Fighter fighter)
     {
-        fighter.Died -= OnUnitDead;
-        _enemyUnits.Remove(fighter.GetComponent<UnitStep>());
+        fighter.Died_get -= OnFriendUnitDead;
+
+        if (fighter.Unit is UnitEnemy unitEnemy)
+            _enemyUnits.Remove(unitEnemy);
     }
 
-    private void OnUnitDead(Fighter fighter)
+    private void OnFriendUnitDead(Fighter fighter)
     {
-        fighter.Died -= OnUnitDead;
-        _units.Remove(fighter.GetComponent<UnitStep>());
+        fighter.Died_get -= OnFriendUnitDead;
+
+        if (fighter.Unit is UnitFriend unitFriend)
+            _friendUnits.Remove(unitFriend);
     }
 }
 

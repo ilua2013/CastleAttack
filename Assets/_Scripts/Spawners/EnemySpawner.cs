@@ -6,16 +6,16 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private UnitStep _mainTarget;
+    [SerializeField] private UnitEnemy _mainTarget;
     [SerializeField] private int _waveCount;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
-    [SerializeField] private List<UnitStep> _enemyUnitsPrefab;
+    [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
     [SerializeField] private FightSystem _fightSystem;
     [Header("Add Params")]
     [SerializeField] private int _minusWaveOnDieBuild = 3;
     [Header("StartSpawn (index 1 to 1)")]
     [SerializeField] private UnitSpawner[] _spawnersStart;
-    [SerializeField] private UnitStep[] _enemysStart;
+    [SerializeField] private UnitEnemy[] _enemysStart;
 
     private int _currentWave = 0;
 
@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     public bool HaveWave => _waveCount > _currentWave;
 
     public event Action WaveCountChanged;
-    public event Action<UnitStep> Spawned_get;
+    public event Action<UnitEnemy> Spawned_get;
 
     private void OnValidate()
     {
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         _fightSystem.StepFinished += EnemySpawn;
 
         if (_mainTarget != null)
-            _mainTarget.Fighter.Died += OnDieMainTarget;
+            _mainTarget.Fighter.Died_get += OnDieMainTarget;
     }
     private void OnDisable()
     {
@@ -60,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDieMainTarget(Fighter fighter)
     {
-        fighter.Died -= OnDieMainTarget;
+        fighter.Died_get -= OnDieMainTarget;
         MinusWaveCount(_waveCount);
     }
 
@@ -81,19 +81,19 @@ public class EnemySpawner : MonoBehaviour
             Spawn(_spawnersStart[i], _enemysStart[i]);
     }
 
-    private void Spawn(UnitSpawner enemySpawner, UnitStep unitStep)
+    private void Spawn(UnitSpawner enemySpawner, UnitEnemy unitStep)
     {
         var spawned = enemySpawner.TryApplyEnemy(unitStep);
 
         if (spawned.Fighter.FighterType == FighterType.Build)
-            spawned.Fighter.Died += OnDieBuild;
+            spawned.Fighter.Died_get += OnDieBuild;
 
         Spawned_get?.Invoke(spawned);
     }
 
     private void OnDieBuild(Fighter fighter)
     {
-        fighter.Died -= OnDieBuild;
+        fighter.Died_get -= OnDieBuild;
         MinusWaveCount(_minusWaveOnDieBuild);
     }
 }

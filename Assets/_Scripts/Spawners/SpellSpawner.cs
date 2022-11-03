@@ -7,7 +7,7 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
 {
     public event Action<Vector3, Spell> Cast;
 
-    public bool TryApply(Card card, Vector3 place)
+    public bool TryApplyFriend(Card card, Vector3 place)
     {
         if (card is SpellCard spellCard)
         {

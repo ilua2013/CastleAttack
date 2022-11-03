@@ -109,7 +109,7 @@ public class CardsMover : MonoBehaviour
 
             foreach (var applicable in applicables)
             {
-                if (applicable.TryApply(card, hit.point))
+                if (applicable.TryApplyFriend(card, hit.point))
                 {
                     card.UseOne();
 

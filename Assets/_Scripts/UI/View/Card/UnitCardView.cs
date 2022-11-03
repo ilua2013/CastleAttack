@@ -8,7 +8,6 @@ public class UnitCardView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private TMP_Text _amountText;
-    [SerializeField] private Fighter _fighter;
 
     private Card _card;
     private string _descriptionTextBase;
@@ -37,7 +36,7 @@ public class UnitCardView : MonoBehaviour
 
     private void WriteText()
     {
-        _text.text = $"{_descriptionTextBase} {_fighter.Damage}"; // Требует корректировки
+        _text.text = $"{_descriptionTextBase}"; // Требует корректировки
         _amountText.text = $"{_card.Amount}";
     }
 }

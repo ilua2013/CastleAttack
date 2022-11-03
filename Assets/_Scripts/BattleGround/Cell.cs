@@ -10,14 +10,14 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
 
-    private NewIUnit _currentUnit;
+    private IUnit _currentUnit;
 
     public Cell Top => _top;
     public Cell Bot => _bot;
     public Cell Left => _left;
     public Cell Right => _right;
     public CellIs CellIs => _cellIs;
-    public NewIUnit CurrentUnit => _currentUnit;
+    public IUnit CurrentUnit => _currentUnit;
     public bool IsFree => _currentUnit == null;
 
     public void SetCell(Cell cell, CellNeighbor set)
@@ -39,7 +39,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void StateUnitOnCell(NewIUnit IUnit)
+    public void StateUnitOnCell(IUnit IUnit)
     {
         _currentUnit = IUnit;
     }
@@ -49,9 +49,9 @@ public class Cell : MonoBehaviour
         _currentUnit = null;
     }
 
-    public List<NewIUnit> GetUnits(List<Cell> cells)
+    public List<IUnit> GetUnits(List<Cell> cells)
     {
-        List<NewIUnit> units = new List<NewIUnit>();
+        List<IUnit> units = new List<IUnit>();
 
         foreach (var item in cells)
             if (item.IsFree == false)
