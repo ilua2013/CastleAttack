@@ -1,75 +1,82 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class CardsHandView : MonoBehaviour
 {
-    [SerializeField] private CardsMover _cardsMover;
-
     private const float _offsetY = -4f;
-    private const float _offsetX = 150f;
+    private const float _offsetX = 120f;
     private const float _radius = 3.89f;
     private const float _angle = 1.33f;
 
-    private float _offsetYLeft;
+    private List<CardHoverView> _cards;
 
     private void Awake()
     {
-        _offsetYLeft = -_offsetY;
+        _cards = GetComponentsInChildren<CardHoverView>().ToList();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        _cardsMover.CardTaken += Shuffling;
-        _cardsMover.CardDrop += Shuffling;
-
-        foreach (var card in _cardsMover.CardsInHand)
+        foreach (CardHoverView card in _cards)
         {
-            card.Enter += OnCardSelect;
-            card.Exit += OnCardDeselect;
+            card.Enter += OnHover;
+            card.Exit += OnRemoveHover;
+            card.BeginDrag += OnBeginDrag;
+            card.Drop += OnDrop;
+            card.CancelDrop += OnCancelDrop;
         }
-
-        Shuffling();
     }
 
     private void OnDisable()
     {
-        _cardsMover.CardTaken -= Shuffling;
-        _cardsMover.CardDrop -= Shuffling;
-
-        foreach (var card in _cardsMover.CardsInHand)
+        foreach (CardHoverView card in _cards)
         {
-            card.Enter -= OnCardSelect;
-            card.Exit -= OnCardDeselect;
+            card.Enter -= OnHover;
+            card.Exit -= OnRemoveHover;
+            card.BeginDrag -= OnBeginDrag;
+            card.Drop -= OnDrop;
+            card.CancelDrop -= OnCancelDrop;
         }
+    }
+
+    private void Start()
+    {
+        Shuffling();
     }
 
     private void Shuffling()
     {
         Vector3 center = transform.position;
-        int number = (-_cardsMover.CardsCount + 1) / 2;
+        int number = (-_cards.Count + 1) / 2;
 
-        foreach (Card card in _cardsMover.CardsInHand)
+        foreach (CardHoverView card in _cards)
         {
-            Vector3 position = RandomCircle(transform.position, _radius, number);
+            Vector3 position = CalculatePosition(transform.position, _radius, number);
+            Vector3 lerpPosition = CalculatePadding(number, position);
+
             Quaternion rotation = Quaternion.FromToRotation(Vector3.down, transform.position - position);
 
-            Vector3 lerpPosition = position + Vector3.right * _offsetX * number;
-
-            if (number > 0)
-                lerpPosition = lerpPosition  + Vector3.down * _offsetYLeft * number;
-            else
-                lerpPosition = lerpPosition  + Vector3.down * _offsetY * number;
-
             card.transform.rotation = rotation;
-            card.LerpPosition(lerpPosition, 10f, () => card.InitPosition(lerpPosition, card.transform.GetSiblingIndex()));
+            card.MoveTo(lerpPosition, () => card.SaveStartState(lerpPosition, card.transform.GetSiblingIndex()));
 
             number++;
         }
     }
 
-    private Vector3 RandomCircle(Vector3 center, float radius, float ang)
+    private Vector3 CalculatePadding(int number, Vector3 position)
+    {
+        Vector3 padding = position + Vector3.right * _offsetX * number;
+
+        if (number > 0)
+            padding = padding + Vector3.down * -_offsetY * number;
+        else
+            padding = padding + Vector3.down * _offsetY * number;
+
+        return padding;
+    }
+
+    private Vector3 CalculatePosition(Vector3 center, float radius, float ang)
     {
         Vector3 position = new();
 
@@ -80,20 +87,39 @@ public class CardsHandView : MonoBehaviour
         return position;
     }
 
-    private void OnCardSelect(PointerEventData eventData, Card card)
+    private void OnHover(CardHoverView card)
     {
-        if (card.IsDragging)
-            return;
+        if (card.CanHover)
+        {
+            Vector3 hoverPosition = card.StartPosition + Vector3.up * 30f;
 
-        card.LerpPosition(card.InitialPosition + Vector3.up * 30f, 500f);
-        card.transform.SetSiblingIndex(_cardsMover.transform.childCount - 1);
+            card.MoveTo(hoverPosition);
+            card.BringForward();
+        }
     }
 
-    private void OnCardDeselect(PointerEventData eventData, Card card)
+    private void OnRemoveHover(CardHoverView card)
     {
-        if (card.IsDragging)
-            return;
+        if (card.CanHover)
+        {
+            card.ResetToStartState();
+        }
+    }
 
-        card.ResetPosition(500f);
+    private void OnBeginDrag(CardHoverView card)
+    {
+        _cards.Remove(card);
+        Shuffling();
+    }
+
+    private void OnDrop(CardHoverView card)
+    {
+        Shuffling();
+    }
+
+    private void OnCancelDrop(CardHoverView card)
+    {
+        _cards.Add(card);
+        Shuffling();
     }
 }

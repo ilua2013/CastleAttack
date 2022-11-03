@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,23 +9,14 @@ public class CardsMover : MonoBehaviour
 {
     [SerializeField] private Transform _draggingParent;
 
-    private List<Card> _cards;
-    private List<Card> _cardsInHand;
+    private List<Card> _cards = new List<Card>();
 
     public event Action CardTaken;
     public event Action CardDrop;
 
-    public IEnumerable<Card> CardsInHand => _cardsInHand;
-    public int CardsCount => _cardsInHand.Count;
-
     private void Awake()
     {
-        _cards = new List<Card>();
-
-        foreach (Card card in GetComponentsInChildren<Card>())
-            _cards.Add(card);
-
-        _cardsInHand = _cards;
+        _cards = GetComponentsInChildren<Card>().ToList();
     }
 
     private void OnEnable()
@@ -62,7 +54,6 @@ public class CardsMover : MonoBehaviour
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
         card.transform.SetParent(_draggingParent);
-        _cardsInHand.Remove(card);
 
         CardTaken?.Invoke();
     }
@@ -73,8 +64,8 @@ public class CardsMover : MonoBehaviour
 
         if (result == false)
         {
-            _cardsInHand.Add(card);
             card.transform.SetParent(transform);
+            card.CancleDrop();
         }
 
         CardDrop?.Invoke();
@@ -130,7 +121,7 @@ public class CardsMover : MonoBehaviour
                     }
                     else
                     {
-                        _cardsInHand.Add(card);
+                        card.CancleDrop();
                         card.transform.SetParent(transform);
                     }
 
