@@ -65,7 +65,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         return false;
     }
 
-    public void TryApplyEnemy(UnitStep unitStep)
+    public UnitStep TryApplyEnemy(UnitStep unitStep)
     {
         UnitStep unit = Instantiate(unitStep, SpawnPoint.position, Quaternion.AngleAxis(180, Vector3.up));
 
@@ -73,7 +73,9 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
         unit.Fighter.Died += OnEnemyUnitDead;
 
         _enemyUnits.Add(unit);
-        SpawnedUnit?.Invoke(unit);      
+        SpawnedUnit?.Invoke(unit);
+
+        return unit;
     }
 
     private void OnFinished()

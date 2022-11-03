@@ -13,15 +13,18 @@ public class FightSystem : MonoBehaviour
 
     private List<UnitStep> _unitFriend = new List<UnitStep>();
     private List<UnitStep> _unitEnemy = new List<UnitStep>();
+    private bool _doStep = true;
 
     public int CountEnemy => _unitEnemy.Count;
+    public List<UnitStep> UnitsEnemy => _unitEnemy;
 
     public event Action StepFinished;
     public event Action StepStarted;
+    public event Action RemovedDie;
 
     private void OnValidate()
     {
-        _spawners = FindObjectsOfType<UnitSpawner>();
+       // _spawners = FindObjectsOfType<UnitSpawner>();
     }
 
     private void OnEnable()
@@ -40,6 +43,11 @@ public class FightSystem : MonoBehaviour
             spawner.SpawnedUnit -= AddUnit;
     }
 
+    public void StopDoStep()
+    {
+        _doStep = false;
+    }
+
     private void StartUnitsDoStep()
     {
         if (_unitFriend.Count > 0)
@@ -51,24 +59,24 @@ public class FightSystem : MonoBehaviour
 
     private IEnumerator UnitsDoStep()
     {
-        while (CheckHaveStep())
+        while (CheckHaveStep() && _doStep == true)
         {
-            foreach (var item in _unitFriend)
-                if (item.TeamUnit == TeamUnit.Friend)
-                    item.DoStep();
+            DoStep(_unitFriend);
 
             yield return new WaitForSeconds(_delayBeetwenStep);
 
-            foreach (var item in _unitEnemy)
-                if (item.TeamUnit == TeamUnit.Enemy)
-                    item.DoStep();
+            DoStep(_unitEnemy);
 
             yield return new WaitForSeconds(_delayBeetwenStep);
         }
 
         StepFinished?.Invoke();
+        //CheckTryReturnToHand();
 
         foreach (var item in _unitFriend)
+            item.UpdateStep();
+
+        foreach (var item in _unitEnemy)
             item.UpdateStep();
     }
 
@@ -100,6 +108,8 @@ public class FightSystem : MonoBehaviour
             unitStep.Fighter.Died -= RemoveUnit;
             _unitEnemy.Remove(unitStep);
         }
+
+        RemovedDie?.Invoke();
     }
 
     private bool CheckHaveStep()
@@ -113,5 +123,17 @@ public class FightSystem : MonoBehaviour
                 return true;
 
         return false;
+    }
+
+    //private void CheckTryReturnToHand()
+    //{
+    //    for (int i = _unitFriend.Count - 1; i > -1; i--)
+    //        _unitFriend[i].TryReturnToHand();
+    //}
+
+    private void DoStep(List<UnitStep> unitSteps)
+    {
+        for (int i = unitSteps.Count - 1; i > -1; i--)
+            unitSteps[i].DoStep();
     }
 }
