@@ -39,13 +39,22 @@ public class NewFighter
             TakeDamage(fighter.Damage);
     }
 
+    public void RecoveryHealth(int value)
+    {
+        if (IsDead)
+            return;
+
+        _health += value;
+        Healed?.Invoke(_health);
+    }
+
     public void Die()
     {
         Died_get?.Invoke(this);
         Died?.Invoke();
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
 

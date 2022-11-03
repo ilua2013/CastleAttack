@@ -33,10 +33,10 @@ public class HealSpell : Spell
 
         foreach (var collider in hitColliders)
         {
-            if (collider.TryGetComponent(out IMonstr triggered))
+            if (collider.TryGetComponent(out NewIUnit triggered))
             {
                 Debug.Log("Affect " + triggered);
-                triggered.RecoveryHealth(_recovery);
+                triggered.Fighter.RecoveryHealth(_recovery);
             }
         }
     }

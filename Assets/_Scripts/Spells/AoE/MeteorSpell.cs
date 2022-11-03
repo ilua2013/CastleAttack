@@ -33,10 +33,10 @@ public class MeteorSpell : Spell
 
         foreach (var collider in hitColliders)
         {
-            if (collider.TryGetComponent(out IMob triggered))
+            if (collider.TryGetComponent(out NewUnitEnemy enemy))
             {
-                Debug.Log("Affect " + triggered);
-                //triggered.TakeDamage(_damage);
+                Debug.Log("Affect " + enemy);
+                enemy.Fighter.TakeDamage(_damage);
             }
         }
     }
