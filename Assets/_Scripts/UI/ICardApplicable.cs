@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface ICardApplicable
 {
+    UnitFriend Spawned { get; }
     bool TryApplyFriend(Card card, Vector3 place);
 }

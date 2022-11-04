@@ -4,6 +4,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private CellIs _cellIs;
+    [SerializeField] private int _number;
     [Header("CellNeighbor")]
     [SerializeField] private Cell _top;
     [SerializeField] private Cell _bot;
@@ -18,7 +19,31 @@ public class Cell : MonoBehaviour
     public Cell Right => _right;
     public CellIs CellIs => _cellIs;
     public IUnit CurrentUnit => _currentUnit;
+    public int Number => _number;
     public bool IsFree => _currentUnit == null;
+
+    private void OnValidate()
+    {
+        //List<Cell> cells = new List<Cell>();
+        //Cell currentCell = this;
+        //int number = 0;
+
+        //while (currentCell.Top != null)
+        //    currentCell = currentCell.Top;
+
+        //while (currentCell != null)
+        //{
+        //    cells.Add(currentCell);
+        //    currentCell.SetNumber(number);
+        //    number++;
+        //    currentCell = currentCell.Bot;
+        //}
+    }
+
+    public void SetNumber(int value)
+    {
+        _number = value;
+    }
 
     public void SetCell(Cell cell, CellNeighbor set)
     {

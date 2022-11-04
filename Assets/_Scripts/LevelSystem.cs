@@ -10,17 +10,17 @@ public class LevelSystem : MonoBehaviour
     [SerializeField] private Button _buttonStartFight2;
     [SerializeField] private Button _buttonStartFight3;
     [Header("Wave 1")]
-    [SerializeField] private FightSystem _fightSystem1;
+    [SerializeField] private BattleSystem _fightSystem1;
     [SerializeField] private EnemySpawner _enemySpawner1;
     //private List<UnitStep> _building = new List<UnitStep>();
 
     [Header("Wave 2")]
-    [SerializeField] private FightSystem _fightSystem2;
+    [SerializeField] private BattleSystem _fightSystem2;
     [SerializeField] private EnemySpawner _enemySpawner2;
     [SerializeField] private UnitEnemy _castleDoor;
 
     [Header("Wave 3")]
-    [SerializeField] private FightSystem _fightSystem3;
+    [SerializeField] private BattleSystem _fightSystem3;
     [SerializeField] private EnemySpawner _enemySpawner3;
     [SerializeField] private UnitEnemy _boss;
 

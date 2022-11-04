@@ -7,7 +7,7 @@ public class StartFightButton : MonoBehaviour
 {
     [SerializeField] private Button _button;
     [SerializeField] private Image _imageButton;
-    [SerializeField] private FightSystem _fightSystem;
+    [SerializeField] private BattleSystem _fightSystem;
 
     private void OnEnable()
     {

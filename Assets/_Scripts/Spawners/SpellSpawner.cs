@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SpellSpawner : MonoBehaviour, ICardApplicable
 {
+    public UnitFriend Spawned { get; private set; }
+
     public event Action<Vector3, Spell> Cast;
 
     public bool TryApplyFriend(Card card, Vector3 place)

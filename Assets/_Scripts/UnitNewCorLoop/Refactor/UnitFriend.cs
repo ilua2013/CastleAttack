@@ -75,10 +75,6 @@ public class UnitFriend : MonoBehaviour, IUnit
             Mover.Move(Mover.CurrentCell.Top);
             Moved?.Invoke();
         }
-        else
-        {
-            _currentStep++;
-        }
 
         _currentStep--;
 

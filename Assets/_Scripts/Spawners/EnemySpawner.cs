@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _waveCount;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
     [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
-    [SerializeField] private FightSystem _fightSystem;
+    [SerializeField] private BattleSystem _fightSystem;
     [Header("Add Params")]
     [SerializeField] private int _minusWaveOnDieBuild = 3;
     [Header("StartSpawn (index 1 to 1)")]

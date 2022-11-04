@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +10,7 @@ public class CardsMover : MonoBehaviour
 
     private List<Card> _cards = new List<Card>();
 
+    public event Action<UnitFriend> Spawned;
     public event Action CardTaken;
     public event Action CardDrop;
 
@@ -124,6 +124,8 @@ public class CardsMover : MonoBehaviour
                         card.CancleDrop();
                         card.transform.SetParent(transform);
                     }
+
+                    Spawned?.Invoke(applicable.Spawned);
 
                     return true;
                 }

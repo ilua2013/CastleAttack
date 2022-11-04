@@ -22,6 +22,9 @@ public class UnitEnemy : MonoBehaviour, IUnit
 
     public void Init(Card card, Cell cell)
     {
-        throw new System.NotImplementedException();
+    }
+
+    public void DoStep()
+    {
     }
 }
