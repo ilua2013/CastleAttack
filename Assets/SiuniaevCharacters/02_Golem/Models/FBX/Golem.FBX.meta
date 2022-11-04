@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: d19f0e375a0203a4ca72964404dbd39e
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21202
   internalIDToNameTable:
   - first:
       1: 100000
@@ -128,7 +128,7 @@ ModelImporter:
     second: 1
   - first:
       74: 7400000
-    second: idle
+    second: idleHorner
   - first:
       74: 7400002
     second: idle_action
@@ -152,10 +152,10 @@ ModelImporter:
     second: die
   - first:
       74: 7400016
-    second: walk
+    second: walkHorner
   - first:
       74: 7400018
-    second: hit2
+    second: hit2Horner
   - first:
       74: 7400020
     second: rage
@@ -188,6 +188,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -206,7 +207,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: idle
+      name: idleHorner
       takeName: idle
       internalID: 0
       firstFrame: 1
@@ -438,7 +439,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: walk
+      name: walkHorner
       takeName: walk
       internalID: 0
       firstFrame: 340
@@ -467,7 +468,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 339.9
     - serializedVersion: 16
-      name: hit2
+      name: hit2Horner
       takeName: hit2
       internalID: 0
       firstFrame: 370
@@ -623,6 +624,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -634,6 +636,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
