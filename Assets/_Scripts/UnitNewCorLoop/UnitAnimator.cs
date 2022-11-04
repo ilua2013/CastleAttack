@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitAnimator : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator[] _animators;
 
     private IUnit _unit;
     private Mover _mover;
@@ -36,11 +36,18 @@ public class UnitAnimator : MonoBehaviour
 
     private void SetAttack()
     {
-        _animator.SetTrigger(State.Attack.ToString());        
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.Attack.ToString());
+        }
+               
     }
 
     private void SetMove()
-    {       
-        _animator.SetTrigger(State.Move.ToString());        
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.Move.ToString());
+        }             
     }
 }
