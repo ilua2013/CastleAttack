@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1710454381889582020}
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8943193774448606894}
+  - component: {fileID: 6687131897390697683}
   m_Layer: 0
   m_Name: ArcherFriend
   m_TagString: Untagged
@@ -126,6 +127,19 @@ MonoBehaviour:
     _distanceAttack: 3
     _damage: 2
     _maxHealth: 4
+--- !u!114 &6687131897390697683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677d160d75e7b69459f9dcd5c8813cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitFriend: {fileID: 8943193774448606894}
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
