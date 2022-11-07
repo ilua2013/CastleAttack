@@ -25,6 +25,12 @@ public class UnitFriend : MonoBehaviour, IUnit
         _currentStep = _maxStep;
     }
 
+    private void Start()
+    {
+        if (Fighter.FighterType == FighterType.MainWizzard)
+            Init(null, null);
+    }
+
     private void OnEnable()
     {
         Fighter.Died += OnDie;
@@ -101,6 +107,7 @@ public class UnitFriend : MonoBehaviour, IUnit
     private void OnDie()
     {
         Mover.Die();
+        gameObject.SetActive(false);
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
