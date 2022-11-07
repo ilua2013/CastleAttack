@@ -33,22 +33,14 @@ public class CardsMover : MonoBehaviour
 
     private void RegisterCard(Card card)
     {
-        card.Drag += OnDrag;
         card.BeginDrag += OnBeginDrag;
         card.EndDrag += OnEndDrag;
     }
 
     private void UnRegister(Card card)
     {
-        card.Drag -= OnDrag;
         card.BeginDrag -= OnBeginDrag;
         card.EndDrag -= OnEndDrag;
-    }
-
-    private void OnDrag(PointerEventData eventData, Card card)
-    {
-        if (IsOverDraggingPanel(eventData))
-            card.transform.position = eventData.position;
     }
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
@@ -78,23 +70,6 @@ public class CardsMover : MonoBehaviour
         card.transform.SetParent(transform);
     }
 
-    private bool IsOverDraggingPanel(PointerEventData eventData)
-    {
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        foreach (var item in results)
-        {
-            if (!item.isValid)
-                continue;
-
-            if (item.gameObject.transform == _draggingParent)
-                return true;
-        }
-
-        return false;
-    }
-
     private bool TryApply(Card card, Vector3 mousePosition)
     {
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
@@ -116,7 +91,7 @@ public class CardsMover : MonoBehaviour
                     if (card.Amount <= 0)
                     {
                         UnRegister(card);
-                        card.DropOut();
+                        card.DropOut(mousePosition);
                         card.CameBack += OnCardComeBack;
                     }
                     else

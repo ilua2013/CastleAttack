@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private const float LerpTime = 10f;
-    private const float DistanceDelta = 0.1f;
+    private const float DistanceDelta = 0.01f;
 
     private Coroutine _coroutinePosition;
     private Coroutine _coroutineScaling;
@@ -110,9 +110,9 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         CancelDrop?.Invoke(this);
     }
 
-    private void OnDrop(Card card)
+    private void OnDrop(Card card, Vector3 mousePosition)
     {
-        CanHover = true;
+        CanHover = false;
         Drop?.Invoke(this);
     }
 
@@ -132,12 +132,12 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private IEnumerator LerpScale(Vector3 to)
     {
-        while (Vector3.Distance(transform.position, to) > DistanceDelta)
+        while (Vector3.Distance(transform.localScale, to) > DistanceDelta)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, to, LerpTime * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 
-        transform.position = to;
+        transform.localScale = to;
     }
 }
