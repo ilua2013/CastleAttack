@@ -1544,6 +1544,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _spawnPoint: {fileID: 1876023547}
+--- !u!114 &537095590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2120975630999082945, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
+  m_PrefabInstance: {fileID: 1574898677}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca8d54cc361afe4cb0ce4d5242da1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &544876144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,116 +2383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonStartFight: {fileID: 689178742}
+  _cardMover: {fileID: 537095590}
   _delayBeetwenStep: 0.7
-  _spawners:
-  - {fileID: 8845158}
-  - {fileID: 49440051}
-  - {fileID: 87132193}
-  - {fileID: 91912333}
-  - {fileID: 110032115}
-  - {fileID: 118700557}
-  - {fileID: 140641138}
-  - {fileID: 171642979}
-  - {fileID: 180367484}
-  - {fileID: 191726223}
-  - {fileID: 228422669}
-  - {fileID: 268750177}
-  - {fileID: 280458477}
-  - {fileID: 292869698}
-  - {fileID: 325149946}
-  - {fileID: 333096711}
-  - {fileID: 344996391}
-  - {fileID: 374897602}
-  - {fileID: 383610608}
-  - {fileID: 389168664}
-  - {fileID: 496365294}
-  - {fileID: 528848859}
-  - {fileID: 529951941}
-  - {fileID: 533241386}
-  - {fileID: 544876144}
-  - {fileID: 552363139}
-  - {fileID: 559084524}
-  - {fileID: 588111520}
-  - {fileID: 609622897}
-  - {fileID: 622311608}
-  - {fileID: 622330336}
-  - {fileID: 669586959}
-  - {fileID: 676035409}
-  - {fileID: 677540030}
-  - {fileID: 683293398}
-  - {fileID: 716502092}
-  - {fileID: 753818811}
-  - {fileID: 765725965}
-  - {fileID: 804009654}
-  - {fileID: 804830453}
-  - {fileID: 808191839}
-  - {fileID: 812680449}
-  - {fileID: 817522939}
-  - {fileID: 826015821}
-  - {fileID: 897807849}
-  - {fileID: 1023081960}
-  - {fileID: 1025362259}
-  - {fileID: 1041589668}
-  - {fileID: 1051849153}
-  - {fileID: 1058251391}
-  - {fileID: 1081577863}
-  - {fileID: 1090517273}
-  - {fileID: 1099079453}
-  - {fileID: 1116548842}
-  - {fileID: 1116880856}
-  - {fileID: 1140289238}
-  - {fileID: 1157311194}
-  - {fileID: 1160222239}
-  - {fileID: 1172607480}
-  - {fileID: 1174033664}
-  - {fileID: 1197539333}
-  - {fileID: 1207244634}
-  - {fileID: 1219924393}
-  - {fileID: 1241049361}
-  - {fileID: 1250650746}
-  - {fileID: 1266600658}
-  - {fileID: 1294073972}
-  - {fileID: 1299730101}
-  - {fileID: 1302478264}
-  - {fileID: 1332928337}
-  - {fileID: 1349608888}
-  - {fileID: 1367731525}
-  - {fileID: 1389728101}
-  - {fileID: 1413819284}
-  - {fileID: 1419191965}
-  - {fileID: 1451416122}
-  - {fileID: 1466149566}
-  - {fileID: 1501862004}
-  - {fileID: 1546622158}
-  - {fileID: 1553648552}
-  - {fileID: 1585289823}
-  - {fileID: 1635680397}
-  - {fileID: 1639296892}
-  - {fileID: 1641359561}
-  - {fileID: 1651698984}
-  - {fileID: 1653446016}
-  - {fileID: 1662672367}
-  - {fileID: 1667697707}
-  - {fileID: 1705621337}
-  - {fileID: 1706281592}
-  - {fileID: 1712914502}
-  - {fileID: 1751203090}
-  - {fileID: 1811439395}
-  - {fileID: 1847925808}
-  - {fileID: 1867408258}
-  - {fileID: 1876023640}
-  - {fileID: 1876023641}
-  - {fileID: 1887409540}
-  - {fileID: 1929446687}
-  - {fileID: 1948639246}
-  - {fileID: 1952500012}
-  - {fileID: 1971837978}
-  - {fileID: 1975923778}
-  - {fileID: 1978703818}
-  - {fileID: 2008695686}
-  - {fileID: 2046686390}
-  - {fileID: 2103638785}
-  - {fileID: 2143149399}
 --- !u!4 &849836882
 Transform:
   m_ObjectHideFlags: 0
@@ -4022,6 +3925,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3957267029582802758, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
+      propertyPath: _unitPrefab
+      value: 
+      objectReference: {fileID: 8801586289200443270, guid: f49ea1f1bb6d90c448f6e679fb793965, type: 3}
     - target: {fileID: 4374403895909167904, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4054,6 +3961,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 2.6522217
       objectReference: {fileID: 0}
+    - target: {fileID: 7936243246731870435, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
+      propertyPath: _unitPrefab
+      value: 
+      objectReference: {fileID: 8801586289200443270, guid: 8d59d21d4f580dc4aa15717fbd6e6698, type: 3}
     - target: {fileID: 8164881711423377357, guid: 595dbab16e631854889e35e3c7d1e207, type: 3}
       propertyPath: m_IsActive
       value: 1
