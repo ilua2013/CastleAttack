@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class ProjectorPointer : MonoBehaviour
 {
-    [SerializeField] private GameObject _pointerPrefab;
-
-    private Transform _pointer;
+    private HighlightingCell _previous;
     private CardsMover _cardsMover;
 
     private bool _isCardInHand;
 
     private void Awake()
     {
-        _pointer = Instantiate(_pointerPrefab).transform;
         _cardsMover = FindObjectOfType<CardsMover>();
     }
 
@@ -32,23 +29,23 @@ public class ProjectorPointer : MonoBehaviour
     private void Update()
     {
         if (_isCardInHand == false)
-        {
-            _pointer.gameObject.SetActive(false);
             return;
-        }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
 
         if (hits.Length == 0)
-            _pointer.gameObject.SetActive(false);
+            return;
 
         foreach (var hit in hits)
         {
-            if (hit.collider.TryGetComponent(out ICardApplicable applicable))
+            if (hit.collider.TryGetComponent(out HighlightingCell cell))
             {
-                _pointer.gameObject.SetActive(true);
-                _pointer.position = hit.point + Vector3.up * 0.1f;
+                if (_previous != null)
+                    _previous.UnSelect();
+
+                cell.Select();
+                _previous = cell;
             }
         }
     }
@@ -60,6 +57,9 @@ public class ProjectorPointer : MonoBehaviour
 
     private void OnCardDrop()
     {
+        if (_previous != null)
+            _previous.UnSelect();
+
         _isCardInHand = false;
     }
 }
