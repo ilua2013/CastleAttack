@@ -6,6 +6,11 @@ public class RadiusAttackView : MonoBehaviour
 {
     [SerializeField] private UnitFriend _unitFriend;
 
+    private void OnValidate()
+    {
+        _unitFriend = GetComponent<UnitFriend>();
+    }
+
     private void Start()
     {
         foreach (var cell in _unitFriend.Mover.CurrentCell.GetForwardsCell(_unitFriend.Fighter.DistanceAttack))
@@ -32,13 +37,13 @@ public class RadiusAttackView : MonoBehaviour
 
         foreach (Cell cell in forwardCells)
         {
-            if (cell.TryGetComponent(out HighlightingCell highlightingCell))
+            if (cell != null && cell.TryGetComponent(out HighlightingCell highlightingCell))
                 highlightingCell.Select();
         }
 
         foreach (Cell cell in backCells)
         {
-            if (cell.TryGetComponent(out HighlightingCell highlightingCell))
+            if (cell != null && cell.TryGetComponent(out HighlightingCell highlightingCell))
                 highlightingCell.UnSelect();
         }
     }

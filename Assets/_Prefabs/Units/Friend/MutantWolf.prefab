@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8801586289200443270}
   - component: {fileID: 8092146533268061293}
+  - component: {fileID: 1851937936142482570}
   m_Layer: 0
   m_Name: MutantWolf
   m_TagString: Untagged
@@ -120,6 +121,19 @@ MonoBehaviour:
   _visualEffects:
   - _prefab: {fileID: 19807068, guid: 05d8ff69b824e32479f9ea8be857a7a6, type: 3}
     _type: 0
+--- !u!114 &1851937936142482570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677d160d75e7b69459f9dcd5c8813cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitFriend: {fileID: 0}
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,11 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fighter:
-    _type: 0
-    _distanceAttack: 0
-    _damage: 0
-    _maxHealth: 0
   _bar: {fileID: 4581620883515003956}
 --- !u!1 &8814044131612141863
 GameObject:
