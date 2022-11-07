@@ -82,7 +82,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.3833186}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.4, y: 5.1}
+  m_AnchoredPosition: {x: 4.399994, y: 5.0999985}
   m_SizeDelta: {x: -67.2854, y: -55.7828}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2439325043062318387
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 7385425094312963249}
   - component: {fileID: 7182174309042314210}
   - component: {fileID: 3422850895979909087}
+  - component: {fileID: 1268107706244107304}
   m_Layer: 5
   m_Name: Catapult
   m_TagString: Untagged
@@ -218,8 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032ae5a56209180439860bf13f12ef30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amount: 0
-  _unitPrefab: {fileID: 1550770333636696621, guid: 5132c285cc434b14c9879f2b2d32f838, type: 3}
+  _amount: 2
+  _unitPrefab: {fileID: 8801586289200443270, guid: f49ea1f1bb6d90c448f6e679fb793965, type: 3}
 --- !u!114 &7182174309042314210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +235,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 3978825195560205397}
   _amountText: {fileID: 7801130295153167515}
-  _fighter: {fileID: 7530554008974131939, guid: 5132c285cc434b14c9879f2b2d32f838, type: 3}
 --- !u!114 &3422850895979909087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +245,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d6e7eaccfa58964b9499653de02ab88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1268107706244107304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439325043610291258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548cdc55960d4a14f86391e03be6e68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2627631614739867695

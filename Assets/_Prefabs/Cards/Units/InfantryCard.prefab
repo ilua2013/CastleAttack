@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 9125992736136377987}
   - component: {fileID: -3415291784745103380}
   - component: {fileID: 5797931187017722644}
+  - component: {fileID: 2896713834205644716}
   m_Layer: 5
   m_Name: InfantryCard
   m_TagString: Untagged
@@ -239,7 +240,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4382009319936778587}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
@@ -308,7 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 31345490308475784}
   _amountText: {fileID: 6197545480433901914}
-  _fighter: {fileID: 6265881899677326290, guid: 00a89c6193da08c4788ccee2d12806cb, type: 3}
 --- !u!114 &-3415291784745103380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032ae5a56209180439860bf13f12ef30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amount: 0
-  _unitPrefab: {fileID: 9173333324988753516, guid: 00a89c6193da08c4788ccee2d12806cb, type: 3}
+  _amount: 1
+  _unitPrefab: {fileID: 8801586289200443270, guid: b017f15b7920f5d4f9329673ee012119, type: 3}
 --- !u!114 &5797931187017722644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +333,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d6e7eaccfa58964b9499653de02ab88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2896713834205644716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382009319936778587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548cdc55960d4a14f86391e03be6e68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5338740362402117249
