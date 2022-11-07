@@ -57,7 +57,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
         if (_currentStep <= 0)
             return;
 
-        UnitEnemy enemy = TryAttack();
+        UnitFriend enemy = TryAttack();
 
         if (enemy != null)
         {
@@ -81,13 +81,13 @@ public class UnitEnemy : MonoBehaviour, IUnit
         _currentStep = _maxStep;
     }
 
-    private UnitEnemy TryAttack()
+    private UnitFriend TryAttack()
     {
         var units = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetBottomCell(Fighter.DistanceAttack));
 
         foreach (var item in units)
-            if (item is UnitEnemy unitEnemy)
-                return unitEnemy;
+            if (item is UnitFriend unitFriend)
+                return unitFriend;
 
         return null;
     }
