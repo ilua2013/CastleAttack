@@ -69,7 +69,7 @@ public class BattleSystem : MonoBehaviour
 
     private void AddUnit(UnitFriend unitFriend)
     {
-        if (_unitFriend.Contains(unitFriend) == false)
+        if (unitFriend != null && _unitFriend.Contains(unitFriend) == false)
         {
             _unitFriend.Add(unitFriend);
             unitFriend.Fighter.Died_get += RemoveUnit;
