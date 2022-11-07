@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] UnitFriend _unitFriend;
-    
-
+    [SerializeField] private UnitFriend _unitFriend;
 
     private void Start()
     {
-        StartCoroutine(HighLigthRadius(_unitFriend.Mover.CurrentCell));
+        foreach (var cell in _unitFriend.Mover.CurrentCell.GetForwardsCell(_unitFriend.Fighter.DistanceAttack))
+        {
+            if (cell.TryGetComponent(out HighlightingCell highlighting))
+                highlighting.Select();
+        }
     }
 
-    public IEnumerator HighLigthRadius(Cell cell)
+    private void OnEnable()
     {
-        while (true)
+        _unitFriend.Mover.Moved += OnMoved;
+    }
+
+    private void OnDisable()
+    {
+        _unitFriend.Mover.Moved -= OnMoved;
+    }
+
+    private void OnMoved()
+    {
+        List<Cell> forwardCells =_unitFriend.Mover.CurrentCell.GetForwardsCell(1);
+        List<Cell> backCells =_unitFriend.Mover.CurrentCell.GetBottomCell(1);
+
+        foreach (Cell cell in forwardCells)
         {
-            List<Cell>cells = _unitFriend.Mover.CurrentCell.GetForwardsCell(_unitFriend.Fighter.DistanceAttack);
-
-            foreach (var currentCell in cells)
-            {
-                MeshRenderer higtligthCell = currentCell.gameObject.GetComponent<MeshRenderer>()!=null ? currentCell.gameObject.GetComponent<MeshRenderer>():null;
-                if (higtligthCell != null)
-                {
-                    higtligthCell.material.color = Color.gray;
-                }
-            }
-
-            yield return null;
+            if (cell.TryGetComponent(out HighlightingCell highlightingCell))
+                highlightingCell.Select();
         }
 
-       
+        foreach (Cell cell in backCells)
+        {
+            if (cell.TryGetComponent(out HighlightingCell highlightingCell))
+                highlightingCell.UnSelect();
+        }
     }
-
-
-
 }
