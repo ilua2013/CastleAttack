@@ -57,7 +57,9 @@ public class CardMovement : MonoBehaviour
 
     private Vector3 CalculateScale()
     {
-        return IsOverDraggingPanel(_target) ? _initialScale : _initialScale / 3;
+        Vector3 scale = IsOverDraggingPanel(_target) ? _initialScale : _initialScale / 3;
+
+        return Vector3.Lerp(transform.localScale, scale, LerpTime * Time.deltaTime);
     }
 
     private bool IsOverDraggingPanel(PointerEventData eventData)
