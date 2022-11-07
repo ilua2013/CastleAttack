@@ -199,17 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5ac83f1509c244fb925e1ac8051b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonStartFight: {fileID: 689178742}
-  _buttonStartFight2: {fileID: 0}
-  _buttonStartFight3: {fileID: 0}
-  _fightSystem1: {fileID: 0}
+  _wizzard: {fileID: 4113348099452886783}
+  _battleSystem: {fileID: 849836881}
   _enemySpawner1: {fileID: 0}
-  _fightSystem2: {fileID: 0}
   _enemySpawner2: {fileID: 0}
-  _castleDoor: {fileID: 0}
-  _fightSystem3: {fileID: 0}
   _enemySpawner3: {fileID: 0}
-  _boss: {fileID: 0}
 --- !u!114 &30533057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,6 +2945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonStartFight: {fileID: 689178742}
   _cardMover: {fileID: 537095590}
+  _enemySpawner: {fileID: 0}
   _delayBeetwenStep: 0.7
 --- !u!4 &849836882
 Transform:
@@ -5581,9 +5576,8 @@ MonoBehaviour:
   - {fileID: 9173333324988753516, guid: d7325c633293f7f4088b2ecf75092060, type: 3}
   - {fileID: 9173333324988753516, guid: d7325c633293f7f4088b2ecf75092060, type: 3}
   - {fileID: 9173333324988753516, guid: d7325c633293f7f4088b2ecf75092060, type: 3}
-  _fightSystem: {fileID: 849836881}
+  _battleSystem: {fileID: 849836881}
   _minusWaveOnDieBuild: 3
-  _spawnersStart: []
   _enemysStart: []
 --- !u!4 &1870174933
 Transform:
@@ -31970,6 +31964,7 @@ GameObject:
   - component: {fileID: 4113348099452886780}
   - component: {fileID: 4113348099452886781}
   - component: {fileID: 4113348099452886782}
+  - component: {fileID: 4113348099452886783}
   m_Layer: 0
   m_Name: CharacterVampire
   m_TagString: Untagged
@@ -32092,6 +32087,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meteor: {fileID: 6223848068479651722}
   _heal: {fileID: 2021059580402002248}
+--- !u!114 &4113348099452886783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3629440471343465537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b58abcf18fe39443ab14e5e2a214bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxStep: 3
+  <Mover>k__BackingField:
+    _startCell: {fileID: 0}
+    _speed: 0
+    _canMove: 0
+  <Fighter>k__BackingField:
+    _type: 6
+    _distanceAttack: 8
+    _damage: 3
+    _maxHealth: 5
 --- !u!1 &4315382783859096249
 GameObject:
   m_ObjectHideFlags: 0
