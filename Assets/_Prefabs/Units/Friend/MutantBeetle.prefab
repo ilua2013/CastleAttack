@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1710454381889582021}
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8801586289200443270}
+  - component: {fileID: 7864184127803688506}
   m_Layer: 0
   m_Name: MutantBeetle
   m_TagString: Untagged
@@ -103,6 +104,22 @@ MonoBehaviour:
     _distanceAttack: 2
     _damage: 3
     _maxHealth: 5
+--- !u!114 &7864184127803688506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd006d030b710c498d41ec29cf5a19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unit: {fileID: 8801586289200443270}
+  _visualEffects:
+  - _prefab: {fileID: 19807068, guid: 05d8ff69b824e32479f9ea8be857a7a6, type: 3}
+    _type: 0
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0

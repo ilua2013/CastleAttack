@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8943193774448606894}
   - component: {fileID: 6687131897390697683}
+  - component: {fileID: 1521495520686836683}
   m_Layer: 0
   m_Name: ArcherFriend
   m_TagString: Untagged
@@ -140,6 +141,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitFriend: {fileID: 8943193774448606894}
+--- !u!114 &1521495520686836683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd006d030b710c498d41ec29cf5a19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unit: {fileID: 8943193774448606894}
+  _visualEffects:
+  - _prefab: {fileID: 19807068, guid: 05d8ff69b824e32479f9ea8be857a7a6, type: 3}
+    _type: 0
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
