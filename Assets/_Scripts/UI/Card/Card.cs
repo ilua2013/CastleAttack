@@ -12,7 +12,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<PointerEventData, Card> BeginDrag;
     public event Action<PointerEventData, Card> EndDrag;
 
-    public event Action<Card> Drop;
+    public event Action<Card, Vector3> Drop;
     public event Action<Card> CancelDrop;
     public event Action<Card> CameBack;
     public event Action<int> Used;
@@ -25,10 +25,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         Used?.Invoke(_amount);
     }
 
-    public void DropOut()
+    public void DropOut(Vector3 mousePosition)
     {
-        Drop?.Invoke(this);
-        gameObject.SetActive(false);
+        Drop?.Invoke(this, mousePosition);
     }
 
     public void CancleDrop()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardsHandView : MonoBehaviour
 {
-    private const float OffsetY = -4f;
+    private const float OffsetY = -1f;
     private const float OffsetX = 110f;
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
@@ -94,7 +94,7 @@ public class CardsHandView : MonoBehaviour
     {
         if (card.CanHover)
         {
-            Vector3 hoverPosition = card.StartPosition + Vector3.up * 30f;
+            Vector3 hoverPosition = card.StartPosition + Vector3.up * 10f;
 
             card.MoveTo(hoverPosition);
             card.ScaleTo(card.StartScaling * ScaleFactor);
