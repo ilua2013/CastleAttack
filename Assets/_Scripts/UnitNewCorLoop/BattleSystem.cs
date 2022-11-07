@@ -136,32 +136,32 @@ public class BattleSystem : MonoBehaviour
 
     private void CalculateFirstStep()
     {
-        List<UnitFriend> units = new List<UnitFriend>();
-        int index = 0;
+        //List<UnitFriend> units = new List<UnitFriend>();
+        //int index = 0;
 
-        while (units.Count != _unitFriend.Count)
-        {
-            foreach (var item in _unitFriend)
-                if (item.Mover.CurrentCell.Number == index)
-                    units.Add(item);
+        //while (units.Count != _unitFriend.Count)
+        //{
+        //    foreach (var item in _unitFriend)
+        //        if (item.Mover.CurrentCell.Number == index)
+        //            units.Add(item);
 
-            index++;
-        }
+        //    index++;
+        //}
 
-        _unitFriend = units;
+        //_unitFriend = units;
 
-        List<UnitEnemy> unitsEnemy = new List<UnitEnemy>();
+        //List<UnitEnemy> unitsEnemy = new List<UnitEnemy>();
 
-        while (unitsEnemy.Count != _unitEnemy.Count)
-        {
-            foreach (var item in _unitEnemy)
-                if (item.Mover.CurrentCell.Number == index)
-                    unitsEnemy.Add(item);
+        //while (unitsEnemy.Count != _unitEnemy.Count)
+        //{
+        //    foreach (var item in _unitEnemy)
+        //        if (item.Mover.CurrentCell.Number == index)
+        //            unitsEnemy.Add(item);
 
-            index--;
-        }
+        //    index--;
+        //}
 
-        _unitEnemy = unitsEnemy;
+        //_unitEnemy = unitsEnemy;
     }
 
     private void RemoveUnit(Fighter fighter)

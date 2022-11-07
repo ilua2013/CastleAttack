@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardsHandView : MonoBehaviour
 {
     private const float OffsetY = -1f;
-    private const float OffsetX = 110f;
+    private const float OffsetX = 150f;
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
     private const float ScaleFactor = 1.2f;
