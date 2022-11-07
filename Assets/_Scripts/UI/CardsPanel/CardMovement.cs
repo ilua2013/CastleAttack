@@ -53,7 +53,8 @@ public class CardMovement : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Speed * Time.deltaTime);
 
         transform.localScale = CalculateScale();
-    } 
+    }
+
     private Vector3 CalculateScale()
     {
         return IsOverDraggingPanel(_target) ? _initialScale : _initialScale / 3;
@@ -79,18 +80,6 @@ public class CardMovement : MonoBehaviour
     private void OnDrop(Card card, Vector3 mousePosition)
     {
         StartCoroutine(LerpScale(Vector3.zero));
-        StartCoroutine(LerpPosition(mousePosition));
-    }
-
-    private IEnumerator LerpPosition(Vector3 to)
-    {
-        while (Vector3.Distance(transform.position, to) > DistanceDelta)
-        {
-            transform.position = Vector3.Lerp(transform.position, to, LerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-
-        transform.position = to;
     }
 
     private IEnumerator LerpScale(Vector3 to)

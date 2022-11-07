@@ -112,6 +112,12 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void OnDrop(Card card, Vector3 mousePosition)
     {
+        if (_coroutinePosition != null)
+            StopCoroutine(_coroutinePosition);
+
+        if (_coroutineScaling != null)
+            StopCoroutine(_coroutineScaling);
+
         CanHover = false;
         Drop?.Invoke(this);
     }
@@ -122,6 +128,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         while (Vector3.Distance(transform.position, to) > DistanceDelta)
         {
+            Debug.Log("LerpPos");
+
             transform.position = Vector3.Lerp(transform.position, to, LerpTime * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
@@ -134,6 +142,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         while (Vector3.Distance(transform.localScale, to) > DistanceDelta)
         {
+            Debug.Log("LerpScale");
+
             transform.localScale = Vector3.Lerp(transform.localScale, to, LerpTime * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
