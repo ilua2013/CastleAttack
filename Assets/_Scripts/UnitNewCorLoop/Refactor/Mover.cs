@@ -26,21 +26,24 @@ public class Mover
         _unit = unit;
         transform = unitTransform;
 
-        SetCurrentCell(cell);
-
         if (cell == null && _startCell != null)
             SetCurrentCell(_startCell);
+        else
+            SetCurrentCell(cell);
     }
 
     public void SetCurrentCell(Cell cell)
     {
+        if (_currentCell != null)
+            _currentCell.SetFree();
+
         _currentCell = cell;
         _currentCell.StateUnitOnCell(_unit);
     }
 
     public bool CanMove(Cell cell)
     {
-        if (_canMove == false || cell.IsFree == false)
+        if (_canMove == false || cell == null || cell.IsFree == false)
             return false;
         else
             return true;
@@ -57,8 +60,17 @@ public class Mover
 
     public void Die()
     {
+        if (_currentCell == null)
+            return;
+
         _currentCell.SetFree();
         _currentCell = null;
+    }
+
+    public void SetTransformOnCell(Cell cell)
+    {
+        SetCurrentCell(cell);
+        transform.position = cell.transform.position;
     }
 
     public IEnumerator MoveTo(Cell cell)

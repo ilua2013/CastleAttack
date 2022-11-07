@@ -9,24 +9,30 @@ public class HealthBar : MonoBehaviour
     private const float LerpTime = 1f;
     private const float LerpError = 0.01f;
 
-    [SerializeField] private Fighter _fighter;
     [SerializeField] private Slider _bar;
+
+    private IUnit _unit;
+
+    private void Awake()
+    {
+        _unit = GetComponentInParent<IUnit>();
+    }
 
     private void OnEnable()
     {
-        _fighter.Damaged += OnHealthChanged;
-        _fighter.Healed += OnHealthChanged;
+        _unit.Fighter.Damaged += OnHealthChanged;
+        _unit.Fighter.Healed += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _fighter.Damaged -= OnHealthChanged;
-        _fighter.Healed -= OnHealthChanged;
+        _unit.Fighter.Damaged -= OnHealthChanged;
+        _unit.Fighter.Healed -= OnHealthChanged;
     }
 
     private void OnHealthChanged(int amount)
     {
-        float remain = (float)_fighter.Health / _fighter.MaxHealth;
+        float remain = (float)_unit.Fighter.Health / _unit.Fighter.MaxHealth;
         StartCoroutine(LerpValue(remain, LerpTime));
     }
 

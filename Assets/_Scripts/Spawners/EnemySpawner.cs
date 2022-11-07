@@ -10,18 +10,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _waveCount;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
     [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
-    [SerializeField] private BattleSystem _fightSystem;
+    [SerializeField] private BattleSystem _battleSystem;
     [Header("Add Params")]
     [SerializeField] private int _minusWaveOnDieBuild = 3;
-    [Header("StartSpawn (index 1 to 1)")]
-    [SerializeField] private UnitSpawner[] _spawnersStart;
+    [Header("StartUnit")]
     [SerializeField] private UnitEnemy[] _enemysStart;
 
     private int _currentWave = 0;
 
     public int WaveCount => _waveCount;
     public int CurrentWave => _currentWave;
-
     public bool HaveWave => _waveCount > _currentWave;
 
     public event Action WaveCountChanged;
@@ -29,25 +27,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_spawnersStart.Length != _enemysStart.Length)
-            Debug.LogError("_cells.Length != _enemys.Length !");
-    }
-
-    private void Start()
-    {
-        SpawnOnStart();
+        _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     private void OnEnable()
     {
-        _fightSystem.StepFinished += EnemySpawn;
-
         if (_mainTarget != null)
             _mainTarget.Fighter.Died_get += OnDieMainTarget;
     }
     private void OnDisable()
     {
-        _fightSystem.StepFinished -= EnemySpawn;
+        _battleSystem.StepFinished -= EnemySpawn;
+
+        if (_mainTarget != null)
+            _mainTarget.Fighter.Died_get -= OnDieMainTarget;
+    }
+
+    public void Init()
+    {
+        _battleSystem.StepFinished += EnemySpawn;
+
+        foreach (var item in _enemysStart)
+        {
+            item.Init(null, null);
+            Spawned_get?.Invoke(item);
+            if (item.Fighter.FighterType == FighterType.Build)
+                item.Fighter.Died_get += OnDieBuild;
+        }
     }
 
     public void MinusWaveCount(int value)
@@ -73,12 +79,6 @@ public class EnemySpawner : MonoBehaviour
         _currentWave++;
 
         WaveCountChanged?.Invoke();
-    }
-
-    private void SpawnOnStart()
-    {
-        for (int i = 0; i < _spawnersStart.Length; i++)
-            Spawn(_spawnersStart[i], _enemysStart[i]);
     }
 
     private void Spawn(UnitSpawner enemySpawner, UnitEnemy unitStep)
