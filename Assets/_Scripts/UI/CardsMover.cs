@@ -63,6 +63,7 @@ public class CardsMover : MonoBehaviour
     private void OnCardComeBack(Card card)
     {
         RegisterCard(card);
+        card.gameObject.SetActive(true);
         card.CameBack -= OnCardComeBack;
     }
 

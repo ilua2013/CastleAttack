@@ -219,8 +219,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032ae5a56209180439860bf13f12ef30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amount: 2
-  _unitPrefab: {fileID: 8801586289200443270, guid: f49ea1f1bb6d90c448f6e679fb793965, type: 3}
+  _amount: 5
+  _unitPrefabs:
+  - _stage: 0
+    _prefab: {fileID: 8801586289200443270, guid: b017f15b7920f5d4f9329673ee012119, type: 3}
+  - _stage: 1
+    _prefab: {fileID: 8801586289200443270, guid: f49ea1f1bb6d90c448f6e679fb793965, type: 3}
+  - _stage: 2
+    _prefab: {fileID: 8801586289200443270, guid: 6c1b55876cf5c674e95c7b7c360a0534, type: 3}
 --- !u!114 &7182174309042314210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,8 +239,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654a9fe83a7be2c478d44576a7009dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardUpgradeView:
+  - _stage: 0
+    _background: {fileID: 21300000, guid: 06362a52c634f3f4b8e0b30b9ebda32d, type: 3}
+    _icon: {fileID: 21300000, guid: 5067249fe5494aa47a9a304f96840d1f, type: 3}
+  - _stage: 1
+    _background: {fileID: 21300000, guid: 27403caf80f213a41971c6ee39142a7f, type: 3}
+    _icon: {fileID: 21300000, guid: 5067249fe5494aa47a9a304f96840d1f, type: 3}
+  - _stage: 2
+    _background: {fileID: 21300000, guid: 51e349392aa504a498ca75d61cc27517, type: 3}
+    _icon: {fileID: 21300000, guid: 5067249fe5494aa47a9a304f96840d1f, type: 3}
   _text: {fileID: 3978825195560205397}
   _amountText: {fileID: 7801130295153167515}
+  _background: {fileID: 2439325043610291256}
+  _icon: {fileID: 2439325043062318388}
 --- !u!114 &3422850895979909087
 MonoBehaviour:
   m_ObjectHideFlags: 0
