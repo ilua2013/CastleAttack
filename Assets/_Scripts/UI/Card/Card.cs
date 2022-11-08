@@ -18,6 +18,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<int> Used;
 
     public int Amount => _amount;
+    public CardStage Stage { get; private set; }
 
     public void UseOne()
     {
@@ -39,7 +40,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void ComeBack()
     {
         _amount++;
-        gameObject.SetActive(true);
+
+        if (Stage != CardStage.Three)
+            Stage++;
+
         CameBack?.Invoke(this);
     }
 
