@@ -14,6 +14,24 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<PointerEventData, Card> BeginDrag;
     public event Action<PointerEventData, Card> EndDrag;
     public event Action<Card> CameBack;
+<<<<<<< Updated upstream:Assets/_Scripts/UI/Card.cs
+=======
+    public event Action<int> Used;
+
+    public int Amount => _amount;
+
+    public void UseOne()
+    {
+        _amount--;
+        Used?.Invoke(_amount);
+    }
+
+    public void DropOut(Vector3 mousePosition)
+    {
+        _amount--;
+        Drop?.Invoke(this, mousePosition);
+    }
+>>>>>>> Stashed changes:Assets/_Scripts/UI/Card/Card.cs
 
     public void DropOut()
     {
@@ -22,6 +40,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void ComeBack()
     {
+        _amount++;
         gameObject.SetActive(true);
         CameBack?.Invoke(this);
     }

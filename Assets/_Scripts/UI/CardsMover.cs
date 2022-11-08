@@ -46,8 +46,6 @@ public class CardsMover : MonoBehaviour
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        card.transform.SetParent(_draggingParent);
-
         CardTaken?.Invoke();
     }
 
@@ -56,7 +54,13 @@ public class CardsMover : MonoBehaviour
         bool result = TryApply(card, eventData.position);
 
         if (result == false)
+<<<<<<< Updated upstream
             card.transform.SetParent(transform);
+=======
+        {
+            card.CancleDrop();
+        }
+>>>>>>> Stashed changes
 
         CardDrop?.Invoke();
     }
@@ -101,10 +105,26 @@ public class CardsMover : MonoBehaviour
             {
                 if (applicable.TryApply(card, hit.point))
                 {
+<<<<<<< Updated upstream
                     UnRegister(card);
 
                     card.CameBack += OnCardComeBack;
                     card.DropOut();
+=======
+                    if (card.Amount <= 1)
+                    {
+                        UnRegister(card);
+                        card.DropOut(mousePosition);
+                        card.CameBack += OnCardComeBack;
+                    }
+                    else
+                    {
+                        card.UseOne();
+                        card.transform.SetParent(transform);
+                    }
+
+                    Spawned?.Invoke(applicable.Spawned);
+>>>>>>> Stashed changes
 
                     return true;
                 }
