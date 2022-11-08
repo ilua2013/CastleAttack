@@ -11,6 +11,7 @@ public class CardsHandView : MonoBehaviour
     private const float ScaleFactor = 1.2f;
 
     private List<CardHoverView> _cards;
+    private CardsInHandComparer _comparer = new CardsInHandComparer();
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class CardsHandView : MonoBehaviour
             card.BeginDrag += OnBeginDrag;
             card.Drop += OnDrop;
             card.CancelDrop += OnCancelDrop;
+            card.CameBack += OnCameBack;
+            card.Used += OnUsed;
         }
     }
 
@@ -38,6 +41,8 @@ public class CardsHandView : MonoBehaviour
             card.BeginDrag -= OnBeginDrag;
             card.Drop -= OnDrop;
             card.CancelDrop -= OnCancelDrop;
+            card.CameBack -= OnCameBack;
+            card.Used -= OnUsed;
         }
     }
 
@@ -49,7 +54,9 @@ public class CardsHandView : MonoBehaviour
     private void Shuffling()
     {
         Vector3 center = transform.position;
-        int number = (-_cards.Count + 1) / 2;
+        int number = -_cards.Count / 2;
+
+        _cards.Sort(_comparer);
 
         foreach (CardHoverView card in _cards)
         {
@@ -61,7 +68,8 @@ public class CardsHandView : MonoBehaviour
             Quaternion rotation = Quaternion.FromToRotation(Vector3.down, transform.position - position);
 
             card.transform.rotation = rotation;
-            card.MoveTo(lerpPosition, () => card.SaveStartState(lerpPosition, card.transform.GetSiblingIndex()));
+            card.SaveStartState(lerpPosition, card.transform.GetSiblingIndex());
+            card.MoveTo(lerpPosition);
 
             number++;
         }
@@ -118,10 +126,26 @@ public class CardsHandView : MonoBehaviour
 
     private void OnDrop(CardHoverView card)
     {
+        _cards.Remove(card);
         Shuffling();
     }
 
     private void OnCancelDrop(CardHoverView card)
+    {
+        _cards.Add(card);
+        Shuffling();
+    }
+
+    private void OnCameBack(CardHoverView card)
+    {
+        if (card.Card.Amount <= 1)
+        {
+            _cards.Add(card);
+            Shuffling();
+        }
+    }
+
+    private void OnUsed(CardHoverView card, int count)
     {
         _cards.Add(card);
         Shuffling();

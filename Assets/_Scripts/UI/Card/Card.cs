@@ -27,6 +27,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void DropOut(Vector3 mousePosition)
     {
+        _amount--;
         Drop?.Invoke(this, mousePosition);
     }
 
@@ -37,6 +38,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void ComeBack()
     {
+        _amount++;
         gameObject.SetActive(true);
         CameBack?.Invoke(this);
     }

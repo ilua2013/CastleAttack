@@ -18,16 +18,20 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public event Action<CardHoverView> BeginDrag;
     public event Action<CardHoverView> CancelDrop;
     public event Action<CardHoverView> Drop;
+    public event Action<CardHoverView> CameBack;
+    public event Action<CardHoverView, int> Used;
 
     public Vector3 StartPosition { get; private set; }
     public Vector3 StartScaling { get; private set; }
     public int StartIndex { get; private set; }
     public bool CanHover { get; private set; } = true;
+    public Card Card => _card;
 
     private void Awake()
     {
         _card = GetComponent<Card>();
         StartScaling = transform.localScale;
+        StartIndex = transform.GetSiblingIndex();
     }
 
     private void OnEnable()
@@ -35,6 +39,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.BeginDrag += OnBeginDrag;
         _card.Drop += OnDrop;
         _card.CancelDrop += OnCancelDrag;
+        _card.CameBack += OnCameBack;
+        _card.Used += OnUse;
     }
 
     private void OnDisable()
@@ -42,6 +48,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.BeginDrag -= OnBeginDrag;
         _card.Drop -= OnDrop;
         _card.CancelDrop -= OnCancelDrag;
+        _card.CameBack -= OnCameBack;
+        _card.Used -= OnUse;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -107,6 +115,12 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         BeginDrag?.Invoke(this);
     }
 
+    private void OnCameBack(Card card)
+    {
+        CanHover = true;
+        CameBack?.Invoke(this);
+    }
+
     private void OnCancelDrag(Card card)
     {
         CanHover = true;
@@ -117,6 +131,12 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         CanHover = false;
         Drop?.Invoke(this);
+    }
+
+    private void OnUse(int count)
+    {
+        CanHover = true;
+        Used?.Invoke(this, count);
     }
 
     private IEnumerator LerpPosition(Vector3 to, Action onEndCallback = null)

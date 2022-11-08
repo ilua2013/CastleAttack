@@ -45,8 +45,6 @@ public class CardsMover : MonoBehaviour
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        card.transform.SetParent(_draggingParent);
-
         CardTaken?.Invoke();
     }
 
@@ -56,7 +54,6 @@ public class CardsMover : MonoBehaviour
 
         if (result == false)
         {
-            card.transform.SetParent(transform);
             card.CancleDrop();
         }
 
@@ -67,7 +64,6 @@ public class CardsMover : MonoBehaviour
     {
         RegisterCard(card);
         card.CameBack -= OnCardComeBack;
-        card.transform.SetParent(transform);
     }
 
     private bool TryApply(Card card, Vector3 mousePosition)
@@ -86,9 +82,7 @@ public class CardsMover : MonoBehaviour
             {
                 if (applicable.TryApplyFriend(card, hit.point))
                 {
-                    card.UseOne();
-
-                    if (card.Amount <= 0)
+                    if (card.Amount <= 1)
                     {
                         UnRegister(card);
                         card.DropOut(mousePosition);
@@ -96,8 +90,7 @@ public class CardsMover : MonoBehaviour
                     }
                     else
                     {
-                        card.CancleDrop();
-                        card.transform.SetParent(transform);
+                        card.UseOne();
                     }
 
                     Spawned?.Invoke(applicable.Spawned);

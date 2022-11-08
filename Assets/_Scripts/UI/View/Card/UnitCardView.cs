@@ -22,14 +22,21 @@ public class UnitCardView : MonoBehaviour
     private void OnEnable()
     {
         _card.Used += OnCardUse;
+        _card.CameBack += OnCardCameBack;
     }
 
     private void OnDisable()
     {
         _card.Used -= OnCardUse;
+        _card.CameBack -= OnCardCameBack;
     }
 
     private void OnCardUse(int amount)
+    {
+        WriteText();
+    }
+
+    private void OnCardCameBack(Card card)
     {
         WriteText();
     }
