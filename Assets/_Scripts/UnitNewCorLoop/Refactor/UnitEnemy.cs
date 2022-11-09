@@ -9,7 +9,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
-    public Card Card { get; private set; }
+    public UnitCard Card { get; private set; }
     private int _currentStep;
 
     public int CurrentStep => _currentStep;
@@ -43,7 +43,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
         Mover.CellChanged -= StartMove;
     }
 
-    public void Init(Card card, Cell cell)
+    public void Init(UnitCard card, Cell cell)
     {
         Card = card;
         Mover.Init(this, transform, cell);

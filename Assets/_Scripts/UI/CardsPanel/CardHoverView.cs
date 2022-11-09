@@ -39,7 +39,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.BeginDrag += OnBeginDrag;
         _card.Drop += OnDrop;
         _card.CancelDrop += OnCancelDrag;
-        _card.CameBack += OnCameBack;
         _card.Used += OnUse;
     }
 
@@ -48,7 +47,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.BeginDrag -= OnBeginDrag;
         _card.Drop -= OnDrop;
         _card.CancelDrop -= OnCancelDrag;
-        _card.CameBack -= OnCameBack;
         _card.Used -= OnUse;
     }
 
@@ -113,12 +111,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         CanHover = false;
         BeginDrag?.Invoke(this);
-    }
-
-    private void OnCameBack(Card card)
-    {
-        CanHover = true;
-        CameBack?.Invoke(this);
     }
 
     private void OnCancelDrag(Card card)
