@@ -5,25 +5,25 @@ using UnityEngine;
 public class ProjectorPointer : MonoBehaviour
 {
     private HighlightingCell _previous;
-    private CardsMover _cardsMover;
+    private CardsHand _cardsHand;
 
     private bool _isCardInHand;
 
     private void Awake()
     {
-        _cardsMover = FindObjectOfType<CardsMover>();
+        _cardsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
     {
-        _cardsMover.CardTaken += OnCardTaken;
-        _cardsMover.CardDrop += OnCardDrop;
+        _cardsHand.CardTaken += OnCardTaken;
+        _cardsHand.CardDrop += OnCardDrop;
     }
 
     private void OnDisable()
     {
-        _cardsMover.CardTaken -= OnCardTaken;
-        _cardsMover.CardDrop -= OnCardDrop;
+        _cardsHand.CardTaken -= OnCardTaken;
+        _cardsHand.CardDrop -= OnCardDrop;
     }
 
     private void Update()

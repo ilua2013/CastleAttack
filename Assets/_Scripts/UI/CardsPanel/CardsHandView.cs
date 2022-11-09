@@ -27,7 +27,6 @@ public class CardsHandView : MonoBehaviour
             card.BeginDrag += OnBeginDrag;
             card.Drop += OnDrop;
             card.CancelDrop += OnCancelDrop;
-            card.CameBack += OnCameBack;
             card.Used += OnUsed;
         }
     }
@@ -41,7 +40,6 @@ public class CardsHandView : MonoBehaviour
             card.BeginDrag -= OnBeginDrag;
             card.Drop -= OnDrop;
             card.CancelDrop -= OnCancelDrop;
-            card.CameBack -= OnCameBack;
             card.Used -= OnUsed;
         }
     }
@@ -136,13 +134,25 @@ public class CardsHandView : MonoBehaviour
         Shuffling();
     }
 
-    private void OnCameBack(CardHoverView card)
+    public void CardAdd(Card card)
     {
-        if (card.Card.Amount <= 1)
-        {
-            _cards.Add(card);
-            Shuffling();
-        }
+        CardHoverView cardHover = card.GetComponent<CardHoverView>();
+
+        cardHover.Enter += OnHover;
+        cardHover.Exit += OnRemoveHover;
+        cardHover.BeginDrag += OnBeginDrag;
+        cardHover.Drop += OnDrop;
+        cardHover.CancelDrop += OnCancelDrop;
+        cardHover.Used += OnUsed;
+
+        _cards.Add(cardHover);
+        Shuffling();
+    }
+
+    public void CardComeBack(Card card)
+    {
+        _cards.Add(card.GetComponent<CardHoverView>());
+        Shuffling();
     }
 
     private void OnUsed(CardHoverView card, int count)

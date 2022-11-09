@@ -29,7 +29,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
             UnitFriend unitFriend = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
             Spawned = unitFriend;
 
-            unitFriend.Init(card, GetComponent<Cell>());
+            unitFriend.Init(unitCard, GetComponent<Cell>());
 
             SpawnedUnit?.Invoke(unitFriend);
 

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class BattleSystem : MonoBehaviour
 {
     [SerializeField] private Button _buttonStartFight;
-    [SerializeField] private CardsMover _cardMover;
+    [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private float _delayBeetwenStep;
 
@@ -28,20 +28,20 @@ public class BattleSystem : MonoBehaviour
 
     private void OnValidate()
     {
-        _cardMover = FindObjectOfType<CardsMover>();
+        _cardsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
     {
         _buttonStartFight.onClick.AddListener(StartBattle);
-        _cardMover.Spawned += AddUnit;
+        _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
     }
 
     private void OnDisable()
     {
         _buttonStartFight.onClick.RemoveListener(StartBattle);
-        _cardMover.Spawned -= AddUnit;
+        _cardsHand.Spawned -= AddUnit;
         _enemySpawner.Spawned_get -= AddUnit;
     }
 
