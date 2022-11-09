@@ -19,17 +19,19 @@ public class UnitCardView : MonoBehaviour
 
     private void OnEnable()
     {
-        _card.Used += OnCardUse;
+        _card.Used += OnAmountChange;
         _card.CameBack += OnCardCameBack;
+        _card.AmountChanged += OnAmountChange;
     }
 
     private void OnDisable()
     {
-        _card.Used -= OnCardUse;
+        _card.Used -= OnAmountChange;
         _card.CameBack -= OnCardCameBack;
+        _card.AmountChanged -= OnAmountChange;
     }
 
-    private void OnCardUse(int amount)
+    private void OnAmountChange(int amount)
     {
         WriteText();
     }
