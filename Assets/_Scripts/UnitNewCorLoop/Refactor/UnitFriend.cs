@@ -58,10 +58,8 @@ public class UnitFriend : MonoBehaviour, IUnit
     {
         Mover.Die();
         Fighter.Die();
+        gameObject.SetActive(false);
         Card.ComeBack();
-
-        Returned?.Invoke();
-        Destroy(gameObject);
     }
 
     public void DoStep()
