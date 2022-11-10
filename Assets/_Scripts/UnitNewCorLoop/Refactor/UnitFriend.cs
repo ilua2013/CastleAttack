@@ -9,10 +9,21 @@ public class UnitFriend : MonoBehaviour, IUnit
     [field:SerializeField] public Mover Mover { get; private set; }
     [field:SerializeField] public Fighter Fighter { get; private set; }
 
+    [SerializeField] private int _topDistance = 0;
+    [SerializeField] private int _rightDistance = 0;
+    [SerializeField] private int _bottomDistance = 0;
+    [SerializeField] private int _leftDistance = 0;
+
     public UnitCard Card { get; private set; }
     private int _currentStep;
 
     public int CurrentStep => _currentStep;
+    public int TopDistance => _topDistance;
+    public int RightDistance => _rightDistance;
+
+    public int BottomDistance => _bottomDistance;
+
+    public int LeftDistance => _leftDistance;
 
     public event Action Returned;
     public event Action Attacked;
@@ -95,11 +106,26 @@ public class UnitFriend : MonoBehaviour, IUnit
 
     private UnitEnemy TryAttack()
     {
-        var units = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetForwardsCell(Fighter.DistanceAttack));
+        List<IUnit> units = new List<IUnit>();
+
+        var unitsTop = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetTopCell(_topDistance));       
+        units.AddRange(unitsTop);
+
+        var unitsRight = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetRightCell(_rightDistance));
+        units.AddRange(unitsRight);
+
+        var unitsLeft = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetLeftCell(_leftDistance));
+        units.AddRange(unitsLeft);
+
+        var unitsBottom = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetBottomCell(_bottomDistance));
+        units.AddRange(unitsBottom);
+
 
         foreach (var item in units)
             if (item is UnitEnemy unitEnemy)
                 return unitEnemy;
+
+        
 
         return null;
     }

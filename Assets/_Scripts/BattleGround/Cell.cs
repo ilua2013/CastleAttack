@@ -85,7 +85,7 @@ public class Cell : MonoBehaviour
         return units;
     }
 
-    public List<Cell> GetForwardsCell(int countForward)
+    public List<Cell> GetTopCell(int countForward)
     {
         List<Cell> cells = new List<Cell>();
         Cell currentCell = this;
@@ -96,6 +96,22 @@ public class Cell : MonoBehaviour
             {
                 cells.Add(currentCell.Top);
                 currentCell = currentCell.Top != null ? currentCell.Top : null;
+            }
+        }
+        return cells;
+    }
+
+    public List<Cell> GetRightCell(int countForward)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell currentCell = this;
+
+        for (int i = 0; i < countForward; i++)
+        {
+            if (currentCell != null && currentCell.Right != null)
+            {
+                cells.Add(currentCell.Right);
+                currentCell = currentCell.Right != null ? currentCell.Right : null;
             }
         }
         return cells;
@@ -117,22 +133,26 @@ public class Cell : MonoBehaviour
         return cells;
     }
 
-    public List<Cell> GetVerticalCells()
+    public List<Cell> GetLeftCell(int countForward)
     {
         List<Cell> cells = new List<Cell>();
         Cell currentCell = this;
 
-        while(currentCell.Top != null)
-            currentCell = currentCell.Top;
-
-        while(currentCell != null)
+        for (int i = 0; i < countForward; i++)
         {
-            cells.Add(currentCell);
-            currentCell = currentCell.Bot;
+            if (currentCell != null)
+            {
+                if (currentCell.Left != null)
+                {
+                    cells.Add(currentCell.Left);
+                }
+               
+                currentCell = currentCell.Left != null ? currentCell.Left : null;
+            }
         }
-
         return cells;
     }
+   
 }
 
 public enum CellIs
