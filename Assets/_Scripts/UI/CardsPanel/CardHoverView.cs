@@ -68,6 +68,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ResetToStartState()
     {
+        CanHover = true;
+
         if (_coroutinePosition != null)
             StopCoroutine(_coroutinePosition);
 

@@ -12,9 +12,10 @@ public class UnitCard : Card
 
     public event Action<UnitCard> StageUp;
     public event Action<UnitCard> CameBack;
+    public event Action<int> AmountChanged;
 
     public UnitFriend UnitPrefab => _unitPrefab;
-    public Card NextStage => _nextStage;
+    public UnitCard NextStage => _nextStage;
     public CardStage Stage => _stage;
 
     public void ComeBack()
@@ -25,8 +26,16 @@ public class UnitCard : Card
         }
         else
         {
-            Amount++;
-            CameBack?.Invoke(this);
+            if (Amount == 0)
+                CameBack?.Invoke(this);
+
+            Merge();
         }
+    }
+
+    public void Merge()
+    {
+        Amount++;
+        AmountChanged?.Invoke(Amount);
     }
 }

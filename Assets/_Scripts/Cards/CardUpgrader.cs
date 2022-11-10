@@ -36,14 +36,26 @@ public class CardUpgrader : MonoBehaviour
 
     private void OnCardStageUp(UnitCard card)
     {
-        UnitCard unitCard = Instantiate(card.NextStage, _cardsHand.transform) as UnitCard;
+        foreach (var other in _cards)
+        {
+            if (other.UnitPrefab == card.NextStage.UnitPrefab)
+            {
+                if (other.gameObject.activeInHierarchy)
+                {
+                    other.Merge();
+                    return;
+                }
+            }
+        }
 
-        unitCard.StageUp += OnCardStageUp;
-        unitCard.CameBack += OnCameBack;
+        UnitCard newCard = Instantiate(card.NextStage, _cardsHand.transform);
 
-        _cards.Add(unitCard);
-        _cardsHand.CardAdd(unitCard);
-        _cardsHandView.CardAdd(unitCard);
+        newCard.StageUp += OnCardStageUp;
+        newCard.CameBack += OnCameBack;
+
+        _cards.Add(newCard);
+        _cardsHand.CardAdd(newCard);
+        _cardsHandView.CardAdd(newCard);
     }
 
     private void OnCameBack(UnitCard card)

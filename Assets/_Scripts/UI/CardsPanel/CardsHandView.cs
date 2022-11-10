@@ -151,7 +151,9 @@ public class CardsHandView : MonoBehaviour
 
     public void CardComeBack(Card card)
     {
-        _cards.Add(card.GetComponent<CardHoverView>());
+        CardHoverView cardHover = card.GetComponent<CardHoverView>();
+
+        _cards.Add(cardHover);
         Shuffling();
     }
 

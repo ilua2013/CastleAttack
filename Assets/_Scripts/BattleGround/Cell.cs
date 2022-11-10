@@ -7,14 +7,22 @@ public class Cell : MonoBehaviour
     [SerializeField] private int _number;
     [Header("CellNeighbor")]
     [SerializeField] private Cell _top;
+    [SerializeField] private Cell _topLeft;
+    [SerializeField] private Cell _topRight;
     [SerializeField] private Cell _bot;
+    [SerializeField] private Cell _botLeft;
+    [SerializeField] private Cell _botRight;
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
 
     private IUnit _currentUnit;
 
     public Cell Top => _top;
+    public Cell TopRight => _topRight;
+    public Cell TopLeft => _topLeft;
     public Cell Bot => _bot;
+    public Cell BotRight => _botRight;
+    public Cell BotLeft => _botLeft;
     public Cell Left => _left;
     public Cell Right => _right;
     public CellIs CellIs => _cellIs;
@@ -60,6 +68,18 @@ public class Cell : MonoBehaviour
                 break;
             case CellNeighbor.Left:
                 _left = cell;
+                break;
+            case CellNeighbor.TopLeft:
+                _topLeft = cell;
+                break;
+            case CellNeighbor.TopRight:
+                _topRight = cell;
+                break;
+            case CellNeighbor.BotLeft:
+                _botLeft = cell;
+                break;
+            case CellNeighbor.BotRight:
+                _botRight = cell;
                 break;
         }
     }
