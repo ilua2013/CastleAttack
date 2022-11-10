@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] private int _amount;
 
     public int Amount { get => _amount; protected set => _amount = value; }
 
+    public event Action<PointerEventData, Card> Clicked;
     public event Action<PointerEventData, Card> Drag;
     public event Action<PointerEventData, Card> BeginDrag;
     public event Action<PointerEventData, Card> EndDrag;
@@ -49,5 +50,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         EndDrag?.Invoke(eventData, this);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Clicked?.Invoke(eventData, this);
     }
 }
