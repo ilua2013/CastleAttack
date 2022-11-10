@@ -51,13 +51,11 @@ public class CardReplenisher : MonoBehaviour
 
     private void OnCardStageUp(UnitCard card)
     {
-        Debug.Log(card);
         CreateUnit(card.NextStage);
     }
 
     private void OnCameBack(UnitCard card)
     {
-        Debug.Log(card);
         _cardsHand.CardComeBack(card);
         _cardsHandView.CardComeBack(card);
     }
