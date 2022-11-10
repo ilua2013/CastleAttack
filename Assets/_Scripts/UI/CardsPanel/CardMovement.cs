@@ -21,7 +21,7 @@ public class CardMovement : MonoBehaviour
         _card = GetComponent<Card>();
 
         _initialScale = transform.localScale;
-        _draggingParent = transform.parent.parent;
+        _draggingParent = transform.parent;
     }
 
     private void OnEnable()
