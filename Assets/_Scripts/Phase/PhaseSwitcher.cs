@@ -54,16 +54,12 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnCardSelected(Card card)
     {
-        Debug.Log("Card Selecrt");
         Switch(PhaseType.CardPlacement);
     }
 
     private void Switch(PhaseType phaseType)
     {
-        Debug.Log("Phase switch to " + phaseType);
         foreach (IPhaseHandler handler in _handlers)
-        {
             handler.SwitchPhase(phaseType);
-        }
     }
 }

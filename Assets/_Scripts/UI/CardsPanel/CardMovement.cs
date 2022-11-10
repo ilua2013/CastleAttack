@@ -38,7 +38,7 @@ public class CardMovement : MonoBehaviour
         _card.Drop -= OnDrop;
     }
 
-    private void Update()
+    public void Move()
     {
         if (_target == null)
             return;

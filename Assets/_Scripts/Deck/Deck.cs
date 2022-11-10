@@ -30,7 +30,7 @@ public class Deck : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Card card = _cardObjects[Random.Range(0, _cardObjects.Count - 1)];
+            Card card = _cardObjects[Random.Range(0, _cardObjects.Count)];
 
             if (result.Contains(card))
             {
@@ -42,5 +42,14 @@ public class Deck : MonoBehaviour
         }
 
         return result.ToArray();
+    }
+
+    public void ReturnCards(Card[] cards)
+    {
+        foreach (Card card in cards)
+        {
+            card.transform.SetParent(transform);
+            card.gameObject.SetActive(false);
+        }
     }
 }
