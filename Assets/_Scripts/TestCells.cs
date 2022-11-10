@@ -22,5 +22,5 @@ public class TestCells : MonoBehaviour
 }
 public enum CellNeighbor
 {
-    Left, Top, Right, Bot
+    Left, Top, Right, Bot, TopLeft, TopRight, BotLeft, BotRight
 }
