@@ -9,6 +9,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField] private int _amount;
 
     public int Amount { get => _amount; protected set => _amount = value; }
+    public bool IsActive { get; private set; }
 
     public event Action<PointerEventData, Card> Clicked;
     public event Action<PointerEventData, Card> Drag;
@@ -18,6 +19,11 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<Card, Vector3> Drop;
     public event Action<Card> CancelDrop;
     public event Action<int> Used;
+
+    public void Activate(bool isActive)
+    {
+        IsActive = isActive;
+    }
 
     public void UseOne()
     {
@@ -39,17 +45,20 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        BeginDrag?.Invoke(eventData, this);
+        if (IsActive)
+            BeginDrag?.Invoke(eventData, this);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Drag?.Invoke(eventData, this);
+        if (IsActive)
+            Drag?.Invoke(eventData, this);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        EndDrag?.Invoke(eventData, this);
+        if (IsActive)
+            EndDrag?.Invoke(eventData, this);
     }
 
     public void OnPointerClick(PointerEventData eventData)

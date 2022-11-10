@@ -11,11 +11,18 @@ public class CardsHandView : MonoBehaviour
     private const float ScaleFactor = 1.2f;
 
     private List<CardHoverView> _cards;
+    private List<CardMovement> _cardMovements = new List<CardMovement>();
     private CardsInHandComparer _comparer = new CardsInHandComparer();
 
     private void Awake()
     {
         _cards = GetComponentsInChildren<CardHoverView>().ToList();
+
+        foreach (CardHoverView card in _cards)
+        {
+            if (card.TryGetComponent(out CardMovement movement))
+                _cardMovements.Add(movement);
+        }
     }
 
     private void OnEnable()
@@ -47,6 +54,12 @@ public class CardsHandView : MonoBehaviour
     private void Start()
     {
         Shuffling();
+    }
+
+    private void Update()
+    {
+        foreach (CardMovement cardMovement in _cardMovements)
+            cardMovement.Move();
     }
 
     private void Shuffling()
@@ -146,6 +159,10 @@ public class CardsHandView : MonoBehaviour
         cardHover.Used += OnUsed;
 
         _cards.Add(cardHover);
+
+        if (cardHover.TryGetComponent(out CardMovement movement))
+            _cardMovements.Add(movement);
+
         Shuffling();
     }
 

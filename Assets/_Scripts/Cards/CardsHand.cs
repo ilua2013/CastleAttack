@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardsHand : MonoBehaviour
+public class CardsHand : MonoBehaviour, IPhaseHandler
 {
+    [SerializeField] private Phase[] _phases;
+
     private List<Card> _cards = new List<Card>();
+
+    public Phase[] Phases => _phases;
 
     public event Action<UnitFriend> Spawned;
     public event Action CardTaken;
@@ -56,6 +60,14 @@ public class CardsHand : MonoBehaviour
         }
 
         CardDrop?.Invoke();
+    }
+
+    public void SwitchPhase(PhaseType phaseType)
+    {
+        bool isActive = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType).IsActive;
+
+        foreach (Card card in _cards)
+            card.Activate(isActive);
     }
 
     public void CardAdd(Card card)

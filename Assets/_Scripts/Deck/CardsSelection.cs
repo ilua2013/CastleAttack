@@ -56,9 +56,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             selectedCard.gameObject.SetActive(false);
         }
 
-        Card newCard = Instantiate(card);
-        newCard.gameObject.SetActive(true);
-
-        CardSelected?.Invoke(newCard);
+        _deck.ReturnCards(_selectedCards);
+        CardSelected?.Invoke(card);
     }
 }
