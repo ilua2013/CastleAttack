@@ -80,18 +80,20 @@ public class UnitFriend : MonoBehaviour, IUnit
 
         UnitEnemy enemy = TryAttack();
 
-        if(enemy != null)
+        if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter);
             Attacked?.Invoke();
+
+            _currentStep -= 2;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Top))
         {
             Mover.Move(Mover.CurrentCell.Top);
             Moved?.Invoke();
-        }
 
-        _currentStep--;
+            _currentStep--;
+        }
 
         if (_currentStep <= 0)
             EndedSteps?.Invoke();
