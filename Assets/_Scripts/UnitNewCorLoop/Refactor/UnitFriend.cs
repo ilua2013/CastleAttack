@@ -94,6 +94,10 @@ public class UnitFriend : MonoBehaviour, IUnit
 
             _currentStep--;
         }
+        else
+        {
+            _currentStep--;
+        }
 
         if (_currentStep <= 0)
             EndedSteps?.Invoke();
