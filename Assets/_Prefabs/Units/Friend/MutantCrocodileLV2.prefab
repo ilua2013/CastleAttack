@@ -96,6 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxStep: 3
+  _distanceAttack:
+  - Side: 1
+    Distance: 2
+  - Side: 4
+    Distance: 2
+  - Side: 5
+    Distance: 2
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
     _speed: 5
@@ -105,6 +112,10 @@ MonoBehaviour:
     _distanceAttack: 1
     _damage: 4
     _maxHealth: 6
+  _topDistance: 0
+  _rightDistance: 0
+  _bottomDistance: 0
+  _leftDistance: 0
 --- !u!114 &6118880768389054476
 MonoBehaviour:
   m_ObjectHideFlags: 0

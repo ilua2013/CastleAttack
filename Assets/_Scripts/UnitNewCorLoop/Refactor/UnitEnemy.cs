@@ -6,6 +6,7 @@ using System;
 public class UnitEnemy : MonoBehaviour, IUnit
 {
     [SerializeField] private int _maxStep = 3;
+    [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
@@ -83,11 +84,10 @@ public class UnitEnemy : MonoBehaviour, IUnit
 
     private UnitFriend TryAttack()
     {
-        var units = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetBottomCell(Fighter.DistanceAttack));
+        List<UnitFriend> units = Mover.CurrentCell.GetFriendUnits(_distanceAttack);
 
         foreach (var item in units)
-            if (item is UnitFriend unitFriend)
-                return unitFriend;
+            return item;
 
         return null;
     }
