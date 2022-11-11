@@ -6,9 +6,9 @@ using UnityEngine;
 public class UnitFriend : MonoBehaviour, IUnit
 {
     [SerializeField] private int _maxStep = 3;
+    [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field:SerializeField] public Mover Mover { get; private set; }
     [field:SerializeField] public Fighter Fighter { get; private set; }
-
     [SerializeField] private int _topDistance = 0;
     [SerializeField] private int _rightDistance = 0;
     [SerializeField] private int _bottomDistance = 0;
@@ -104,26 +104,10 @@ public class UnitFriend : MonoBehaviour, IUnit
 
     private UnitEnemy TryAttack()
     {
-        List<IUnit> units = new List<IUnit>();
-
-        var unitsTop = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetTopCell(_topDistance));       
-        units.AddRange(unitsTop);
-
-        var unitsRight = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetRightCell(_rightDistance));
-        units.AddRange(unitsRight);
-
-        var unitsLeft = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetLeftCell(_leftDistance));
-        units.AddRange(unitsLeft);
-
-        var unitsBottom = Mover.CurrentCell.GetUnits(Mover.CurrentCell.GetBottomCell(_bottomDistance));
-        units.AddRange(unitsBottom);
-
+        List<UnitEnemy> units = Mover.CurrentCell.GetEnemyUnits(_distanceAttack);
 
         foreach (var item in units)
-            if (item is UnitEnemy unitEnemy)
-                return unitEnemy;
-
-        
+                return item;
 
         return null;
     }
@@ -135,4 +119,11 @@ public class UnitFriend : MonoBehaviour, IUnit
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+}
+
+[Serializable]
+public class DistanceAttack
+{
+    [SerializeField] public CellNeighbor Side;
+    [SerializeField] public int Distance;
 }

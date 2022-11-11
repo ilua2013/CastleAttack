@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxStep: 3
+  _distanceAttack:
+  - Side: 1
+    Distance: 3
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
     _speed: 5
@@ -128,6 +131,10 @@ MonoBehaviour:
     _distanceAttack: 3
     _damage: 2
     _maxHealth: 4
+  _topDistance: 0
+  _rightDistance: 0
+  _bottomDistance: 0
+  _leftDistance: 0
 --- !u!114 &6687131897390697683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,11 +533,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fighter:
-    _type: 0
-    _distanceAttack: 0
-    _damage: 0
-    _maxHealth: 0
   _bar: {fileID: 4581620883515003956}
 --- !u!1 &8814044131612141863
 GameObject:
