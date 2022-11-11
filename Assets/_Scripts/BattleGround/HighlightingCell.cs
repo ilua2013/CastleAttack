@@ -23,6 +23,7 @@ public class HighlightingCell : MonoBehaviour
 
     public void UnSelect()
     {
+        if(_renderer != null)
         _renderer.material.color = _default;
     }
 }
