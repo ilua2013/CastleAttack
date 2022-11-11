@@ -35,7 +35,6 @@ public class HealSpell : Spell
         {
             if (collider.TryGetComponent(out IUnit triggered))
             {
-                Debug.Log("Affect " + triggered);
                 triggered.Fighter.RecoveryHealth(_recovery);
             }
         }
