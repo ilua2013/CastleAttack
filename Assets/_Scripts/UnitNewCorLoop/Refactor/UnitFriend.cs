@@ -8,22 +8,12 @@ public class UnitFriend : MonoBehaviour, IUnit
     [SerializeField] private int _maxStep = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field:SerializeField] public Mover Mover { get; private set; }
-    [field:SerializeField] public Fighter Fighter { get; private set; }
-    [SerializeField] private int _topDistance = 0;
-    [SerializeField] private int _rightDistance = 0;
-    [SerializeField] private int _bottomDistance = 0;
-    [SerializeField] private int _leftDistance = 0;
+    [field:SerializeField] public Fighter Fighter { get; private set; }   
 
     public UnitCard Card { get; private set; }
     private int _currentStep;
 
-    public int CurrentStep => _currentStep;
-    public int TopDistance => _topDistance;
-    public int RightDistance => _rightDistance;
-
-    public int BottomDistance => _bottomDistance;
-
-    public int LeftDistance => _leftDistance;
+    public int CurrentStep => _currentStep;  
 
     public event Action Returned;
     public event Action Attacked;
@@ -110,6 +100,12 @@ public class UnitFriend : MonoBehaviour, IUnit
                 return item;
 
         return null;
+    }
+
+    public List<Cell> RadiusView()
+    {
+        List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
+        return cells;
     }
 
     private void OnDie()
