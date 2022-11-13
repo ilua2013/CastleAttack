@@ -62,7 +62,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         }
 
         _deck.ReturnCards(_selectedCards);
-        _cardReplenisher.Create(card);
+        _cardReplenisher.Create(card, eventData.position);
 
         CardSelected?.Invoke(card);
     }

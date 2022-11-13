@@ -35,17 +35,17 @@ public class CardReplenisher : MonoBehaviour
         }
     }
 
-    public void Create(Card card)
+    public void Create(Card card, Vector2 position)
     {
         if (card is UnitCard unitCard)
-            CreateUnit(unitCard);
+            CreateUnit(unitCard, position);
         else if (card is SpellCard spellCard)
-            CreateSpell(spellCard);
+            CreateSpell(spellCard, position);
     }
 
     private void OnCardStageUp(UnitCard card)
     {
-        CreateUnit(card.NextStage);
+        CreateUnit(card.NextStage, transform.position);
     }
 
     private void OnCameBack(UnitCard card)
@@ -54,7 +54,7 @@ public class CardReplenisher : MonoBehaviour
         _cardsHandView.CardComeBack(card);
     }
 
-    private void CreateUnit(UnitCard card)
+    private void CreateUnit(UnitCard card, Vector2 position)
     {
         foreach (UnitCard unitCard in _unitCards)
         {
@@ -68,7 +68,7 @@ public class CardReplenisher : MonoBehaviour
             }
         }
 
-        UnitCard newCard = Instantiate(card, _cardsHand.transform);
+        UnitCard newCard = Instantiate(card, position, Quaternion.identity, _cardsHand.transform);
         newCard.gameObject.SetActive(true);
 
         newCard.StageUp += OnCardStageUp;
@@ -79,7 +79,7 @@ public class CardReplenisher : MonoBehaviour
         _cardsHandView.CardAdd(newCard);
     }
 
-    private void CreateSpell(SpellCard card)
+    private void CreateSpell(SpellCard card, Vector2 position)
     {
         foreach (SpellCard spellCard in _spellCards)
         {
@@ -93,7 +93,7 @@ public class CardReplenisher : MonoBehaviour
             }
         }
 
-        SpellCard newCard = Instantiate(card, _cardsHand.transform);
+        SpellCard newCard = Instantiate(card, position, Quaternion.identity, _cardsHand.transform);
         newCard.gameObject.SetActive(true);
 
         _spellCards.Add(newCard);
