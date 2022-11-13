@@ -4,15 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(UnitFriend))]
 public class RadiusAttackView : MonoBehaviour
 {
-
     [SerializeField] private UnitFriend _unitFriend;
+
     private List<Cell> _cells = new List<Cell>();
 
     private void Start()
     {
         _cells = _unitFriend.RadiusView();
         SelectionCells(_cells);
-
     }
 
     private void OnEnable()
