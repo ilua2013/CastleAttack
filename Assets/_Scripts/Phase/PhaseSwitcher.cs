@@ -10,7 +10,7 @@ public class PhaseSwitcher : MonoBehaviour
 
     private List<IPhaseHandler> _handlers = new List<IPhaseHandler>();
 
-    private void OnValidate()
+    private void Awake()
     {
         _levelSystem = FindObjectOfType<LevelSystem>(true);
         _battleSystem = FindObjectOfType<BattleSystem>(true);

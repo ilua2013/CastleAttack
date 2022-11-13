@@ -18,7 +18,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     
     public Phase[] Phases => _phases;
 
-    private void OnValidate()
+    private void Awake()
     {
         _deck = FindObjectOfType<Deck>();
 
