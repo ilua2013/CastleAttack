@@ -12,18 +12,23 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private ParticleSystem[] _particleSystemSelectStars;
     [SerializeField] private float _secondEffect;
     [SerializeField] private ParticleSystem[] _particleDrawCard;
+    [SerializeField] private ParticleSystem[] _particleStartButton;
     [SerializeField] private Button _startFightButton;
+    [SerializeField] private GameObject _canvasTutorial;
+    [SerializeField] private CardsHand _cardsHand;
 
     private Color _defaultColor;
 
     private void OnEnable()
     {
-        _cardsSelection.CardSelected += SelectionEffect;       
+        _cardsSelection.CardSelected += SelectionEffect;
+        _cardsHand.Spawned += CardSpawned;
     }
 
     private void OnDisable()
     {
         _cardsSelection.CardSelected -= SelectionEffect;
+        _cardsHand.Spawned -= CardSpawned;
     }
 
     private void Start()
@@ -33,6 +38,8 @@ public class Tutorial : MonoBehaviour
         ParticleStop(_particleSystemSelectStars);
         ParticleStop(_particleDrawCard);
         _startFightButton.gameObject.SetActive(false);
+        _canvasTutorial.SetActive(false);
+        ParticleStop(_particleStartButton);
     }
 
     private void Update()
@@ -47,9 +54,10 @@ public class Tutorial : MonoBehaviour
 
     private void SelectionEffect(Card card)
     {
-        ParticlePlay(_particleSystemSelectStars);        
-        StartCoroutine(PlayAnimation());
-        ParticlePlay(_particleDrawCard);        
+        ParticlePlay(_particleSystemSelectStars);
+        StartCoroutine(PlayStarEffect());
+        ParticlePlay(_particleDrawCard);
+        _canvasTutorial.SetActive(true);
     }
 
     private void ParticleStop(ParticleSystem [] particleSystems)
@@ -68,10 +76,21 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayAnimation()
+    private IEnumerator PlayStarEffect()
     {
         WaitForSeconds _forSeconds = new WaitForSeconds(_secondEffect);
         yield return _forSeconds;
-        ParticleStop(_particleSystemSelectStars);    
+        ParticleStop(_particleSystemSelectStars);
+        StopCoroutine(PlayStarEffect());
+    }
+
+    private void CardSpawned(UnitFriend unitFriend)
+    {
+        ParticlePlay(_particleSystemSelectStars);
+        StartCoroutine(PlayStarEffect());
+        _canvasTutorial.SetActive(false);
+        ParticleStop(_particleDrawCard);
+        _startFightButton.gameObject.SetActive(true);
+        ParticlePlay(_particleStartButton);
     }
 }
