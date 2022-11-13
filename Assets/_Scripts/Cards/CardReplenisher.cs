@@ -11,18 +11,14 @@ public class CardReplenisher : MonoBehaviour
 
     private List<UnitCard> _unitCards = new List<UnitCard>();
     private List<SpellCard> _spellCards = new List<SpellCard>();
-    private CardsSelection _cardsSelection;
 
     private void Awake()
     {
         _unitCards = GetComponentsInChildren<UnitCard>().ToList();
-        _cardsSelection = FindObjectOfType<CardsSelection>(true);
     }
 
     private void OnEnable()
     {
-        _cardsSelection.CardSelected += OnCardSelect;
-
         foreach (UnitCard card in _unitCards)
         {
             card.StageUp += OnCardStageUp;
@@ -32,8 +28,6 @@ public class CardReplenisher : MonoBehaviour
 
     private void OnDisable()
     {
-        _cardsSelection.CardSelected -= OnCardSelect;
-
         foreach (UnitCard card in _unitCards)
         {
             card.StageUp -= OnCardStageUp;
@@ -41,7 +35,7 @@ public class CardReplenisher : MonoBehaviour
         }
     }
 
-    private void OnCardSelect(Card card)
+    public void Create(Card card)
     {
         if (card is UnitCard unitCard)
             CreateUnit(unitCard);

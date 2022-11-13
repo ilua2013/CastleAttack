@@ -11,6 +11,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     [SerializeField] private Phase[] _phases;
 
     private Deck _deck;
+    private CardReplenisher _cardReplenisher;
     private Card[] _selectedCards;
 
     public event Action<Card[]> DrawnOut;
@@ -21,9 +22,13 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     private void Awake()
     {
         _deck = FindObjectOfType<Deck>();
+        _cardReplenisher = FindObjectOfType<CardReplenisher>();
 
         if (_deck == null)
             throw new NullReferenceException(nameof(_deck));
+
+        if (_cardReplenisher == null)
+            throw new NullReferenceException(nameof(_cardReplenisher));
     }
 
     public void SwitchPhase(PhaseType phaseType)
@@ -57,6 +62,8 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         }
 
         _deck.ReturnCards(_selectedCards);
+        _cardReplenisher.Create(card);
+
         CardSelected?.Invoke(card);
     }
 }
