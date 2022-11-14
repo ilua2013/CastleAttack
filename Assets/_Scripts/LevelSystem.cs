@@ -9,7 +9,7 @@ public class LevelSystem : MonoBehaviour
     [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private BattleSystem _battleSystem;
     [Header("Wave 1")]
-    //[SerializeField] private EnemySpawner _enemySpawner1;
+    [SerializeField] private EnemySpawner _enemySpawner1;
     [Header("Wave 2")]
     [SerializeField] private EnemySpawner _enemySpawner2;
     [Header("Wave 3")]
@@ -35,7 +35,7 @@ public class LevelSystem : MonoBehaviour
     private void Start()
     {
         _currentWave = Wave.One;
-        //_enemySpawner1.Init();
+        _enemySpawner1.Init();
     }
 
     private void OnEnable()
@@ -58,19 +58,19 @@ public class LevelSystem : MonoBehaviour
         switch (_currentWave)
         {
             case Wave.One:
-                //if(_enemySpawner1.HaveWave == false)
-                //{
-                //    _currentWave++;
+                if (_enemySpawner1.HaveWave == false)
+                {
+                    _currentWave++;
 
-                //    _battleSystem.StopDoStep();
-                //    _battleSystem.ReturnToHandFriend();
-                //    _battleSystem.SetEnemySpawner(_enemySpawner2);
+                    _battleSystem.StopDoStep();
+                    _battleSystem.ReturnToHandFriend();
+                    //_battleSystem.SetEnemySpawner(_enemySpawner2);
 
-                //    _enemySpawner2.Init();
+                    _enemySpawner2.Init();
 
-                //    Wave1Finished?.Invoke();
-                //    WaveFinished?.Invoke();
-                //}
+                    Wave1Finished?.Invoke();
+                    WaveFinished?.Invoke();
+                }
                 break;
 
             case Wave.Two:
