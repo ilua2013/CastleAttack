@@ -64,14 +64,20 @@ public class UnitEnemy : MonoBehaviour, IUnit
         {
             Fighter.Attack(enemy.Fighter);
             Attacked?.Invoke();
+
+            _currentStep -= 2;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Bot))
         {
             Mover.Move(Mover.CurrentCell.Bot);
             Moved?.Invoke();
-        }
 
-        _currentStep--;
+            _currentStep--;
+        }
+        else
+        {
+            _currentStep--;
+        }
 
         if (_currentStep <= 0)
             EndedSteps?.Invoke();

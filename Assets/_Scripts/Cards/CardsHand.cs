@@ -65,6 +65,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public void SwitchPhase(PhaseType phaseType)
     {
         bool isActive = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType).IsActive;
+        Debug.Log(isActive);
 
         foreach (Card card in _cards)
             card.Activate(isActive);
