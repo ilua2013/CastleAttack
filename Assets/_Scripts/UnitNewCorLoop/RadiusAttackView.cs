@@ -12,7 +12,6 @@ public class RadiusAttackView : MonoBehaviour
     {
         _cells = _unitFriend.RadiusView();
         SelectionCells(_cells);
-
     }
 
     private void OnEnable()
