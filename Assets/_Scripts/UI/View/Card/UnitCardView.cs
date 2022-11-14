@@ -2,18 +2,15 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitCard))]
-public class UnitCardView : MonoBehaviour
+public class UnitCardView : CardView
 {
-    [SerializeField] private TMP_Text _text;
-    [SerializeField] private TMP_Text _amountText;
-
     private UnitCard _card;
     private string _descriptionTextBase;
 
     private void Awake()
     {
         _card = GetComponent<UnitCard>();
-        _descriptionTextBase = _text.text;
+        _descriptionTextBase = Text.text;
         WriteText();
     }
 
@@ -43,7 +40,7 @@ public class UnitCardView : MonoBehaviour
 
     private void WriteText()
     {
-        _text.text = $"{_descriptionTextBase}";
-        _amountText.text = $"{_card.Amount}";
+        Text.text = $"{_descriptionTextBase}";
+        AmountText.text = $"{_card.Amount}";
     }
 }
