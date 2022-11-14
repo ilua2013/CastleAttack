@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
@@ -9,6 +7,9 @@ public class HighlightingCell : MonoBehaviour
 
     private Color _default;
     private MeshRenderer _renderer;
+    private bool _isSelect = false;
+
+    public bool IsSelect => _isSelect;
 
     private void Awake()
     {
@@ -18,12 +19,13 @@ public class HighlightingCell : MonoBehaviour
 
     public void Select()
     {
+        _isSelect = true;
         _renderer.material.color = _highlight;
     }
 
     public void UnSelect()
     {
-        if(_renderer != null)
+        _isSelect = false;
         _renderer.material.color = _default;
     }
 }
