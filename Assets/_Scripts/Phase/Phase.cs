@@ -8,6 +8,7 @@ public enum PhaseType
     SelectionCard,
     Battle,
     CardPlacement,
+    Tutorial
 }
 
 [Serializable]

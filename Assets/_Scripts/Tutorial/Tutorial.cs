@@ -10,6 +10,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private Button _startFightButton;
     [SerializeField] private GameObject _canvasTutorialFingerDraw;
     [SerializeField] private GameObject _canvasTutorialFingerTap;
+    [SerializeField] private GameObject _panelTutorial;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private TutorialEffects _tutorialEffects;
     [SerializeField] private BattleSystem _battleSystem;
@@ -38,6 +39,7 @@ public class Tutorial : MonoBehaviour
         _startFightButton.gameObject.SetActive(false);
         _canvasTutorialFingerDraw.SetActive(false);
         _canvasTutorialFingerTap.SetActive(false);
+        _panelTutorial.gameObject.SetActive(false);
     }
 
     private void StepOneTwo(Card card)
@@ -63,9 +65,7 @@ public class Tutorial : MonoBehaviour
 
     private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
     {
-        //_cardsSelection.gameObject.SetActive(false);
-        Debug.Log("ggg");
-        Debug.Log(cardLod);
+        _panelTutorial.gameObject.SetActive(true);
         _viewTutorial.OnDrawOut(cardLod, cardNew);
        
     }
