@@ -149,6 +149,8 @@ public class CardsHandView : MonoBehaviour
 
     public void CardAdd(Card card)
     {
+        Debug.Log("CardAdd method calling");
+
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
 
         cardHover.Enter += OnHover;
@@ -161,7 +163,10 @@ public class CardsHandView : MonoBehaviour
         _cards.Add(cardHover);
 
         if (cardHover.TryGetComponent(out CardMovement movement))
+        {
+            Debug.Log("card successful getComponent: movement");
             _cardMovements.Add(movement);
+        }
 
         Shuffling();
     }
