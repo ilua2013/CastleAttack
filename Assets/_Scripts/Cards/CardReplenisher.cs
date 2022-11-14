@@ -12,6 +12,8 @@ public class CardReplenisher : MonoBehaviour
     private List<UnitCard> _unitCards = new List<UnitCard>();
     private List<SpellCard> _spellCards = new List<SpellCard>();
 
+    public event Action<UnitCard, UnitCard> CardUp;
+
     private void Awake()
     {
         _unitCards = GetComponentsInChildren<UnitCard>().ToList();
@@ -46,6 +48,7 @@ public class CardReplenisher : MonoBehaviour
     private void OnCardStageUp(UnitCard card)
     {
         CreateUnit(card.NextStage, transform.position);
+        CardUp?.Invoke(card, card.NextStage);
     }
 
     private void OnCameBack(UnitCard card)

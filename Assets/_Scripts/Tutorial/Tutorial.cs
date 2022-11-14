@@ -13,12 +13,15 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private TutorialEffects _tutorialEffects;
     [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardReplenisher _cardReplenisher;
+    [SerializeField] private CardViewTutorial _viewTutorial;
 
     private void OnEnable()
     {
         _cardsSelection.CardSelected += StepOneTwo;
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
+        _cardReplenisher.CardUp += StepFourFive;
 
     }
 
@@ -27,6 +30,7 @@ public class Tutorial : MonoBehaviour
         _cardsSelection.CardSelected -= StepOneTwo;
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
+        _cardReplenisher.CardUp -= StepFourFive;
     }
 
     private void Start()
@@ -54,6 +58,15 @@ public class Tutorial : MonoBehaviour
     {
         _canvasTutorialFingerTap.SetActive(false);
         _tutorialEffects.EffectThreeFour();
+       
+    }
+
+    private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
+    {
+        //_cardsSelection.gameObject.SetActive(false);
+        Debug.Log("ggg");
+        Debug.Log(cardLod);
+        _viewTutorial.OnDrawOut(cardLod, cardNew);
        
     }
 
