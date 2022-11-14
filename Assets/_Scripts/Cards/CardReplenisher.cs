@@ -13,6 +13,8 @@ public class CardReplenisher : MonoBehaviour
     private List<SpellCard> _spellCards = new List<SpellCard>();
     private CardsSelection _cardsSelection;
 
+    public event Action<UnitCard, UnitCard> CardUp;
+
     private void Awake()
     {
         _unitCards = GetComponentsInChildren<UnitCard>().ToList();
@@ -52,12 +54,14 @@ public class CardReplenisher : MonoBehaviour
     private void OnCardStageUp(UnitCard card)
     {
         CreateUnit(card.NextStage);
+        CardUp?.Invoke(card, card.NextStage);
     }
 
     private void OnCameBack(UnitCard card)
     {
         _cardsHand.CardComeBack(card);
         _cardsHandView.CardComeBack(card);
+
     }
 
     private void CreateUnit(UnitCard card)
