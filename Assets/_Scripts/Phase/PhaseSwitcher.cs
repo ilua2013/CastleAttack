@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PhaseSwitcher : MonoBehaviour
 {
-    private LevelSystem _levelSystem;
     private BattleSystem _battleSystem;
     private CardsSelection _cardSelection;
 
@@ -12,7 +11,6 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        _levelSystem = FindObjectOfType<LevelSystem>(true);
         _battleSystem = FindObjectOfType<BattleSystem>(true);
         _cardSelection = FindObjectOfType<CardsSelection>(true);
 
@@ -57,8 +55,15 @@ public class PhaseSwitcher : MonoBehaviour
         Switch(PhaseType.CardPlacement);
     }
 
-    private void Switch(PhaseType phaseType)
+    private void Switch(PhaseType phaseType )
     {
+        StartCoroutine(Delay(phaseType));
+    }
+
+    private IEnumerator Delay(PhaseType phaseType)
+    {
+        WaitForSeconds delay = new WaitForSeconds(2);
+        yield return delay;
         foreach (IPhaseHandler handler in _handlers)
             handler.SwitchPhase(phaseType);
     }
