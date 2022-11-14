@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class CardsHand : MonoBehaviour, IPhaseHandler
 {
@@ -62,13 +63,14 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         CardDrop?.Invoke();
     }
 
-    public void SwitchPhase(PhaseType phaseType)
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        bool isActive = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType).IsActive;
-        Debug.Log(isActive);
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
+
+        yield return new WaitForSeconds(phase.Delay);
 
         foreach (Card card in _cards)
-            card.Activate(isActive);
+            card.Activate(phase.IsActive);
     }
 
     public void CardAdd(Card card)

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IPhaseHandler
 {
     public Phase[] Phases { get; }
-    public void SwitchPhase(PhaseType phaseType);
+    public IEnumerator SwitchPhase(PhaseType phaseType);
 }

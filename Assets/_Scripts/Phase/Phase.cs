@@ -8,7 +8,6 @@ public enum PhaseType
     SelectionCard,
     Battle,
     CardPlacement
-   
 }
 
 [Serializable]
@@ -20,8 +19,5 @@ public class Phase
 
     public PhaseType PhaseType => _phaseType;
     public bool IsActive => _isActive;
-
     public float Delay => _delayTime;
-
-
 }

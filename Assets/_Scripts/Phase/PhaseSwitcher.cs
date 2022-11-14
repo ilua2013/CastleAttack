@@ -57,14 +57,7 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void Switch(PhaseType phaseType )
     {
-        StartCoroutine(Delay(phaseType));
-    }
-
-    private IEnumerator Delay(PhaseType phaseType)
-    {
-        WaitForSeconds delay = new WaitForSeconds(2);
-        yield return delay;
         foreach (IPhaseHandler handler in _handlers)
-            handler.SwitchPhase(phaseType);
+            StartCoroutine(handler.SwitchPhase(phaseType));
     }
 }

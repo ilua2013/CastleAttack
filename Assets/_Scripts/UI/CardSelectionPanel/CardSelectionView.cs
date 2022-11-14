@@ -31,10 +31,13 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
         _cardsSelection.DrawnOut -= OnDrawOut;
     }
 
-    public void SwitchPhase(PhaseType phaseType)
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        bool isActive = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType).IsActive;
-        gameObject.SetActive(isActive);
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
+
+        yield return new WaitForSeconds(phase.Delay);
+
+        gameObject.SetActive(phase.IsActive);
     }
 
     private void OnDrawOut(Card[] cards)

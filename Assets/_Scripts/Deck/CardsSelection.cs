@@ -31,12 +31,15 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             throw new NullReferenceException(nameof(_cardReplenisher));
     }
 
-    public void SwitchPhase(PhaseType phaseType)
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        bool isActive = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType).IsActive;
-        gameObject.SetActive(isActive);
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
+        
+        yield return new WaitForSeconds(phase.Delay);
 
-        if (isActive)
+        gameObject.SetActive(phase.IsActive);
+
+        if (phase.IsActive)
             DrawOutCards();
     }
 
