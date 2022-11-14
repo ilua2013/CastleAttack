@@ -10,6 +10,8 @@ public class Deck : MonoBehaviour
 
     private List<Card> _cardObjects = new List<Card>();
 
+    public IEnumerable<Card> Cards => _cardObjects;
+
     private void Awake()
     {
         foreach (Card card in _cards)
