@@ -8,6 +8,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 {
     [SerializeField] private int _amount;
 
+    private CardView _cardView;
+
     public int Amount { get => _amount; protected set => _amount = value; }
     public bool IsActive { get; private set; }
 
