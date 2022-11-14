@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MeteorCardView : MonoBehaviour
+public class MeteorCardView : CardView
 {
-    [SerializeField] private TMP_Text _text;
-    [SerializeField] private TMP_Text _amountText;
     [SerializeField] private MeteorSpell _description;
 
     private SpellCard _card;
@@ -15,7 +13,7 @@ public class MeteorCardView : MonoBehaviour
     private void Awake()
     {
         _card = GetComponent<SpellCard>();
-        _descriptionTextBase = _text.text;
+        _descriptionTextBase = Text.text;
         WriteText();
     }
 
@@ -43,7 +41,7 @@ public class MeteorCardView : MonoBehaviour
 
     private void WriteText()
     {
-        _text.text = $"{_descriptionTextBase} {_description.Damage}";
-        _amountText.text = $"{_card.Amount}";
+        Text.text = $"{_descriptionTextBase} {_description.Damage}";
+        AmountText.text = $"{_card.Amount}";
     }
 }
