@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using System;
 
-[RequireComponent(typeof(Inventory))]
 public class PanelController : MonoBehaviour
 {
     [SerializeField] private Button _openButton;

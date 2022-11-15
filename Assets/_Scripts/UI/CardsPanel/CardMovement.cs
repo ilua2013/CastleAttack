@@ -45,11 +45,9 @@ public class CardMovement : MonoBehaviour
 
     public void Move()
     {
-
         if (_target == null)
             return;
 
-        Debug.Log("Move");
         Vector3 position = new Vector3(_target.position.x, _target.position.y, 0);
         transform.position = Vector3.Lerp(transform.position, position, Speed * Time.deltaTime);
 
@@ -104,14 +102,11 @@ public class CardMovement : MonoBehaviour
 
     private void OnBeginMove(PointerEventData eventData, Card card)
     {
-        Debug.Log("Start drag");
         _target = eventData;
     }
 
     private void OnEndMove(PointerEventData eventData, Card card)
     {
-        Debug.Log("End drag");
-
         _target = null;
     }
 }

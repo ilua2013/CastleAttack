@@ -10,7 +10,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     [SerializeField] private int _count;
     [SerializeField] private Phase[] _phases;
 
-    private Deck _deck;
+    private CombatDeck _deck;
     private CardReplenisher _cardReplenisher;
     private Card[] _selectedCards;
 
@@ -21,7 +21,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private void Awake()
     {
-        _deck = FindObjectOfType<Deck>();
+        _deck = FindObjectOfType<CombatDeck>();
         _cardReplenisher = FindObjectOfType<CardReplenisher>();
 
         if (_deck == null)
