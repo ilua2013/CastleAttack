@@ -32,20 +32,21 @@ public class Cell : MonoBehaviour
 
     private void OnValidate()
     {
-        //List<Cell> cells = new List<Cell>();
-        //Cell currentCell = this;
-        //int number = 0;
+        if (_cellIs != CellIs.Lower)
+            return;
 
-        //while (currentCell.Top != null)
-        //    currentCell = currentCell.Top;
+        Cell currentCell = this;
+        int number = 0;
 
-        //while (currentCell != null)
-        //{
-        //    cells.Add(currentCell);
-        //    currentCell.SetNumber(number);
-        //    number++;
+        //while (currentCell.Bot != null)
         //    currentCell = currentCell.Bot;
-        //}
+
+        while (currentCell != null)
+        {
+            currentCell.SetNumber(number);
+            number++;
+            currentCell = currentCell.Top;
+        }
     }
 
     public void SetNumber(int value)
