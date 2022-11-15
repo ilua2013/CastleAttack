@@ -37,6 +37,11 @@ public class TutorialEffects : MonoBehaviour
         ParticlePlay(_particleSystemSelectStars);
     }
 
+    public void EffectFourFive()
+    {
+        ParticlePlay(_particleSystemSelectStars);
+    }
+
     private void ParticleStop(ParticleSystem[] particleSystems)
     {
         foreach (var particle in particleSystems)

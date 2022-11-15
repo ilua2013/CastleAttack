@@ -13,10 +13,11 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     private Deck _deck;
     private CardReplenisher _cardReplenisher;
     private Card[] _selectedCards;
+    private float _delayTime = 0; 
 
     public event Action<Card[]> DrawnOut;
     public event Action<Card> CardSelected;
-    
+
     public Phase[] Phases => _phases;
 
     private void Awake()
@@ -31,11 +32,21 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             throw new NullReferenceException(nameof(_cardReplenisher));
     }
 
+    public void TutorialTimeSwitch(float time)
+    {
+        _delayTime = time;
+    }
+
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
+
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
-        
-        yield return new WaitForSeconds(phase.Delay);
+
+
+        yield return new WaitForSeconds(_delayTime);
+
+        _delayTime = phase.Delay;
+
 
         gameObject.SetActive(phase.IsActive);
 
@@ -66,8 +77,8 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
         _deck.ReturnCards(_selectedCards);
         _cardReplenisher.Create(card, eventData.position);
-        
-       CardSelected?.Invoke(card);
+
+        CardSelected?.Invoke(card);
         gameObject.SetActive(false);
     }
 }

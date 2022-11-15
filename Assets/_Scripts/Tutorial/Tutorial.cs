@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
-{   
-    [SerializeField] private CardsSelection _cardsSelection;    
+{
+    [SerializeField] private CardsSelection _cardsSelection;
+    [SerializeField] private CardSelectionView _cardSelectionView;
     [SerializeField] private Button _startFightButton;
     [SerializeField] private GameObject _canvasTutorialFingerDraw;
     [SerializeField] private GameObject _canvasTutorialFingerTap;
@@ -16,6 +17,10 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardReplenisher _cardReplenisher;
     [SerializeField] private CardViewTutorial _viewTutorial;
+    [SerializeField] private float _delaySelectionPanelTime;
+
+    private bool _isActivStep = true;
+
 
     private void OnEnable()
     {
@@ -23,6 +28,7 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
         _cardReplenisher.CardUp += StepFourFive;
+        _viewTutorial.EndStep += StepFive;
 
     }
 
@@ -32,10 +38,11 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
         _cardReplenisher.CardUp -= StepFourFive;
+        _viewTutorial.EndStep -= StepFive;
     }
 
     private void Start()
-    {      
+    {
         _startFightButton.gameObject.SetActive(false);
         _canvasTutorialFingerDraw.SetActive(false);
         _canvasTutorialFingerTap.SetActive(false);
@@ -43,32 +50,53 @@ public class Tutorial : MonoBehaviour
     }
 
     private void StepOneTwo(Card card)
-    {       
-        _tutorialEffects.EffectOneTwo();
-        _canvasTutorialFingerDraw.SetActive(true);
+    {
+        if (_isActivStep ==true)
+        {
+            _tutorialEffects.EffectOneTwo();
+            _canvasTutorialFingerDraw.SetActive(true);
+        }
+
     }
 
     private void StepTwoThree(UnitFriend unitFriend)
     {
-        _tutorialEffects.EffectTwoThree();        
-        _canvasTutorialFingerDraw.SetActive(false);
-        _canvasTutorialFingerTap.SetActive(true);
-        _startFightButton.gameObject.SetActive(true);      
+        if (_isActivStep == true)
+        {
+            _tutorialEffects.EffectTwoThree();
+            _canvasTutorialFingerDraw.SetActive(false);
+            _canvasTutorialFingerTap.SetActive(true);
+            _startFightButton.gameObject.SetActive(true);
+        }
     }
 
     private void StepThreeFour()
     {
-        _canvasTutorialFingerTap.SetActive(false);
-        _tutorialEffects.EffectThreeFour();
-       
+        if (_isActivStep == true)
+        {
+            _canvasTutorialFingerTap.SetActive(false);
+            _tutorialEffects.EffectThreeFour();
+        }
+
     }
 
     private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
     {
-        _panelTutorial.gameObject.SetActive(true);
-        _viewTutorial.OnDrawOut(cardLod, cardNew);
-       
+        if (_isActivStep == true)
+        {
+            _panelTutorial.gameObject.SetActive(true);
+            _cardsSelection.TutorialTimeSwitch(_delaySelectionPanelTime);
+            _cardSelectionView.TutorialTimeSwitch(_delaySelectionPanelTime);
+            _viewTutorial.OnDrawOut(cardLod, cardNew, _delaySelectionPanelTime);
+        }
     }
-
-
+    private void StepFive()
+    {
+        _isActivStep = false;
+        _delaySelectionPanelTime = 0;
+        _cardsSelection.TutorialTimeSwitch(_delaySelectionPanelTime);
+        _cardSelectionView.TutorialTimeSwitch(_delaySelectionPanelTime);
+    }
 }
+
+
