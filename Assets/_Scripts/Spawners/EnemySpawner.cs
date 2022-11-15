@@ -56,6 +56,12 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void TutorialEnemy(UnitEnemy[] unitEnemies)
+    {
+        _enemysStart = unitEnemies;
+        Init();
+    }
+
     public void MinusWaveCount(int value)
     {
         _waveCount = _waveCount - value < 0 ? 0 : _waveCount - value;

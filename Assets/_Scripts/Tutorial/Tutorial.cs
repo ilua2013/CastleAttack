@@ -18,6 +18,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private CardReplenisher _cardReplenisher;
     [SerializeField] private CardViewTutorial _viewTutorial;
     [SerializeField] private float _delaySelectionPanelTime;
+    [SerializeField] private UnitEnemy[] _targets;
+    [SerializeField] private EnemySpawner _enemySpawner;
 
     private bool _isActivStep = true;
 
@@ -96,6 +98,12 @@ public class Tutorial : MonoBehaviour
         _delaySelectionPanelTime = 0;
         _cardsSelection.TutorialTimeSwitch(_delaySelectionPanelTime);
         _cardSelectionView.TutorialTimeSwitch(_delaySelectionPanelTime);
+        //foreach (var target in _targets)
+        //{
+        //    target.gameObject.SetActive(true);
+        //}
+        //_enemySpawner.TutorialEnemy(_targets);
+        
     }
 }
 
