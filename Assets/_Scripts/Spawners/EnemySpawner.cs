@@ -78,6 +78,14 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemySpawn()
     {
+        if (_cellsEnemySpawner.Count == 0)
+        {
+            _currentWave++;
+            WaveCountChanged?.Invoke();
+            return;
+        }
+            
+
         if (_currentWave >= _waveCount)
             return;
 

@@ -98,6 +98,12 @@ public class UnitEnemy : MonoBehaviour, IUnit
         return null;
     }
 
+    public List<Cell> RadiusView()
+    {
+        List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
+        return cells;
+    }
+
     private void OnDie()
     {
         Mover.Die();

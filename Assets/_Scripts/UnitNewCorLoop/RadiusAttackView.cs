@@ -1,27 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitFriend))]
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] private UnitFriend _unitFriend;
+    [SerializeField] private UnitView _unitView;
 
     private List<Cell> _cells = new List<Cell>();
 
     private void Start()
     {
-        _cells = _unitFriend.RadiusView();
+        _cells = _unitView.ViewCells();
         SelectionCells(_cells);
     }
 
     private void OnEnable()
-    {       
-        _unitFriend.Mover.Moved += OnMoved;
+    {
+        _unitView.UnitMover().Moved += OnMoved;       
     }
 
     private void OnDisable()
     {
-        _unitFriend.Mover.Moved -= OnMoved;       
+        _unitView.UnitMover().Moved -= OnMoved;
         _cells.Clear();
     }
 
@@ -29,8 +28,8 @@ public class RadiusAttackView : MonoBehaviour
     {
         UnSelectionCells(_cells);
         _cells.Clear();
-        _cells = _unitFriend.RadiusView();
-        SelectionCells(_cells);       
+        _cells = _unitView.ViewCells();
+        SelectionCells(_cells);
     }
 
     private void SelectionCells(List<Cell> cells)
@@ -38,8 +37,8 @@ public class RadiusAttackView : MonoBehaviour
         foreach (var cell in cells)
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
-            {               
-                highlighting.Select();               
+            {
+                highlighting.Select();
             }
         }
     }
@@ -48,9 +47,9 @@ public class RadiusAttackView : MonoBehaviour
         foreach (var cell in cells)
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
-            {              
+            {
                 highlighting.UnSelect();
             }
         }
-    }   
+    }
 }
