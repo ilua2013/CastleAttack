@@ -64,7 +64,7 @@ public class LevelSystem : MonoBehaviour
 
                     _battleSystem.StopDoStep();
                     _battleSystem.ReturnToHandFriend();
-                    //_battleSystem.SetEnemySpawner(_enemySpawner2);
+                    _battleSystem.SetEnemySpawner(_enemySpawner2);
 
                     _enemySpawner2.Init();
 
