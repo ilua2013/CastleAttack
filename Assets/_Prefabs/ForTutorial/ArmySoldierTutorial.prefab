@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1710454381889582021}
   - component: {fileID: 109085980406422160}
   - component: {fileID: 2275570904515265033}
-  - component: {fileID: 2736198299282138421}
   - component: {fileID: 1078772291964254898}
   m_Layer: 0
   m_Name: ArmySoldierTutorial
@@ -111,21 +110,6 @@ MonoBehaviour:
     _distanceAttack: 2
     _damage: 1
     _maxHealth: 1
---- !u!114 &2736198299282138421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1710454381889582042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aff93606cad7aa40b961e9633d1ab74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitFriend: {fileID: 0}
-  _unitEnemy: {fileID: 2275570904515265033}
-  _unit: 1
 --- !u!114 &1078772291964254898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41373a1a9ec2afb4281c6e3ed46258cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitView: {fileID: 2736198299282138421}
+  <UnitView>k__BackingField:
+    _unitFriend: {fileID: 0}
+    _unitEnemy: {fileID: 2275570904515265033}
+    _unit: 1
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
