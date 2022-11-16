@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8801586289200443270}
   - component: {fileID: 7864184127803688506}
-  - component: {fileID: 8118934187988838891}
+  - component: {fileID: 2751084510486370179}
   m_Layer: 0
   m_Name: MutantBeetleLV1
   m_TagString: Untagged
@@ -112,10 +112,6 @@ MonoBehaviour:
     _distanceAttack: 1
     _damage: 1
     _maxHealth: 4
-  _topDistance: 2
-  _rightDistance: 1
-  _bottomDistance: 1
-  _leftDistance: 0
 --- !u!114 &7864184127803688506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +128,7 @@ MonoBehaviour:
   _visualEffects:
   - _prefab: {fileID: 19807068, guid: 05d8ff69b824e32479f9ea8be857a7a6, type: 3}
     _type: 0
---- !u!114 &8118934187988838891
+--- !u!114 &2751084510486370179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,10 +137,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1710454381889582042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 677d160d75e7b69459f9dcd5c8813cf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 41373a1a9ec2afb4281c6e3ed46258cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitFriend: {fileID: 8801586289200443270}
+  <UnitView>k__BackingField:
+    _unitFriend: {fileID: 8801586289200443270}
+    _unitEnemy: {fileID: 0}
+    _unit: 0
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0

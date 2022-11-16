@@ -3,33 +3,39 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] private UnitView _unitView;
+    [field: SerializeField] public UnitView UnitView { get; private set; }
 
     private List<Cell> _cells = new List<Cell>();
 
     private void Start()
     {
-        _cells = _unitView.ViewCells();
+        _cells = UnitView.ViewCells();
         SelectionCells(_cells);
     }
 
     private void OnEnable()
     {
-        _unitView.UnitMover().Moved += OnMoved;       
+        UnitView.UnitMover().Moved += OnMoved;
     }
 
     private void OnDisable()
     {
-        _unitView.UnitMover().Moved -= OnMoved;
-        _cells.Clear();
+        UnitView.UnitMover().Moved -= OnMoved;
+        UnitDisable();
     }
 
     private void OnMoved()
     {
         UnSelectionCells(_cells);
         _cells.Clear();
-        _cells = _unitView.ViewCells();
+        _cells = UnitView.ViewCells();
         SelectionCells(_cells);
+    }
+
+    private void UnitDisable()
+    {
+        UnSelectionCells(_cells);
+        _cells.Clear();
     }
 
     private void SelectionCells(List<Cell> cells)
@@ -38,7 +44,10 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                highlighting.Select();
+                if (UnitView.Unit == Unit.Enemy)
+                    highlighting.SelectEnemy();
+                else
+                    highlighting.Select();
             }
         }
     }
@@ -48,7 +57,10 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                highlighting.UnSelect();
+                if (UnitView.Unit == Unit.Enemy)
+                    highlighting.UnSelectEnemy();
+                else
+                    highlighting.UnSelect();
             }
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 109085980406422160}
   - component: {fileID: 8801586289200443270}
   - component: {fileID: 8636050476215644690}
-  - component: {fileID: -739816536045919683}
+  - component: {fileID: 717398258454243147}
   m_Layer: 0
   m_Name: MutantLizardsLV1
   m_TagString: Untagged
@@ -116,10 +116,6 @@ MonoBehaviour:
     _distanceAttack: 2
     _damage: 2
     _maxHealth: 8
-  _topDistance: 0
-  _rightDistance: 2
-  _bottomDistance: 0
-  _leftDistance: 0
 --- !u!114 &8636050476215644690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +132,7 @@ MonoBehaviour:
   _visualEffects:
   - _prefab: {fileID: 19807068, guid: 05d8ff69b824e32479f9ea8be857a7a6, type: 3}
     _type: 0
---- !u!114 &-739816536045919683
+--- !u!114 &717398258454243147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,10 +141,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1710454381889582042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 677d160d75e7b69459f9dcd5c8813cf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 41373a1a9ec2afb4281c6e3ed46258cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitFriend: {fileID: 8801586289200443270}
+  <UnitView>k__BackingField:
+    _unitFriend: {fileID: 8801586289200443270}
+    _unitEnemy: {fileID: 0}
+    _unit: 0
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
