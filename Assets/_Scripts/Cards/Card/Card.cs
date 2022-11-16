@@ -4,14 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[Serializable]
 public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] private int _amount;
+    [SerializeField] private CardSave _cardSave;
+    [SerializeField] private CardName _name;
 
-    private CardView _cardView;
-
+    public CardSave CardSave => _cardSave;
     public int Amount { get => _amount; protected set => _amount = value; }
+    public CardName Name { get => _name; protected set => _name = value; }
     public bool IsActive { get; private set; }
+    public bool IsAvailable { get; private set; }
+    public Deck Deck { get; private set; }
+
 
     public event Action<PointerEventData, Card> Clicked;
     public event Action<PointerEventData, Card> Drag;
@@ -66,5 +72,26 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnPointerClick(PointerEventData eventData)
     {
         Clicked?.Invoke(eventData, this);
+    }
+
+
+    public void Save(Deck deck)
+    {
+        _cardSave = new CardSave(IsAvailable, deck);
+
+        Saves.SetCard(Name.ToString(), CardSave);
+        Saves.Save();
+    }
+
+    public void Load()
+    {
+        if (Saves.HasKey(Name.ToString()))
+            _cardSave = Saves.GetCard(Name.ToString());
+
+        IsAvailable = CardSave.IsAvailable;
+        Deck = CardSave.Deck;
+
+        if (CardSave.IsAvailable == false)
+            gameObject.SetActive(false);
     }
 }

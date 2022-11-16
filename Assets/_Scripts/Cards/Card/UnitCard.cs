@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+[Serializable]
 public class UnitCard : Card
 {
     [SerializeField] private CardStage _stage;
