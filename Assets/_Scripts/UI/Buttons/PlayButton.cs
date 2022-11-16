@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayButton : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private string MainScene;
+    [SerializeField] private string NextScene;
 
     private Button _button;
     private LevelLoader _levelLoader;
@@ -24,7 +24,7 @@ public class PlayButton : MonoBehaviour
 
     private void OnClick()
     {
-        AsyncOperation waitLoadScene = _levelLoader.LoadScene(MainScene);
+        AsyncOperation waitLoadScene = _levelLoader.LoadScene(NextScene);
         StartCoroutine(LoadingCurtain(waitLoadScene));
     }
 
