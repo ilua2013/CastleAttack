@@ -10,7 +10,6 @@ public class CardInDeckView : MonoBehaviour
 
     public void FillCard(Card card)
     {
-        card.gameObject.SetActive(true);
         card.transform.SetParent(transform);
         card.transform.SetAsFirstSibling();
 

@@ -20,9 +20,9 @@ public class DeckReplacement : MonoBehaviour
         _views = GetComponentsInChildren<CardInDeckView>().ToList();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        _cards = _deck.Cards;
+        _cards = new List<Card>(_deck.Cards);
 
         foreach (Card card in _cards)
         {
@@ -56,6 +56,7 @@ public class DeckReplacement : MonoBehaviour
     {
         Register(card);
         _cards.Add(card);
+        _deck.Add(card);
         FillCards();
     }
 
@@ -63,6 +64,7 @@ public class DeckReplacement : MonoBehaviour
     {
         UnRegister(card);
         _cards.Remove(card);
+        _deck.Remove(card);
         FillCards();
     }
 
@@ -100,8 +102,28 @@ public class DeckReplacement : MonoBehaviour
 
     private void FillCards()
     {
+        for (int i = 0; i < _views.Count; i++)
+        {
+            for (int j = 0; j < _cards.Count; j++)
+            {
+                if (_cards[j].IsAvailable)
+                {
+                    _views[i].FillCard(_cards[j]);
+                    break;
+                }
+            }
+        }
+
+
         for (int i = 0; i < _cards.Count && i < _views.Count; i++)
+        {
+            if (_cards[i].IsAvailable == false)
+            {
+                continue;
+            }
+            
             _views[i].FillCard(_cards[i]);
+        }
     }
 
     private void OnBeginDrag(PointerEventData eventData, Card card)

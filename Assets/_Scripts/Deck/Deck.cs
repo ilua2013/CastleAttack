@@ -5,29 +5,18 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Card> _deckPrefabs;
-
     private List<Card> _cards = new List<Card>();
 
     public List<Card> Cards => _cards;
-    public virtual string SaveKey { get; }
 
-    private void Awake()
+    public void Add(Card card)
     {
-        if (Saves.HasKey(SaveKey))
-            _deckPrefabs = Saves.GetDeck(SaveKey).ToList();
-
-        CreateDeck();
+        _cards.Add(card);
+        card.Save(this);
     }
 
-    private void CreateDeck()
+    public void Remove(Card card)
     {
-        foreach (Card card in _deckPrefabs)
-        {
-            Card newCard = Instantiate(card);
-            newCard.Activate(true);
-
-            _cards.Add(newCard);
-        }
+        _cards.Remove(card);
     }
 }

@@ -24,13 +24,13 @@ public class Dictionary
     [SerializeField] private List<Entry<int>> _entiesInt = new List<Entry<int>>();
     [SerializeField] private List<Entry<float>> _entiesFloat = new List<Entry<float>>();
     [SerializeField] private List<Entry<string>> _entiesString = new List<Entry<string>>();
-    [SerializeField] private List<Entry<Card[]>> _entiesCard = new List<Entry<Card[]>>();
+    [SerializeField] private List<Entry<CardSave>> _entiesCard = new List<Entry<CardSave>>();
 
     public IEnumerable<Entry<bool>> EntiesBool => _entiesBool;
     public IEnumerable<Entry<int>> EntiesInt => _entiesInt;
     public IEnumerable<Entry<float>> EntiesFloat => _entiesFloat;
     public IEnumerable<Entry<string>> EntiesString => _entiesString;
-    public IEnumerable<Entry<Card[]>> EntiesCard => _entiesCard;
+    public IEnumerable<Entry<CardSave>> EntiesCard => _entiesCard;
 
     public bool ContainsKey(string key)
     {
@@ -113,7 +113,7 @@ public class Dictionary
         }
     }
 
-    public void Add(string key, Card[] value)
+    public void Add(string key, CardSave value)
     {
         if (ContainsKey(key))
         {
@@ -123,7 +123,7 @@ public class Dictionary
         }
         else
         {
-            _entiesCard.Add(new Entry<Card[]>(key, value));
+            _entiesCard.Add(new Entry<CardSave>(key, value));
         }
     }
 
@@ -163,7 +163,7 @@ public class Dictionary
         throw new InvalidOperationException($"Key:{key} is not found");
     }
 
-    public Card[] GetDeck(string key)
+    public CardSave GetCard(string key)
     {
         foreach (var entry in _entiesCard)
             if (entry.Key == key)
@@ -232,7 +232,7 @@ public static class Saves
         _saves.Add(key, value);
     }
 
-    public static void SetDeck(string key, Card[] value)
+    public static void SetCard(string key, CardSave value)
     {
         _saves.Add(key, value);
     }
@@ -257,8 +257,8 @@ public static class Saves
         return _saves.GetFloat(key);
     }
 
-    public static Card[] GetDeck(string key)
+    public static CardSave GetCard(string key)
     {
-        return _saves.GetDeck(key);
+        return _saves.GetCard(key);
     }
 }

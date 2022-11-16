@@ -5,5 +5,4 @@ using UnityEngine;
 
 public class CommonDeck : Deck
 {
-    public override string SaveKey => SaveController.Params.CommonDeck;
 }

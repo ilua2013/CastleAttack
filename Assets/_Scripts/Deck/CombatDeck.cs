@@ -7,8 +7,6 @@ using System.Linq;
 
 public class CombatDeck : Deck
 {
-    public override string SaveKey => SaveController.Params.CombatDeck;
-
     public Card[] ShowRandomCards(int count)
     {
         if (count > Cards.Count)
