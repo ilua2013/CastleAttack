@@ -89,7 +89,21 @@ public class EnemySpawner : MonoBehaviour
         if (_currentWave >= _waveCount)
             return;
 
-        Spawn(_cellsEnemySpawner[Random.Range(0, _cellsEnemySpawner.Count)], _enemyUnitsPrefab[Random.Range(0, _enemyUnitsPrefab.Count)]);
+        UnitSpawner spawner = null;
+        int indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+        int indexUnit = Random.Range(0, _enemyUnitsPrefab.Count);
+
+        for (int i = 0; i < _cellsEnemySpawner.Count; i++)
+        {
+            if (_cellsEnemySpawner[indexSpawner].TryGetComponent(out Cell cell) && cell.IsFree == true)
+                spawner = _cellsEnemySpawner[indexSpawner];
+
+            indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+        }
+
+        if (spawner != null)
+            Spawn(spawner, _enemyUnitsPrefab[indexUnit]);
+
         _currentWave++;
 
         WaveCountChanged?.Invoke();
