@@ -128,7 +128,7 @@ public class DeckReplacement : MonoBehaviour
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        card.transform.SetParent(_dragging);
+        card.transform.SetParent(_dragging.parent);
     }
 
     private void OnEndDrag(PointerEventData eventData, Card card)
