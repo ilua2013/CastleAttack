@@ -48,6 +48,8 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.Drop -= OnDrop;
         _card.CancelDrop -= OnCancelDrag;
         _card.Used -= OnUse;
+
+        transform.localScale = StartScaling;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
