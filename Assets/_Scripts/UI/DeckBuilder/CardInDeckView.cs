@@ -44,8 +44,8 @@ public class CardInDeckView : MonoBehaviour
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        StopCoroutine(_coroutine);
-        card.transform.localPosition = Vector3.zero;
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 
     private IEnumerator LerpPosition(Transform card, Vector3 to)
