@@ -27,15 +27,9 @@ public class DeckReplacement : MonoBehaviour
         foreach (Card card in _cards)
         {
             Register(card);
-
-            if (card.TryGetComponent(out CardMovement movement))
-            {
-                movement.Init(_dragging);
-                _movements.Add(movement);
-            }
         }
 
-        FillCards();
+        FillCards(false);
     }
 
     private void OnDisable()
@@ -57,7 +51,7 @@ public class DeckReplacement : MonoBehaviour
         Register(card);
         _cards.Add(card);
         _deck.Add(card);
-        FillCards();
+        FillCards(true);
     }
 
     public void RemoveCard(Card card)
@@ -65,7 +59,7 @@ public class DeckReplacement : MonoBehaviour
         UnRegister(card);
         _cards.Remove(card);
         _deck.Remove(card);
-        FillCards();
+        FillCards(true);
     }
 
     private void TryTransferCard(PointerEventData eventData, Card card)
@@ -82,7 +76,7 @@ public class DeckReplacement : MonoBehaviour
             {
                 if (deckView == this)
                 {
-                    FillCards();
+                    FillCards(true);
                     return;
                 }
                 else
@@ -97,32 +91,17 @@ public class DeckReplacement : MonoBehaviour
             }
         }
 
-        FillCards();
+        FillCards(true);
     }
 
-    private void FillCards()
+    private void FillCards(bool smooth)
     {
-        for (int i = 0; i < _views.Count; i++)
-        {
-            for (int j = 0; j < _cards.Count; j++)
-            {
-                if (_cards[j].IsAvailable)
-                {
-                    _views[i].FillCard(_cards[j]);
-                    break;
-                }
-            }
-        }
-
-
         for (int i = 0; i < _cards.Count && i < _views.Count; i++)
         {
             if (_cards[i].IsAvailable == false)
-            {
                 continue;
-            }
-            
-            _views[i].FillCard(_cards[i]);
+
+            _views[i].FillCard(_cards[i], smooth);
         }
     }
 
@@ -138,12 +117,21 @@ public class DeckReplacement : MonoBehaviour
 
     private void Register(Card card)
     {
+        if (card.TryGetComponent(out CardMovement movement))
+        {
+            movement.Init(_dragging);
+            _movements.Add(movement);
+        }
+
         card.BeginDrag += OnBeginDrag;
         card.EndDrag += OnEndDrag;
     }
 
     private void UnRegister(Card card)
     {
+        if (card.TryGetComponent(out CardMovement movement))
+            _movements.Remove(movement);
+
         card.BeginDrag -= OnBeginDrag;
         card.EndDrag -= OnEndDrag;
     }
