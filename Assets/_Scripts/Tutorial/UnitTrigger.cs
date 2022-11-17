@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 public class UnitTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject _gameObject; 
+    [SerializeField] private GameObject _gameObject;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private GameObject _cardSelection;
+    [SerializeField] private LevelSystem _levelSystem;
 
     //private bool 
 
@@ -19,11 +22,12 @@ public class UnitTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other);
         if (other.TryGetComponent(out UnitFriend triggered))
         {
-            //UnitHighCell?.Invoke();
-
-            
+            _levelSystem.enabled = false;
+            _cardSelection.SetActive(false);
+            _gameObject.SetActive(true);
         }
     }
 
