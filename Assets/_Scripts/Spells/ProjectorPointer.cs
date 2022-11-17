@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ProjectorPointer : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class ProjectorPointer : MonoBehaviour
         }
     }
 
-    private void OnCardTaken()
+    private void OnCardTaken(PointerEventData eventData, Card card)
     {
         _isCardInHand = true;
     }

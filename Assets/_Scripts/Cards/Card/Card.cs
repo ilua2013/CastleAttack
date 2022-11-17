@@ -11,13 +11,13 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField] private CardSave _cardSave;
     [SerializeField] private CardName _name;
 
-    public CardSave CardSave => _cardSave;
     public int Amount { get => _amount; protected set => _amount = value; }
     public CardName Name { get => _name; protected set => _name = value; }
     public bool IsActive { get; private set; }
     public bool IsAvailable { get; private set; }
     public DeckType Deck { get; private set; }
-
+    public CardSave CardSave => _cardSave;
+    public virtual GameObject ProjectionPrefab { get; }
 
     public event Action<PointerEventData, Card> Clicked;
     public event Action<PointerEventData, Card> Drag;

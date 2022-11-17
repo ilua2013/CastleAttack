@@ -18,8 +18,9 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public bool CanTakeCard => _cards.Count < _capacity;
 
     public event Action<UnitFriend> Spawned;
-    public event Action CardTaken;
+    public event Action<PointerEventData, Card> CardTaken;
     public event Action CardDrop;
+    public event Action CancelDrop;
     public event Action CardsEmpty;
 
     private void Awake()
@@ -56,7 +57,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        CardTaken?.Invoke();
+        CardTaken?.Invoke(eventData, card);
     }
 
     private void OnEndDrag(PointerEventData eventData, Card card)
@@ -66,6 +67,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         if (result == false)
         {
             card.CancleDrop();
+            CancelDrop?.Invoke();
         }
 
         CardDrop?.Invoke();
