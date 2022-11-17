@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HealthBar : MonoBehaviour
 {
     private const float LerpTime = 1f;
     private const float LerpError = 0.01f;
 
+    [SerializeField] private TMP_Text _textHealth;
     [SerializeField] private Slider _bar;
 
     private IUnit _unit;
@@ -34,6 +36,7 @@ public class HealthBar : MonoBehaviour
     {
         float remain = (float)_unit.Fighter.Health / _unit.Fighter.MaxHealth;
         StartCoroutine(LerpValue(remain, LerpTime));
+        SetText();
     }
 
     private IEnumerator LerpValue(float to, float time)
@@ -44,4 +47,6 @@ public class HealthBar : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
+
+    private void SetText() => _textHealth.text = _unit.Fighter.Health + "/" + _unit.Fighter.MaxHealth;
 }
