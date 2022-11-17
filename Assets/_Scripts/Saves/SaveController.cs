@@ -11,5 +11,6 @@ public static class SaveController
         public const string Level = nameof(Level);
         public const string Coins = nameof(Coins);
         public const string IsSoundMuted = nameof(IsSoundMuted);
+        public const string HandCapacity = nameof(HandCapacity);
     }
 }
