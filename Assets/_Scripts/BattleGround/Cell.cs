@@ -32,21 +32,21 @@ public class Cell : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_cellIs != CellIs.Lower)
-            return;
+        //if (_cellIs != CellIs.Lower)
+        //    return;
 
-        Cell currentCell = this;
-        int number = 0;
+        //Cell currentCell = this;
+        //int number = 0;
 
-        //while (currentCell.Bot != null)
-        //    currentCell = currentCell.Bot;
+        ////while (currentCell.Bot != null)
+        ////    currentCell = currentCell.Bot;
 
-        while (currentCell != null)
-        {
-            currentCell.SetNumber(number);
-            number++;
-            currentCell = currentCell.Top;
-        }
+        //while (currentCell != null)
+        //{
+        //    currentCell.SetNumber(number);
+        //    number++;
+        //    currentCell = currentCell.Top;
+        //}
     }
 
     public void SetNumber(int value)
