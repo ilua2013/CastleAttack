@@ -21,4 +21,9 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
         }
         return false;
     }
+
+    public bool CanApply(Card card)
+    {
+        return card is SpellCard;
+    }
 }

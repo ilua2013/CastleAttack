@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 public class UnitProjection : MonoBehaviour
 {
     [SerializeField] private CardsHand _cardsHand;
+    [SerializeField] private GameObject _cross;
 
     private PointerEventData _pointer;
     private GameObject _projection;
+    private GameObject _projectionCross;
 
     private void OnEnable()
     {
@@ -31,7 +33,20 @@ public class UnitProjection : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(_pointer.position);
             
             if (Physics.Raycast(ray, out RaycastHit hit))
-                _projection.transform.position = hit.point;
+            {
+                if (_cardsHand.CanPlaceCard)
+                {
+                    _projection.SetActive(true);
+                    _projectionCross.SetActive(false);
+                    _projection.transform.position = hit.point;
+                }
+                else
+                {
+                    _projection.SetActive(false);
+                    _projectionCross.SetActive(true);
+                    _projectionCross.transform.position = hit.point;
+                }
+            }
         }
     }
 
@@ -39,6 +54,10 @@ public class UnitProjection : MonoBehaviour
     {
         _pointer = eventData;
         _projection = Instantiate(card.ProjectionPrefab);
+        _projectionCross = Instantiate(_cross);
+
+        _projection.SetActive(false);
+        _projectionCross.SetActive(false);
     }
 
     private void OnCardDrop()
@@ -46,6 +65,9 @@ public class UnitProjection : MonoBehaviour
         _pointer = null;
 
         Destroy(_projection);
+        Destroy(_projectionCross);
+
         _projection = null;
+        _projectionCross = null;
     }
 }
