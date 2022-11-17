@@ -21,6 +21,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private UnitEnemy[] _targets;
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private LevelSystem _levelSystem;
+    //[SerializeField] private UnitTrigger _unitTrigger;
 
     private bool _isActivStepOne = true;
     private bool _isActivStepTwo = false;
@@ -35,6 +36,7 @@ public class Tutorial : MonoBehaviour
         _battleSystem.DiedAllEnemy += EndStep;
         _levelSystem.Wave1Finished += EnabledWaveTwo;
         _levelSystem.Wave2Finished += EnabledWaveThree;
+        //_unitTrigger.UnitHighCell += StepLowFourFive;
     }
 
     private void OnDisable()
@@ -47,6 +49,7 @@ public class Tutorial : MonoBehaviour
         _battleSystem.DiedAllEnemy -= EndStep;
         _levelSystem.Wave1Finished -= EnabledWaveTwo;
         _levelSystem.Wave2Finished -= EnabledWaveThree;
+        //_unitTrigger.UnitHighCell += StepLowFourFive;
     }
 
     private void Start()
@@ -59,35 +62,22 @@ public class Tutorial : MonoBehaviour
 
     private void StepOneTwo(Card card)
     {
-        if (_isActivStepOne == true)
+        if (_isActivStepOne == true|| _isActivStepTwo == true)
         {
             _tutorialEffects.EffectOneTwo();
             _canvasTutorialFingerDraw.SetActive(true);
-        }
-
-        if(_isActivStepTwo == true)
-        {
-            _tutorialEffects.EffectOneTwo();
-            _canvasTutorialFingerDraw.SetActive(true);
-        }
+        }       
     }
 
     private void StepTwoThree(UnitFriend unitFriend)
     {
-        if (_isActivStepOne == true)
+        if (_isActivStepOne == true|| _isActivStepTwo == true)
         {
             _tutorialEffects.EffectTwoThree();
             _canvasTutorialFingerDraw.SetActive(false);
             _canvasTutorialFingerTap.SetActive(true);
             _startFightButton.gameObject.SetActive(true);
-        }
-
-        if(_isActivStepTwo == true)
-        {
-            _tutorialEffects.EffectTwoThree();
-            _canvasTutorialFingerDraw.SetActive(false);
-            _canvasTutorialFingerTap.SetActive(true);          
-        }
+        }    
     }
 
     private void StepThreeFour()
@@ -104,6 +94,11 @@ public class Tutorial : MonoBehaviour
             _isActivStepTwo = false;
         }
     }
+
+    //private void StepLowFourFive()
+    //{
+
+    //}
 
     private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
     {
