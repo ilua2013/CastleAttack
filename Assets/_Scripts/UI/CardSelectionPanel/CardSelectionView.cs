@@ -6,9 +6,12 @@ using System.Linq;
 
 public class CardSelectionView : MonoBehaviour, IPhaseHandler
 {
+    private const float ScaleFactor = 1.2f;
+
     [SerializeField] private Transform[] _cardPlacements;
     [SerializeField] private Phase[] _phases;
 
+    private List<CardHoverView> _cardHovers = new List<CardHoverView>();
     private CardsSelection _cardsSelection;
     private float _delayTime = 0;
     private bool _isActivTutor = false;
@@ -32,6 +35,12 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
     private void OnDisable()
     {
         _cardsSelection.DrawnOut -= OnDrawOut;
+
+        foreach (CardHoverView cardHover in _cardHovers)
+        {
+            cardHover.Enter -= OnCardHover;
+            cardHover.Exit -= OnCardRemoveHover;
+        }
     }
 
     public void TutorialTimeSwitch(float time)
@@ -57,6 +66,25 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
         {
             cards[i].transform.SetParent(_cardPlacements[i]);
             cards[i].transform.localPosition = Vector3.zero;
+
+            if (cards[i].TryGetComponent(out CardHoverView cardHover))
+            {
+                cardHover.Enter += OnCardHover;
+                cardHover.Exit += OnCardRemoveHover;
+
+                _cardHovers.Add(cardHover);
+            }
         }
+    }
+
+    private void OnCardHover(CardHoverView cardHover)
+    {
+        cardHover.SaveStartState(cardHover.transform.position, cardHover.transform.GetSiblingIndex());
+        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
+    }
+
+    private void OnCardRemoveHover(CardHoverView cardHover)
+    {
+        cardHover.ResetToStartState();
     }
 }

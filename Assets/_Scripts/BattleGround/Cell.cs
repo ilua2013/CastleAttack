@@ -54,6 +54,11 @@ public class Cell : MonoBehaviour
         _number = value;
     }
 
+    public void SetType(CellIs cellIs)
+    {
+        _cellIs = cellIs;
+    }
+
     public void SetCell(Cell cell, CellNeighbor set)
     {
         switch (set)

@@ -1,57 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using System;
-using Random = UnityEngine.Random;
+
+public enum DeckType
+{
+    Common,
+    Combat,
+}
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Card> _cards;
+    private List<Card> _cards = new List<Card>();
 
-    private List<Card> _cardObjects = new List<Card>();
+    public List<Card> Cards => _cards;
+    public virtual DeckType DeckType { get; }
 
-    public List<Card> Cards => _cardObjects;
-
-    private void Awake()
+    public void Add(Card card)
     {
-        foreach (Card card in _cards)
-        {
-            Card newCard = Instantiate(card, transform);
-            newCard.gameObject.SetActive(false);
-
-            _cardObjects.Add(newCard);
-        }
+        _cards.Add(card);
+        card.Save(DeckType);
     }
 
-    public Card[] ShowRandomCards(int count)
+    public void Remove(Card card)
     {
-        if (count > _cardObjects.Count)
-            throw new ArgumentOutOfRangeException($"{count} is more then cards in the Deck");
-
-        List<Card> result = new List<Card>(count);
-
-        for (int i = 0; i < count; i++)
-        {
-            Card card = _cardObjects[Random.Range(0, _cardObjects.Count)];
-
-            if (result.Contains(card))
-            {
-                i--;
-                continue;
-            }
-
-            result.Add(card);
-        }
-
-        return result.ToArray();
-    }
-
-    public void ReturnCards(Card[] cards)
-    {
-        foreach (Card card in cards)
-        {
-            card.transform.SetParent(transform);
-            card.gameObject.SetActive(false);
-        }
+        _cards.Remove(card);
     }
 }

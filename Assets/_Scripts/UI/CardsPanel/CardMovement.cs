@@ -38,6 +38,11 @@ public class CardMovement : MonoBehaviour
         _card.Drop -= OnDrop;
     }
 
+    public void Init(Transform dragging)
+    {
+        _draggingParent = dragging;
+    }
+
     public void Move()
     {
         if (_target == null)
