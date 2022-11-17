@@ -59,17 +59,11 @@ public class Tutorial : MonoBehaviour
 
     private void StepOneTwo(Card card)
     {
-        if (_isActivStepOne == true)
+        if (_isActivStepOne == true|| _isActivStepTwo == true)
         {
             _tutorialEffects.EffectOneTwo();
             _canvasTutorialFingerDraw.SetActive(true);
-        }
-
-        if(_isActivStepTwo == true)
-        {
-            _tutorialEffects.EffectOneTwo();
-            _canvasTutorialFingerDraw.SetActive(true);
-        }
+        }     
     }
 
     private void StepTwoThree(UnitFriend unitFriend)
@@ -141,5 +135,5 @@ public class Tutorial : MonoBehaviour
     private void EnabledWaveThree()
     {
         _tutorialEffects.EffectFourFive();        
-    }
+    }  
 }
