@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitFriend : MonoBehaviour, IUnit
+public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 {
     [SerializeField] private int _maxStep = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;

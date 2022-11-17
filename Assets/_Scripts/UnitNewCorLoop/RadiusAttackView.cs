@@ -3,41 +3,33 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] private UnitFriend _unitFriend;
-    [SerializeField] private UnitEnemy _unitEnemy;
-    [SerializeField] private Unit _unit;
+    [SerializeField] private MonoBehaviour _unit;
+    [SerializeField] private Unit _unitType;
+
+    private IRadiusAttack _radiusAttack;
 
     private List<Cell> _cells = new List<Cell>();
 
     public Mover UnitMover()
     {
-        if (_unit == Unit.Friend)
-            return _unitFriend.Mover;
-        else
-            return _unitEnemy.Mover;
+        return _radiusAttack.Mover;
     }
 
     public List<Cell> ViewCells()
     {
-        if (_unit == Unit.Friend)
-            return _cells = _unitFriend.RadiusView();
-        else
-            return _cells = _unitEnemy.RadiusView();
-    }
-
-    private void Start()
-    {
-        _cells = ViewCells();
-        SelectionCells(_cells);
-    }
+        return _cells = _radiusAttack.RadiusView();
+    }   
 
     private void OnEnable()
     {
+        _radiusAttack = _unit.GetComponent<IRadiusAttack>();
+        _radiusAttack.Inited += InitedCells;
         UnitMover().Moved += OnMoved;
     }
 
     private void OnDisable()
     {
+        _radiusAttack.Inited -= InitedCells;
         UnitMover().Moved -= OnMoved;
         UnitDisable();
     }
@@ -46,6 +38,12 @@ public class RadiusAttackView : MonoBehaviour
     {
         UnSelectionCells(_cells);
         _cells.Clear();
+        _cells = ViewCells();
+        SelectionCells(_cells);
+    }
+
+    private void InitedCells()
+    {
         _cells = ViewCells();
         SelectionCells(_cells);
     }
@@ -62,7 +60,7 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (_unit == Unit.Enemy)
+                if (_unitType == Unit.Enemy)
                     highlighting.SelectEnemy();
                 else
                     highlighting.Select();
@@ -75,7 +73,7 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (_unit == Unit.Enemy)
+                if (_unitType == Unit.Enemy)
                     highlighting.UnSelectEnemy();
                 else
                     highlighting.UnSelect();

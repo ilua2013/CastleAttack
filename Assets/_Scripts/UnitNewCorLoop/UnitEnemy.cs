@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UnitEnemy : MonoBehaviour, IUnit
+public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
     [SerializeField] private int _maxStep = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
@@ -117,7 +117,9 @@ public class UnitEnemy : MonoBehaviour, IUnit
 
     public List<Cell> RadiusView()
     {
+        Debug.Log(Mover.CurrentCell);
         List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
+
         return cells;
     }
 
