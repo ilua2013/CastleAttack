@@ -12,8 +12,10 @@ public class UnitEnemy : MonoBehaviour, IUnit
 
     public UnitCard Card { get; private set; }
     private int _currentStep;
+    private bool _initialized;
 
     public int CurrentStep => _currentStep;
+    public bool Initialized => _initialized;
 
     public event Action Returned;
     public event Action Attacked;
@@ -36,11 +38,14 @@ public class UnitEnemy : MonoBehaviour, IUnit
     private void Awake()
     {
         _currentStep = _maxStep;
+
+        if (Fighter.FighterType == FighterType.MainTarget)
+            Init(null, null);
     }
 
     private void Start()
     {
-        if (Fighter.FighterType == FighterType.MainTarget)
+        if (_initialized == false)
             Init(null, null);
     }
 
@@ -63,6 +68,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
         Fighter.Init(this);
 
         Inited?.Invoke();
+        _initialized = true;
     }
 
     public void DoStep()

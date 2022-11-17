@@ -36,10 +36,7 @@ public class UnitFriend : MonoBehaviour, IUnit
     private void Awake()
     {
         _currentStep = _maxStep;
-    }
 
-    private void Start()
-    {
         if (Fighter.FighterType == FighterType.MainWizzard)
             Init(null, null);
     }
