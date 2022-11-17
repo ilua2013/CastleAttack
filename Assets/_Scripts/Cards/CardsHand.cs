@@ -20,6 +20,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public event Action<UnitFriend> Spawned;
     public event Action CardTaken;
     public event Action CardDrop;
+    public event Action CardsEmpty;
 
     private void Awake()
     {
@@ -68,6 +69,9 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         }
 
         CardDrop?.Invoke();
+
+        if (_cards.Count <= 0)
+            CardsEmpty?.Invoke();
     }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
