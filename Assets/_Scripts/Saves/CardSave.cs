@@ -7,14 +7,14 @@ using System;
 public class CardSave
 {
     [SerializeField] private bool _isAvailable;
-    [SerializeField] private Deck _deck;
+    [SerializeField] private DeckType _deck;
 
-    public CardSave(bool isAvailable, Deck deck)
+    public CardSave(bool isAvailable, DeckType deck)
     {
         _isAvailable = isAvailable;
         _deck = deck;
     }
 
     public bool IsAvailable => _isAvailable;
-    public Deck Deck => _deck;
+    public DeckType Deck => _deck;
 }

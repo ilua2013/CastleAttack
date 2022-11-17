@@ -15,7 +15,7 @@ public class DeckBuilder : MonoBehaviour
         {
             Card card = Create(prefab);
 
-            if (card.Deck is CombatDeck)
+            if (card.Deck == DeckType.Combat)
                 _combatDeck.Add(card);
             else
                 _commonDeck.Add(card);

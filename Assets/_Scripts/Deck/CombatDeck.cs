@@ -7,6 +7,8 @@ using System.Linq;
 
 public class CombatDeck : Deck
 {
+    public override DeckType DeckType => DeckType.Combat;
+
     public Card[] ShowRandomCards(int count)
     {
         if (count > Cards.Count)

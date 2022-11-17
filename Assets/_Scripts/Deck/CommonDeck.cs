@@ -5,4 +5,5 @@ using UnityEngine;
 
 public class CommonDeck : Deck
 {
+    public override DeckType DeckType => DeckType.Common;
 }

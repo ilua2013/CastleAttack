@@ -16,7 +16,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public CardName Name { get => _name; protected set => _name = value; }
     public bool IsActive { get; private set; }
     public bool IsAvailable { get; private set; }
-    public Deck Deck { get; private set; }
+    public DeckType Deck { get; private set; }
 
 
     public event Action<PointerEventData, Card> Clicked;
@@ -75,7 +75,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     }
 
 
-    public void Save(Deck deck)
+    public void Save(DeckType deck)
     {
         _cardSave = new CardSave(IsAvailable, deck);
 
