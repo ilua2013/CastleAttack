@@ -26,6 +26,7 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepStarted += OnStepStarted;
         _battleSystem.StepFinished += OnStepFinished;
         _cardSelection.CardSelected += OnCardSelected;
+        _cardSelection.Passed += OnCardSelectionPassed;
     }
 
     private void OnDisable()
@@ -33,6 +34,7 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
         _cardSelection.CardSelected -= OnCardSelected;
+        _cardSelection.Passed -= OnCardSelectionPassed;
     }
 
     private void Start()
@@ -51,6 +53,11 @@ public class PhaseSwitcher : MonoBehaviour
     }
 
     private void OnCardSelected(Card card)
+    {
+        Switch(PhaseType.CardPlacement);
+    }
+
+    private void OnCardSelectionPassed()
     {
         Switch(PhaseType.CardPlacement);
     }

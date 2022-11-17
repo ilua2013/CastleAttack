@@ -12,11 +12,13 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private CombatDeck _deck;
     private CardReplenisher _cardReplenisher;
+    private CardsHand _cardsHand;
     private Card[] _selectedCards;
     private float _delayTime = 0; 
 
     public event Action<Card[]> DrawnOut;
     public event Action<Card> CardSelected;
+    public event Action Passed;
 
     public Phase[] Phases => _phases;
 
@@ -24,12 +26,16 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     {
         _deck = FindObjectOfType<CombatDeck>();
         _cardReplenisher = FindObjectOfType<CardReplenisher>();
+        _cardsHand = FindObjectOfType<CardsHand>();
 
         if (_deck == null)
             throw new NullReferenceException(nameof(_deck));
 
         if (_cardReplenisher == null)
             throw new NullReferenceException(nameof(_cardReplenisher));
+
+        if (_cardsHand == null)
+            throw new NullReferenceException(nameof(_cardsHand));
     }
 
     public void TutorialTimeSwitch(float time)
@@ -53,6 +59,13 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private void DrawOutCards()
     {
+        if (!_cardsHand.CanTakeCard)
+        {
+            Passed?.Invoke();
+            gameObject.SetActive(false);
+            return;
+        }
+
         _selectedCards = _deck.ShowRandomCards(_count);
 
         foreach (Card card in _selectedCards)
