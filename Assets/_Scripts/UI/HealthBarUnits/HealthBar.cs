@@ -24,8 +24,6 @@ public class HealthBar : MonoBehaviour
     {
         _unit.Fighter.Damaged += OnHealthChanged;
         _unit.Fighter.Healed += OnHealthChanged;
-
-        OnHealthChanged(0);
     }
 
     private void OnDisable()

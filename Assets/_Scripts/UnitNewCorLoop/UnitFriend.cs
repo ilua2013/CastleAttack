@@ -13,7 +13,8 @@ public class UnitFriend : MonoBehaviour, IUnit
     public UnitCard Card { get; private set; }
     private int _currentStep;
 
-    public int CurrentStep => _currentStep;  
+    public int CurrentStep => _currentStep;
+    public bool Initialized { get; private set; }
 
     public event Action Returned;
     public event Action Attacked;
@@ -62,6 +63,7 @@ public class UnitFriend : MonoBehaviour, IUnit
         Fighter.Init(this);
 
         Inited?.Invoke();
+        Initialized = true;
     }
 
     public void ReturnToHand()
