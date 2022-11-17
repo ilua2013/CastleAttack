@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CardsHandView : MonoBehaviour
 {
+    private const float HoverOffsetY = 50f;
     private const float OffsetY = -1f;
-    private const float OffsetX = 150f;
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
     private const float ScaleFactor = 1.2f;
+    private const float OffsetXFactor = 2.5f;
+
+    private float _offsetX = 150f;
 
     private List<CardHoverView> _cards;
     private List<CardMovement> _cardMovements = new List<CardMovement>();
@@ -66,6 +69,7 @@ public class CardsHandView : MonoBehaviour
     {
         Vector3 center = transform.position;
         int number = -_cards.Count / 2;
+        float offsetX = _offsetX - _cards.Count * OffsetXFactor;
 
         _cards.Sort(_comparer);
 
@@ -74,7 +78,7 @@ public class CardsHandView : MonoBehaviour
             card.ResetToStartState();
 
             Vector3 position = CalculatePosition(transform.position, Radius, number);
-            Vector3 lerpPosition = CalculatePadding(number, position);
+            Vector3 lerpPosition = CalculatePadding(number, position, offsetX);
 
             Quaternion rotation = Quaternion.FromToRotation(Vector3.down, transform.position - position);
 
@@ -86,9 +90,9 @@ public class CardsHandView : MonoBehaviour
         }
     }
 
-    private Vector3 CalculatePadding(int number, Vector3 position)
+    private Vector3 CalculatePadding(int number, Vector3 position, float offsetX)
     {
-        Vector3 padding = position + Vector3.right * OffsetX * number;
+        Vector3 padding = position + Vector3.right * offsetX * number;
 
         if (number > 0)
             padding = padding + Vector3.down * -OffsetY * number;
@@ -113,7 +117,7 @@ public class CardsHandView : MonoBehaviour
     {
         if (card.CanHover)
         {
-            Vector3 hoverPosition = card.StartPosition + Vector3.up * 10f;
+            Vector3 hoverPosition = card.StartPosition + Vector3.up * HoverOffsetY;
 
             card.MoveTo(hoverPosition);
             card.ScaleTo(card.StartScaling * ScaleFactor);
@@ -149,8 +153,6 @@ public class CardsHandView : MonoBehaviour
 
     public void CardAdd(Card card)
     {
-        Debug.Log("CardAdd method calling");
-
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
 
         cardHover.Enter += OnHover;
@@ -163,10 +165,7 @@ public class CardsHandView : MonoBehaviour
         _cards.Add(cardHover);
 
         if (cardHover.TryGetComponent(out CardMovement movement))
-        {
-            Debug.Log("card successful getComponent: movement");
             _cardMovements.Add(movement);
-        }
 
         Shuffling();
     }

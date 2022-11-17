@@ -39,14 +39,11 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
-
 
         yield return new WaitForSeconds(_delayTime);
 
         _delayTime = phase.Delay;
-
 
         gameObject.SetActive(phase.IsActive);
 
