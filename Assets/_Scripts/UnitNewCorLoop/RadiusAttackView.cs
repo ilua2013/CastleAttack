@@ -3,24 +3,42 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [field: SerializeField] public UnitView UnitView { get; private set; }
+    [SerializeField] private UnitFriend _unitFriend;
+    [SerializeField] private UnitEnemy _unitEnemy;
+    [SerializeField] private Unit _unit;
 
     private List<Cell> _cells = new List<Cell>();
 
+    public Mover UnitMover()
+    {
+        if (_unit == Unit.Friend)
+            return _unitFriend.Mover;
+        else
+            return _unitEnemy.Mover;
+    }
+
+    public List<Cell> ViewCells()
+    {
+        if (_unit == Unit.Friend)
+            return _cells = _unitFriend.RadiusView();
+        else
+            return _cells = _unitEnemy.RadiusView();
+    }
+
     private void Start()
     {
-        _cells = UnitView.ViewCells();
+        _cells = ViewCells();
         SelectionCells(_cells);
     }
 
     private void OnEnable()
     {
-        UnitView.UnitMover().Moved += OnMoved;
+        UnitMover().Moved += OnMoved;
     }
 
     private void OnDisable()
     {
-        UnitView.UnitMover().Moved -= OnMoved;
+        UnitMover().Moved -= OnMoved;
         UnitDisable();
     }
 
@@ -28,7 +46,7 @@ public class RadiusAttackView : MonoBehaviour
     {
         UnSelectionCells(_cells);
         _cells.Clear();
-        _cells = UnitView.ViewCells();
+        _cells = ViewCells();
         SelectionCells(_cells);
     }
 
@@ -44,7 +62,7 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (UnitView.Unit == Unit.Enemy)
+                if (_unit == Unit.Enemy)
                     highlighting.SelectEnemy();
                 else
                     highlighting.Select();
@@ -57,11 +75,15 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (UnitView.Unit == Unit.Enemy)
+                if (_unit == Unit.Enemy)
                     highlighting.UnSelectEnemy();
                 else
                     highlighting.UnSelect();
             }
         }
     }
+}
+public enum Unit
+{
+    Friend, Enemy
 }
