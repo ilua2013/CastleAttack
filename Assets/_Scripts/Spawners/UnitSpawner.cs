@@ -36,7 +36,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public bool TryApplyFriend(Card card, Vector3 place)
     {
-        if (_type == SpawnerType.Enemy)
+        if (_type == SpawnerType.Enemy || _cell.IsFree == false)
             return false;
 
         if (card is UnitCard unitCard)
