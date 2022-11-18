@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6854,6 +6854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textHealth: {fileID: 0}
   _bar: {fileID: 330663425}
 --- !u!114 &330663425
 MonoBehaviour:
@@ -7128,6 +7129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textHealth: {fileID: 0}
   _bar: {fileID: 417619642}
 --- !u!114 &417619642
 MonoBehaviour:
@@ -17135,14 +17137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd9225fc13651d44923e058290f085c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cards:
-  - {fileID: 8870374063627645585, guid: 2cbcbd3d6a5fd994db3b3595b65986f2, type: 3}
-  - {fileID: -3415291784745103380, guid: f69c29bd259171a419d5a8b8c3220e52, type: 3}
-  - {fileID: 7385425094312963249, guid: 249abeeb674ec5c4abb238482e73a883, type: 3}
-  - {fileID: -3415291784745103380, guid: e33be05293096b449848347e550a7b43, type: 3}
-  - {fileID: -3415291784745103380, guid: 7b721bf9790e7d249a5d29f45ce39d98, type: 3}
-  - {fileID: 6782374143103343938, guid: f3c441feaf08e91409684d7c0b0a1d3c, type: 3}
-  - {fileID: 1900457106052404449, guid: 0a79ee8be4329874d8b230f480c5b9b2, type: 3}
 --- !u!4 &1009898272
 Transform:
   m_ObjectHideFlags: 0
@@ -18242,9 +18236,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226869301}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.40821785, y: -0.23456965, z: 0.109381616, w: 0.8754262}
+  m_LocalPosition: {x: 0, y: 2.999999, z: -0.0000038146973}
+  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000005}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -18763,6 +18757,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 647699140}
     m_Modifications:
+    - target: {fileID: 1836057788656461481, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836057788656461481, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2074627330754344197, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
@@ -37124,6 +37126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d301fe1e31794b46980c14658b51823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textHealth: {fileID: 0}
   _bar: {fileID: 1578475768}
 --- !u!114 &1578475768
 MonoBehaviour:
@@ -39428,6 +39431,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 647699140}
     m_Modifications:
+    - target: {fileID: 1836057788656461481, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836057788656461481, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2074627330754344197, guid: c97c6d207b659a040a667fa4c82b31d4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 

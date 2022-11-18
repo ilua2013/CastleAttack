@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private UnitEnemy _mainTarget;
+    [SerializeField] private int _countSpawnWave;
     [SerializeField] private int _waveCount;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
     [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
@@ -89,20 +90,23 @@ public class EnemySpawner : MonoBehaviour
         if (_currentWave >= _waveCount)
             return;
 
-        UnitSpawner spawner = null;
-        int indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
-        int indexUnit = Random.Range(0, _enemyUnitsPrefab.Count);
-
-        for (int i = 0; i < _cellsEnemySpawner.Count; i++)
+        for (int i = 0; i < _countSpawnWave; i++)
         {
-            if (_cellsEnemySpawner[indexSpawner].TryGetComponent(out Cell cell) && cell.IsFree == true)
-                spawner = _cellsEnemySpawner[indexSpawner];
+            UnitSpawner spawner = null;
+            int indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+            int indexUnit = Random.Range(0, _enemyUnitsPrefab.Count);
 
-            indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+            for (int a = 0; a < _cellsEnemySpawner.Count; a++)
+            {
+                if (_cellsEnemySpawner[indexSpawner].TryGetComponent(out Cell cell) && cell.IsFree == true)
+                    spawner = _cellsEnemySpawner[indexSpawner];
+
+                indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+            }
+
+            if (spawner != null)
+                Spawn(spawner, _enemyUnitsPrefab[indexUnit]);
         }
-
-        if (spawner != null)
-            Spawn(spawner, _enemyUnitsPrefab[indexUnit]);
 
         _currentWave++;
 
