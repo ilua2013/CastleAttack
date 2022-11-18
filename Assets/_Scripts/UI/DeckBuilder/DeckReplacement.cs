@@ -20,7 +20,7 @@ public class DeckReplacement : MonoBehaviour
         _views = GetComponentsInChildren<CardInDeckView>().ToList();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _cards = new List<Card>(_deck.Cards);
 

@@ -10,6 +10,7 @@ public class CardMovement : MonoBehaviour
     private const float LerpTime = 10f;
     private const float DistanceDelta = 0.1f;
     private const float AngleClamp = 35f;
+    private readonly Vector3 PlacementScale = Vector3.zero;
 
     private Vector3 _initialScale;
     private Transform _draggingParent;
@@ -62,7 +63,7 @@ public class CardMovement : MonoBehaviour
 
     private Vector3 CalculateScale()
     {
-        Vector3 scale = IsOverDraggingPanel(_target) ? _initialScale : _initialScale / 3;
+        Vector3 scale = IsOverDraggingPanel(_target) ? _initialScale : PlacementScale;
 
         return Vector3.Lerp(transform.localScale, scale, LerpTime * Time.deltaTime);
     }

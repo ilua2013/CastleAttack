@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UnitEnemy : MonoBehaviour, IUnit
+public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
     [SerializeField] private int _maxStep = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
@@ -14,6 +14,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
     private int _currentStep;
 
     public int CurrentStep => _currentStep;
+    public bool Initialized { get; private set; }
 
     public event Action Returned;
     public event Action Attacked;
@@ -36,11 +37,14 @@ public class UnitEnemy : MonoBehaviour, IUnit
     private void Awake()
     {
         _currentStep = _maxStep;
+
+        if (Fighter.FighterType == FighterType.MainTarget)
+            Init(null, null);
     }
 
     private void Start()
     {
-        if (Fighter.FighterType == FighterType.MainTarget)
+        if (Initialized == false)
             Init(null, null);
     }
 
@@ -63,6 +67,7 @@ public class UnitEnemy : MonoBehaviour, IUnit
         Fighter.Init(this);
 
         Inited?.Invoke();
+        Initialized = true;
     }
 
     public void DoStep()
@@ -112,7 +117,9 @@ public class UnitEnemy : MonoBehaviour, IUnit
 
     public List<Cell> RadiusView()
     {
+        Debug.Log(Mover.CurrentCell);
         List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
+
         return cells;
     }
 

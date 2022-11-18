@@ -15,11 +15,13 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public Phase[] Phases => _phases;
 
     public int Capacity => _capacity;
+    public bool CanPlaceCard { get; private set; }
     public bool CanTakeCard => _cards.Count < _capacity;
 
     public event Action<UnitFriend> Spawned;
-    public event Action CardTaken;
+    public event Action<PointerEventData, Card> CardTaken;
     public event Action CardDrop;
+    public event Action CancelDrop;
     public event Action CardsEmpty;
 
     private void Awake()
@@ -45,18 +47,45 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     private void RegisterCard(Card card)
     {
         card.BeginDrag += OnBeginDrag;
+        card.Drag += OnDrag;
         card.EndDrag += OnEndDrag;
     }
 
     private void UnRegister(Card card)
     {
         card.BeginDrag -= OnBeginDrag;
+        card.Drag -= OnDrag;
         card.EndDrag -= OnEndDrag;
     }
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
     {
-        CardTaken?.Invoke();
+        CardTaken?.Invoke(eventData, card);
+    }
+
+    private void OnDrag(PointerEventData eventData, Card card)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+
+        if (hits.Length == 0)
+            return;
+
+        foreach (var hit in hits)
+        {
+            ICardApplicable[] applicables = hit.collider.GetComponents<ICardApplicable>();
+
+            foreach (var applicable in applicables)
+            {
+                if (applicable.CanApply(card))
+                {
+                    CanPlaceCard = true;
+                    return;
+                }
+            }
+        }
+
+        CanPlaceCard = false;
     }
 
     private void OnEndDrag(PointerEventData eventData, Card card)
@@ -66,6 +95,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         if (result == false)
         {
             card.CancleDrop();
+            CancelDrop?.Invoke();
         }
 
         CardDrop?.Invoke();

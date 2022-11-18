@@ -7,21 +7,36 @@ using UnityEngine.UI;
 public class UnitSpawner : MonoBehaviour, ICardApplicable
 {
     [SerializeField] private SpawnerType _type;
-    [SerializeField] private Transform _spawnPoint; 
+    [SerializeField] private Transform _spawnPoint;
+
+    private Cell _cell;
 
     public Transform SpawnPoint => _spawnPoint;
     public UnitFriend Spawned { get; private set; }
 
     public event Action<IUnit> SpawnedUnit;
 
+    private void Awake()
+    {
+        _cell = GetComponent<Cell>();
+    }
+
     private void OnValidate()
     {
         _spawnPoint = transform;
     }
 
+    public bool CanApply(Card card)
+    {
+        if (card is UnitCard unitCard)
+            return _cell.IsFree && _type != SpawnerType.Enemy;
+
+        return false;
+    }
+
     public bool TryApplyFriend(Card card, Vector3 place)
     {
-        if (_type == SpawnerType.Enemy)
+        if (_type == SpawnerType.Enemy || _cell.IsFree == false)
             return false;
 
         if (card is UnitCard unitCard)
@@ -29,7 +44,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
             UnitFriend unitFriend = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
             Spawned = unitFriend;
 
-            unitFriend.Init(unitCard, GetComponent<Cell>());
+            unitFriend.Init(unitCard, _cell);
 
             SpawnedUnit?.Invoke(unitFriend);
 
@@ -43,7 +58,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
     {
         UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint.position, Quaternion.identity);
 
-        unit.Init(unitEnemy.Card, GetComponent<Cell>());
+        unit.Init(unitEnemy.Card, _cell);
 
         SpawnedUnit?.Invoke(unit);
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitFriend : MonoBehaviour, IUnit
+public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 {
     [SerializeField] private int _maxStep = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
@@ -13,7 +13,8 @@ public class UnitFriend : MonoBehaviour, IUnit
     public UnitCard Card { get; private set; }
     private int _currentStep;
 
-    public int CurrentStep => _currentStep;  
+    public int CurrentStep => _currentStep;
+    public bool Initialized { get; private set; }
 
     public event Action Returned;
     public event Action Attacked;
@@ -36,10 +37,7 @@ public class UnitFriend : MonoBehaviour, IUnit
     private void Awake()
     {
         _currentStep = _maxStep;
-    }
 
-    private void Start()
-    {
         if (Fighter.FighterType == FighterType.MainWizzard)
             Init(null, null);
     }
@@ -65,6 +63,7 @@ public class UnitFriend : MonoBehaviour, IUnit
         Fighter.Init(this);
 
         Inited?.Invoke();
+        Initialized = true;
     }
 
     public void ReturnToHand()
