@@ -71,13 +71,16 @@ public class RadiusAttackView : MonoBehaviour
     {
         foreach (var cell in cells)
         {
-            if (cell.TryGetComponent(out HighlightingCell highlighting))
+            if (cell != null)
             {
-                if (_unitType == Unit.Enemy)
-                    highlighting.UnSelectEnemy();
-                else
-                    highlighting.UnSelect();
-            }
+                if (cell.TryGetComponent(out HighlightingCell highlighting))
+                {
+                    if (_unitType == Unit.Enemy)
+                        highlighting.UnSelectEnemy();
+                    else
+                        highlighting.UnSelect();
+                }
+            }            
         }
     }
 }
