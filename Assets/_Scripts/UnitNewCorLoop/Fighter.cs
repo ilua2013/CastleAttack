@@ -7,7 +7,6 @@ using System;
 public class Fighter
 {
     [SerializeField] private FighterType _type;
-    [SerializeField] private int _distanceAttack;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
 
@@ -18,7 +17,6 @@ public class Fighter
     public int Health => _health;
     public bool IsDead => _health < 1;
     public int MaxHealth => _maxHealth;
-    public int DistanceAttack => _distanceAttack;
     public FighterType FighterType => _type;
     public IUnit Unit => _unit;
 
