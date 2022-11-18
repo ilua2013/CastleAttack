@@ -38,7 +38,7 @@ public class UnitProjection : MonoBehaviour
                 {
                     _projection.SetActive(true);
                     _projectionCross.SetActive(false);
-                    _projection.transform.position = hit.point;
+                    _projection.transform.position = _cardsHand.CurrentTarget.SpawnPoint;
                 }
                 else
                 {

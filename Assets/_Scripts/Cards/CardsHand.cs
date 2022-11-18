@@ -10,6 +10,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     [SerializeField] private Phase[] _phases;
     [SerializeField] private int _capacity;
 
+    private ICardApplicable _currentTarget;
     private List<Card> _cards = new List<Card>();
 
     public Phase[] Phases => _phases;
@@ -17,6 +18,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public int Capacity => _capacity;
     public bool CanPlaceCard { get; private set; }
     public bool CanTakeCard => _cards.Count < _capacity;
+    public ICardApplicable CurrentTarget => _currentTarget;
 
     public event Action<UnitFriend> Spawned;
     public event Action<PointerEventData, Card> CardTaken;
@@ -79,6 +81,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
             {
                 if (applicable.CanApply(card))
                 {
+                    _currentTarget = applicable;
                     CanPlaceCard = true;
                     return;
                 }

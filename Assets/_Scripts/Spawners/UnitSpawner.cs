@@ -11,8 +11,8 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     private Cell _cell;
 
-    public Transform SpawnPoint => _spawnPoint;
     public UnitFriend Spawned { get; private set; }
+    public Vector3 SpawnPoint => _spawnPoint.position;
 
     public event Action<IUnit> SpawnedUnit;
 
@@ -41,7 +41,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
         if (card is UnitCard unitCard)
         {
-            UnitFriend unitFriend = Instantiate(unitCard.UnitPrefab, SpawnPoint.position, Quaternion.identity);
+            UnitFriend unitFriend = Instantiate(unitCard.UnitPrefab, SpawnPoint, Quaternion.identity);
             Spawned = unitFriend;
 
             unitFriend.Init(unitCard, _cell);
@@ -56,7 +56,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public UnitEnemy TryApplyEnemy(UnitEnemy unitEnemy)
     {
-        UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint.position, Quaternion.identity);
+        UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint, Quaternion.identity);
 
         unit.Init(unitEnemy.Card, _cell);
 

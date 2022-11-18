@@ -67,6 +67,7 @@ public class RadiusAttackView : MonoBehaviour
             }
         }
     }
+
     private void UnSelectionCells(List<Cell> cells)
     {
         foreach (var cell in cells)
@@ -80,10 +81,11 @@ public class RadiusAttackView : MonoBehaviour
                     else
                         highlighting.UnSelect();
                 }
-            }            
+            }
         }
     }
 }
+
 public enum Unit
 {
     Friend, Enemy
