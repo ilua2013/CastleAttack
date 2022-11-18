@@ -3,11 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class HighlightingCell : MonoBehaviour
 {
-    [SerializeField] private Color _highlight;
-    [SerializeField] private Color _highlightEnemy;
-    [SerializeField] private Color _highLightMiddle;
+    [SerializeField] private GameObject _highlightFriend;
+    [SerializeField] private GameObject _highlightEnemy;
+    [SerializeField] private GameObject _highLightMiddle;
+    [SerializeField] private GameObject _highlightHalf;
 
-    private Color _default;
+   
     private MeshRenderer _renderer;
     private bool _isSelect = false;
     private bool _isSelectEnemy = false;
@@ -19,8 +20,12 @@ public class HighlightingCell : MonoBehaviour
 
     private void Awake()
     {
+        _highlightEnemy.SetActive(false);
+        _highlightFriend.SetActive(false);
+        _highlightHalf.SetActive(false);
+        _highLightMiddle.SetActive(false);
         _renderer = GetComponent<MeshRenderer>();
-        _default = _renderer.material.color;
+        //_default = _renderer.material.color;
     }
 
     public void Select()
@@ -28,10 +33,13 @@ public class HighlightingCell : MonoBehaviour
         _isSelect = true;
         _isSelectFriend = true;
         if (_isSelectEnemy == true && _isSelectFriend == true)
-            _renderer.material.color = _highLightMiddle;
+        {
+            _highlightHalf.SetActive(true);
+            _highLightMiddle.SetActive(true);
+        }      
         else
         {
-            _renderer.material.color = _highlight;
+            _highlightFriend.SetActive(true);
         }
         ++_selectCount;
     }
@@ -41,10 +49,14 @@ public class HighlightingCell : MonoBehaviour
         _isSelect = true;
         _isSelectEnemy = true;
         if (_isSelectEnemy == true && _isSelectFriend == true)
-            _renderer.material.color = _highLightMiddle;
+        {
+            _highlightHalf.SetActive(true);
+            _highLightMiddle.SetActive(true);
+        }
+          
         else
         {
-            _renderer.material.color = _highlightEnemy;
+            _highlightEnemy.SetActive(true);
         }
         ++_selectCountEnemy;
     }
@@ -55,7 +67,7 @@ public class HighlightingCell : MonoBehaviour
         if (_selectCount == 0)
         {
             _isSelectFriend = false;
-            _renderer.material.color = _highlightEnemy;
+            _highlightEnemy.SetActive(true);
             if (_isSelectEnemy == false)
             {
                 DefaultSelect();
@@ -67,7 +79,11 @@ public class HighlightingCell : MonoBehaviour
             _isSelect = false;
             _isSelectEnemy = false;
             _isSelectFriend = false;
-            _renderer.material.color = _default;
+
+            _highlightEnemy.SetActive(false);
+            _highlightFriend.SetActive(false);
+            _highlightHalf.SetActive(false);
+            _highLightMiddle.SetActive(false);
             _selectCount = 0;
         }
     }
@@ -77,7 +93,7 @@ public class HighlightingCell : MonoBehaviour
         if (_selectCountEnemy == 0)
         {
             _isSelectEnemy = false;
-            _renderer.material.color = _highlight;
+            _highlightFriend.SetActive(true);
             if (_isSelectFriend == false)
             {
                 DefaultSelect();
@@ -88,6 +104,9 @@ public class HighlightingCell : MonoBehaviour
     private void DefaultSelect()
     {
         _isSelect = false;
-        _renderer.material.color = _default;
+        _highlightEnemy.SetActive(false);
+        _highlightFriend.SetActive(false);
+        _highlightHalf.SetActive(false);
+        _highLightMiddle.SetActive(false);
     }
 }
