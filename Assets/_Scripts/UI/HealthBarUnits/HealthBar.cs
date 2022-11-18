@@ -22,15 +22,19 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
+        _unit.Inited += StartOnHealthChanged;
         _unit.Fighter.Damaged += OnHealthChanged;
         _unit.Fighter.Healed += OnHealthChanged;
     }
 
     private void OnDisable()
     {
+        _unit.Inited -= StartOnHealthChanged;
         _unit.Fighter.Damaged -= OnHealthChanged;
         _unit.Fighter.Healed -= OnHealthChanged;
     }
+
+    private void StartOnHealthChanged() => OnHealthChanged(0);
 
     private void OnHealthChanged(int amount)
     {
