@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(BoxCollider))]
 public class MeteorSpell : Spell
 {
     [SerializeField] private int _damage;
 
-    private SphereCollider _collider;
+    private BoxCollider _collider;
 
     public int Damage => _damage;
 
     private void Awake()
     {
-        _collider = GetComponent<SphereCollider>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     private void OnEnable()
@@ -29,7 +29,7 @@ public class MeteorSpell : Spell
 
     protected override void Affect()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _collider.radius);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _collider.size.x);
 
         foreach (var collider in hitColliders)
         {
