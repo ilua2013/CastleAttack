@@ -141,17 +141,15 @@ public class BattleSystem : MonoBehaviour
         
         while (units.Count != _unitFriend.Count)
         {
-            print(11);
             foreach (var item in _unitFriend)
                 if (item.Mover.CurrentCell.Number == index)
                     units.Add(item);
-            print(111);
+
             index++;
         }
 
         _unitFriend = units;
         index = 20;
-        print(222);
 
         List<UnitEnemy> unitsEnemy = new List<UnitEnemy>();
 
@@ -160,7 +158,6 @@ public class BattleSystem : MonoBehaviour
             foreach (var item in _unitEnemy)
                 if (item.Mover.CurrentCell.Number == index)
                     unitsEnemy.Add(item);
-            print(333);
 
             index--;
         }

@@ -9,6 +9,11 @@ public class StartFightButton : MonoBehaviour
     [SerializeField] private Image _imageButton;
     [SerializeField] private BattleSystem _fightSystem;
 
+    private void OnValidate()
+    {
+        _fightSystem = FindObjectOfType<BattleSystem>();
+    }
+
     private void OnEnable()
     {
         _fightSystem.StepFinished += EnableButton;

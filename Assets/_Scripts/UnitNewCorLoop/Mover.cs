@@ -7,7 +7,7 @@ using System;
 public class Mover
 {
     [SerializeField] private Cell _startCell;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _timeMove;
     [SerializeField] private bool _canMove = true;
 
     private IUnit _unit;
@@ -80,9 +80,15 @@ public class Mover
 
     public IEnumerator MoveTo(Cell cell)
     {
-        while (Vector3.Distance(transform.position, cell.transform.position) > 0.1f)
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = cell.transform.position - transform.position;
+        float time = 0;
+
+        while (time < _timeMove)
         {
-            transform.position = Vector3.MoveTowards(transform.position, cell.transform.position, _speed * Time.deltaTime);
+            time = time > _timeMove ? _timeMove : time + Time.deltaTime;
+
+            transform.position = startPos + (targetPos * (time / _timeMove));
             yield return null;
         }
 

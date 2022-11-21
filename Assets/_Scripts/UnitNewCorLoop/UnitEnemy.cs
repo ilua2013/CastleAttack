@@ -64,7 +64,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         Mover.Init(this, transform, cell);
-        Fighter.Init(this);
+        Fighter.Init(this, transform, new Vector3(0,180,0));
 
         Inited?.Invoke();
         Initialized = true;
@@ -130,4 +130,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+
+    public void RotateTo(Transform transform) => StartCoroutine(Fighter.RotateTo(transform));
 }

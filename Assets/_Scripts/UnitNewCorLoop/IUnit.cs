@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface IUnit 
 {
@@ -9,4 +10,5 @@ public interface IUnit
     public event Action Inited;
     void Init(UnitCard card, Cell cell);
     void DoStep();
+    void RotateTo(Transform transform);
 }

@@ -9,8 +9,13 @@ public class Fighter
     [SerializeField] private FighterType _type;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
+    [SerializeField] private float _delayAttack;
+    [SerializeField] private float _timeToDefaultRotate;
+    [SerializeField] private float _speedRotate;
 
     private IUnit _unit;
+    private Transform transform;
+    private Vector3 _defaultRotate;
     private int _health;
 
     public int Damage => _damage;
@@ -26,14 +31,18 @@ public class Fighter
     public event Action<int> Healed;
     public event Action<Fighter> Died_get;
 
-    public void Init(IUnit unit)
+    public void Init(IUnit unit, Transform transformUnit, Vector3 defaultEuler)
     {
+        transform = transformUnit;
+        _defaultRotate = defaultEuler;
         _unit = unit;
         _health = _maxHealth;
     }
 
     public void Attack(Fighter fighter)
     {
+        _unit.RotateTo(fighter.transform);
+
         int damage = (int)DamageConditions.CalculateDamage(_type, fighter.FighterType, _damage);
         fighter.TakeDamage(damage);
 
@@ -66,6 +75,30 @@ public class Fighter
 
         if (_health == 0)
             Die();
+    }
+
+    public IEnumerator RotateTo(Transform lookAt)
+    {
+        Vector3 target = lookAt.position - transform.position;
+        target.y = 0;
+
+        while (transform.forward != target.normalized)
+        {
+            Debug.Log(Vector3.Distance(transform.forward, target.normalized) + " a");
+            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(_timeToDefaultRotate);
+
+        target = _defaultRotate;
+
+        //while (transform.forward != target.normalized)
+        //{
+            transform.forward = target;
+            yield return null;
+       // }
     }
 }
 

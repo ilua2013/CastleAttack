@@ -34,10 +34,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1710454382622567927}
+  - {fileID: 8504359530493094215}
   - {fileID: 1710454382197722553}
   - {fileID: 1916894435939343688}
-  - {fileID: 8504359530493094215}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animators:
+  - {fileID: 8182816850288234194}
   - {fileID: 2366596724035586885}
 --- !u!114 &8801586289200443270
 MonoBehaviour:
@@ -106,13 +106,15 @@ MonoBehaviour:
     Distance: 1
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
-    _speed: 5
+    _timeMove: 0.75
     _canMove: 1
   <Fighter>k__BackingField:
     _type: 2
-    _distanceAttack: 1
-    _damage: 1
-    _maxHealth: 4
+    _damage: 2
+    _maxHealth: 5
+    _delayAttack: 0
+    _timeToDefaultRotate: 0.2
+    _speedRotate: 10
 --- !u!114 &7864184127803688506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,13 +214,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710454382622567926}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.64926004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2416608157829382033}
-  m_Father: {fileID: 1710454381889582023}
+  m_Father: {fileID: 1740939592731650464}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2093914938370250301
@@ -233,7 +235,6 @@ GameObject:
   - component: {fileID: 3735938494750113980}
   - component: {fileID: 2986653072763800926}
   - component: {fileID: 4289333602831220163}
-  - component: {fileID: 578590028967413056}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -323,18 +324,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &578590028967413056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093914938370250301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a8df8123eaf9e4e8f312be5da16317, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1327953015719747256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -513,6 +502,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95025375702580604, guid: f88c6ad57910d8648807bcf0c131f49d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95025375702580604, guid: f88c6ad57910d8648807bcf0c131f49d, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d93308c435ec1944882d0df531d6acc8, type: 2}
@@ -537,7 +530,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2728252765516272951, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2728252765516272951, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
       propertyPath: m_LocalScale.x
@@ -604,5 +597,15 @@ PrefabInstance:
 --- !u!4 &8504359530493094215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2728252765516272951, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
+  m_PrefabInstance: {fileID: 6041929095295319152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8182816850288234194 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2474176117925114530, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
+  m_PrefabInstance: {fileID: 6041929095295319152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1740939592731650464 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5471928341827311056, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
   m_PrefabInstance: {fileID: 6041929095295319152}
   m_PrefabAsset: {fileID: 0}

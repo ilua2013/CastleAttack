@@ -60,7 +60,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         Mover.Init(this, transform, currentCell);
-        Fighter.Init(this);
+        Fighter.Init(this, transform, new Vector3(0,0,0));
 
         Inited?.Invoke();
         Initialized = true;
@@ -132,6 +132,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+    public void RotateTo(Transform transform) => StartCoroutine(Fighter.RotateTo(transform));
 }
 
 [Serializable]
