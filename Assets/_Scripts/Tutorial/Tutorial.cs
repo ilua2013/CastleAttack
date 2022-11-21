@@ -56,36 +56,44 @@ public class Tutorial : MonoBehaviour
 
     private void StepOneTwo(Card card)
     {
-        if (/*_isActivStepOne*/ _stepTutorial == 0 || _stepTutorial == 7)
-        {
-            _tutorialEffects.EffectOneTwo();
-            _panelViewSwitcher.TutorialFingerDraw(true);
+        if ( _stepTutorial == 0 )
+        {        
             _panelViewSwitcher.PanelInstructinSpellAndMonster(true);
             ++_stepTutorial;
-            GameSwitch(0, true);           
+            Debug.Log(_stepTutorial);           
+            StartCoroutine(DelayGameStop());
         }
+    }
+
+    private IEnumerator DelayGameStop()
+    {
+        Debug.Log(Time.timeScale);
+        yield return new WaitForSeconds(0.1f);      
+        GameSwitch(0, true);
     }
 
     private void StepTwoThree(UnitFriend unitFriend)
     {
-        if (_stepTutorial == 1 || _isActivStepTwo == true)
+        if (_stepTutorial == 1 )
         {
             _tutorialEffects.EffectTwoThree();
             _panelViewSwitcher.TutorialFingerDraw(false);
             _panelViewSwitcher.TutorialFingerTap(true);
             _startFightButton.gameObject.SetActive(true);
             ++_stepTutorial;
+            Debug.Log(_stepTutorial);
         }
     }
 
     private void StepThreeFour()
     {
-        if (_stepTutorial == 2 || _isActivStepTwo == true)
+        if (_stepTutorial == 2 )
         {
             _panelViewSwitcher.TutorialFingerTap(false);
             _tutorialEffects.EffectThreeFour();
             _isActivStepTwo = false;
             ++_stepTutorial;
+            Debug.Log(_stepTutorial);
         }
     }
 
@@ -96,6 +104,7 @@ public class Tutorial : MonoBehaviour
             _panelViewSwitcher.PanelMonstr(true);
             ++_stepTutorial;
             GameSwitch(0, true);
+            Debug.Log(_stepTutorial);
         }
     }
 
@@ -106,6 +115,7 @@ public class Tutorial : MonoBehaviour
             _panelViewSwitcher.UpgradeCardTutorial(true);
             _panelViewSwitcher.OnDrawOut(cardLod, cardNew);
             ++_stepTutorial;
+            Debug.Log(_stepTutorial);
             GameSwitch(0, true);
 
         }
@@ -116,9 +126,11 @@ public class Tutorial : MonoBehaviour
         {
             target.gameObject.SetActive(true);
         }
+        _tutorialEffects.ParticleBox();
         _enemySpawner.TutorialEnemy(_targets);
         _panelViewSwitcher.PanelViewBox(true);
         ++_stepTutorial;
+        Debug.Log(_stepTutorial);
         GameSwitch(0, true);       
     }
 
@@ -134,11 +146,15 @@ public class Tutorial : MonoBehaviour
 
     private void StartGamePause()
     {
-        GameSwitch(1, false);
+        GameSwitch(1, false);      
 
         switch (_stepTutorial)
         {
             case 1:
+
+                StopCoroutine(DelayGameStop());
+                _tutorialEffects.EffectOneTwo();
+                _panelViewSwitcher.TutorialFingerDraw(true);
                 _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
                 break;
 
@@ -169,6 +185,7 @@ public class Tutorial : MonoBehaviour
     private void GameSwitch(float time, bool isActived)
     {
         Time.timeScale = time;
+        Debug.Log(isActived);
         _buttonStartGame.gameObject.SetActive(isActived);
     }
 }
