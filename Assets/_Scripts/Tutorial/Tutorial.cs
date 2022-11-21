@@ -7,23 +7,20 @@ using UnityEngine.UI;
 public class Tutorial : MonoBehaviour
 {
     [SerializeField] private CardsSelection _cardsSelection;
-    [SerializeField] private CardSelectionView _cardSelectionView;
     [SerializeField] private Button _startFightButton;
-    [SerializeField] private GameObject _canvasTutorialFingerDraw;
-    [SerializeField] private GameObject _canvasTutorialFingerTap;
-    [SerializeField] private GameObject _panelTutorial;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private TutorialEffects _tutorialEffects;
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardReplenisher _cardReplenisher;
-    [SerializeField] private CardViewTutorial _viewTutorial;
     [SerializeField] private float _delaySelectionPanelTime;
     [SerializeField] private UnitEnemy[] _targets;
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private LevelSystem _levelSystem;
-
-    private bool _isActivStepOne = true;
-    private bool _isActivStepTwo = false;
+    [SerializeField] private Button _buttonStartGame;
+    [SerializeField] private TutorialPanelViewSwitcher _panelViewSwitcher;
+   
+    private bool _isActivStepTwo = false;    
+    private int _stepTutorial = 0;
 
     private void OnEnable()
     {
@@ -31,10 +28,11 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
         _cardReplenisher.CardUp += StepFourFive;
-        _viewTutorial.EndStep += StepFive;
         _battleSystem.DiedAllEnemy += EndStep;
+        _battleSystem.TutorialStopedUnit += StopGame;
         _levelSystem.Wave1Finished += EnabledWaveTwo;
         _levelSystem.Wave2Finished += EnabledWaveThree;
+        _buttonStartGame.onClick.AddListener(StartGamePause);
     }
 
     private void OnDisable()
@@ -43,88 +41,90 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
         _cardReplenisher.CardUp -= StepFourFive;
-        _viewTutorial.EndStep -= StepFive;
         _battleSystem.DiedAllEnemy -= EndStep;
         _levelSystem.Wave1Finished -= EnabledWaveTwo;
         _levelSystem.Wave2Finished -= EnabledWaveThree;
+        _battleSystem.TutorialStopedUnit -= StopGame;
+        _buttonStartGame.onClick.RemoveListener(StartGamePause);
     }
 
     private void Start()
     {
+        _buttonStartGame.gameObject.SetActive(false);
         _startFightButton.gameObject.SetActive(false);
-        _canvasTutorialFingerDraw.SetActive(false);
-        _canvasTutorialFingerTap.SetActive(false);
-        _panelTutorial.gameObject.SetActive(false);
     }
 
     private void StepOneTwo(Card card)
     {
-        if (_isActivStepOne == true|| _isActivStepTwo == true)
+        if (/*_isActivStepOne*/ _stepTutorial == 0 || _stepTutorial == 7)
         {
             _tutorialEffects.EffectOneTwo();
-            _canvasTutorialFingerDraw.SetActive(true);
-        }     
+            _panelViewSwitcher.TutorialFingerDraw(true);
+            _panelViewSwitcher.PanelInstructinSpellAndMonster(true);
+            ++_stepTutorial;
+            GameSwitch(0, true);           
+        }
     }
 
     private void StepTwoThree(UnitFriend unitFriend)
     {
-        if (_isActivStepOne == true)
+        if (_stepTutorial == 1 || _isActivStepTwo == true)
         {
             _tutorialEffects.EffectTwoThree();
-            _canvasTutorialFingerDraw.SetActive(false);
-            _canvasTutorialFingerTap.SetActive(true);
+            _panelViewSwitcher.TutorialFingerDraw(false);
+            _panelViewSwitcher.TutorialFingerTap(true);
             _startFightButton.gameObject.SetActive(true);
-        }
-
-        if(_isActivStepTwo == true)
-        {
-            _tutorialEffects.EffectTwoThree();
-            _canvasTutorialFingerDraw.SetActive(false);
-            _canvasTutorialFingerTap.SetActive(true);          
+            ++_stepTutorial;
         }
     }
 
     private void StepThreeFour()
     {
-        if (_isActivStepOne == true)
+        if (_stepTutorial == 2 || _isActivStepTwo == true)
         {
-            _canvasTutorialFingerTap.SetActive(false);
-            _tutorialEffects.EffectThreeFour();
-        }
-        if(_isActivStepTwo == true)
-        {
-            _canvasTutorialFingerTap.SetActive(false);
+            _panelViewSwitcher.TutorialFingerTap(false);
             _tutorialEffects.EffectThreeFour();
             _isActivStepTwo = false;
+            ++_stepTutorial;
+        }
+    }
+
+    private void StopGame()
+    {
+        if (_stepTutorial == 3)
+        {
+            _panelViewSwitcher.PanelMonstr(true);
+            ++_stepTutorial;
+            GameSwitch(0, true);
         }
     }
 
     private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
     {
-        if (_isActivStepOne == true)
+        if (_stepTutorial == 4)
         {
-            _panelTutorial.gameObject.SetActive(true);
-            _cardsSelection.TutorialTimeSwitch(_delaySelectionPanelTime);
-            _cardSelectionView.TutorialTimeSwitch(_delaySelectionPanelTime);
-            _viewTutorial.OnDrawOut(cardLod, cardNew, _delaySelectionPanelTime);
+            _panelViewSwitcher.UpgradeCardTutorial(true);
+            _panelViewSwitcher.OnDrawOut(cardLod, cardNew);
+            ++_stepTutorial;
+            GameSwitch(0, true);
+
         }
     }
     private void StepFive()
-    {        
-            _isActivStepOne = false;
-            _delaySelectionPanelTime = 0;
-            _cardsSelection.TutorialTimeSwitch(_delaySelectionPanelTime);
-            _cardSelectionView.TutorialTimeSwitch(_delaySelectionPanelTime);
-            foreach (var target in _targets)
-            {
-                target.gameObject.SetActive(true);
-            }
-            _enemySpawner.TutorialEnemy(_targets);       
+    {
+        foreach (var target in _targets)
+        {
+            target.gameObject.SetActive(true);
+        }
+        _enemySpawner.TutorialEnemy(_targets);
+        _panelViewSwitcher.PanelViewBox(true);
+        ++_stepTutorial;
+        GameSwitch(0, true);       
     }
 
     private void EndStep()
     {
-        _tutorialEffects.EffectFourFive();       
+        _tutorialEffects.EffectFourFive();
     }
 
     private void EnabledWaveTwo()
@@ -132,8 +132,43 @@ public class Tutorial : MonoBehaviour
         _isActivStepTwo = true;
     }
 
+    private void StartGamePause()
+    {
+        GameSwitch(1, false);
+
+        switch (_stepTutorial)
+        {
+            case 1:
+                _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
+                break;
+
+            case 4:
+                _panelViewSwitcher.PanelMonstr(false);
+                break;
+
+            case 5:
+                _panelViewSwitcher.UpgradeCardTutorial(false);
+                StepFive();
+                break;
+
+            case 6:
+                _panelViewSwitcher.PanelViewBox(false);
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     private void EnabledWaveThree()
     {
-        _tutorialEffects.EffectFourFive();        
-    }  
+        _tutorialEffects.EffectFourFive();
+    }
+
+    private void GameSwitch(float time, bool isActived)
+    {
+        Time.timeScale = time;
+        _buttonStartGame.gameObject.SetActive(isActived);
+    }
 }

@@ -12,6 +12,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 
     public UnitCard Card { get; private set; }
     private int _currentStep;
+    private bool _isTutorialUnitStop = true;
 
     public int CurrentStep => _currentStep;
     public bool Initialized { get; private set; }
@@ -21,6 +22,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public event Action Moved;
     public event Action Inited;
     public event Action EndedSteps;
+    public event Action StopUnit;
 
     private void OnValidate()
     {
@@ -68,11 +70,24 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 
     public void ReturnToHand()
     {
+        StartCoroutine(TutorialPause());
+        
+    }
+
+    public IEnumerator TutorialPause()
+    {
+
+        yield return new WaitForSeconds(0.1f);
         Mover.Die();
-        Fighter.Die();
+        Fighter.Die();        
         gameObject.SetActive(false);
         Card.ComeBack();
+
     }
+
+
+
+
 
     public void DoStep()
     {
