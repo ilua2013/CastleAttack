@@ -20,6 +20,7 @@ public class CardInDeckView : MonoBehaviour
         SetHierarchy(card.transform);
         Transformation(card.transform, smooth);
 
+        card.transform.localScale = Vector3.one;
         card.BeginDrag += OnBeginDrag;
     }
 
