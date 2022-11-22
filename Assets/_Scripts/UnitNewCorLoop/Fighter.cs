@@ -15,7 +15,6 @@ public class Fighter
 
     private IUnit _unit;
     private Transform transform;
-    private Vector3 _defaultRotate;
     private int _health;
 
     public int Damage => _damage;
@@ -31,10 +30,9 @@ public class Fighter
     public event Action<int> Healed;
     public event Action<Fighter> Died_get;
 
-    public void Init(IUnit unit, Transform transformUnit, Vector3 defaultEuler)
+    public void Init(IUnit unit, Transform transformUnit)
     {
         transform = transformUnit;
-        _defaultRotate = defaultEuler;
         _unit = unit;
         _health = _maxHealth;
     }
@@ -79,12 +77,12 @@ public class Fighter
 
     public IEnumerator RotateTo(Transform lookAt)
     {
+        Vector3 startRotate = transform.forward;
         Vector3 target = lookAt.position - transform.position;
         target.y = 0;
 
-        while (transform.forward != target.normalized)
+        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
         {
-            Debug.Log(Vector3.Distance(transform.forward, target.normalized) + " a");
             transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
 
             yield return null;
@@ -92,13 +90,12 @@ public class Fighter
 
         yield return new WaitForSeconds(_timeToDefaultRotate);
 
-        target = _defaultRotate;
+        while (transform.forward != startRotate)
+        {
+            transform.forward = Vector3.MoveTowards(transform.forward, startRotate, _speedRotate * Time.deltaTime);
 
-        //while (transform.forward != target.normalized)
-        //{
-            transform.forward = target;
             yield return null;
-       // }
+        }
     }
 }
 

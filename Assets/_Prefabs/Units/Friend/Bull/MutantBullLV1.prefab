@@ -26,18 +26,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908525480380400829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3930143779692936567}
-  m_Father: {fileID: 1710454381889582023}
-  m_RootOrder: 2
+  m_Father: {fileID: 5852873304321709542}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.15400004}
   m_SizeDelta: {x: 3.5891, y: 1.3966}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6351696705553983445
@@ -137,7 +137,6 @@ Transform:
   m_Children:
   - {fileID: 5852873304321709542}
   - {fileID: 1710454382197722553}
-  - {fileID: 2670498952716475377}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -214,8 +213,8 @@ MonoBehaviour:
     _damage: 2
     _maxHealth: 15
     _delayAttack: 0
-    _timeToDefaultRotate: 0.2
-    _speedRotate: 10
+    _timeToDefaultRotate: 0.25
+    _speedRotate: 4
 --- !u!114 &5648544236220189253
 MonoBehaviour:
   m_ObjectHideFlags: 0
