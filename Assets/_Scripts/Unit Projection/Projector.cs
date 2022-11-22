@@ -63,11 +63,13 @@ public class Projector : MonoBehaviour
 
     private void OnCardDrop()
     {
-        Debug.Log("Drop card");
         _pointer = null;
 
-        Destroy(_projection.gameObject);
-        Destroy(_projectionCross.gameObject);
+        if (_projection != null)
+            Destroy(_projection.gameObject);
+
+        if (_projectionCross != null)
+            Destroy(_projectionCross.gameObject);
 
         _projection = null;
         _projectionCross = null;

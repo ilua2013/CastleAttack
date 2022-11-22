@@ -14,6 +14,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _botRight;
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
+    [SerializeField] private Cell _this;
 
     private IUnit _currentUnit;
 
@@ -25,6 +26,7 @@ public class Cell : MonoBehaviour
     public Cell BotLeft => _botLeft;
     public Cell Left => _left;
     public Cell Right => _right;
+    public Cell This => _this;
     public CellIs CellIs => _cellIs;
     public IUnit CurrentUnit => _currentUnit;
     public int Number => _number;
@@ -87,6 +89,9 @@ public class Cell : MonoBehaviour
             case CellNeighbor.BotRight:
                 _botRight = cell;
                 break;
+            case CellNeighbor.This:
+                _this = cell;
+                break;
         }
     }
 
@@ -139,6 +144,10 @@ public class Cell : MonoBehaviour
                 case CellNeighbor.BotRight:
                     SetCellsInCells(cells, GetBotRightCells(distanceAttacks[i].Distance));
                     break;
+
+                case CellNeighbor.This:
+                    SetCellsInCells(cells, new List<Cell>() { this });
+                    break;
             }
         }
 
@@ -184,6 +193,10 @@ public class Cell : MonoBehaviour
                 case CellNeighbor.BotRight:
                     CheckStateUnitEnemy(GetBotRightCells(distanceAttack[i].Distance), enemys);
                     break;
+
+                case CellNeighbor.This:
+                    CheckStateUnitEnemy(new List<Cell>() { this }, enemys);
+                    break;
             }
         }
 
@@ -228,6 +241,10 @@ public class Cell : MonoBehaviour
 
                 case CellNeighbor.BotRight:
                     CheckStateUnitFriend(GetBotRightCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.This:
+                    CheckStateUnitFriend(new List<Cell>() { this }, friends);
                     break;
             }
         }
@@ -400,5 +417,5 @@ public enum CellIs
 
 public enum CellNeighbor
 {
-    Left, Top, Right, Bot, TopLeft, TopRight, BotLeft, BotRight
+    Left, Top, Right, Bot, TopLeft, TopRight, BotLeft, BotRight, This
 }
