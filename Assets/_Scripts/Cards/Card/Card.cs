@@ -17,7 +17,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public bool IsAvailable { get; private set; }
     public DeckType Deck { get; private set; }
     public CardSave CardSave => _cardSave;
-    public virtual GameObject ProjectionPrefab { get; }
+    public virtual Projection ProjectionPrefab { get; }
 
     public event Action<PointerEventData, Card> Clicked;
     public event Action<PointerEventData, Card> Drag;

@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2412874775183391171
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5628983567676718962, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8096742630889791109, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d53ab2818a2b01c4fbdad6ceb95c1cff, type: 2}
+    - target: {fileID: 8156258594302621448, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_Name
+      value: Heal Projection
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156258594302621449, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5628983567676718962, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+--- !u!1 &5786168021159251659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8156258594302621448, guid: dea2973bdcad57a46912fc0c785f7779, type: 3}
+  m_PrefabInstance: {fileID: 2412874775183391171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5489697418375583998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786168021159251659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41373a1a9ec2afb4281c6e3ed46258cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unit: {fileID: -5489697418375583998}
+  _unitType: 0
+--- !u!114 &3716402256111120999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786168021159251659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1405fa13af0c7340ab35e1fd221e922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceAttacks:
+  - Side: 0
+    Distance: 1
+  - Side: 1
+    Distance: 1
+  - Side: 2
+    Distance: 1
+  - Side: 3
+    Distance: 1
+  - Side: 4
+    Distance: 1
+  - Side: 5
+    Distance: 1
+  - Side: 6
+    Distance: 1
+  - Side: 7
+    Distance: 1
+  _radiusAttack: {fileID: -5489697418375583998}

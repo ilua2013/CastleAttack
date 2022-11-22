@@ -3,19 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class MeteorSpell : Spell
 {
     [SerializeField] private int _damage;
 
-    private BoxCollider _collider;
-
     public int Damage => _damage;
-
-    private void Awake()
-    {
-        _collider = GetComponent<BoxCollider>();
-    }
 
     private void OnEnable()
     {
@@ -27,18 +19,12 @@ public class MeteorSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect()
+    protected override void Affect(Cell cell)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _collider.size.x);
+        List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
 
-        foreach (var collider in hitColliders)
-        {
-            if (collider.TryGetComponent(out UnitEnemy enemy))
-            {
-                Debug.Log("Affect " + enemy);
-                enemy.Fighter.TakeDamage(_damage);
-            }
-        }
+        foreach (UnitEnemy enemy in enemies)
+            enemy.Fighter.TakeDamage(_damage);
     }
 
     private void OnDispelled()
