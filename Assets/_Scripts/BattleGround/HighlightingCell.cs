@@ -8,7 +8,7 @@ public class HighlightingCell : MonoBehaviour
     [SerializeField] private GameObject _highLightMiddle;
     [SerializeField] private GameObject _highlightHalf;
 
-   
+
     private MeshRenderer _renderer;
     private bool _isSelect = false;
     private bool _isSelectEnemy = false;
@@ -36,7 +36,7 @@ public class HighlightingCell : MonoBehaviour
         {
             _highlightHalf.SetActive(true);
             _highLightMiddle.SetActive(true);
-        }      
+        }
         else
         {
             _highlightFriend.SetActive(true);
@@ -53,7 +53,7 @@ public class HighlightingCell : MonoBehaviour
             _highlightHalf.SetActive(true);
             _highLightMiddle.SetActive(true);
         }
-          
+
         else
         {
             _highlightEnemy.SetActive(true);
@@ -101,9 +101,11 @@ public class HighlightingCell : MonoBehaviour
         }
     }
 
-    private void DefaultSelect()
+   private void DefaultSelect()
     {
         _isSelect = false;
+        _selectCount = 0;
+        _selectCountEnemy = 0;
         _highlightEnemy.SetActive(false);
         _highlightFriend.SetActive(false);
         _highlightHalf.SetActive(false);

@@ -63,12 +63,13 @@ public class Tutorial : MonoBehaviour
             Debug.Log(_stepTutorial);           
             StartCoroutine(DelayGameStop());
         }
+        
     }
 
     private IEnumerator DelayGameStop()
     {
         Debug.Log(Time.timeScale);
-        yield return new WaitForSeconds(0.1f);      
+        yield return new WaitForSeconds(0.2f);      
         GameSwitch(0, true);
     }
 
@@ -83,6 +84,14 @@ public class Tutorial : MonoBehaviour
             ++_stepTutorial;
             Debug.Log(_stepTutorial);
         }
+        if (_isActivStepTwo)
+        {
+            _panelViewSwitcher.PanelTwoTutorial(true);
+            _isActivStepTwo = false;
+            ++_stepTutorial;
+            StartCoroutine(DelayGameStop());
+        }
+
     }
 
     private void StepThreeFour()
@@ -144,6 +153,10 @@ public class Tutorial : MonoBehaviour
         _isActivStepTwo = true;
     }
 
+   
+
+
+
     private void StartGamePause()
     {
         GameSwitch(1, false);      
@@ -169,6 +182,10 @@ public class Tutorial : MonoBehaviour
 
             case 6:
                 _panelViewSwitcher.PanelViewBox(false);
+                break;
+
+            case 7:
+                _panelViewSwitcher.PanelTwoTutorial(false);
                 break;
 
             default:
