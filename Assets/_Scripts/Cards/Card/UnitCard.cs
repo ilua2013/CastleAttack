@@ -9,7 +9,7 @@ public class UnitCard : Card
     [SerializeField] private CardStage _stage;
     [SerializeField] private UnitCard _nextStage;
     [SerializeField] private UnitFriend _unitPrefab;
-    [SerializeField] private GameObject _projectionPrefab;
+    [SerializeField] private UnitProjection _projectionPrefab;
 
     public event Action<UnitCard> StageUp;
     public event Action<UnitCard> CameBack;
@@ -19,7 +19,7 @@ public class UnitCard : Card
     public UnitCard NextStage => _nextStage;
     public CardStage Stage => _stage;
 
-    public override GameObject ProjectionPrefab => _projectionPrefab;
+    public override Projection ProjectionPrefab => _projectionPrefab;
 
     public void ComeBack()
     {

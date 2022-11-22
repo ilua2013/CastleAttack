@@ -10,31 +10,28 @@ public class RadiusAttackView : MonoBehaviour
 
     private List<Cell> _cells = new List<Cell>();
 
-    public Mover UnitMover()
-    {
-        return _radiusAttack.Mover;
-    }
-
     public List<Cell> ViewCells()
     {
         return _cells = _radiusAttack.RadiusView();
-    }   
-
-    private void OnEnable()
-    {
-        _radiusAttack = _unit.GetComponent<IRadiusAttack>();
-        _radiusAttack.Inited += InitedCells;
-        UnitMover().Moved += OnMoved;
     }
 
-    private void OnDisable()
+    public void ShowRadius(Cell cell, DistanceAttack[] attacks)
     {
-        _radiusAttack.Inited -= InitedCells;
-        UnitMover().Moved -= OnMoved;
-        UnitDisable();
+        UnSelectionCells(_cells);
+        _cells.Clear();
+        _cells = cell.GetCellsDistanceAttack(attacks);
+        SelectionCells(_cells);
     }
 
-    private void OnMoved()
+    public void ShowRadius(Cell cell)
+    {
+        UnSelectionCells(_cells);
+        _cells.Clear();
+        _cells = cell.GetCellsDistanceAttack(_radiusAttack.DistanceAttack);
+        SelectionCells(_cells);
+    }
+
+    public void ShowRadius()
     {
         UnSelectionCells(_cells);
         _cells.Clear();
@@ -42,10 +39,33 @@ public class RadiusAttackView : MonoBehaviour
         SelectionCells(_cells);
     }
 
+    private void OnEnable()
+    {
+        _radiusAttack = _unit.GetComponent<IRadiusAttack>();
+        _radiusAttack.Inited += InitedCells;
+
+        if (_radiusAttack.Mover != null)
+            _radiusAttack.Mover.Moved += OnMoved;
+    }
+
+    private void OnDisable()
+    {
+        _radiusAttack.Inited -= InitedCells;
+
+        if (_radiusAttack.Mover != null)
+            _radiusAttack.Mover.Moved -= OnMoved;
+
+        UnitDisable();
+    }
+
+    private void OnMoved()
+    {
+        ShowRadius();
+    }
+
     private void InitedCells()
     {
-        _cells = ViewCells();
-        SelectionCells(_cells);
+        ShowRadius();
     }
 
     private void UnitDisable()

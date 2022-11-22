@@ -7,18 +7,21 @@ public abstract class Spell : MonoBehaviour
 {
     private const float Interval = 1f;
 
+    [SerializeField] private DistanceAttack[] _distanceAttacks;
     [SerializeField] private float _lifetime;
+
+    public DistanceAttack[] DistanceAttacks => _distanceAttacks;
 
     public event Action Dispelled;
 
-    public void Cast(Action onEndCallback = null)
+    public void Cast(Cell cell, Action onEndCallback = null)
     {
-        StartCoroutine(Live(onEndCallback));
+        StartCoroutine(Live(onEndCallback, cell));
     }
 
-    protected abstract void Affect();
+    protected abstract void Affect(Cell cell);
 
-    private IEnumerator Live(Action onDeathCallback)
+    private IEnumerator Live(Action onDeathCallback, Cell cell)
     {
         float elapsed = 0;
         float ticks = 0;
@@ -28,7 +31,7 @@ public abstract class Spell : MonoBehaviour
             if (ticks >= Interval)
             {
                 ticks = 0;
-                Affect();
+                Affect(cell);
             }
 
             ticks += Time.deltaTime;

@@ -3,19 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class HealSpell : Spell
 {
     [SerializeField] private int _recovery;
 
-    private SphereCollider _collider;
-
     public int Recovery => _recovery;
-
-    private void Awake()
-    {
-        _collider = GetComponent<SphereCollider>();
-    }
 
     private void OnEnable()
     {
@@ -27,17 +19,12 @@ public class HealSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect()
+    protected override void Affect(Cell cell)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _collider.radius);
+        List<UnitFriend> units = cell.GetFriendUnits(DistanceAttacks);
 
-        foreach (var collider in hitColliders)
-        {
-            if (collider.TryGetComponent(out IUnit triggered))
-            {
-                triggered.Fighter.RecoveryHealth(_recovery);
-            }
-        }
+        foreach (UnitFriend unit in units)
+            unit.Fighter.RecoveryHealth(Recovery);
     }
 
     private void OnDispelled()

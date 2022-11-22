@@ -6,12 +6,12 @@ using UnityEngine;
 public class SpellCard : Card
 {
     [SerializeField] private Spell _spellPrefab;
-    [SerializeField] private GameObject _projectionPrefab;
+    [SerializeField] private SpellProjection _projectionPrefab;
 
     public event Action<int> AmountChanged;
     public Spell SpellPrefab => _spellPrefab;
 
-    public override GameObject ProjectionPrefab => _projectionPrefab;
+    public override Projection ProjectionPrefab => _projectionPrefab;
 
     public void Merge()
     {

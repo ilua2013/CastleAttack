@@ -17,6 +17,8 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public int CurrentStep => _currentStep;
     public bool Initialized { get; private set; }
 
+    public DistanceAttack[] DistanceAttack => _distanceAttack;
+
     public event Action Returned;
     public event Action Attacked;
     public event Action Moved;

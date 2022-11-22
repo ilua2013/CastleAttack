@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class SpellSpawner : MonoBehaviour, ICardApplicable
 {
+    private Cell _cell;
+
     public UnitFriend Spawned { get; private set; }
 
     public Vector3 SpawnPoint => transform.position;
 
+    public Cell Cell => _cell;
+
     public event Action<Vector3, Spell> Cast;
+
+    private void Awake()
+    {
+        _cell = GetComponent<Cell>();
+    }
 
     public bool TryApplyFriend(Card card, Vector3 place)
     {
@@ -17,7 +26,7 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
         {
             Spell spell = Instantiate(spellCard.SpellPrefab, place, Quaternion.identity);
 
-            spell.Cast();
+            spell.Cast(_cell);
             Cast?.Invoke(place, spell);
             return true;
         }

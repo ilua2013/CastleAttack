@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnitProjection : MonoBehaviour
+public class Projector : MonoBehaviour
 {
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private GameObject _cross;
 
     private PointerEventData _pointer;
-    private GameObject _projection;
+    private Projection _projection;
     private GameObject _projectionCross;
 
     private void OnEnable()
@@ -36,13 +36,14 @@ public class UnitProjection : MonoBehaviour
             {
                 if (_cardsHand.CanPlaceCard)
                 {
-                    _projection.SetActive(true);
+                    _projection.gameObject.SetActive(true);
+                    _projection.Show(_cardsHand.CurrentTarget.Cell);
                     _projectionCross.SetActive(false);
                     _projection.transform.position = _cardsHand.CurrentTarget.SpawnPoint;
                 }
                 else
                 {
-                    _projection.SetActive(false);
+                    _projection.gameObject.SetActive(false);
                     _projectionCross.SetActive(true);
                     _projectionCross.transform.position = hit.point;
                 }
@@ -56,16 +57,17 @@ public class UnitProjection : MonoBehaviour
         _projection = Instantiate(card.ProjectionPrefab);
         _projectionCross = Instantiate(_cross);
 
-        _projection.SetActive(false);
+        _projection.gameObject.SetActive(false);
         _projectionCross.SetActive(false);
     }
 
     private void OnCardDrop()
     {
+        Debug.Log("Drop card");
         _pointer = null;
 
-        Destroy(_projection);
-        Destroy(_projectionCross);
+        Destroy(_projection.gameObject);
+        Destroy(_projectionCross.gameObject);
 
         _projection = null;
         _projectionCross = null;
