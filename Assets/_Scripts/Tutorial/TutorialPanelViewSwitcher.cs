@@ -11,6 +11,7 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
     [SerializeField] private GameObject _panelUpgradeCardTutorial;
     [SerializeField] private GameObject _panelInstructionSpellAndMonster;
     [SerializeField] private GameObject _panelTwoTutorial;
+    [SerializeField] private GameObject _panelThreeTutorial;
     [SerializeField] private CardLevelUp _cardLevelUpOld;
     [SerializeField] private CardLevelUp _cardLevelUpNew;
 
@@ -56,6 +57,11 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
     public void PanelTwoTutorial(bool actived)
     {
         _panelTwoTutorial.SetActive(actived);
+    }
+
+    public void PanelThree()
+    {
+
     }
 
     public void OnDrawOut(UnitCard cardOld, UnitCard cardNew)

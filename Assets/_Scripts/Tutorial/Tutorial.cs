@@ -19,7 +19,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private Button _buttonStartGame;
     [SerializeField] private TutorialPanelViewSwitcher _panelViewSwitcher;
    
-    private bool _isActivStepTwo = false;    
+    private bool _isActivStepTwo = false;
+    private bool _isActivStepThree = false;
     private int _stepTutorial = 0;
 
     private void OnEnable()
@@ -91,6 +92,11 @@ public class Tutorial : MonoBehaviour
             ++_stepTutorial;
             StartCoroutine(DelayGameStop());
         }
+        if (_isActivStepThree)
+        {
+
+        }
+
 
     }
 
@@ -152,10 +158,6 @@ public class Tutorial : MonoBehaviour
     {
         _isActivStepTwo = true;
     }
-
-   
-
-
 
     private void StartGamePause()
     {
