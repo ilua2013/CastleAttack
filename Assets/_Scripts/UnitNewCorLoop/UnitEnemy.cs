@@ -64,7 +64,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         Mover.Init(this, transform, cell);
-        Fighter.Init(this, transform, new Vector3(0,180,0));
+        Fighter.Init(this, transform);
 
         Inited?.Invoke();
         Initialized = true;
@@ -117,7 +117,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     public List<Cell> RadiusView()
     {
-        Debug.Log(Mover.CurrentCell);
         List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
 
         return cells;

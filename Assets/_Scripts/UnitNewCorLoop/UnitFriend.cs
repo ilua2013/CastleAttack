@@ -60,7 +60,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         Mover.Init(this, transform, currentCell);
-        Fighter.Init(this, transform, new Vector3(0,0,0));
+        Fighter.Init(this, transform);
 
         Inited?.Invoke();
         Initialized = true;
