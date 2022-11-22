@@ -32,6 +32,12 @@ public static class DamageConditions
     private const float TowerToWizzard = 1f;
     private const float TowerToMainTarget = 1f;
 
+    private const float AttackSpellToArcher = 1f;
+    private const float AttackSpellToTower = 1f;
+    private const float AttackSpellToBuild = 1f;
+    private const float AttackSpellToWizzard = 1f;
+    private const float AttackSpellToMainTarget = 0.2f;
+
     public static float CalculateDamage(FighterType attacking, FighterType defensive, int damage)
     {
         if (attacking == defensive)
@@ -130,6 +136,28 @@ public static class DamageConditions
                         return damage * CatapultToMainTarget;
                 }
                 break;
+
+            case FighterType.AttackSpell:
+                switch (defensive)
+                {
+                    case FighterType.Archer:
+                        return damage * AttackSpellToArcher;
+
+                    case FighterType.Tower:
+                        return damage * AttackSpellToTower;
+
+                    case FighterType.Build:
+                        return damage * AttackSpellToBuild;
+
+                    case FighterType.MainWizzard:
+                        return damage * AttackSpellToWizzard;
+
+                    case FighterType.MainTarget:
+                        return damage * AttackSpellToMainTarget;
+
+                    default:
+                        return damage;
+                }
         }
 
         Debug.LogError("No Type");

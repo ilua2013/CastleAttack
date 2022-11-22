@@ -20,7 +20,6 @@ public class RadiusAttackView : MonoBehaviour
         UnSelectionCells(_cells);
         _cells.Clear();
         _cells = cell.GetCellsDistanceAttack(attacks);
-        _cells.Add(cell);
         SelectionCells(_cells);
     }
 
@@ -29,7 +28,6 @@ public class RadiusAttackView : MonoBehaviour
         UnSelectionCells(_cells);
         _cells.Clear();
         _cells = cell.GetCellsDistanceAttack(_radiusAttack.DistanceAttack);
-        _cells.Add(cell);
         SelectionCells(_cells);
     }
 

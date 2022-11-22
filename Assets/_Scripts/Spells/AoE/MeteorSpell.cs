@@ -6,6 +6,7 @@ using UnityEngine;
 public class MeteorSpell : Spell
 {
     [SerializeField] private int _damage;
+    [SerializeField] private FighterType _fighterType;
 
     public int Damage => _damage;
 
@@ -24,7 +25,10 @@ public class MeteorSpell : Spell
         List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
 
         foreach (UnitEnemy enemy in enemies)
-            enemy.Fighter.TakeDamage(_damage);
+        {
+            int damage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, _damage);
+            enemy.Fighter.TakeDamage(damage);
+        }
     }
 
     private void OnDispelled()
