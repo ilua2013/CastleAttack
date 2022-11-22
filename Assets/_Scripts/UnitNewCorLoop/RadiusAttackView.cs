@@ -9,6 +9,7 @@ public class RadiusAttackView : MonoBehaviour
     private IRadiusAttack _radiusAttack;
 
     private List<Cell> _cells = new List<Cell>();
+    private bool _isInited = false;
 
     public Mover UnitMover()
     {
@@ -44,8 +45,13 @@ public class RadiusAttackView : MonoBehaviour
 
     private void InitedCells()
     {
-        _cells = ViewCells();
-        SelectionCells(_cells);
+        if(_isInited == false)
+        {
+            _cells = ViewCells();
+            SelectionCells(_cells);
+            _isInited = true;
+        }
+       
     }
 
     private void UnitDisable()
