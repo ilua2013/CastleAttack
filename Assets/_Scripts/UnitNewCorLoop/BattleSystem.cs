@@ -105,14 +105,11 @@ public class BattleSystem : MonoBehaviour
 
     private void StartBattle()
     {
-        if (_unitFriend.Count > 0)
-        {
-            CalculateFirstStep();
-            _doStep = true;
+        CalculateFirstStep();
+        _doStep = true;
 
-            StepStarted?.Invoke();
-            StartCoroutine(Battle());
-        }
+        StepStarted?.Invoke();
+        StartCoroutine(Battle());
     }
 
     private IEnumerator Battle()
