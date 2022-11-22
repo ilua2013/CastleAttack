@@ -34,14 +34,35 @@ public class Cell : MonoBehaviour
 
     private void OnValidate()
     {
+        Vector3 right = new Vector3(1.5f, 0, 0);
+        Vector3 rightTop = new Vector3(1.5f, 0, 1.5f);
+        Vector3 rightBot = new Vector3(1.5f, 0, -1.5f);
+        Vector3 top = new Vector3(0, 0, 1.5f);
+        Vector3 bot = new Vector3(0, 0, -1.5f);
+        Vector3 left = new Vector3(-1.5f, 0, 0);
+        Vector3 leftTop = new Vector3(-1.5f, 0, 1.5f);
+        Vector3 leftBot = new Vector3(-1.5f, 0, -1.5f);
+
+        Dictionary<Vector3, CellNeighbor> sides = new Dictionary<Vector3, CellNeighbor>() { {right, CellNeighbor.Right}, {rightBot, CellNeighbor.BotRight },
+{rightTop, CellNeighbor.TopRight }, {top, CellNeighbor.Top }, {bot, CellNeighbor.Bot },
+{left, CellNeighbor.Left }, {leftBot, CellNeighbor.BotLeft }, {leftTop, CellNeighbor.TopLeft } };
+
+        foreach (var item in sides)
+        {
+            Vector3 currentSide = item.Key;
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position + currentSide, 0.01f);
+
+            foreach (var collider in hitColliders)
+                if (collider.TryGetComponent(out Cell cell))
+                    SetCell(cell, item.Value);
+        }
+
         if (_cellIs != CellIs.Lower)
             return;
 
         Cell currentCell = this;
         int number = 0;
-
-        //while (currentCell.Bot != null)
-        //    currentCell = currentCell.Bot;
 
         while (currentCell != null)
         {
