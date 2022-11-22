@@ -50,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (var item in _enemysStart)
         {
+            Debug.Log(item);
             item.Init(null, null);
             Spawned_get?.Invoke(item);
             if (item.Fighter.FighterType == FighterType.Build)

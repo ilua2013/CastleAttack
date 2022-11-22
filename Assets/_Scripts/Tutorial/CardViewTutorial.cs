@@ -13,20 +13,26 @@ public class CardViewTutorial : MonoBehaviour
     private float _delayTime;
     public event Action EndStep;
 
-    public void OnDrawOut(UnitCard cardOld, UnitCard cardNew, float time )
-    {
-        _delayTime = time;
-        _cardLevelUpOld.ChangeDrawCard(cardOld);
-        _cardLevelUpNew.ChangeDrawCard(cardNew);
-        StartCoroutine(DisableWindows());
-    }
+    //public void OnDrawOut(UnitCard cardOld, UnitCard cardNew, float time )
+    //{
+    //    _delayTime = time;
+    //    _cardLevelUpOld.ChangeDrawCard(cardOld);
+    //    _cardLevelUpNew.ChangeDrawCard(cardNew);
+      
+    //}
 
-    private IEnumerator DisableWindows()
-    {        
-        yield return new WaitForSeconds(_delayTime);
-        EndStep?.Invoke();
-        StopCoroutine(DisableWindows());
-        gameObject.SetActive(false);
+    //public void EndViewCardUpgrade()
+    //{
+    //    EndStep?.Invoke();
+    //    gameObject.SetActive(false);
+    //}
+
+    //private IEnumerator DisableWindows()
+    //{        
+    //    yield return new WaitForSeconds(_delayTime);
+    //    EndStep?.Invoke();
+    //    StopCoroutine(DisableWindows());
+    //    gameObject.SetActive(false);
        
-    }
+    //}
 }

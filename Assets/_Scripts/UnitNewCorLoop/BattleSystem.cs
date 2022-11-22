@@ -25,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     public event Action RemovedDie;
     public event Action DiedAllEnemy;
     public event Action EnemySpawnerChanged;
+    public event Action TutorialStopedUnit;
 
     private void OnValidate()
     {
@@ -36,6 +37,13 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
+        Debug.Log(_unitFriend.Count);
+        foreach (var unit in _unitFriend)
+        {
+            Debug.Log(_unitFriend);
+            Debug.Log(unit);
+            unit.Mover.ReachedHigherCell += TutorialStopUnit;
+        }
     }
 
     private void OnDisable()
@@ -43,6 +51,10 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.RemoveListener(StartBattle);
         _cardsHand.Spawned -= AddUnit;
         _enemySpawner.Spawned_get -= AddUnit;
+        foreach (var unit in _unitFriend)
+        {
+            unit.Mover.ReachedHigherCell -= TutorialStopUnit;
+        }
     }
 
     public void SetEnemySpawner(EnemySpawner enemySpawner)
@@ -60,6 +72,12 @@ public class BattleSystem : MonoBehaviour
     {
         for (int i = _unitFriend.Count - 1; i > -1; i--)
             _unitFriend[i].ReturnToHand();
+    }
+
+    private void TutorialStopUnit()
+    {
+        Debug.Log("prprpr");
+        TutorialStopedUnit?.Invoke();
     }
 
     public void StopDoStep()
@@ -87,14 +105,11 @@ public class BattleSystem : MonoBehaviour
 
     private void StartBattle()
     {
-        if (_unitFriend.Count > 0)
-        {
-            CalculateFirstStep();
-            _doStep = true;
+        CalculateFirstStep();
+        _doStep = true;
 
-            StepStarted?.Invoke();
-            StartCoroutine(Battle());
-        }
+        StepStarted?.Invoke();
+        StartCoroutine(Battle());
     }
 
     private IEnumerator Battle()
@@ -149,6 +164,10 @@ public class BattleSystem : MonoBehaviour
         }
 
         _unitFriend = units;
+        foreach (var unit in _unitFriend)
+        {           
+            unit.Mover.ReachedHigherCell += TutorialStopUnit;
+        }
         index = 20;
 
         List<UnitEnemy> unitsEnemy = new List<UnitEnemy>();
