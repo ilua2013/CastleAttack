@@ -58,7 +58,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public UnitEnemy TryApplyEnemy(UnitEnemy unitEnemy)
     {
-        UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint, Quaternion.identity);
+        UnitEnemy unit = Instantiate(unitEnemy, SpawnPoint, Quaternion.Euler(0,180,0));
 
         unit.Init(unitEnemy.Card, _cell);
 

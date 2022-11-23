@@ -59,9 +59,9 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
         _panelTwoTutorial.SetActive(actived);
     }
 
-    public void PanelThree()
+    public void PanelThree(bool actived)
     {
-
+        _panelThreeTutorial.SetActive(actived);
     }
 
     public void OnDrawOut(UnitCard cardOld, UnitCard cardNew)
