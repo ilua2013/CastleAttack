@@ -136,6 +136,19 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         return null;
     }
 
+    public bool CanAttackDiagonal()
+    {
+        for (int i = 0; i < _distanceAttack.Length; i++)
+        {
+            CellNeighbor side = _distanceAttack[i].Side;
+
+            if (side == CellNeighbor.BotLeft || side == CellNeighbor.BotRight || side == CellNeighbor.TopRight || side == CellNeighbor.TopLeft)
+                return true;
+        }
+
+        return false;
+    }
+
     public List<Cell> RadiusView()
     {
         List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
