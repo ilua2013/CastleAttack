@@ -94,7 +94,10 @@ public class Tutorial : MonoBehaviour
         }
         if (_isActivStepThree)
         {
-
+            _panelViewSwitcher.PanelThree(true);
+            _isActivStepThree = false;
+            ++_stepTutorial;
+            StartCoroutine(DelayGameStop());
         }
 
 
@@ -189,6 +192,10 @@ public class Tutorial : MonoBehaviour
             case 7:
                 _panelViewSwitcher.PanelTwoTutorial(false);
                 break;
+            case 8:
+                _panelViewSwitcher.PanelThree(false);
+                break;
+
 
             default:
                 break;
@@ -199,6 +206,7 @@ public class Tutorial : MonoBehaviour
     private void EnabledWaveThree()
     {
         _tutorialEffects.EffectFourFive();
+        _isActivStepThree = true;
     }
 
     private void GameSwitch(float time, bool isActived)
