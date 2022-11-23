@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
     public int CountEnemy => _unitEnemy.Count;
     public EnemySpawner EnemySpawner => _enemySpawner;
     public List<UnitEnemy> UnitsEnemy => _unitEnemy;
+    public List<UnitFriend> UnitsFriend => _unitFriend;
 
     public event Action StepFinished;
     public event Action StepStarted;

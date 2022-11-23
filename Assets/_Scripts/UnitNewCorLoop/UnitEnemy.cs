@@ -27,12 +27,16 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnValidate()
     {
         RaycastHit raycastHit;
-        Physics.Raycast(transform.position + Vector3.up, Vector3.down, out raycastHit, 50, 1, QueryTriggerInteraction.Collide);
+        var raycasts = Physics.RaycastAll(transform.position + Vector3.up, Vector3.down, 50, 1, QueryTriggerInteraction.Collide);
 
-        if (raycastHit.collider != null && raycastHit.collider.TryGetComponent(out Cell cell))
+        for (int i = 0; i < raycasts.Length; i++)
         {
-            Mover.SetStartCell(cell);
-            transform.position = cell.transform.position;
+            if (raycasts[i].collider.TryGetComponent(out Cell cell))
+            {
+                Mover.SetStartCell(cell);
+                transform.position = cell.transform.position;
+                break;
+            }
         }
     }
 

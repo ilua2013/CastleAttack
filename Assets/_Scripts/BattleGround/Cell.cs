@@ -273,6 +273,25 @@ public class Cell : MonoBehaviour
         return friends;
     }
 
+    public List<Cell> GetVerticalCells(Cell cell)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell currentCell = cell;
+
+        while(currentCell.CellIs != CellIs.Lower)
+            currentCell = currentCell.Bot;
+
+        cells.Add(currentCell);
+
+        while(currentCell.CellIs != CellIs.Higher)
+        {
+            currentCell = currentCell.Top;
+            cells.Add(currentCell);
+        }
+
+        return cells;
+    }
+
     private void SetCellsInCells(List<Cell> defolt, List<Cell> add)
     {
         foreach (var item in add)
