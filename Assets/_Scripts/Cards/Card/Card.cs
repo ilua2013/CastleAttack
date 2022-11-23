@@ -14,8 +14,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public int Amount { get => _amount; protected set => _amount = value; }
     public CardName Name { get => _name; protected set => _name = value; }
     public bool IsActive { get; private set; }
-    public bool IsAvailable { get; private set; }
-    public DeckType Deck { get; private set; }
     public CardSave CardSave => _cardSave;
     public virtual Projection ProjectionPrefab { get; }
 
@@ -74,10 +72,15 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         Clicked?.Invoke(eventData, this);
     }
 
+    public void Save()
+    {
+        Saves.SetCard(Name.ToString(), CardSave);
+        Saves.Save();
+    }
 
     public void Save(DeckType deck)
     {
-        _cardSave = new CardSave(IsAvailable, deck);
+        _cardSave.SetDeck(deck);
 
         Saves.SetCard(Name.ToString(), CardSave);
         Saves.Save();
@@ -88,8 +91,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (Saves.HasKey(Name.ToString()))
             _cardSave = Saves.GetCard(Name.ToString());
 
-        IsAvailable = CardSave.IsAvailable;
-        Deck = CardSave.Deck;
+        //IsAvailable = CardSave.IsAvailable;
+        //Deck = CardSave.Deck;
 
         if (CardSave.IsAvailable == false)
             gameObject.SetActive(false);

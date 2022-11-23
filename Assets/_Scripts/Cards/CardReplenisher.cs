@@ -47,14 +47,20 @@ public class CardReplenisher : MonoBehaviour
 
     private void OnCardStageUp(UnitCard card)
     {
-        CreateUnit(card.NextStage, transform.position);
-        CardUp?.Invoke(card, card.NextStage);
+        if (_cardsHand.CanTakeCard)
+        {
+            CreateUnit(card.NextStage, transform.position);
+            CardUp?.Invoke(card, card.NextStage);
+        }
     }
 
     private void OnCameBack(UnitCard card)
     {
-        _cardsHand.CardComeBack(card);
-        _cardsHandView.CardComeBack(card);
+        if (_cardsHand.CanTakeCard)
+        {
+            _cardsHand.CardComeBack(card);
+            _cardsHandView.CardComeBack(card);
+        }
     }
 
     private void CreateUnit(UnitCard card, Vector2 position)

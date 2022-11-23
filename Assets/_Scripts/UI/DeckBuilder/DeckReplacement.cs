@@ -98,9 +98,6 @@ public class DeckReplacement : MonoBehaviour
     {
         for (int i = 0; i < _cards.Count && i < _views.Count; i++)
         {
-            if (_cards[i].IsAvailable == false)
-                continue;
-
             _views[i].FillCard(_cards[i], smooth);
         }
     }

@@ -22,7 +22,6 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
     {
         _cardsSelection = GetComponent<CardsSelection>();
 
-
         if (_cardsSelection == null)
             throw new NullReferenceException("This object must have a component " + nameof(CardsSelection));
     }
@@ -69,6 +68,8 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
 
             if (cards[i].TryGetComponent(out CardHoverView cardHover))
             {
+                cardHover.ScaleTo(cardHover.StartScaling);
+
                 cardHover.Enter += OnCardHover;
                 cardHover.Exit += OnCardRemoveHover;
 
