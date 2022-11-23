@@ -84,6 +84,9 @@ public class Mover
         Vector3 targetPos = cell.transform.position - transform.position;
         float time = 0;
 
+        if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss && cell.Top == null)
+            ReachedHigherCell?.Invoke();
+
         while (time < _timeMove)
         {
             time = time > _timeMove ? _timeMove : time + Time.deltaTime;
@@ -91,8 +94,5 @@ public class Mover
             transform.position = startPos + (targetPos * (time / _timeMove));
             yield return null;
         }
-
-        if (cell.CellIs == CellIs.Higher && cell.Top == null)
-            ReachedHigherCell?.Invoke();
     }
 }

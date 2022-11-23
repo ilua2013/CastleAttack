@@ -38,13 +38,9 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
-        Debug.Log(_unitFriend.Count);
+
         foreach (var unit in _unitFriend)
-        {
-            Debug.Log(_unitFriend);
-            Debug.Log(unit);
             unit.Mover.ReachedHigherCell += TutorialStopUnit;
-        }
     }
 
     private void OnDisable()
@@ -52,10 +48,9 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.RemoveListener(StartBattle);
         _cardsHand.Spawned -= AddUnit;
         _enemySpawner.Spawned_get -= AddUnit;
+
         foreach (var unit in _unitFriend)
-        {
             unit.Mover.ReachedHigherCell -= TutorialStopUnit;
-        }
     }
 
     public void SetEnemySpawner(EnemySpawner enemySpawner)
@@ -77,7 +72,6 @@ public class BattleSystem : MonoBehaviour
 
     private void TutorialStopUnit()
     {
-        Debug.Log("prprpr");
         TutorialStopedUnit?.Invoke();
     }
 

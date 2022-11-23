@@ -15,9 +15,9 @@ public class LevelSystem : MonoBehaviour
     [Header("Wave 3")]
     [SerializeField] private EnemySpawner _enemySpawner3;
 
-    private Wave _currentWave;
+    private StageNumber _currentWave;
 
-    public Wave CurrentWave => _currentWave;
+    public StageNumber CurrentWave => _currentWave;
 
     public event Action WaveFinished;
     public event Action Wave1Finished;
@@ -34,7 +34,7 @@ public class LevelSystem : MonoBehaviour
 
     private void Start()
     {
-        _currentWave = Wave.One;
+        _currentWave = StageNumber.One;
         _enemySpawner1.Init();
     }
 
@@ -57,7 +57,7 @@ public class LevelSystem : MonoBehaviour
 
         switch (_currentWave)
         {
-            case Wave.One:
+            case StageNumber.One:
                 if (_enemySpawner1.HaveWave == false)
                 {
                     _currentWave++;
@@ -73,7 +73,7 @@ public class LevelSystem : MonoBehaviour
                 }
                 break;
 
-            case Wave.Two:
+            case StageNumber.Two:
                 if (_enemySpawner2.HaveWave == false)
                 {
                     _currentWave++;
@@ -89,7 +89,7 @@ public class LevelSystem : MonoBehaviour
                 }
                 break;
 
-            case Wave.Three:
+            case StageNumber.Three:
                 if (_enemySpawner3.HaveWave == false)
                 {
                     _battleSystem.StopDoStep();
@@ -107,7 +107,7 @@ public class LevelSystem : MonoBehaviour
     }
 }
 
-public enum Wave
+public enum StageNumber
 {
     One, Two, Three
 }

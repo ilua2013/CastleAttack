@@ -13,7 +13,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
     public UnitFriend Spawned { get; private set; }
     public Vector3 SpawnPoint => _spawnPoint.position;
-
+    public SpawnerType SpawnerType => _type;
     public Cell Cell => _cell;
 
     public event Action<IUnit> SpawnedUnit;

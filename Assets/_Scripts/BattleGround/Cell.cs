@@ -452,7 +452,7 @@ public class Cell : MonoBehaviour
 
 public enum CellIs
 {
-    Higher, Lower, Default
+    Higher, Lower, Default, Boss, Wizzard
 }
 
 public enum CellNeighbor

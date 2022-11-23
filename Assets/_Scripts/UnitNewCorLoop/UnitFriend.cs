@@ -25,6 +25,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public event Action Inited;
     public event Action EndedSteps;
     public event Action StopUnit;
+    public event Action FinishedStep;
 
     private void OnValidate()
     {
@@ -73,23 +74,16 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public void ReturnToHand()
     {
         StartCoroutine(TutorialPause());
-        
     }
 
     public IEnumerator TutorialPause()
     {
-
         yield return new WaitForSeconds(0.1f);
         Mover.Die();
         Fighter.Die();        
         gameObject.SetActive(false);
         Card.ComeBack();
-
     }
-
-
-
-
 
     public void DoStep()
     {
@@ -101,20 +95,25 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter);
+
             Attacked?.Invoke();
+            StartCoroutine(InvokeEvent(FinishedStep, 0.5f));
 
             _currentStep -= 2;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Top))
         {
             Mover.Move(Mover.CurrentCell.Top);
+
             Moved?.Invoke();
+            StartCoroutine(InvokeEvent(FinishedStep, 0.7f));
 
             _currentStep--;
         }
         else
         {
             _currentStep--;
+            FinishedStep?.Invoke();
         }
 
         if (_currentStep <= 0)
@@ -161,8 +160,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         gameObject.SetActive(false);
     }
 
-    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+    private IEnumerator InvokeEvent(Action action, float time)
+    {
+        yield return new WaitForSeconds(time);
+        action?.Invoke();
+    }
+
     public void RotateTo(Transform transform) => StartCoroutine(Fighter.RotateTo(transform));
+    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
 }
 
 [Serializable]

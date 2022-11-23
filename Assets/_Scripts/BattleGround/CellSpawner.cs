@@ -6,6 +6,7 @@ public class CellSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _pointSpawn;
     [SerializeField] private Cell _cell;
+    [SerializeField] private float _offsetMainTarget;
     [Header("FriendCell")]
     [SerializeField] private int _countRowFriend;
     [SerializeField] private Cell _cellFriend;
@@ -72,8 +73,46 @@ public class CellSpawner : MonoBehaviour
                 offset.x += _offset.x;
             }
 
+            if (i == 0)
+                SpawnCellWizzard();
+
+            if (i + 1 == _grid.x)
+                SpawnCellBoss();
+
             offset.x = 0;
             offset.z += _offset.y;
         }
+    }
+
+    private void SpawnCellWizzard()
+    {
+        Transform firtsCell = _cells[0].transform;
+        Transform lastCell = _cells[_cells.Count - 1].transform;
+
+        Vector3 spawnPoint = (firtsCell.localPosition + lastCell.localPosition) / 2f;
+
+        Cell cell = Instantiate(_cellFriend, Vector3.zero, Quaternion.identity, transform);
+        cell.transform.localPosition = spawnPoint + new Vector3(0, 0, -_offsetMainTarget);
+        cell.gameObject.name += " Wizzard";
+        cell.SetType(CellIs.Lower);
+
+        foreach (var item in _cells)
+            item.SetCell(cell, CellNeighbor.Bot);
+    }
+
+    private void SpawnCellBoss()
+    {
+        Transform firtsCell = _cells[_cells.Count - (int)_grid.y].transform;
+        Transform lastCell = _cells[_cells.Count - 1].transform;
+
+        Vector3 spawnPoint = (firtsCell.localPosition + lastCell.localPosition) / 2f;
+
+        Cell cell = Instantiate(_cellEnemy, Vector3.zero, Quaternion.identity, transform);
+        cell.transform.localPosition = spawnPoint + new Vector3(0, 0, _offsetMainTarget);
+        cell.gameObject.name += " Boss";
+        cell.SetType(CellIs.Higher);
+
+        for (int i = 0; i < _grid.y; i++)
+            _cells[_cells.Count - 1 - i].SetCell(cell, CellNeighbor.Top);
     }
 }

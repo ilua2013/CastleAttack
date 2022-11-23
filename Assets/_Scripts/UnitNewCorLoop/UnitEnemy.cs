@@ -23,6 +23,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action Moved;
     public event Action Inited;
     public event Action EndedSteps;
+    public event Action FinishedStep;
 
     private void OnValidate()
     {
@@ -86,20 +87,25 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter);
+
             Attacked?.Invoke();
+            StartCoroutine(InvokeEvent(FinishedStep, 0.5f));
 
             _currentStep -= 2;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Bot))
         {
             Mover.Move(Mover.CurrentCell.Bot);
+
             Moved?.Invoke();
+            StartCoroutine(InvokeEvent(FinishedStep, 0.7f));
 
             _currentStep--;
         }
         else
         {
             _currentStep--;
+            FinishedStep?.Invoke();
         }
 
         if (_currentStep <= 0)
@@ -132,6 +138,12 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         Mover.Die();
         gameObject.SetActive(false);
+    }
+
+    private IEnumerator InvokeEvent(Action action, float time)
+    {
+        yield return new WaitForSeconds(time);
+        action?.Invoke();
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));

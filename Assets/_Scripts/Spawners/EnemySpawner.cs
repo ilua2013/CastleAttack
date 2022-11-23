@@ -29,6 +29,11 @@ public class EnemySpawner : MonoBehaviour
     private void OnValidate()
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
+
+        for (int i = 0; i < _enemysStart.Length; i++)
+            if (_enemysStart[i].transform.parent != transform)
+                _enemysStart[i].transform.parent = transform;
+        _enemysStart = GetComponentsInChildren<UnitEnemy>();
     }
 
     private void OnEnable()
@@ -89,6 +94,35 @@ public class EnemySpawner : MonoBehaviour
         if (_currentWave >= _waveCount)
             return;
 
+        if (_battleSystem.UnitsFriend.Count == 0)
+            RandomSpawn();
+        else
+            SpawnOnUnitFriend();
+
+        _currentWave++;
+
+        WaveCountChanged?.Invoke();
+    }
+
+    private void SpawnOnUnitFriend()
+    {
+        List<UnitFriend> unitFriends = _battleSystem.UnitsFriend;
+        Cell cell = unitFriends[Random.Range(0, unitFriends.Count)].Mover.CurrentCell;
+
+        while (cell.Top != null)
+        {
+            if (cell.Top.IsFree && cell.Top.TryGetComponent(out UnitSpawner unitSpawner) && unitSpawner.SpawnerType == SpawnerType.Enemy)
+            {
+                Spawn(unitSpawner, _enemyUnitsPrefab[Random.Range(0, _enemyUnitsPrefab.Count)]);
+                break;
+            }
+            else
+                cell = cell.Top;
+        }
+    }
+
+    private void RandomSpawn()
+    {
         for (int i = 0; i < _countSpawnWave; i++)
         {
             UnitSpawner spawner = null;
@@ -106,10 +140,6 @@ public class EnemySpawner : MonoBehaviour
             if (spawner != null)
                 Spawn(spawner, _enemyUnitsPrefab[indexUnit]);
         }
-
-        _currentWave++;
-
-        WaveCountChanged?.Invoke();
     }
 
     private void Spawn(UnitSpawner enemySpawner, UnitEnemy unitStep)
