@@ -37,7 +37,6 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
-        Debug.Log(_unitFriend.Count);
         foreach (var unit in _unitFriend)
         {
             Debug.Log(_unitFriend);

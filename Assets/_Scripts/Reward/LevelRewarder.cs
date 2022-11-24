@@ -21,12 +21,12 @@ public class LevelRewarder : MonoBehaviour
 
     private void OnEnable()
     {
-        _levelSystem.WaveFinished += OnFinished;
+        _levelSystem.Wave3Finished += OnFinished;
     }
 
     private void OnDisable()
     {
-        _levelSystem.WaveFinished -= OnFinished;
+        _levelSystem.Wave3Finished -= OnFinished;
     }
 
     private void OnFinished()
@@ -38,9 +38,6 @@ public class LevelRewarder : MonoBehaviour
             SetRandomAmount(card);
             card.Save();
         }
-
-        foreach (Card card in _rewardCards)
-            Debug.Log($"{card.Name} is {card.CardSave.Amount}");
     }
 
     private Card[] GetRandomCards()

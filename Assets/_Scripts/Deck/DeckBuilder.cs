@@ -20,8 +20,6 @@ public class DeckBuilder : MonoBehaviour
             Card card = Create(prefab);
             _cards.Add(card);
 
-            Debug.Log($"{card.Name} in amount of {card.CardSave.Amount} isAvailable {card.CardSave.IsAvailable}");
-
             if (card.CardSave.IsAvailable == false)
                 continue;
 

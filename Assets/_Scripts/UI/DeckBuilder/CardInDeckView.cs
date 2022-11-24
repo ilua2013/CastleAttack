@@ -11,17 +11,37 @@ public class CardInDeckView : MonoBehaviour
     private const float DistanceDelta = 0.01f;
 
     [SerializeField] private Image _background;
+    [SerializeField] private Slider _amountBar;
+    [SerializeField] private Image _upArrow;
+    [SerializeField] private TMP_Text _amountText;
 
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
     private Coroutine _coroutine;
+    private Card _card;
+
+    public Card Card => _card;
 
     public void FillCard(Card card, bool smooth)
     {
+        _card = card;
+
         SetHierarchy(card.transform);
         Transformation(card.transform, smooth);
+        SetInfo(card.CardSave);
 
         card.transform.localScale = Vector3.one;
         card.BeginDrag += OnBeginDrag;
+    }
+
+    private void SetInfo(CardSave cardSave)
+    {
+        _amountBar.wholeNumbers = true;
+        _amountBar.minValue = 0;
+        _amountBar.maxValue = cardSave.AmountToImprove;
+
+        _amountBar.value = cardSave.Amount;
+        _amountText.text = $"{cardSave.Amount} / {cardSave.AmountToImprove}";
+        _upArrow.enabled = cardSave.CanLevelUp;
     }
 
     private void SetHierarchy(Transform card)

@@ -25,9 +25,7 @@ public class DeckReplacement : MonoBehaviour
         _cards = new List<Card>(_deck.Cards);
 
         foreach (Card card in _cards)
-        {
             Register(card);
-        }
 
         FillCards(false);
     }
@@ -35,15 +33,13 @@ public class DeckReplacement : MonoBehaviour
     private void OnDisable()
     {
         foreach (Card card in _cards)
-        {
             UnRegister(card);
-        }
     }
 
     private void Update()
     {
-        foreach (CardMovement movement in _movements)
-            movement.Move();
+        //foreach (CardMovement movement in _movements)
+        //    movement.Move();
     }
 
     public void AddCard(Card card)
@@ -120,8 +116,8 @@ public class DeckReplacement : MonoBehaviour
             _movements.Add(movement);
         }
 
-        card.BeginDrag += OnBeginDrag;
-        card.EndDrag += OnEndDrag;
+        //card.BeginDrag += OnBeginDrag;
+        //card.EndDrag += OnEndDrag;
     }
 
     private void UnRegister(Card card)
@@ -129,7 +125,7 @@ public class DeckReplacement : MonoBehaviour
         if (card.TryGetComponent(out CardMovement movement))
             _movements.Remove(movement);
 
-        card.BeginDrag -= OnBeginDrag;
-        card.EndDrag -= OnEndDrag;
+        //card.BeginDrag -= OnBeginDrag;
+        //card.EndDrag -= OnEndDrag;
     }
 }

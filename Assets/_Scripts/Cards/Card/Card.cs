@@ -91,9 +91,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (Saves.HasKey(Name.ToString()))
             _cardSave = Saves.GetCard(Name.ToString());
 
-        //IsAvailable = CardSave.IsAvailable;
-        //Deck = CardSave.Deck;
-
         if (CardSave.IsAvailable == false)
             gameObject.SetActive(false);
     }
