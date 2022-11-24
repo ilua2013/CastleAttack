@@ -137,7 +137,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
-        //gameObject.SetActive(false);
+        if(Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 
     private IEnumerator InvokeEvent(Action action, float time)
