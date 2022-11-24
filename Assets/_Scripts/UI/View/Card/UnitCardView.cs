@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(UnitCard))]
 public class UnitCardView : CardView
 {
+    [SerializeField] private TMP_Text _damageText;
+    [SerializeField] private TMP_Text _healthText;
+
     private UnitCard _card;
     private string _descriptionTextBase;
 
@@ -40,6 +43,9 @@ public class UnitCardView : CardView
 
     private void WriteText()
     {
+        _damageText.text = _card.UnitPrefab.Fighter.Damage.ToString();
+        _healthText.text = _card.UnitPrefab.Fighter.MaxHealth.ToString();
+
         Text.text = $"{_descriptionTextBase}";
         AmountText.text = $"{_card.Amount}";
     }
