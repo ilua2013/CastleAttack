@@ -25,9 +25,7 @@ public class DeckReplacement : MonoBehaviour
         _cards = new List<Card>(_deck.Cards);
 
         foreach (Card card in _cards)
-        {
             Register(card);
-        }
 
         FillCards(false);
     }
@@ -35,9 +33,7 @@ public class DeckReplacement : MonoBehaviour
     private void OnDisable()
     {
         foreach (Card card in _cards)
-        {
             UnRegister(card);
-        }
     }
 
     private void Update()
@@ -96,13 +92,11 @@ public class DeckReplacement : MonoBehaviour
 
     private void FillCards(bool smooth)
     {
-        for (int i = 0; i < _cards.Count && i < _views.Count; i++)
-        {
-            if (_cards[i].IsAvailable == false)
-                continue;
+        for (int i = 0; i < _views.Count; i++)
+            _views[i].Clear();
 
+        for (int i = 0; i < _cards.Count && i < _views.Count; i++)
             _views[i].FillCard(_cards[i], smooth);
-        }
     }
 
     private void OnBeginDrag(PointerEventData eventData, Card card)

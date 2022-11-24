@@ -7,7 +7,9 @@ public enum PhaseType
 {
     SelectionCard,
     Battle,
-    CardPlacement
+    CardPlacement,
+    Win,
+    Lose,
 }
 
 [Serializable]

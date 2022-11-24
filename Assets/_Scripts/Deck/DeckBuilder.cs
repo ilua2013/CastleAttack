@@ -9,13 +9,21 @@ public class DeckBuilder : MonoBehaviour
     [SerializeField] private CommonDeck _commonDeck;
     [SerializeField] private CombatDeck _combatDeck;
 
+    private List<Card> _cards = new List<Card>();
+
+    public List<Card> Cards => _cards;
+
     private void Awake()
     {
         foreach (Card prefab in _deckPrefabs)
         {
             Card card = Create(prefab);
+            _cards.Add(card);
 
-            if (card.Deck == DeckType.Combat)
+            if (card.CardSave.IsAvailable == false)
+                continue;
+
+            if (card.CardSave.Deck == DeckType.Combat)
                 _combatDeck.Add(card);
             else
                 _commonDeck.Add(card);
