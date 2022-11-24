@@ -14,12 +14,39 @@ public class CardInDeckView : MonoBehaviour
     [SerializeField] private Slider _amountBar;
     [SerializeField] private Image _upArrow;
     [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private TMP_Text _levelText;
 
+    private string _level;
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
     private Coroutine _coroutine;
     private Card _card;
 
     public Card Card => _card;
+
+    public void LevelUpCard()
+    {
+        if (_card == null)
+            return;
+
+        if (_card.CardSave.CanLevelUp)
+        {
+            _card.CardSave.LevelUp();
+            _card.Save();
+            SetInfo(_card.CardSave);
+        }
+    }
+
+    public void Clear()
+    {
+        if (string.IsNullOrEmpty(_level))
+            _level = _levelText.text;
+
+        _card = null;
+        _upArrow.enabled = false;
+        _levelText.text = _level;
+        _amountText.text = "0 / 3";
+        _amountBar.value = 0;
+    }
 
     public void FillCard(Card card, bool smooth)
     {
@@ -41,6 +68,11 @@ public class CardInDeckView : MonoBehaviour
 
         _amountBar.value = cardSave.Amount;
         _amountText.text = $"{cardSave.Amount} / {cardSave.AmountToImprove}";
+
+        if (string.IsNullOrEmpty(_level))
+            _level = _levelText.text;
+
+        _levelText.text = _level + " " + cardSave.Level;
         _upArrow.enabled = cardSave.CanLevelUp;
     }
 

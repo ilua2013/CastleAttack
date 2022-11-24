@@ -38,8 +38,8 @@ public class DeckReplacement : MonoBehaviour
 
     private void Update()
     {
-        //foreach (CardMovement movement in _movements)
-        //    movement.Move();
+        foreach (CardMovement movement in _movements)
+            movement.Move();
     }
 
     public void AddCard(Card card)
@@ -92,10 +92,11 @@ public class DeckReplacement : MonoBehaviour
 
     private void FillCards(bool smooth)
     {
+        for (int i = 0; i < _views.Count; i++)
+            _views[i].Clear();
+
         for (int i = 0; i < _cards.Count && i < _views.Count; i++)
-        {
             _views[i].FillCard(_cards[i], smooth);
-        }
     }
 
     private void OnBeginDrag(PointerEventData eventData, Card card)
@@ -116,8 +117,8 @@ public class DeckReplacement : MonoBehaviour
             _movements.Add(movement);
         }
 
-        //card.BeginDrag += OnBeginDrag;
-        //card.EndDrag += OnEndDrag;
+        card.BeginDrag += OnBeginDrag;
+        card.EndDrag += OnEndDrag;
     }
 
     private void UnRegister(Card card)
@@ -125,7 +126,7 @@ public class DeckReplacement : MonoBehaviour
         if (card.TryGetComponent(out CardMovement movement))
             _movements.Remove(movement);
 
-        //card.BeginDrag -= OnBeginDrag;
-        //card.EndDrag -= OnEndDrag;
+        card.BeginDrag -= OnBeginDrag;
+        card.EndDrag -= OnEndDrag;
     }
 }

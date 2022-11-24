@@ -27,7 +27,6 @@ public class CardLevelUpButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (_cardView.Card.CardSave.CanLevelUp)
-            Debug.Log("LevelUp");
+        _cardView.LevelUpCard();
     }
 }
