@@ -131,7 +131,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));

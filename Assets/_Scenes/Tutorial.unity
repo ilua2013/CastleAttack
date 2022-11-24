@@ -6090,30 +6090,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArmySoldier (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 1710454381889582042, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Mover>k__BackingField._canMove
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._damage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
       objectReference: {fileID: 148471435}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._maxHealth
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7503814118305759525, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6121,6 +6101,14 @@ PrefabInstance:
     - target: {fileID: 7503814118305759525, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692488662963739360, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
+      propertyPath: _rigidbody
+      value: 
+      objectReference: {fileID: 2050713356}
+    - target: {fileID: 8692488662963739360, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
+      propertyPath: _rigidbodies.Array.size
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
@@ -12911,34 +12899,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArmySoldier
       objectReference: {fileID: 0}
-    - target: {fileID: 1710454381889582042, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Mover>k__BackingField._canMove
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._damage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
       objectReference: {fileID: 1402117447}
-    - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: <Fighter>k__BackingField._maxHealth
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3896894190679727202, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7503814118305759525, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -20815,6 +20779,7 @@ MonoBehaviour:
   _minusWaveOnDieBuild: 3
   _enemysStart:
   - {fileID: 1929522682}
+  - {fileID: 0}
 --- !u!1 &1373668707
 GameObject:
   m_ObjectHideFlags: 0
@@ -42222,7 +42187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795856635}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.99, y: 9.01, z: 16.08}
+  m_LocalPosition: {x: 4.771371, y: 8.095249, z: 15.79187}
   m_LocalScale: {x: 1.6949923, y: 1.6949923, z: 1.6949923}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50392,6 +50357,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &2050713356 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 102383857, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
+  m_PrefabInstance: {fileID: 337914302}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2058644507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50627,7 +50597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103444806}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.93, y: 10.01, z: 73.87}
+  m_LocalPosition: {x: 4.771371, y: 8.095249, z: 73.54823}
   m_LocalScale: {x: 2.5340135, y: 2.5340135, z: 2.5340135}
   m_ConstrainProportionsScale: 0
   m_Children:
