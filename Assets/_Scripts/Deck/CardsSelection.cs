@@ -38,18 +38,18 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             throw new NullReferenceException(nameof(_cardsHand));
     }
 
-    public void TutorialTimeSwitch(float time)
-    {
-        _delayTime = time;
-    }
+    //public void TutorialTimeSwitch(float time)
+    //{
+    //    _delayTime = time;
+    //}
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-        yield return new WaitForSeconds(_delayTime);
+        yield return new WaitForSeconds(phase.Delay);
 
-        _delayTime = phase.Delay;
+        //_delayTime = phase.Delay;
 
         gameObject.SetActive(phase.IsActive);
 

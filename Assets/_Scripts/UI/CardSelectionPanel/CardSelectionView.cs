@@ -13,7 +13,7 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
 
     private List<CardHoverView> _cardHovers = new List<CardHoverView>();
     private CardsSelection _cardsSelection;
-    private float _delayTime = 0;
+    //private float _delayTime = 0;
     private bool _isActivTutor = false;
 
     public Phase[] Phases => _phases;
@@ -42,17 +42,17 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
         }
     }
 
-    public void TutorialTimeSwitch(float time)
-    {
-        _delayTime = time;
-    }
+    //public void TutorialTimeSwitch(float time)
+    //{
+    //    _delayTime = time;
+    //}
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-        yield return new WaitForSeconds(_delayTime);
-        _delayTime = phase.Delay;
+        yield return new WaitForSeconds(phase.Delay);
+        //_delayTime = phase.Delay;
         gameObject.SetActive(phase.IsActive);
     }
 
