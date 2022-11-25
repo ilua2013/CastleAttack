@@ -54,6 +54,8 @@ public class RagdollFriend : MonoBehaviour
     private IEnumerator DelayDied()
     {
         yield return new WaitForSeconds(_timeDelay);
+
+        GamesStatistics.RegisterFriendKill();
         Destroy(_unit);
     }
 }
