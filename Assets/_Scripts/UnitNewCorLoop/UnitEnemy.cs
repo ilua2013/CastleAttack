@@ -84,6 +84,8 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
         UnitFriend enemy = TryAttack();
 
+        print($"{Mover.CanMove(Mover.CurrentCell.Bot)} + {gameObject.name}");
+
         if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter);
