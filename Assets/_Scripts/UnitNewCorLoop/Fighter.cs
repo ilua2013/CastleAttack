@@ -25,6 +25,7 @@ public class Fighter
     public IUnit Unit => _unit;
 
     public event Action Died;
+    public event Action EffectDied;
     public event Action Attacked;
     public event Action<int> Damaged;
     public event Action<int> Healed;
@@ -72,7 +73,11 @@ public class Fighter
         Damaged?.Invoke(damage);
 
         if (_health == 0)
+        {
             Die();
+            EffectDied?.Invoke();
+        }
+           
     }
 
     public IEnumerator RotateTo(Transform lookAt)

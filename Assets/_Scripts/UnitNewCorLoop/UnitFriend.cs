@@ -74,6 +74,10 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public void ReturnToHand()
     {
         StartCoroutine(TutorialPause());
+        //Mover.Die();
+        //Fighter.Die();
+        //gameObject.SetActive(false);
+        //Card.ComeBack();
     }
 
     public IEnumerator TutorialPause()
@@ -157,7 +161,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private IEnumerator InvokeEvent(Action action, float time)
