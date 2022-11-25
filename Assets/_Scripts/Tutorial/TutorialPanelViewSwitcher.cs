@@ -65,12 +65,8 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
     }
 
     public void OnDrawOut(UnitCard cardOld, UnitCard cardNew)
-    {        
-        _cardLevelUpOld.ChangeDrawCard(cardOld);
+    {
+        _cardLevelUpOld.ChangeOldCard(cardOld);
         _cardLevelUpNew.ChangeDrawCard(cardNew);
     }
-
-
-
-
 }

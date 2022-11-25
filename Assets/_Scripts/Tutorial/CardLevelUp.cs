@@ -8,14 +8,17 @@ public class CardLevelUp : MonoBehaviour
     [SerializeField] private Image _imageIcon;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private Transform _transform;
 
     public void ChangeDrawCard(UnitCard card)
     {
-        UnitCardView unitCard = card.gameObject.GetComponent<UnitCardView>();
-        _imageCard.sprite = unitCard.Background;
-        _imageIcon.sprite = unitCard.Icon;
-        _text = unitCard.Text;
-        _amountText = unitCard.AmountText;        
+        Instantiate(card, _transform);
+    }
+
+    public void ChangeOldCard(UnitCard card)
+    {
+        UnitCard cardOld = Instantiate(card, _transform);
+        cardOld.gameObject.SetActive(true);
+        cardOld.transform.localPosition = Vector3.zero;
     }
 }
-
