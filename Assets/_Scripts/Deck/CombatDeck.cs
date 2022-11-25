@@ -7,7 +7,23 @@ using System.Linq;
 
 public class CombatDeck : Deck
 {
+    private const int Capacity = 8;
+
     public override DeckType DeckType => DeckType.Combat;
+
+    public bool IsFull
+    {
+        get
+        {
+            int count = 0;
+
+            foreach (Card card in Cards)
+                if (card.CardSave.IsAvailable)
+                    count++;
+
+            return count >= Capacity;
+        }
+    }
 
     public Card[] ShowRandomCards(int count)
     {

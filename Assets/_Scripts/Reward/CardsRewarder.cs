@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using System;
 
-public class LevelRewarder : MonoBehaviour
+public class CardsRewarder : MonoBehaviour
 {
     private LevelSystem _levelSystem;
     private DeckBuilder _deckBuilder;
@@ -36,7 +36,11 @@ public class LevelRewarder : MonoBehaviour
         foreach (Card card in _rewardCards)
         {
             SetRandomAmount(card);
-            card.Save();
+
+            if (_deckBuilder.IsCombatDeckFull)
+                card.Save(DeckType.Common);
+            else
+                card.Save(DeckType.Combat);
         }
     }
 
