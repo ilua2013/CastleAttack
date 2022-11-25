@@ -84,8 +84,11 @@ public class Mover
         Vector3 targetPos = cell.transform.position - transform.position;
         float time = 0;
 
-        if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss && cell.Top == null)
-            ReachedHigherCell?.Invoke();
+        if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss)
+        {
+            if (cell.Top == null)
+                ReachedHigherCell?.Invoke();
+        }
 
         while (time < _timeMove)
         {

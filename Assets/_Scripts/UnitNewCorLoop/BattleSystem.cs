@@ -117,20 +117,29 @@ public class BattleSystem : MonoBehaviour
         {
             _friendFinishStep = false;
             _enemyFinishStep = false;
-
+            print("1111");
             for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
                 _unitFriend[i].DoStep();
 
-            CheckFinishStepFriend();
+            while (_friendFinishStep == false)
+            {
+            print("2222");
+                yield return new WaitForSeconds(0.2f);
+                CheckFinishStepFriend();
+            }
 
-            yield return new WaitWhile(() => _friendFinishStep == false);
             yield return new WaitForSeconds(_delayBeetwenStep);
+            print("3333");
 
             for (int i = _unitEnemy.Count - 1; i > -1; i--)
                 _unitEnemy[i].DoStep();
 
-            CheckFinishStepEnemy();
-            yield return new WaitWhile(() => _enemyFinishStep == false);
+            while (_enemyFinishStep == false)
+            {
+                yield return new WaitForSeconds(0.2f);
+                CheckFinishStepEnemy();
+            }
+            print("4444");
         }
 
         StepFinished?.Invoke();
@@ -157,7 +166,6 @@ public class BattleSystem : MonoBehaviour
 
     private void CheckFinishStepFriend()
     {
-        print("2233");
         foreach (var item in _unitFriend)
         {
         print("2233 " + item.DoingStep);

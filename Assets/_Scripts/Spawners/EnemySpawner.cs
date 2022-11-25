@@ -34,6 +34,12 @@ public class EnemySpawner : MonoBehaviour
             if (_enemysStart[i].transform.parent != transform)
                 _enemysStart[i].transform.parent = transform;
         _enemysStart = GetComponentsInChildren<UnitEnemy>();
+        _cellsEnemySpawner.Clear();
+        foreach (var item in GetComponentInParent<Stage>().CellSpawner.GetComponentsInChildren<UnitSpawner>())
+        {
+            if (item.SpawnerType == SpawnerType.Enemy && _cellsEnemySpawner.Contains(item) == false)
+                _cellsEnemySpawner.Add(item);
+        }
     }
 
     private void OnEnable()
