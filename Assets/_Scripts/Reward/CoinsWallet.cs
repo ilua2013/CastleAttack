@@ -13,8 +13,6 @@ public class CoinsWallet : MonoBehaviour
     {
         if (Saves.HasKey(SaveController.Params.Coins))
             Coins = Saves.GetInt(SaveController.Params.Coins);
-
-        Debug.Log(Coins);
     }
 
     public bool TrySpend(int amount)

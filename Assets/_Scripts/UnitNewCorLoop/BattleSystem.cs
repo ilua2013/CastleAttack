@@ -157,11 +157,8 @@ public class BattleSystem : MonoBehaviour
 
     private void CheckFinishStepFriend()
     {
-        print("2233");
         foreach (var item in _unitFriend)
         {
-        print("2233 " + item.DoingStep);
-
             if (item.DoingStep == true)
                 return;
         }
