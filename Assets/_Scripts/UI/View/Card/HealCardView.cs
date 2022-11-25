@@ -8,12 +8,10 @@ public class HealCardView : CardView
     [SerializeField] private HealSpell _description;
     
     private SpellCard _card;
-    private string _descriptionTextBase;
 
     private void Awake()
     {
         _card = GetComponent<SpellCard>();
-        _descriptionTextBase = Text.text;
         WriteText();
     }
 
@@ -41,7 +39,7 @@ public class HealCardView : CardView
 
     private void WriteText()
     {
-        Text.text = $"{_descriptionTextBase} {_description.Recovery}";
+        Text.text = $"{_description.Recovery}";
         AmountText.text = $"{_card.Amount}";
     }
 }

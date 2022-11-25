@@ -8,12 +8,10 @@ public class MeteorCardView : CardView
     [SerializeField] private MeteorSpell _description;
 
     private SpellCard _card;
-    private string _descriptionTextBase;
 
     private void Awake()
     {
         _card = GetComponent<SpellCard>();
-        _descriptionTextBase = Text.text;
         WriteText();
     }
 
@@ -41,7 +39,7 @@ public class MeteorCardView : CardView
 
     private void WriteText()
     {
-        Text.text = $"{_descriptionTextBase} {_description.Damage}";
+        Text.text = $"{_description.Damage}";
         AmountText.text = $"{_card.Amount}";
     }
 }

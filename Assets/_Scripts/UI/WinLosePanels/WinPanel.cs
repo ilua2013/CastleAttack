@@ -7,12 +7,12 @@ public class WinPanel : MonoBehaviour
 {
     [SerializeField] private CardRewardPanel _cardRewardPanel;
 
-    private LevelRewarder _levelRewarder;
+    private CardsRewarder _levelRewarder;
     private FinishPanel _finishPanel;
 
     private void Awake()
     {
-        _levelRewarder = FindObjectOfType<LevelRewarder>();
+        _levelRewarder = FindObjectOfType<CardsRewarder>();
         _finishPanel = GetComponent<FinishPanel>();
     }
 

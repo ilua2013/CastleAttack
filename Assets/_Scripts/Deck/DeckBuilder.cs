@@ -11,6 +11,7 @@ public class DeckBuilder : MonoBehaviour
 
     private List<Card> _cards = new List<Card>();
 
+    public bool IsCombatDeckFull => _combatDeck.IsFull; 
     public List<Card> Cards => _cards;
 
     private void Awake()
