@@ -15,6 +15,7 @@ public class CardInDeckView : MonoBehaviour
     [SerializeField] private Image _upArrow;
     [SerializeField] private TMP_Text _amountText;
     [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private GameObject _coins;
 
     private string _level;
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -23,17 +24,21 @@ public class CardInDeckView : MonoBehaviour
 
     public Card Card => _card;
 
-    public void LevelUpCard()
+    public bool TryLevelUpCard()
     {
         if (_card == null)
-            return;
+            return false;
 
         if (_card.CardSave.CanLevelUp)
         {
             _card.CardSave.LevelUp();
             _card.Save();
             SetInfo(_card.CardSave);
+
+            return true;
         }
+
+        return false;
     }
 
     public void Clear()
@@ -42,7 +47,7 @@ public class CardInDeckView : MonoBehaviour
             _level = _levelText.text;
 
         _card = null;
-        _upArrow.enabled = false;
+        _upArrow.gameObject.SetActive(false);
         _levelText.text = _level;
         _amountText.text = "0 / 3";
         _amountBar.value = 0;
@@ -73,7 +78,9 @@ public class CardInDeckView : MonoBehaviour
             _level = _levelText.text;
 
         _levelText.text = _level + " " + cardSave.Level;
-        _upArrow.enabled = cardSave.CanLevelUp;
+        _upArrow.gameObject.SetActive(cardSave.CanLevelUp);
+        _coins.SetActive(cardSave.CanLevelUp);
+        _amountText.gameObject.SetActive(!cardSave.CanLevelUp);
     }
 
     private void SetHierarchy(Transform card)

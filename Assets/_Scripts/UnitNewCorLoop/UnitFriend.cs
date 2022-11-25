@@ -163,8 +163,10 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
+
         if (Fighter.FighterType == FighterType.MainWizzard)
         {
+            GamesStatistics.RegisterFriendKill();
             gameObject.SetActive(false);
         }      
     }
