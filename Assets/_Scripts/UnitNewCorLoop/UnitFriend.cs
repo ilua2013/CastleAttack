@@ -161,7 +161,10 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
-        //gameObject.SetActive(false);
+        if (Fighter.FighterType == FighterType.MainWizzard)
+        {
+            gameObject.SetActive(false);
+        }      
     }
 
     private IEnumerator InvokeEvent(Action action, float time)
