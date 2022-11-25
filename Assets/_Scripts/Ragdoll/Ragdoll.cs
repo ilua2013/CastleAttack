@@ -53,6 +53,8 @@ public class Ragdoll : MonoBehaviour
     private IEnumerator DelayDied()
     {
         yield return new WaitForSeconds(_timeDelay);
+
+        GamesStatistics.RegisterEnemyKill();
         Destroy(_unit);
     }
 }

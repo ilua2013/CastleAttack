@@ -10,11 +10,13 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Button _buttonStartFight;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private float _delayBeetwenStep;
+    [SerializeField] private float _delayBeetwenStep = 0.15f;
 
     private List<UnitFriend> _unitFriend = new List<UnitFriend>();
     private List<UnitEnemy> _unitEnemy = new List<UnitEnemy>();
     private bool _doStep = true;
+    private bool _friendFinishStep;
+    private bool _enemyFinishStep;
 
     public int CountEnemy => _unitEnemy.Count;
     public EnemySpawner EnemySpawner => _enemySpawner;
@@ -86,6 +88,7 @@ public class BattleSystem : MonoBehaviour
         {
             _unitFriend.Add(unitFriend);
             unitFriend.Fighter.Died_get += RemoveUnit;
+            unitFriend.FinishedStep += CheckFinishStepFriend;
         }
     }
 
@@ -95,6 +98,7 @@ public class BattleSystem : MonoBehaviour
         {
             _unitEnemy.Add(unitEnemy);
             unitEnemy.Fighter.Died_get += RemoveUnit;
+            unitEnemy.FinishedStep += CheckFinishStepEnemy;
         }
     }
 
@@ -111,15 +115,22 @@ public class BattleSystem : MonoBehaviour
     {
         while (CheckHaveStep() && _doStep == true)
         {
+            _friendFinishStep = false;
+            _enemyFinishStep = false;
+
             for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
                 _unitFriend[i].DoStep();
 
+            CheckFinishStepFriend();
+
+            yield return new WaitWhile(() => _friendFinishStep == false);
             yield return new WaitForSeconds(_delayBeetwenStep);
 
             for (int i = _unitEnemy.Count - 1; i > -1; i--)
                 _unitEnemy[i].DoStep();
 
-            yield return new WaitForSeconds(_delayBeetwenStep);
+            CheckFinishStepEnemy();
+            yield return new WaitWhile(() => _enemyFinishStep == false);
         }
 
         StepFinished?.Invoke();
@@ -142,6 +153,29 @@ public class BattleSystem : MonoBehaviour
                 return true;
 
         return false;
+    }
+
+    private void CheckFinishStepFriend()
+    {
+        print("2233");
+        foreach (var item in _unitFriend)
+        {
+        print("2233 " + item.DoingStep);
+
+            if (item.DoingStep == true)
+                return;
+        }
+
+        _friendFinishStep = true;
+    }
+
+    private void CheckFinishStepEnemy()
+    {
+        foreach (var item in _unitEnemy)
+            if (item.DoingStep == true)
+                return;
+
+        _enemyFinishStep = true;
     }
 
     private void CalculateFirstStep()

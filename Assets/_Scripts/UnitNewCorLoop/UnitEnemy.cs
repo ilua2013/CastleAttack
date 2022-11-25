@@ -12,10 +12,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     public UnitCard Card { get; private set; }
     private int _currentStep;
+    private bool _doingStep;
 
     public int CurrentStep => _currentStep;
     public bool Initialized { get; private set; }
-
+    public bool DoingStep => _doingStep;
     public DistanceAttack[] DistanceAttack => _distanceAttack;
 
     public event Action Returned;
@@ -83,13 +84,14 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             return;
 
         UnitFriend enemy = TryAttack();
+        _doingStep = true;
 
         if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter);
 
             Attacked?.Invoke();
-            StartCoroutine(InvokeEvent(FinishedStep, 0.5f));
+            StartCoroutine(FinishStep(FinishedStep, 0.5f));
 
             _currentStep -= 2;
         }
@@ -98,14 +100,14 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             Mover.Move(Mover.CurrentCell.Bot);
 
             Moved?.Invoke();
-            StartCoroutine(InvokeEvent(FinishedStep, 0.7f));
+            StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
             _currentStep--;
         }
         else
         {
             _currentStep--;
-            FinishedStep?.Invoke();
+            StartCoroutine(FinishStep(FinishedStep, 0));
         }
 
         if (_currentStep <= 0)
@@ -137,16 +139,18 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
+
         if(Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
         {
+            GamesStatistics.RegisterEnemyKill();
             gameObject.SetActive(false);
         }
-
     }
 
-    private IEnumerator InvokeEvent(Action action, float time)
+    private IEnumerator FinishStep(Action action, float time)
     {
         yield return new WaitForSeconds(time);
+        _doingStep = false;
         action?.Invoke();
     }
 

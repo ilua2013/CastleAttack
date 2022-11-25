@@ -6,6 +6,7 @@ using UnityEngine;
 public class WinPanel : MonoBehaviour
 {
     [SerializeField] private CardRewardPanel _cardRewardPanel;
+    [SerializeField] private RewardStepsAnimation _stepsAnimation;
 
     private CardsRewarder _levelRewarder;
     private FinishPanel _finishPanel;
@@ -29,5 +30,6 @@ public class WinPanel : MonoBehaviour
     private void OnOpened()
     {
         _cardRewardPanel.ShowCards(_levelRewarder.RewardCards);
+        _stepsAnimation.Play(3);
     }
 }
