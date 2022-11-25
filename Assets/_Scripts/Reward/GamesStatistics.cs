@@ -9,7 +9,6 @@ public static class GamesStatistics
 
     public static void RegisterEnemyKill()
     {
-        Debug.Log("Kill enemy");
         KilledEnemy++;
     }
 

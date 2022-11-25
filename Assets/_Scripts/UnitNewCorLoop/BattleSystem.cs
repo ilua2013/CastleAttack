@@ -168,8 +168,6 @@ public class BattleSystem : MonoBehaviour
     {
         foreach (var item in _unitFriend)
         {
-        print("2233 " + item.DoingStep);
-
             if (item.DoingStep == true)
                 return;
         }
