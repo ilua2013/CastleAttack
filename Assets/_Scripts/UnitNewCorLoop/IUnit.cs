@@ -7,6 +7,9 @@ public interface IUnit
     Fighter Fighter { get; }
     UnitCard Card { get; }
     public event Action FinishedStep;
+    public event Action StepChanged;
+    int MaxStep { get; }
+    int CurrentStep { get; }
     bool Initialized { get; }
     public event Action Inited;
     void Init(UnitCard card, Cell cell);
