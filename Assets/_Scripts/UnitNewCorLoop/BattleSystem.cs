@@ -140,7 +140,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         StepFinished?.Invoke();
-
+        print("Update Step");
         foreach (var item in _unitFriend)
             item.UpdateStep();
 

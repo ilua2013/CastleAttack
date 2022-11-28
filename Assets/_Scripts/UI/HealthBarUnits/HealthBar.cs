@@ -25,6 +25,11 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();
+
+        if (_unit.Fighter.Health == 0)
+            _bar.value = _unit.Fighter.MaxHealth;
+        else
+            _bar.value = _unit.Fighter.Health;
     }
 
     private void OnEnable()
@@ -33,7 +38,6 @@ public class HealthBar : MonoBehaviour
         _unit.Inited += StartOnHealthChanged;
         _unit.Fighter.Damaged += OnHealthChanged;
         _unit.Fighter.Healed += OnHealthChanged;
-        OnHealthChanged(0);
     }
 
     private void OnDisable()

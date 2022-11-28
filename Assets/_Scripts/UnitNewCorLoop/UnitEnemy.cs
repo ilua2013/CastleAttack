@@ -124,6 +124,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public void UpdateStep()
     {
         CurrentStep = MaxStep;
+        StepChanged?.Invoke();
     }
 
     private UnitFriend TryAttack()
