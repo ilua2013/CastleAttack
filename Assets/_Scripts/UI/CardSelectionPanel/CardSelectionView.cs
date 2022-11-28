@@ -18,7 +18,7 @@ public class CardSelectionView : MonoBehaviour
     private void Awake()
     {
         _cardsSelection = GetComponent<CardsSelection>();
-        _deckCounterView = FindObjectOfType<DeckCounterView>();
+        _deckCounterView = FindObjectOfType<DeckCounterView>(true);
 
         if (_cardsSelection == null)
             throw new NullReferenceException("This object must have a component " + nameof(CardsSelection));
