@@ -103,7 +103,17 @@ public class EnemySpawner : MonoBehaviour
         if (_battleSystem.UnitsFriend.Count == 0)
             RandomSpawn();
         else
-            SpawnOnUnitFriend();
+        {
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    RandomSpawn();
+                    break;
+                case 1:
+                    SpawnOnUnitFriend();
+                    break;
+            }
+        }
 
         _currentWave++;
 

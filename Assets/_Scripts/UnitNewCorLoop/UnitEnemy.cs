@@ -5,17 +5,18 @@ using System;
 
 public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
-    [SerializeField] private int _maxStep = 3;
+    [field: SerializeField] public int MaxStep { get; private set; } = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
     public UnitCard Card { get; private set; }
-    private int _currentStep;
+    public int CurrentStep { get; private set; }
+    public bool Initialized { get; private set; }
+
+    private bool _isTutorialUnitStop = true;
     private bool _doingStep;
 
-    public int CurrentStep => _currentStep;
-    public bool Initialized { get; private set; }
     public bool DoingStep => _doingStep;
     public DistanceAttack[] DistanceAttack => _distanceAttack;
 
@@ -25,6 +26,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action Inited;
     public event Action EndedSteps;
     public event Action FinishedStep;
+    public event Action StepChanged;
 
     private void OnValidate()
     {
@@ -44,7 +46,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     private void Awake()
     {
-        _currentStep = _maxStep;
+        CurrentStep = MaxStep;
 
         if (Fighter.FighterType == FighterType.MainTarget)
             Init(null, null);
@@ -80,7 +82,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     public void DoStep()
     {
-        if (_currentStep <= 0)
+        if (CurrentStep <= 0)
             return;
 
         UnitFriend enemy = TryAttack();
@@ -93,7 +95,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             Attacked?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.5f));
 
-            _currentStep -= 2;
+            CurrentStep -= 2;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Bot))
         {
@@ -102,21 +104,26 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             Moved?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
-            _currentStep--;
+            CurrentStep--;
         }
         else
         {
-            _currentStep--;
+            CurrentStep--;
             StartCoroutine(FinishStep(FinishedStep, 0));
         }
 
-        if (_currentStep <= 0)
+        if (CurrentStep <= 0)
+        {
+            CurrentStep = 0;
             EndedSteps?.Invoke();
+        }
+
+        StepChanged?.Invoke();
     }
 
     public void UpdateStep()
     {
-        _currentStep = _maxStep;
+        CurrentStep = MaxStep;
     }
 
     private UnitFriend TryAttack()
