@@ -12,7 +12,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private CombatDeck _deck;
     private CardReplenisher _cardReplenisher;
-    private CardsHand _cardsHand;
+    private DeckCounter _deckCounter;
     private Card[] _selectedCards;
     private float _delayTime = 0; 
 
@@ -26,7 +26,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     {
         _deck = FindObjectOfType<CombatDeck>();
         _cardReplenisher = FindObjectOfType<CardReplenisher>();
-        _cardsHand = FindObjectOfType<CardsHand>();
+        _deckCounter = FindObjectOfType<DeckCounter>();
 
         if (_deck == null)
             throw new NullReferenceException(nameof(_deck));
@@ -34,8 +34,8 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         if (_cardReplenisher == null)
             throw new NullReferenceException(nameof(_cardReplenisher));
 
-        if (_cardsHand == null)
-            throw new NullReferenceException(nameof(_cardsHand));
+        if (_deckCounter == null)
+            throw new NullReferenceException(nameof(_deckCounter));
     }
 
     //public void TutorialTimeSwitch(float time)
@@ -59,7 +59,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private void DrawOutCards()
     {
-        if (!_cardsHand.CanTakeCard)
+        if (!_deckCounter.CanTakeCard)
         {
             Passed?.Invoke();
             gameObject.SetActive(false);

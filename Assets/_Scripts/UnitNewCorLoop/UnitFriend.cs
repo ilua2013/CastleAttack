@@ -72,18 +72,22 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         Initialized = true;
     }
 
-    public void ReturnToHand()
+    public void ReturnToHandStageUp()
     {
-        StartCoroutine(TutorialPause());
-        //Mover.Die();
-        //Fighter.Die();
-        //gameObject.SetActive(false);
-        //Card.ComeBack();
+        Mover.Die();
+        Fighter.Die();
+        gameObject.SetActive(false);
+        Card.DoStageUp();
     }
 
-    public IEnumerator TutorialPause()
+    public void ReturnToHand()
     {
-        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(TutorialPause(0.1f));
+    }
+
+    public IEnumerator TutorialPause(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Mover.Die();
         Fighter.Die();        
         gameObject.SetActive(false);

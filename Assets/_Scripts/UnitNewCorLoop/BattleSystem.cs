@@ -69,7 +69,7 @@ public class BattleSystem : MonoBehaviour
     public void ReturnToHandFriend()
     {
         for (int i = _unitFriend.Count - 1; i > -1; i--)
-            _unitFriend[i].ReturnToHand();
+            _unitFriend[i].ReturnToHandStageUp();
     }
 
     private void TutorialStopUnit()

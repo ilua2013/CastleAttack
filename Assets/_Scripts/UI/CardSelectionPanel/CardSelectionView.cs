@@ -4,26 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class CardSelectionView : MonoBehaviour, IPhaseHandler
+public class CardSelectionView : MonoBehaviour
 {
     private const float ScaleFactor = 1.2f;
 
     [SerializeField] private Transform[] _cardPlacements;
-    [SerializeField] private Phase[] _phases;
 
     private List<CardHoverView> _cardHovers = new List<CardHoverView>();
     private CardsSelection _cardsSelection;
-    //private float _delayTime = 0;
+    private DeckCounterView _deckCounterView;
     private bool _isActivTutor = false;
-
-    public Phase[] Phases => _phases;
 
     private void Awake()
     {
         _cardsSelection = GetComponent<CardsSelection>();
+        _deckCounterView = FindObjectOfType<DeckCounterView>();
 
         if (_cardsSelection == null)
             throw new NullReferenceException("This object must have a component " + nameof(CardsSelection));
+
+        if (_deckCounterView == null)
+            throw new NullReferenceException(nameof(_deckCounterView));
     }
 
     private void OnEnable()
@@ -36,24 +37,7 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
         _cardsSelection.DrawnOut -= OnDrawOut;
 
         foreach (CardHoverView cardHover in _cardHovers)
-        {
-            cardHover.Enter -= OnCardHover;
-            cardHover.Exit -= OnCardRemoveHover;
-        }
-    }
-
-    //public void TutorialTimeSwitch(float time)
-    //{
-    //    _delayTime = time;
-    //}
-
-    public IEnumerator SwitchPhase(PhaseType phaseType)
-    {
-        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
-
-        yield return new WaitForSeconds(phase.Delay);
-        //_delayTime = phase.Delay;
-        gameObject.SetActive(phase.IsActive);
+            UnRegister(cardHover);
     }
 
     private void OnDrawOut(Card[] cards)
@@ -64,14 +48,12 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
         for (int i = 0; i < _cardPlacements.Length; i++)
         {
             cards[i].transform.SetParent(_cardPlacements[i]);
-            cards[i].transform.localPosition = Vector3.zero;
+            cards[i].transform.position = _deckCounterView.transform.position;
 
             if (cards[i].TryGetComponent(out CardHoverView cardHover))
             {
+                cardHover.MoveTo(_cardPlacements[i].position, 5f, () => Register(cardHover));
                 cardHover.ScaleTo(cardHover.StartScaling);
-
-                cardHover.Enter += OnCardHover;
-                cardHover.Exit += OnCardRemoveHover;
 
                 _cardHovers.Add(cardHover);
             }
@@ -87,5 +69,18 @@ public class CardSelectionView : MonoBehaviour, IPhaseHandler
     private void OnCardRemoveHover(CardHoverView cardHover)
     {
         cardHover.ResetToStartState();
+    }
+
+    private void Register(CardHoverView card)
+    {
+        card.SaveStartState(card.transform.position, card.transform.GetSiblingIndex());
+        card.Enter += OnCardHover;
+        card.Exit += OnCardRemoveHover;
+    }
+
+    private void UnRegister(CardHoverView card)
+    {
+        card.Enter -= OnCardHover;
+        card.Exit -= OnCardRemoveHover;
     }
 }

@@ -21,19 +21,17 @@ public class UnitCard : Card
 
     public override Projection ProjectionPrefab => _projectionPrefab;
 
+    public void DoStageUp()
+    {
+        StageUp?.Invoke(this);
+    }
+
     public void ComeBack()
     {
-        if (Stage != CardStage.Three)
-        {
-            StageUp?.Invoke(this);
-        }
-        else
-        {
-            if (Amount == 0)
-                CameBack?.Invoke(this);
+        if (Amount == 0)
+            CameBack?.Invoke(this);
 
-            Merge();
-        }
+        Merge();
     }
 
     public void Merge()

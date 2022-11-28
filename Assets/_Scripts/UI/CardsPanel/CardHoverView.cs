@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private const float LerpTime = 10f;
-    private const float DistanceDelta = 0.01f;
+    private const float DistanceDelta = 0.05f;
 
     private Coroutine _coroutinePosition;
     private Coroutine _coroutineScaling;
@@ -77,7 +77,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (_coroutineScaling != null)
             StopCoroutine(_coroutineScaling);
 
-        _coroutinePosition = StartCoroutine(LerpPosition(StartPosition));
+        _coroutinePosition = StartCoroutine(LerpPosition(StartPosition, LerpTime));
         _coroutineScaling = StartCoroutine(LerpScale(StartScaling));
 
         transform.SetSiblingIndex(StartIndex);
@@ -88,7 +88,15 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (_coroutinePosition != null)
             StopCoroutine(_coroutinePosition);
 
-        _coroutinePosition = StartCoroutine(LerpPosition(position, onEndCallback));
+        _coroutinePosition = StartCoroutine(LerpPosition(position, LerpTime, onEndCallback));
+    }
+
+    public void MoveTo(Vector3 position, float lerpTime, Action onEndCallback = null)
+    {
+        if (_coroutinePosition != null)
+            StopCoroutine(_coroutinePosition);
+
+        _coroutinePosition = StartCoroutine(LerpPosition(position, lerpTime, onEndCallback));
     }
 
     public void ScaleTo(Vector3 scale)
@@ -134,17 +142,16 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Used?.Invoke(this, count);
     }
 
-    private IEnumerator LerpPosition(Vector3 to, Action onEndCallback = null)
+    private IEnumerator LerpPosition(Vector3 to, float time, Action onEndCallback = null)
     {
-        onEndCallback?.Invoke();
-
         while (Vector3.Distance(transform.position, to) > DistanceDelta)
         {
-            transform.position = Vector3.Lerp(transform.position, to, LerpTime * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, to, time * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 
         transform.position = to;
+        onEndCallback?.Invoke();
         _coroutinePosition = null;
     }
 

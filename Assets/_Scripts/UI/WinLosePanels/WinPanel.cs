@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(FinishPanel))]
 public class WinPanel : MonoBehaviour
 {
+    [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private CardRewardPanel _cardRewardPanel;
     [SerializeField] private RewardStepsAnimation _stepsAnimation;
 
@@ -30,6 +31,19 @@ public class WinPanel : MonoBehaviour
     private void OnOpened()
     {
         _cardRewardPanel.ShowCards(_levelRewarder.RewardCards);
-        _stepsAnimation.Play(3);
+
+        int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
+
+        _stepsAnimation.Play(starsCount);
+    }
+
+    private int CalculateStarsCount(float remain)
+    {
+        if (remain >= 0.5f && remain < 1f)
+            return 2;
+        else if (remain < 0.5f)
+            return 1;
+        else
+            return 3;
     }
 }

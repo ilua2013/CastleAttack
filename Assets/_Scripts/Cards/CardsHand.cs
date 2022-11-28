@@ -8,16 +8,13 @@ using System.Collections;
 public class CardsHand : MonoBehaviour, IPhaseHandler
 {
     [SerializeField] private Phase[] _phases;
-    [SerializeField] private int _capacity;
 
     private ICardApplicable _currentTarget;
     private List<Card> _cards = new List<Card>();
 
     public Phase[] Phases => _phases;
 
-    public int Capacity => _capacity;
     public bool CanPlaceCard { get; private set; }
-    public bool CanTakeCard => _cards.Count < _capacity;
     public ICardApplicable CurrentTarget => _currentTarget;
 
     public event Action<UnitFriend> Spawned;
@@ -29,9 +26,6 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     private void Awake()
     {
         _cards = GetComponentsInChildren<Card>().ToList();
-
-        if (Saves.HasKey(SaveController.Params.HandCapacity))
-            _capacity = Saves.GetInt(SaveController.Params.HandCapacity);
     }
 
     private void OnEnable()
@@ -100,8 +94,11 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
             card.CancleDrop();
             CancelDrop?.Invoke();
         }
+        else
+        {
+            CardDrop?.Invoke();
+        }
 
-        CardDrop?.Invoke();
 
         if (_cards.Count <= 0)
             CardsEmpty?.Invoke();

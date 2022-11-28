@@ -21,6 +21,7 @@ public class Fighter
     public int Health => _health;
     public bool IsDead => _health < 1;
     public int MaxHealth => _maxHealth;
+    public float RemainingHealth => (float)Health / MaxHealth;
     public FighterType FighterType => _type;
     public IUnit Unit => _unit;
 
