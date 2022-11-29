@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UnitSpawner : MonoBehaviour, ICardApplicable
 {
     [SerializeField] private SpawnerType _type;
+    [SerializeField] private SoundEffectPlayer _sounds;
     [SerializeField] private Transform _spawnPoint;
 
     private Cell _cell;
@@ -49,6 +50,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
             unitFriend.Init(unitCard, _cell);
 
             SpawnedUnit?.Invoke(unitFriend);
+            _sounds.Play(SoundEffectType.Spawn, Camera.main.transform.position);
 
             return true;
         }

@@ -39,15 +39,24 @@ public class UnitExperience : MonoBehaviour
         if (_current >= _threshold)
         {
             _level++;
-            LevelUp?.Invoke(_level);
-            _vfx.transform.SetParent(null);
-            _vfx.Play();
+
             CreateNextLevel();
         }
     }
 
     public void CreateNextLevel()
     {
-        StartCoroutine(_unit.DestroyWithDelay(0.6f, () => _unit.Card.DoStageUp(_unit)));
+        StartCoroutine(DestroyWithDelay(2f));
+        StartCoroutine(_unit.DestroyWithDelay(2f));
+    }
+
+    private IEnumerator DestroyWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        LevelUp?.Invoke(_level);
+        _vfx.transform.SetParent(null);
+        _vfx.Play();
+        _unit.Card.DoStageUp(_unit);
     }
 }
