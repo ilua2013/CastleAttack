@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Add Params")]
     [SerializeField] private int _minusWaveOnDieBuild = 3;
     [Header("StartUnit")]
-    [SerializeField] private UnitEnemy[] _enemysStart;
+    [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[50];
 
     private int _currentWave = 0;
 
@@ -30,11 +30,16 @@ public class EnemySpawner : MonoBehaviour
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
 
-        for (int i = 0; i < _enemysStart.Length; i++)
-            if (_enemysStart[i].transform.parent != transform)
-                _enemysStart[i].transform.parent = transform;
+        if (_enemysStart != null)
+        {
+            for (int i = 0; i < _enemysStart.Length; i++)
+                if (_enemysStart[i].transform.parent != transform)
+                    _enemysStart[i].transform.parent = transform;
+        }
+
         _enemysStart = GetComponentsInChildren<UnitEnemy>();
         _cellsEnemySpawner.Clear();
+
         foreach (var item in GetComponentInParent<Stage>().CellSpawner.GetComponentsInChildren<UnitSpawner>())
         {
             if (item.SpawnerType == SpawnerType.Enemy && _cellsEnemySpawner.Contains(item) == false)

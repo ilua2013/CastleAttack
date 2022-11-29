@@ -72,13 +72,25 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 
     public void ReturnToHand()
     {
-        Debug.Log("Return to hand " + this.name);
         StartCoroutine(DestroyWithDelay(0f, Card.ComeBack));
     }
 
     public void Init(UnitCard card, Cell currentCell)
     {
         Card = card;
+
+        Mover.Init(this, transform, currentCell);
+        Fighter.Init(this, transform);
+
+        Inited?.Invoke();
+        Initialized = true;
+    }
+
+    public void Init(UnitCard card, Cell currentCell, int currentStep)
+    {
+        Card = card;
+
+        CurrentStep = currentStep;
         Mover.Init(this, transform, currentCell);
         Fighter.Init(this, transform);
 

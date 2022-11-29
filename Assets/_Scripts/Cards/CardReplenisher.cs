@@ -55,7 +55,7 @@ public class CardReplenisher : MonoBehaviour
         newCard.gameObject.SetActive(false);
 
         UnitFriend newUnit = Instantiate(unit.Card.NextStage.UnitPrefab, unit.transform.position, Quaternion.identity);
-        newUnit.Init(newCard, unit.Mover.CurrentCell);
+        newUnit.Init(newCard, unit.Mover.CurrentCell, 0);
 
         unit.LevelUp(newUnit);
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2275570904515265033}
   - component: {fileID: 4510989440694130687}
   - component: {fileID: 7356547733755051960}
+  - component: {fileID: 6760554040949546422}
   m_Layer: 0
   m_Name: Catapult
   m_TagString: Untagged
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b67684d2d3b4d4ab33a01f87fdaa2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxStep: 2
+  <MaxStep>k__BackingField: 3
   _distanceAttack:
   - Side: 3
     Distance: 3
@@ -128,6 +129,31 @@ MonoBehaviour:
   _animators:
   - {fileID: 241961940517252469}
   - {fileID: 4152093931552831750}
+--- !u!114 &6760554040949546422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710454381889582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86e570aefbe9344cab996a1118444a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _soundEffects:
+    - SoundEffectType: 1
+      AudioClips:
+      - {fileID: 8300000, guid: 73443b2a651affe42a6065a8d5fd8017, type: 3}
+    - SoundEffectType: 2
+      AudioClips:
+      - {fileID: 8300000, guid: b81e1b9e75e750947b61816819ee6dbb, type: 3}
+      - {fileID: 8300000, guid: 867c2af4d16b7b6428b07f9f8cb676b0, type: 3}
+      - {fileID: 8300000, guid: f5621f1f9893f854781488a9f5855e08, type: 3}
+      - {fileID: 8300000, guid: b4bbf3b90bbce144c87ea3f611451fb1, type: 3}
+      - {fileID: 8300000, guid: 700e21fadeb615e49918c291fe4ea9b4, type: 3}
+      - {fileID: 8300000, guid: f44f2c836b6998c43bb4cd1dcffdc3d6, type: 3}
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,11 +414,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4590521106582558662, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
   m_PrefabInstance: {fileID: 444728201551994126}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4152093931562306250 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4590521106582558660, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
-  m_PrefabInstance: {fileID: 444728201551994126}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4152093931562306252 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4590521106582558658, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
@@ -401,6 +422,11 @@ GameObject:
 --- !u!1 &4152093931562306242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4590521106582558668, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
+  m_PrefabInstance: {fileID: 444728201551994126}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4152093931562306250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4590521106582558660, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
   m_PrefabInstance: {fileID: 444728201551994126}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1553319407174638969
@@ -638,6 +664,10 @@ PrefabInstance:
     - target: {fileID: 2728252765516272951, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2883687214357431759, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3357261740300783501, guid: 215e1a4ca503c70408b2080e4cb6e85c, type: 3}
       propertyPath: m_Name
