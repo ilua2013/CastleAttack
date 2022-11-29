@@ -39,17 +39,19 @@ public class Fighter
         _health = _maxHealth;
     }
 
-    public void Attack(Fighter fighter)
+    public bool Attack(Fighter fighter)
     {
         _unit.RotateTo(fighter.transform);
 
         int damage = (int)DamageConditions.CalculateDamage(_type, fighter.FighterType, _damage);
-        fighter.TakeDamage(damage);
+        bool isFatal = fighter.TakeDamage(damage);
 
         if (fighter.FighterType == FighterType.MainTarget || fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
             TakeDamage(fighter.Damage);
 
         Attacked?.Invoke();
+
+        return isFatal;
     }
 
     public void RecoveryHealth(int value)
@@ -67,18 +69,21 @@ public class Fighter
         Died?.Invoke();
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
 
         Damaged?.Invoke(damage);
 
-        if (_health == 0)
+        if (_health <= 0)
         {
             Die();
             EffectDied?.Invoke();
+
+            return true;
         }
-           
+
+        return false;
     }
 
     public IEnumerator RotateTo(Transform lookAt)

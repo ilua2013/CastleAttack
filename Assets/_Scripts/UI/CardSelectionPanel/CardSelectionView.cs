@@ -52,7 +52,8 @@ public class CardSelectionView : MonoBehaviour
 
             if (cards[i].TryGetComponent(out CardHoverView cardHover))
             {
-                cardHover.MoveTo(_cardPlacements[i].position, 5f, () => Register(cardHover));
+                Register(cardHover, _cardPlacements[i].position);
+                cardHover.MoveTo(_cardPlacements[i].position, 5f);
                 cardHover.ScaleTo(cardHover.StartScaling);
 
                 _cardHovers.Add(cardHover);
@@ -62,7 +63,6 @@ public class CardSelectionView : MonoBehaviour
 
     private void OnCardHover(CardHoverView cardHover)
     {
-        cardHover.SaveStartState(cardHover.transform.position, cardHover.transform.GetSiblingIndex());
         cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
     }
 
@@ -71,9 +71,9 @@ public class CardSelectionView : MonoBehaviour
         cardHover.ResetToStartState();
     }
 
-    private void Register(CardHoverView card)
+    private void Register(CardHoverView card, Vector3 startPosition)
     {
-        card.SaveStartState(card.transform.position, card.transform.GetSiblingIndex());
+        card.SaveStartState(startPosition, card.transform.GetSiblingIndex());
         card.Enter += OnCardHover;
         card.Exit += OnCardRemoveHover;
     }

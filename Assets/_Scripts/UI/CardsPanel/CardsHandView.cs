@@ -20,24 +20,13 @@ public class CardsHandView : MonoBehaviour
     private void Awake()
     {
         _cards = GetComponentsInChildren<CardHoverView>().ToList();
-
-        foreach (CardHoverView card in _cards)
-        {
-            if (card.TryGetComponent(out CardMovement movement))
-                _cardMovements.Add(movement);
-        }
     }
 
     private void OnEnable()
     {
         foreach (CardHoverView card in _cards)
         {
-            card.Enter += OnHover;
-            card.Exit += OnRemoveHover;
-            card.BeginDrag += OnBeginDrag;
-            card.Drop += OnDrop;
-            card.CancelDrop += OnCancelDrop;
-            card.Used += OnUsed;
+            Register(card);
         }
     }
 
@@ -45,12 +34,7 @@ public class CardsHandView : MonoBehaviour
     {
         foreach (CardHoverView card in _cards)
         {
-            card.Enter -= OnHover;
-            card.Exit -= OnRemoveHover;
-            card.BeginDrag -= OnBeginDrag;
-            card.Drop -= OnDrop;
-            card.CancelDrop -= OnCancelDrop;
-            card.Used -= OnUsed;
+            UnRegister(card);
         }
     }
 
@@ -151,10 +135,8 @@ public class CardsHandView : MonoBehaviour
         Shuffling();
     }
 
-    public void CardAdd(Card card)
+    public void Register(CardHoverView cardHover)
     {
-        CardHoverView cardHover = card.GetComponent<CardHoverView>();
-
         cardHover.Enter += OnHover;
         cardHover.Exit += OnRemoveHover;
         cardHover.BeginDrag += OnBeginDrag;
@@ -162,11 +144,29 @@ public class CardsHandView : MonoBehaviour
         cardHover.CancelDrop += OnCancelDrop;
         cardHover.Used += OnUsed;
 
-        _cards.Add(cardHover);
-
         if (cardHover.TryGetComponent(out CardMovement movement))
             _cardMovements.Add(movement);
+    }
 
+    public void UnRegister(CardHoverView cardHover)
+    {
+        cardHover.Enter -= OnHover;
+        cardHover.Exit -= OnRemoveHover;
+        cardHover.BeginDrag -= OnBeginDrag;
+        cardHover.Drop -= OnDrop;
+        cardHover.CancelDrop -= OnCancelDrop;
+        cardHover.Used -= OnUsed;
+
+        if (cardHover.TryGetComponent(out CardMovement movement))
+            _cardMovements.Remove(movement);
+    }
+
+    public void CardAdd(Card card)
+    {
+        CardHoverView cardHover = card.GetComponent<CardHoverView>();
+        Register(cardHover);
+
+        _cards.Add(cardHover);
         Shuffling();
     }
 

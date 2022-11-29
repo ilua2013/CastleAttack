@@ -16,6 +16,8 @@ public class CardInDeckView : MonoBehaviour
     [SerializeField] private TMP_Text _amountText;
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private GameObject _coins;
+    [SerializeField] private GameObject _button;
+    [SerializeField] private GameObject _levelPanel;
 
     private string _level;
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -47,6 +49,12 @@ public class CardInDeckView : MonoBehaviour
             _level = _levelText.text;
 
         _card = null;
+        _button.SetActive(false);
+        _levelPanel.SetActive(false);
+
+        if (Card != null && Card.CardSave.Deck == DeckType.Common)
+            _background.gameObject.SetActive(false);
+
         _upArrow.gameObject.SetActive(false);
         _levelText.text = _level;
         _amountText.text = "0 / 3";
@@ -80,6 +88,12 @@ public class CardInDeckView : MonoBehaviour
         _levelText.text = _level + " " + cardSave.Level;
         _upArrow.gameObject.SetActive(cardSave.CanLevelUp);
         _coins.SetActive(cardSave.CanLevelUp);
+        _button.SetActive(true);
+        _levelPanel.SetActive(true);
+
+        if (Card != null && Card.CardSave.Deck == DeckType.Combat)
+            _background.gameObject.SetActive(true);
+
         _amountText.gameObject.SetActive(!cardSave.CanLevelUp);
     }
 

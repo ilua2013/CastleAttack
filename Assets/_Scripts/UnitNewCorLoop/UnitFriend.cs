@@ -28,6 +28,8 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public event Action StopUnit;
     public event Action FinishedStep;
     public event Action StepChanged;
+    public event Action<UnitEnemy> EnemyKilled;
+    public event Action<UnitFriend> LevelUpped;
 
     private void OnValidate()
     {
@@ -63,6 +65,17 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         Mover.CellChanged -= StartMove;
     }
 
+    public void LevelUp(UnitFriend unit)
+    {
+        LevelUpped?.Invoke(unit);
+    }
+
+    public void ReturnToHand()
+    {
+        Debug.Log("Return to hand " + this.name);
+        StartCoroutine(DestroyWithDelay(0f, Card.ComeBack));
+    }
+
     public void Init(UnitCard card, Cell currentCell)
     {
         Card = card;
@@ -73,26 +86,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         Initialized = true;
     }
 
-    public void ReturnToHandStageUp()
-    {
-        Mover.Die();
-        Fighter.Die();
-        gameObject.SetActive(false);
-        Card.DoStageUp();
-    }
-
-    public void ReturnToHand()
-    {
-        StartCoroutine(TutorialPause(0.1f));
-    }
-
-    public IEnumerator TutorialPause(float delay)
+    public IEnumerator DestroyWithDelay(float delay, Action onEnd = null)
     {
         yield return new WaitForSeconds(delay);
+
         Mover.Die();
         Fighter.Die();        
         gameObject.SetActive(false);
-        Card.ComeBack();
+        onEnd?.Invoke();
     }
 
     public void DoStep()
@@ -105,7 +106,11 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 
         if (enemy != null)
         {
-            Fighter.Attack(enemy.Fighter);
+            if (Fighter.Attack(enemy.Fighter))
+            {
+                EnemyKilled?.Invoke(enemy);
+                return;
+            }
 
             Attacked?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.5f));
