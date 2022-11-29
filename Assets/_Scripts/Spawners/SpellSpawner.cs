@@ -24,7 +24,7 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
     {
         if (card is SpellCard spellCard)
         {
-            Spell spell = Instantiate(spellCard.SpellPrefab, place, Quaternion.identity);
+            Spell spell = Instantiate(spellCard.SpellPrefab, transform.position, Quaternion.identity);
 
             spell.Cast(_cell);
             Cast?.Invoke(place, spell);

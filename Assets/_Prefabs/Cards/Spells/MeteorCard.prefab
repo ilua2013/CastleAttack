@@ -805,6 +805,7 @@ GameObject:
   - component: {fileID: 1973495392909156359}
   - component: {fileID: 2284194814575428711}
   - component: {fileID: 1499348537723391406}
+  - component: {fileID: 8101428632509875937}
   m_Layer: 5
   m_Name: MeteorCard
   m_TagString: Untagged
@@ -953,6 +954,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 2149163858821031993}
+--- !u!114 &8101428632509875937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147149369234024144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037cf82d1f0a94a4da640aef2fdc0106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _soundEffects:
+    - SoundEffectType: 10
+      AudioClips:
+      - {fileID: 8300000, guid: ca689c8e86b9f3b499775cb8f89420f1, type: 3}
+    - SoundEffectType: 11
+      AudioClips:
+      - {fileID: 8300000, guid: b4564758b6bc6c446b197a61fd9e0e56, type: 3}
 --- !u!1 &7873677587050763427
 GameObject:
   m_ObjectHideFlags: 0

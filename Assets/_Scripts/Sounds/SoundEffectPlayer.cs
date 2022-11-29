@@ -16,10 +16,14 @@ public enum SoundEffectType
     Attack,
     Steps,
     Death,
-    Meteor,
-    Heal,
+    Spell,
     StartFight,
     Spawn,
+    Panel,
+    BackgroundMenu,
+    BackgroundBattle,
+    CardClick,
+    CardComeBack,
 }
 
 [Serializable]
@@ -27,11 +31,11 @@ public class SoundEffectPlayer
 {
     [SerializeField] private List<SoundEffect> _soundEffects;
 
-    public void Play(SoundEffectType effectType, Vector3 point)
+    public void Play(SoundEffectType effectType)
     {
         SoundEffect effect = _soundEffects.Find(item => item.SoundEffectType == effectType);
         int index = UnityEngine.Random.Range(0, effect.AudioClips.Count);
 
-        AudioSource.PlayClipAtPoint(effect.AudioClips[index], point, 0.5f);
+        AudioSource.PlayClipAtPoint(effect.AudioClips[index], SoundSourceObject.Instance.Position, 1);
     }
 }

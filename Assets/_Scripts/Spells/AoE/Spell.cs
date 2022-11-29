@@ -13,10 +13,12 @@ public abstract class Spell : MonoBehaviour
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
 
     public event Action Dispelled;
+    public event Action WasCast;
 
     public void Cast(Cell cell, Action onEndCallback = null)
     {
         StartCoroutine(Live(onEndCallback, cell));
+        WasCast?.Invoke();
     }
 
     protected abstract void Affect(Cell cell);

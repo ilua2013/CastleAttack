@@ -50,7 +50,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
             unitFriend.Init(unitCard, _cell);
 
             SpawnedUnit?.Invoke(unitFriend);
-            _sounds.Play(SoundEffectType.Spawn, Camera.main.transform.position);
+            _sounds.Play(SoundEffectType.Spawn);
 
             return true;
         }

@@ -19093,6 +19093,7 @@ GameObject:
   - component: {fileID: 8156258594302621449}
   - component: {fileID: 5628983567676718962}
   - component: {fileID: 7741578318399788620}
+  - component: {fileID: 7325421311294122571}
   m_Layer: 0
   m_Name: HealSpell
   m_TagString: Untagged
@@ -19147,7 +19148,7 @@ MonoBehaviour:
     Distance: 1
   - Side: 8
     Distance: 0
-  _lifetime: 10
+  _lifetime: 5
   _recovery: 5
 --- !u!135 &7741578318399788620
 SphereCollider:
@@ -19162,3 +19163,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7325421311294122571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156258594302621448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d5ebeea8a0ba6488d3b314645477c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _soundEffects:
+    - SoundEffectType: 4
+      AudioClips:
+      - {fileID: 8300000, guid: 42200c0d4c76b3d4da2a0208601694bb, type: 3}

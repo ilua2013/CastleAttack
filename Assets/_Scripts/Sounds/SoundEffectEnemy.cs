@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,11 +28,19 @@ public class SoundEffectEnemy : MonoBehaviour
 
     private void OnAttack()
     {
-        _settings.Play(SoundEffectType.Attack, Camera.main.transform.position);
+        _settings.Play(SoundEffectType.Attack);
     }
 
     private void OnMoved()
     {
-        _settings.Play(SoundEffectType.Steps, Camera.main.transform.position);
+        StartCoroutine(PlayWithDelay(0.5f, () =>
+        _settings.Play(SoundEffectType.Steps)));
+    }
+
+    private IEnumerator PlayWithDelay(float delay, Action action)
+    {
+        yield return new WaitForSeconds(delay);
+
+        action?.Invoke();
     }
 }
