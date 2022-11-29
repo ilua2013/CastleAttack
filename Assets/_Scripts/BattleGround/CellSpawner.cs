@@ -93,8 +93,8 @@ public class CellSpawner : MonoBehaviour
 
         Cell cell = Instantiate(_cellFriend, Vector3.zero, Quaternion.identity, transform);
         cell.transform.localPosition = spawnPoint + new Vector3(0, 0, -_offsetMainTarget);
+        cell.SetType(CellIs.Wizzard);
         cell.gameObject.name += " Wizzard";
-        cell.SetType(CellIs.Lower);
 
         foreach (var item in _cells)
             item.SetCell(cell, CellNeighbor.Bot);
@@ -109,8 +109,8 @@ public class CellSpawner : MonoBehaviour
 
         Cell cell = Instantiate(_cellEnemy, Vector3.zero, Quaternion.identity, transform);
         cell.transform.localPosition = spawnPoint + new Vector3(0, 0, _offsetMainTarget);
+        cell.SetType(CellIs.Boss);
         cell.gameObject.name += " Boss";
-        cell.SetType(CellIs.Higher);
 
         for (int i = 0; i < _grid.y; i++)
             _cells[_cells.Count - 1 - i].SetCell(cell, CellNeighbor.Top);
