@@ -11,7 +11,7 @@ public class UnitCard : Card
     [SerializeField] private UnitFriend _unitPrefab;
     [SerializeField] private UnitProjection _projectionPrefab;
 
-    public event Action<UnitCard> StageUp;
+    public event Action<UnitCard, UnitFriend> StageUp;
     public event Action<UnitCard> CameBack;
     public event Action<int> AmountChanged;
 
@@ -21,9 +21,14 @@ public class UnitCard : Card
 
     public override Projection ProjectionPrefab => _projectionPrefab;
 
-    public void DoStageUp()
+    public void Init(int amount)
     {
-        StageUp?.Invoke(this);
+        Amount = amount;
+    }
+
+    public void DoStageUp(UnitFriend unit)
+    {
+        StageUp?.Invoke(this, unit);
     }
 
     public void ComeBack()

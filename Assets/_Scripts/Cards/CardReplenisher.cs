@@ -45,9 +45,26 @@ public class CardReplenisher : MonoBehaviour
             CreateSpell(spellCard, position);
     }
 
-    private void OnCardStageUp(UnitCard card)
+    private void OnCardStageUp(UnitCard card, UnitFriend unit)
     {
-        CreateUnit(card.NextStage, transform.position);
+        card.StageUp -= OnCardStageUp;
+        card.CameBack -= OnCameBack;
+
+        UnitCard newCard = Instantiate(card.NextStage, transform.position, Quaternion.identity, _cardsHand.transform);
+        newCard.Init(0);
+        newCard.gameObject.SetActive(false);
+
+        UnitFriend newUnit = Instantiate(unit.Card.NextStage.UnitPrefab, unit.transform.position, Quaternion.identity);
+        newUnit.Init(newCard, unit.Mover.CurrentCell);
+
+        unit.LevelUp(newUnit);
+
+        newCard.StageUp += OnCardStageUp;
+        newCard.CameBack += OnCameBack;
+
+        _cardsHandView.Register(newCard.GetComponent<CardHoverView>());
+        _unitCards.Add(newCard);
+
         CardUp?.Invoke(card, card.NextStage);
     }
 

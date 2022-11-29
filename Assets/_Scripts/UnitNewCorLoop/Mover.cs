@@ -69,7 +69,7 @@ public class Mover
             return;
 
         _currentCell.SetFree();
-        _currentCell = null;
+        //_currentCell = null;
     }
 
     public void SetTransformOnCell(Cell cell)
