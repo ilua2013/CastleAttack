@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Agava.WebUtility;
 using Agava.YandexGames;
 using UnityEngine;
 
@@ -21,6 +22,16 @@ public class YandexSDK : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        WebApplication.InBackgroundChangeEvent += OnInBackgroundChange;
+    }
+
+    private void OnDisable()
+    {
+        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChange;
     }
 
     private IEnumerator Start()
@@ -104,5 +115,19 @@ public class YandexSDK : MonoBehaviour
             return;
 
         AudioListener.volume = value ? 0f : 1f;
+    }
+
+    private void OnInBackgroundChange(bool inBackground)
+    {
+        bool isMuted = false;
+
+        if (Saves.HasKey(SaveController.Params.IsSoundMuted))
+            isMuted = Saves.GetBool(SaveController.Params.IsSoundMuted);
+
+        if (isMuted)
+            return;
+
+        AudioListener.pause = inBackground;
+        AudioListener.volume = inBackground ? 0f : 1f;
     }
 }
