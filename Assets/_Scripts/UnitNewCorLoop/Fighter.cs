@@ -86,7 +86,7 @@ public class Fighter
         return false;
     }
 
-    public IEnumerator RotateTo(Transform lookAt)
+    public IEnumerator RotateTo(Transform lookAt, Action onFinish = null)
     {
         Vector3 startRotate = transform.forward;
         Vector3 target = lookAt.position - transform.position;
@@ -107,6 +107,8 @@ public class Fighter
 
             yield return null;
         }
+
+        onFinish?.Invoke();
     }
 }
 

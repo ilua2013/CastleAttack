@@ -14,6 +14,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
 
+    private Coroutine _coroutineRotateTo;
     private bool _isTutorialUnitStop = true;
     private bool _doingStep;
 
@@ -119,10 +120,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         if (enemy != null)
         {
             if (Fighter.Attack(enemy.Fighter))
-            {
                 EnemyKilled?.Invoke(enemy);
-                return;
-            }
 
             Attacked?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.5f));
@@ -206,7 +204,19 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         action?.Invoke();
     }
 
-    public void RotateTo(Transform transform) => StartCoroutine(Fighter.RotateTo(transform));
+    public void RotateTo(Transform transform)
+    {
+        if (_coroutineRotateTo == null)
+        {
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+        }
+        else
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+        }
+    }
+
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
 }
 

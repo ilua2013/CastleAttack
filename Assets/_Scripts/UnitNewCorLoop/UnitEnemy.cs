@@ -14,6 +14,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
 
+    private Coroutine _coroutineRotateTo;
     private bool _isTutorialUnitStop = true;
     private bool _doingStep;
 
@@ -162,7 +163,18 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         action?.Invoke();
     }
 
-    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+    public void RotateTo(Transform transform)
+    {
+        if (_coroutineRotateTo == null)
+        {
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+        }
+        else
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+        }
+    }
 
-    public void RotateTo(Transform transform) => StartCoroutine(Fighter.RotateTo(transform));
+    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
 }

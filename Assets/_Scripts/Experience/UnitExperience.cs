@@ -7,7 +7,8 @@ using UnityEngine;
 public class UnitExperience : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _vfx;
-    [SerializeField] private int _threshold;
+    [SerializeField] private int _threshold = 2;
+    [SerializeField] private int _thresholdPlusUp = 1;
     [SerializeField] private int _level;
 
     private UnitFriend _unit;
@@ -42,6 +43,8 @@ public class UnitExperience : MonoBehaviour
         if (_current >= _threshold)
         {
             _level++;
+            _current = 0;
+            _threshold += _thresholdPlusUp;
 
             CreateNextLevel();
         }
