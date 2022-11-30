@@ -36,7 +36,7 @@ public class Tutorial : MonoBehaviour
         _levelSystem.Wave1Finished += EnabledWaveTwo;
         _levelSystem.Wave2Finished += EnabledWaveThree;
         _buttonStartGame.onClick.AddListener(StartGamePause);
-        _unitEnemy.LevelUpped += StepFourFive;
+        _unitEnemy.LevelUppedTutorial += StepFourFive;
     }
 
     private void OnDisable()
@@ -50,7 +50,7 @@ public class Tutorial : MonoBehaviour
         _levelSystem.Wave2Finished -= EnabledWaveThree;
         _battleSystem.TutorialStopedUnit -= StopGame;
         _buttonStartGame.onClick.RemoveListener(StartGamePause);
-        _unitEnemy.LevelUpped -= StepFourFive;
+        _unitEnemy.LevelUppedTutorial -= StepFourFive;
     }
 
     private void Start()
