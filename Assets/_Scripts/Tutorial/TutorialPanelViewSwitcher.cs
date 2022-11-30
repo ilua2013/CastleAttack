@@ -14,6 +14,7 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
     [SerializeField] private GameObject _panelThreeTutorial;
     [SerializeField] private CardLevelUp _cardLevelUpOld;
     [SerializeField] private CardLevelUp _cardLevelUpNew;
+    [SerializeField] private GameObject _alarmCardCount;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
         _canvasTutorialFingerDraw.SetActive(false);
         _canvasTutorialFingerTap.SetActive(false);
         _panelUpgradeCardTutorial.SetActive(false);
+        _alarmCardCount.SetActive(false);
     }
 
     public void PanelInstructinSpellAndMonster(bool actived)
@@ -32,6 +34,11 @@ public class TutorialPanelViewSwitcher : MonoBehaviour
     public void PanelMonstr(bool actived)
     {
         _panelViewMonstr.SetActive(actived);
+    }
+
+    public void AlarmCardCount(bool actived)
+    {
+        _alarmCardCount.SetActive(actived);
     }
 
     public void PanelViewBox(bool actived)

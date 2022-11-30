@@ -9,6 +9,7 @@ public class TutorialEffects : MonoBehaviour
     [SerializeField] private ParticleSystem[] _particleDrawCard;
     [SerializeField] private ParticleSystem[] _particleStartButton;
     [SerializeField] private ParticleSystem[] _particleBox;
+    [SerializeField] private ParticleSystem[] _alarmCardCount;
     [SerializeField] private GameObject _auraCard;
 
     private void Start()
@@ -17,6 +18,7 @@ public class TutorialEffects : MonoBehaviour
         ParticleStop(_particleStartButton);
         ParticleStop(_particleSystemSelectStars);
         ParticleStop(_particleBox);
+        ParticleStop(_alarmCardCount);
     }
 
     public void EffectOneTwo()
@@ -28,7 +30,13 @@ public class TutorialEffects : MonoBehaviour
     public void EffectTwoThree()
     {
         ParticlePlay(_particleSystemSelectStars);       
-        ParticleStop(_particleDrawCard);       
+        ParticleStop(_particleDrawCard);
+        ParticlePlay(_alarmCardCount);
+    }
+
+    public void EffectStartButton()
+    {
+        ParticleStop(_alarmCardCount);
         ParticlePlay(_particleStartButton);
     }
 

@@ -21,6 +21,7 @@ public class Tutorial : MonoBehaviour
    
     private bool _isActivStepTwo = false;
     private bool _isActivStepThree = false;
+    private bool _isCountCardAlarm = true;
     private int _stepTutorial = 0;
 
     private void OnEnable()
@@ -70,7 +71,7 @@ public class Tutorial : MonoBehaviour
     private IEnumerator DelayGameStop()
     {
         Debug.Log(Time.timeScale);
-        yield return new WaitForSeconds(0.2f);      
+        yield return new WaitForSeconds(0.7f);      
         GameSwitch(0, true);
     }
 
@@ -80,8 +81,8 @@ public class Tutorial : MonoBehaviour
         {
             _tutorialEffects.EffectTwoThree();
             _panelViewSwitcher.TutorialFingerDraw(false);
-            _panelViewSwitcher.TutorialFingerTap(true);
-            _startFightButton.gameObject.SetActive(true);
+            _panelViewSwitcher.AlarmCardCount(true);
+            StartCoroutine(DelayGameStop());           
             ++_stepTutorial;
             Debug.Log(_stepTutorial);
         }
@@ -99,8 +100,6 @@ public class Tutorial : MonoBehaviour
             ++_stepTutorial;
             StartCoroutine(DelayGameStop());
         }
-
-
     }
 
     private void StepThreeFour()
@@ -121,7 +120,8 @@ public class Tutorial : MonoBehaviour
         {
             _panelViewSwitcher.PanelMonstr(true);
             ++_stepTutorial;
-            GameSwitch(0, true);
+            StartCoroutine(DelayGameStop());
+            //GameSwitch(0, true);
             Debug.Log(_stepTutorial);
         }
     }
@@ -176,24 +176,36 @@ public class Tutorial : MonoBehaviour
                 _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
                 break;
 
-            case 4:
-                _panelViewSwitcher.PanelMonstr(false);
+            case 2:
+                _tutorialEffects.EffectStartButton();
+                _panelViewSwitcher.AlarmCardCount(false);
+                _panelViewSwitcher.TutorialFingerTap(true);
+                _startFightButton.gameObject.SetActive(true);
                 break;
 
-            case 5:
-                _panelViewSwitcher.UpgradeCardTutorial(false);
+            case 4:
+                _panelViewSwitcher.PanelMonstr(false);
                 StepFive();
                 break;
 
+            case 5:
+                StartCoroutine(PanelVievBox());
+                //_panelViewSwitcher.PanelViewBox(false);
+                //_panelViewSwitcher.UpgradeCardTutorial(false);
+                //StepFive();
+                break;
+
             case 6:
-                _panelViewSwitcher.PanelViewBox(false);
+                _panelViewSwitcher.PanelTwoTutorial(false);
+                //_panelViewSwitcher.PanelViewBox(false);
                 break;
 
             case 7:
-                _panelViewSwitcher.PanelTwoTutorial(false);
+                _panelViewSwitcher.PanelThree(false);
+                //_panelViewSwitcher.PanelTwoTutorial(false);
                 break;
             case 8:
-                _panelViewSwitcher.PanelThree(false);
+                //_panelViewSwitcher.PanelThree(false);
                 break;
 
 
@@ -201,6 +213,12 @@ public class Tutorial : MonoBehaviour
                 break;
         }
 
+    }
+
+    private IEnumerator PanelVievBox()
+    {
+        yield return new WaitForSeconds(2.3f);
+        _panelViewSwitcher.PanelViewBox(false);
     }
 
     private void EnabledWaveThree()
