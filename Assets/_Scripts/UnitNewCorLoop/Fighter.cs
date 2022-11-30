@@ -9,12 +9,12 @@ public class Fighter
     [SerializeField] private FighterType _type;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
-    [SerializeField] private float _delayAttack;
-    [SerializeField] private float _timeToDefaultRotate;
-    [SerializeField] private float _speedRotate;
 
     private IUnit _unit;
     private Transform transform;
+    private Vector3 _startRotate;
+    private float _timeToDefaultRotate = 0.5f;
+    private float _speedRotate = 2f;
     private int _health;
 
     public int Damage => _damage;
@@ -37,6 +37,7 @@ public class Fighter
         transform = transformUnit;
         _unit = unit;
         _health = _maxHealth;
+        _startRotate = transform.forward;
     }
 
     public bool Attack(Fighter fighter)
@@ -88,7 +89,6 @@ public class Fighter
 
     public IEnumerator RotateTo(Transform lookAt, Action onFinish = null)
     {
-        Vector3 startRotate = transform.forward;
         Vector3 target = lookAt.position - transform.position;
         target.y = 0;
 
@@ -101,9 +101,9 @@ public class Fighter
 
         yield return new WaitForSeconds(_timeToDefaultRotate);
 
-        while (transform.forward != startRotate)
+        while (transform.forward != _startRotate)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, startRotate, _speedRotate * Time.deltaTime);
+            transform.forward = Vector3.MoveTowards(transform.forward, _startRotate, _speedRotate * Time.deltaTime);
 
             yield return null;
         }
