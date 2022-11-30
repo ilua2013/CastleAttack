@@ -8,6 +8,7 @@ public class RestartScene : MonoBehaviour
 {
     public void Restart()
     {
+        YandexSDK.Instance.ShowInterstitial();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
