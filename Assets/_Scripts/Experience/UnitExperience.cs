@@ -33,6 +33,9 @@ public class UnitExperience : MonoBehaviour
 
     private void OnEnemyKilled(UnitEnemy enemy)
     {
+        if (_level >= 3)
+            return;
+
         _current++;
         Up?.Invoke(_current);
 
