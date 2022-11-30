@@ -18,6 +18,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private LevelSystem _levelSystem;
     [SerializeField] private Button _buttonStartGame;
     [SerializeField] private TutorialPanelViewSwitcher _panelViewSwitcher;
+    [SerializeField] private UnitEnemy _unitEnemy;
    
     private bool _isActivStepTwo = false;
     private bool _isActivStepThree = false;
@@ -29,12 +30,13 @@ public class Tutorial : MonoBehaviour
         _cardsSelection.CardSelected += StepOneTwo;
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
-        _cardReplenisher.CardUp += StepFourFive;
+        //_cardReplenisher.CardUp += StepFourFive;
         _battleSystem.DiedAllEnemy += EndStep;
         _battleSystem.TutorialStopedUnit += StopGame;
         _levelSystem.Wave1Finished += EnabledWaveTwo;
         _levelSystem.Wave2Finished += EnabledWaveThree;
         _buttonStartGame.onClick.AddListener(StartGamePause);
+        _unitEnemy.LevelUpped += StepFourFive;
     }
 
     private void OnDisable()
@@ -42,12 +44,13 @@ public class Tutorial : MonoBehaviour
         _cardsSelection.CardSelected -= StepOneTwo;
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
-        _cardReplenisher.CardUp -= StepFourFive;
+        //_cardReplenisher.CardUp -= StepFourFive;
         _battleSystem.DiedAllEnemy -= EndStep;
         _levelSystem.Wave1Finished -= EnabledWaveTwo;
         _levelSystem.Wave2Finished -= EnabledWaveThree;
         _battleSystem.TutorialStopedUnit -= StopGame;
         _buttonStartGame.onClick.RemoveListener(StartGamePause);
+        _unitEnemy.LevelUpped -= StepFourFive;
     }
 
     private void Start()
@@ -126,15 +129,16 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    private void StepFourFive(UnitCard cardLod, UnitCard cardNew)
+    private void StepFourFive(/*UnitCard cardLod, UnitCard cardNew*/)
     {
-        if (_stepTutorial == 4)
+        if (_stepTutorial == 5)
         {
             _panelViewSwitcher.UpgradeCardTutorial(true);
-            _panelViewSwitcher.OnDrawOut(cardLod, cardNew);
+            //_panelViewSwitcher.OnDrawOut(cardLod, cardNew);
             ++_stepTutorial;
+            StartCoroutine(DelayGameStop());
             Debug.Log(_stepTutorial);
-            GameSwitch(0, true);
+           
 
         }
     }
@@ -170,7 +174,7 @@ public class Tutorial : MonoBehaviour
         {
             case 1:
 
-                StopCoroutine(DelayGameStop());
+                //StopCoroutine(DelayGameStop());
                 _tutorialEffects.EffectOneTwo();
                 _panelViewSwitcher.TutorialFingerDraw(true);
                 _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
@@ -196,15 +200,16 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 6:
-                _panelViewSwitcher.PanelTwoTutorial(false);
+                _panelViewSwitcher.UpgradeCardTutorial(false);
                 //_panelViewSwitcher.PanelViewBox(false);
                 break;
 
             case 7:
-                _panelViewSwitcher.PanelThree(false);
+                _panelViewSwitcher.PanelTwoTutorial(false);
                 //_panelViewSwitcher.PanelTwoTutorial(false);
                 break;
             case 8:
+                _panelViewSwitcher.PanelThree(false);
                 //_panelViewSwitcher.PanelThree(false);
                 break;
 

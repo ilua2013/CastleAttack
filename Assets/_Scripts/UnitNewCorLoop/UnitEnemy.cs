@@ -27,6 +27,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action EndedSteps;
     public event Action FinishedStep;
     public event Action StepChanged;
+    public event Action LevelUpped;
 
     private void OnValidate()
     {
@@ -151,6 +152,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         if(Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
         {
             GamesStatistics.RegisterEnemyKill();
+            LevelUpped?.Invoke();
             gameObject.SetActive(false);
         }
     }
