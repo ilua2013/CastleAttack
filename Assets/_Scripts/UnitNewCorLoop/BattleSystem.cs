@@ -32,7 +32,8 @@ public class BattleSystem : MonoBehaviour
 
     private void OnValidate()
     {
-        _cardsHand = FindObjectOfType<CardsHand>();
+        if (_cardsHand == null)
+            _cardsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
