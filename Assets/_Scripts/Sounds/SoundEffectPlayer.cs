@@ -24,6 +24,7 @@ public enum SoundEffectType
     BackgroundBattle,
     CardClick,
     CardComeBack,
+    StartStep,
 }
 
 [Serializable]

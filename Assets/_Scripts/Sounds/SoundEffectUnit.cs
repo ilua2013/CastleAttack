@@ -43,6 +43,8 @@ public class SoundEffectUnit : MonoBehaviour
 
     private void OnMoved()
     {
+        _settings.Play(SoundEffectType.StartStep);
+
         StartCoroutine(PlayWithDelay(0.5f, () =>
         _settings.Play(SoundEffectType.Steps)));
     }
