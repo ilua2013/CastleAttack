@@ -1157,15 +1157,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a970f6c96f08aa140973ec7d6b180849, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.315
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -2510,8 +2510,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainTarget: {fileID: 223920037}
-  _countSpawnWave: 3
-  _waveCount: 6
+  _countSpawnWave: 2
+  _waveCount: 3
   _cellsEnemySpawner:
   - {fileID: 1432141495}
   - {fileID: 212298179}
@@ -3197,6 +3197,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1933036533}
     m_Modifications:
+    - target: {fileID: 2530426327198016564, guid: bba5b5504eb1366498d6cca35905c8ca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.142
+      objectReference: {fileID: 0}
     - target: {fileID: 4022230391059800502, guid: bba5b5504eb1366498d6cca35905c8ca, type: 3}
       propertyPath: _iUnit
       value: 
@@ -6975,8 +6979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainTarget: {fileID: 616540168}
-  _countSpawnWave: 4
-  _waveCount: 8
+  _countSpawnWave: 2
+  _waveCount: 5
   _cellsEnemySpawner:
   - {fileID: 1799509647}
   - {fileID: 1775604867}
@@ -25553,7 +25557,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1386714149}
   - component: {fileID: 1386714153}
-  - component: {fileID: 1386714152}
   - component: {fileID: 1386714151}
   - component: {fileID: 1386714150}
   m_Layer: 0
@@ -25630,14 +25633,6 @@ MonoBehaviour:
   - {fileID: 1011223770}
   - {fileID: 1732922156}
   _levelSystem: {fileID: 1461286933}
---- !u!81 &1386714152
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386714148}
-  m_Enabled: 1
 --- !u!20 &1386714153
 Camera:
   m_ObjectHideFlags: 0
@@ -32372,8 +32367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainTarget: {fileID: 0}
-  _countSpawnWave: 2
-  _waveCount: 8
+  _countSpawnWave: 1
+  _waveCount: 6
   _cellsEnemySpawner:
   - {fileID: 1836843241}
   - {fileID: 441767951}
@@ -45051,6 +45046,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1320815092653786559, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: _count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872821890232, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872821890232, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872821890232, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872821890232, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872876712139, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872876712139, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872876712139, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315872876712139, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315873748776735, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315873748776735, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315873748776735, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178315873748776735, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3959873381571035674, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
       propertyPath: m_Pivot.x
       value: 0

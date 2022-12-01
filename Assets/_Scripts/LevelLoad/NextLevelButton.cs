@@ -51,8 +51,9 @@ public class NextLevelButton : MonoBehaviour
 
         if (levelIndex >= SceneManager.sceneCountInBuildSettings)
             levelIndex = FirstLevelIndex;
-
+#if UNITY_EDITOR == false
         YandexSDK.Instance.ShowInterstitial();
+#endif
         SceneManager.LoadScene(levelIndex);
     }
 }
