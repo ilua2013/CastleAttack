@@ -31,6 +31,8 @@ public class RewardStepsAnimation : MonoBehaviour
 
     private IEnumerator AnimateStars(int count, Action onComplete = null)
     {
+        yield return new WaitForSeconds(1f);
+
         for (int i = 0; i < count; i++)
         {
             yield return new WaitForSeconds(0.5f);
