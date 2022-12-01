@@ -39,7 +39,7 @@ public class RadiusAttackViewFriend : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {               
-                highlighting.Select();               
+                highlighting.SelectFriend();               
             }
         }
     }
@@ -49,7 +49,7 @@ public class RadiusAttackViewFriend : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {              
-                highlighting.UnSelect();
+                highlighting.UnSelectFriend();
             }
         }
     }   

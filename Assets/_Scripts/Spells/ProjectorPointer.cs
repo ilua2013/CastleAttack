@@ -43,9 +43,9 @@ public class ProjectorPointer : MonoBehaviour
             if (hit.collider.TryGetComponent(out HighlightingCell cell))
             {
                 if (_previous != null)
-                    _previous.UnSelect();
+                    _previous.UnSelectFriend();
 
-                cell.Select();
+                cell.SelectFriend();
                 _previous = cell;
             }
         }
@@ -59,7 +59,7 @@ public class ProjectorPointer : MonoBehaviour
     private void OnCardDrop()
     {
         if (_previous != null)
-            _previous.UnSelect();
+            _previous.UnSelectFriend();
 
         _isCardInHand = false;
     }
