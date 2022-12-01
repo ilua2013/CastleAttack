@@ -19,6 +19,8 @@ public class LevelSystem : MonoBehaviour
 
     public StageNumber CurrentWave => _currentWave;
 
+    public UnitFriend Wizzard => _wizzard;
+
     public event Action WaveFinished;
     public event Action Wave1Finished;
     public event Action Wave2Finished;
@@ -41,13 +43,13 @@ public class LevelSystem : MonoBehaviour
     private void OnEnable()
     {
         _battleSystem.StepFinished += CheckWinWave;
-        _wizzard.Fighter.Died += Fail;
+        _wizzard.Fighter.ReadyToDie += Fail;
     }
 
     private void OnDisable()
     {
         _battleSystem.StepFinished -= CheckWinWave;
-        _wizzard.Fighter.Died -= Fail;
+        _wizzard.Fighter.ReadyToDie -= Fail;
     }
 
     private void CheckWinWave()

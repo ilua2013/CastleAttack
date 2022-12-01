@@ -22,6 +22,7 @@ public class UnitCardView : CardView
         _card.Used += OnAmountChange;
         _card.CameBack += OnCardCameBack;
         _card.AmountChanged += OnAmountChange;
+        _card.Saved += OnCardSaved;
     }
 
     private void OnDisable()
@@ -29,6 +30,7 @@ public class UnitCardView : CardView
         _card.Used -= OnAmountChange;
         _card.CameBack -= OnCardCameBack;
         _card.AmountChanged -= OnAmountChange;
+        _card.Saved -= OnCardSaved;
     }
 
     private void OnAmountChange(int amount)
@@ -41,10 +43,15 @@ public class UnitCardView : CardView
         WriteText();
     }
 
+    private void OnCardSaved(CardSave save)
+    {
+        WriteText();
+    }
+
     private void WriteText()
     {
-        _damageText.text = _card.UnitPrefab.Fighter.Damage.ToString();
-        _healthText.text = _card.UnitPrefab.Fighter.MaxHealth.ToString();
+        _damageText.text = _card.CardSave.UnitStats.Damage.ToString();
+        _healthText.text = _card.CardSave.UnitStats.MaxHealth.ToString();
 
         Text.text = $"{_descriptionTextBase}";
         AmountText.text = $"{_card.Amount}";

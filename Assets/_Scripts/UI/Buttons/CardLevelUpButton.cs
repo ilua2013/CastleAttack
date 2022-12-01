@@ -22,6 +22,11 @@ public class CardLevelUpButton : MonoBehaviour
         _coinsWallet = FindObjectOfType<CoinsWallet>();
     }
 
+    private void Update()
+    {
+        _button.interactable = _cardView.CanLevelUp;
+    }
+
     private void OnEnable()
     {
         _button.onClick.AddListener(OnClick);
@@ -34,7 +39,7 @@ public class CardLevelUpButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (_coinsWallet.TrySpend(Cost))
+        if (_coinsWallet.TrySpend(Cost) && _cardView.CanLevelUp)
         {
             if (_cardView.TryLevelUpCard())
                 LevelUp?.Invoke();
