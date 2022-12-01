@@ -104,30 +104,18 @@ public class YandexSDK : MonoBehaviour
         VideoAd.Show(onOpenAction, onRewardedAction, onCloseAction);
     }
 
-    private void MuteAudio(bool value)
-    {
-        bool isMuted = false;
-
-        if (Saves.HasKey(SaveController.Params.IsSoundMuted))
-            isMuted = Saves.GetBool(SaveController.Params.IsSoundMuted);
-
-        if (isMuted)
-            return;
-
-        AudioListener.volume = value ? 0f : 1f;
-    }
-
     private void OnInBackgroundChange(bool inBackground)
     {
-        bool isMuted = false;
+        MuteAudio(inBackground);
+    }
 
+    private void MuteAudio(bool value)
+    {
         if (Saves.HasKey(SaveController.Params.IsSoundMuted))
-            isMuted = Saves.GetBool(SaveController.Params.IsSoundMuted);
+            if (Saves.GetBool(SaveController.Params.IsSoundMuted))
+                return;
 
-        if (isMuted)
-            return;
-
-        AudioListener.pause = inBackground;
-        AudioListener.volume = inBackground ? 0f : 1f;
+        AudioListener.pause = value;
+        AudioListener.volume = value ? 0f : 1f;
     }
 }

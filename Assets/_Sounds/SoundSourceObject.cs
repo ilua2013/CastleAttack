@@ -25,6 +25,8 @@ public class SoundSourceObject : MonoBehaviour
 
     private void Start()
     {
+        AudioSource.volume = 0.3f;
+        AudioSource.priority = 256;
         AudioSource.playOnAwake = true;
         AudioSource.loop = true;
 
