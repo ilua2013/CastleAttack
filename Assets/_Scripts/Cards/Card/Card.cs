@@ -24,6 +24,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<Card, Vector3> Drop;
     public event Action<Card> CancelDrop;
     public event Action<int> Used;
+    public event Action<CardSave> Saved;
 
     public void Activate(bool isActive)
     {
@@ -75,6 +76,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         Saves.SetCard(Name.ToString(), CardSave);
         Saves.Save();
+
+        Saved?.Invoke(_cardSave);
     }
 
     public void Save(DeckType deck)
@@ -83,6 +86,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         Saves.SetCard(Name.ToString(), CardSave);
         Saves.Save();
+
+        Saved?.Invoke(_cardSave);
     }
 
     public void Load()

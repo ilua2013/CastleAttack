@@ -25,6 +25,7 @@ public class CardInDeckView : MonoBehaviour
     private Card _card;
 
     public Card Card => _card;
+    public bool CanLevelUp => _card.CardSave.CanLevelUp;
 
     public bool TryLevelUpCard()
     {

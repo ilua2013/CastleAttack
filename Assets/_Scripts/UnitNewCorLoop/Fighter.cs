@@ -26,6 +26,7 @@ public class Fighter
     public IUnit Unit => _unit;
 
     public event Action Died;
+    public event Action ReadyToDie;
     public event Action EffectDied;
     public event Action Attacked;
     public event Action<int> Damaged;
@@ -37,6 +38,18 @@ public class Fighter
         transform = transformUnit;
         _unit = unit;
         _health = _maxHealth;
+        _startRotate = transform.forward;
+    }
+
+    public void Init(IUnit unit, Transform transformUnit, int damage, int health)
+    {
+        transform = transformUnit;
+        _unit = unit;
+
+        _maxHealth = health;
+        _health = _maxHealth;
+        _damage = damage;
+
         _startRotate = transform.forward;
     }
 
@@ -72,6 +85,13 @@ public class Fighter
 
     public bool TakeDamage(int damage)
     {
+        if (FighterType == FighterType.MainWizzard)
+            if (_health <= damage)
+            {
+                ReadyToDie?.Invoke();
+                return true;
+            }
+
         _health = Math.Clamp(_health - damage, 0, _maxHealth);
 
         Damaged?.Invoke(damage);

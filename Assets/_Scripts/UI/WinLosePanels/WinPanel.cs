@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(FinishPanel))]
 public class WinPanel : MonoBehaviour
 {
     [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private CardRewardPanel _cardRewardPanel;
+    [SerializeField] private RewardIncreaseButton _increaseButton;
     [SerializeField] private RewardStepsAnimation _stepsAnimation;
 
     private CardsRewarder _levelRewarder;
@@ -37,10 +39,13 @@ public class WinPanel : MonoBehaviour
 
     private void OnOpened()
     {
+        Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+        Saves.Save();
+
+        _increaseButton.Init(_levelRewarder.RewardCards);
         _cardRewardPanel.ShowCards(_levelRewarder.RewardCards);
 
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
-
         _stepsAnimation.Play(starsCount);
     }
 

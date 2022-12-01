@@ -11,6 +11,7 @@ public class CardSave
     [SerializeField] private int _amount = 0;
     [SerializeField] private int _rewardAmount = 0;
     [SerializeField] private int _amountToImprove = 3;
+    [SerializeField] private UnitStats _unitStats;
     [SerializeField] private DeckType _deck = DeckType.Common;
 
     public CardSave(bool isAvailable = false, DeckType deck = DeckType.Common, int level = 1, int amount = 1, int amountToImprove = 3, int rewardAmount = 0)
@@ -30,6 +31,7 @@ public class CardSave
     public int RewardAmount => _rewardAmount;
     public int AmountToImprove => _amountToImprove;
     public bool CanLevelUp => _amount >= _amountToImprove;
+    public UnitStats UnitStats => _unitStats;
 
     public void SetAvailable(bool isAvailable)
     {

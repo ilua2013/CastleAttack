@@ -24,6 +24,7 @@ public class CoinsWallet : MonoBehaviour
 
         Coins = estimated;
         Saves.SetInt(SaveController.Params.Coins, Coins);
+        Saves.Save();
         CoinsChanged?.Invoke(amount);
 
         return true;
@@ -36,6 +37,7 @@ public class CoinsWallet : MonoBehaviour
 
         Coins += amount;
         Saves.SetInt(SaveController.Params.Coins, Coins);
+        Saves.Save();
         CoinsChanged?.Invoke(amount);
     }
 }

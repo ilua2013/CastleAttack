@@ -81,7 +81,11 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         Card = card;
 
         Mover.Init(this, transform, currentCell);
-        Fighter.Init(this, transform);
+
+        if (Card != null)
+            Fighter.Init(this, transform, GetDamage(Card), GetHealth(Card));
+        else
+            Fighter.Init(this, transform);
 
         Inited?.Invoke();
         Initialized = true;
@@ -90,10 +94,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     public void Init(UnitCard card, Cell currentCell, int currentStep)
     {
         Card = card;
-
         CurrentStep = currentStep;
+
         Mover.Init(this, transform, currentCell);
-        Fighter.Init(this, transform);
+
+        if (Card != null)
+            Fighter.Init(this, transform, GetDamage(Card), GetHealth(Card));
+        else
+            Fighter.Init(this, transform);
 
         Inited?.Invoke();
         Initialized = true;
@@ -218,6 +226,33 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+
+
+    private int GetDamage(UnitCard card)
+    {
+        int damage = card.CardSave.UnitStats.Damage;
+
+        if (card.Stage == CardStage.Two)
+            damage += 2;
+
+        if (card.Stage == CardStage.Three)
+            damage += 4;
+
+        return damage;
+    }
+
+    private int GetHealth(UnitCard card)
+    {
+        int health = card.CardSave.UnitStats.MaxHealth;
+
+        if (card.Stage == CardStage.Two)
+            health += 2;
+
+        if (card.Stage == CardStage.Three)
+            health += 4;
+
+        return health;
+    }
 }
 
 [Serializable]
