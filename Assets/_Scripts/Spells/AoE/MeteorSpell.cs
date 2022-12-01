@@ -20,13 +20,13 @@ public class MeteorSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect(Cell cell)
+    protected override void Affect(Cell cell, CardSave save)
     {
         List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
 
         foreach (UnitEnemy enemy in enemies)
         {
-            int damage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, _damage);
+            int damage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, save.UnitStats.Damage);
             enemy.Fighter.TakeDamage(damage);
         }
     }

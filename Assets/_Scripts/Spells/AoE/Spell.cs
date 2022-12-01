@@ -15,15 +15,15 @@ public abstract class Spell : MonoBehaviour
     public event Action Dispelled;
     public event Action WasCast;
 
-    public void Cast(Cell cell, Action onEndCallback = null)
+    public void Cast(Cell cell, CardSave save, Action onEndCallback = null)
     {
-        StartCoroutine(Live(onEndCallback, cell));
+        StartCoroutine(Live(onEndCallback, cell, save));
         WasCast?.Invoke();
     }
 
-    protected abstract void Affect(Cell cell);
+    protected abstract void Affect(Cell cell, CardSave save);
 
-    private IEnumerator Live(Action onDeathCallback, Cell cell)
+    private IEnumerator Live(Action onDeathCallback, Cell cell, CardSave save)
     {
         float elapsed = 0;
         float ticks = 0;
@@ -33,7 +33,7 @@ public abstract class Spell : MonoBehaviour
             if (ticks >= Interval)
             {
                 ticks = 0;
-                Affect(cell);
+                Affect(cell, save);
             }
 
             ticks += Time.deltaTime;

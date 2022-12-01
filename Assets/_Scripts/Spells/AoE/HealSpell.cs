@@ -19,12 +19,12 @@ public class HealSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect(Cell cell)
+    protected override void Affect(Cell cell, CardSave save)
     {
         List<UnitFriend> units = cell.GetFriendUnits(DistanceAttacks);
 
         foreach (UnitFriend unit in units)
-            unit.Fighter.RecoveryHealth(Recovery);
+            unit.Fighter.RecoveryHealth(save.UnitStats.MaxHealth);
     }
 
     private void OnDispelled()
