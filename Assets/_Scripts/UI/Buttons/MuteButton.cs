@@ -19,12 +19,10 @@ public class MuteButton : MonoBehaviour
         _button = GetComponent<Button>();
 
         if (Saves.HasKey(SaveController.Params.IsSoundMuted))
-        {
             _isMuted = Saves.GetBool(SaveController.Params.IsSoundMuted);
-            Debug.Log(_isMuted);
-        }
 
         AudioListener.pause = _isMuted;
+        AudioListener.volume = _isMuted ? 0 : 1;
 
         if (_isMuted)
             _image.sprite = _mutedSprite;
@@ -48,7 +46,9 @@ public class MuteButton : MonoBehaviour
 
         Saves.SetBool(SaveController.Params.IsSoundMuted, _isMuted);
         Saves.Save();
+
         AudioListener.pause = _isMuted;
+        AudioListener.volume = _isMuted ? 0 : 1;
 
         if (_isMuted)
             _image.sprite = _mutedSprite;
