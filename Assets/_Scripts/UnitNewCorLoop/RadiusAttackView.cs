@@ -82,8 +82,10 @@ public class RadiusAttackView : MonoBehaviour
             {
                 if (_unitType == Unit.Enemy)
                     highlighting.SelectEnemy();
-                else
-                    highlighting.Select();
+                if(_unitType == Unit.Friend)
+                    highlighting.SelectFriend();
+                if (_unitType == Unit.Spell)
+                    highlighting.SelectSpell();
             }
         }
     }
@@ -98,8 +100,10 @@ public class RadiusAttackView : MonoBehaviour
                 {
                     if (_unitType == Unit.Enemy)
                         highlighting.UnSelectEnemy();
-                    else
-                        highlighting.UnSelect();
+                    if(_unitType == Unit.Friend)
+                        highlighting.UnSelectFriend();
+                    if (_unitType == Unit.Spell)
+                        highlighting.UnSelectSpell();
                 }
             }
         }
@@ -108,5 +112,5 @@ public class RadiusAttackView : MonoBehaviour
 
 public enum Unit
 {
-    Friend, Enemy
+    Friend, Enemy, Spell
 }
