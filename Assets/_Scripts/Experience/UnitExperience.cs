@@ -14,6 +14,10 @@ public class UnitExperience : MonoBehaviour
     private UnitFriend _unit;
     private int _current;
 
+    public int Thresold => _threshold;
+    public int CurrentKill => _current;
+    public int Level => _level;
+
     public event Action<int> Up;
     public event Action<int> LevelUp;
 

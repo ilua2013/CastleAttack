@@ -14,7 +14,13 @@ public class StepCounterUI : MonoBehaviour
     {
         _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();
         if (_iUnit is IUnit == false)
+        {
             _iUnit = null;
+            return;
+        }
+
+        if (_unit.Fighter.FighterType == FighterType.MainWizzard || _unit.Fighter.FighterType == FighterType.MainTarget)
+            gameObject.SetActive(false);
     }
 
     private void Awake()

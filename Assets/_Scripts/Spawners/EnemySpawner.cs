@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (var item in GetComponentInParent<Stage>().CellSpawner.GetComponentsInChildren<UnitSpawner>())
         {
-            if (item.SpawnerType == SpawnerType.Enemy && _cellsEnemySpawner.Contains(item) == false)
+            if (item.SpawnerType == SpawnerType.Enemy && item.TryGetComponent(out Cell cell) && cell.CellIs != CellIs.Boss && _cellsEnemySpawner.Contains(item) == false)
                 _cellsEnemySpawner.Add(item);
         }
     }
