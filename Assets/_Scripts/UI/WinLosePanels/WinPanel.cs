@@ -12,6 +12,13 @@ public class WinPanel : MonoBehaviour
     private CardsRewarder _levelRewarder;
     private FinishPanel _finishPanel;
 
+    private void OnValidate()
+    {
+        foreach (var item in FindObjectsOfType<UnitFriend>())
+            if (item.Fighter.FighterType == FighterType.MainWizzard)
+                _wizzard = item;
+    }
+
     private void Awake()
     {
         _levelRewarder = FindObjectOfType<CardsRewarder>();

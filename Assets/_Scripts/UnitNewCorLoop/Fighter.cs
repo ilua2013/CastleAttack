@@ -14,7 +14,7 @@ public class Fighter
     private Transform transform;
     private Vector3 _startRotate;
     private float _timeToDefaultRotate = 0.5f;
-    private float _speedRotate = 2f;
+    private float _speedRotate = 2.5f;
     private int _health;
 
     public int Damage => _damage;
