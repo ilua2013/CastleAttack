@@ -1,3 +1,4 @@
+using Agava.YandexMetrica;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,5 +35,6 @@ public class RewardCoinsButton : MonoBehaviour
     private void OnRewardedCallback()
     {
         _wallet.Add(_award);
+        YandexMetrica.Send("moneyAdClick");
     }
 }
