@@ -18,6 +18,7 @@ public class HighlightingCell : MonoBehaviour
     private int _selectCountEnemy = 0;
     private bool _isSelectSpell = false;
     private int _selectCountSpell = 0;
+    private int _switchHighlight = 0;
 
     public bool IsSelect => _isSelect;
 
@@ -67,10 +68,34 @@ public class HighlightingCell : MonoBehaviour
     public void SelectSpell()
     {
         _isSelect = true;
-        _isSelectSpell = true;
+        _isSelectSpell = true;       
+        _switchHighlight = 0;
         _highlightBlue.SetActive(true);
-        ++_selectCountSpell;
-       
+        if (_isSelectEnemy == true && _isSelectFriend == true)
+        {
+            _highlightHalf.SetActive(false);
+            _highLightMiddle.SetActive(false);
+            _highlightFriend.SetActive(false);
+            _highlightEnemy.SetActive(false);
+            _switchHighlight = 1;            
+        }
+        if (_isSelectEnemy == false && _isSelectFriend == true)
+        {
+            _highlightHalf.SetActive(false);
+            _highLightMiddle.SetActive(false);
+            _highlightFriend.SetActive(false);
+            _highlightEnemy.SetActive(false);
+            _switchHighlight = 2;
+        }
+        if(_isSelectEnemy == true && _isSelectFriend == false)
+        {
+            _highlightHalf.SetActive(false);
+            _highLightMiddle.SetActive(false);
+            _highlightFriend.SetActive(false);
+            _highlightEnemy.SetActive(false);
+            _switchHighlight = 3;
+        }
+        ++_selectCountSpell;       
     }
 
     public void UnSelectFriend()
@@ -106,7 +131,23 @@ public class HighlightingCell : MonoBehaviour
         if(_selectCountSpell == 0)
         {
             _isSelectSpell = false;
-            if(_isSelectFriend == false&&_isSelectEnemy == false)
+            _highlightBlue.SetActive(false);
+           
+            switch (_switchHighlight)
+            {
+                case 1:
+                    _highlightHalf.SetActive(true);
+                    _highLightMiddle.SetActive(true);
+                    break;
+                case 2:
+                    _highlightFriend.SetActive(true);
+                    break;
+                case 3:
+                    _highlightEnemy.SetActive(true);
+                    break;             
+            }
+            
+            if (_isSelectFriend == false&&_isSelectEnemy == false)
             {
                 DefaultSelect();
             }
