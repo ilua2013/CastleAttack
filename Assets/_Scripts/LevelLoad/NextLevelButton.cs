@@ -1,3 +1,4 @@
+using Agava.YandexMetrica;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,7 @@ public class NextLevelButton : MonoBehaviour
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted) == false)
             {
                 YandexSDK.Instance.ShowInterstitial();
+                YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
                 SceneManager.LoadScene(TutorialIndex);
                 return;
             }
@@ -43,6 +45,7 @@ public class NextLevelButton : MonoBehaviour
         else
         {
             SceneManager.LoadScene(TutorialIndex);
+            YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
             return;
         }
 
@@ -54,6 +57,8 @@ public class NextLevelButton : MonoBehaviour
 #if UNITY_EDITOR == false
         YandexSDK.Instance.ShowInterstitial();
 #endif
+
+        YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", $"{levelIndex - 2}" } });
         SceneManager.LoadScene(levelIndex);
     }
 }

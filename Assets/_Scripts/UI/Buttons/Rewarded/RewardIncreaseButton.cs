@@ -1,3 +1,4 @@
+using Agava.YandexMetrica;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,5 +47,7 @@ public class RewardIncreaseButton : MonoBehaviour
 
         Rewarded?.Invoke(_factor);
         gameObject.SetActive(false);
+
+        YandexMetrica.Send("RewardAdClick");
     }
 }

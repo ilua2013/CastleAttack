@@ -1,3 +1,4 @@
+using Agava.YandexMetrica;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class WinPanel : MonoBehaviour
 
     private CardsRewarder _levelRewarder;
     private FinishPanel _finishPanel;
+    private bool _isRewardWasOffered;
 
     private void OnValidate()
     {
@@ -47,6 +49,13 @@ public class WinPanel : MonoBehaviour
 
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
         _stepsAnimation.Play(starsCount);
+
+        if (_isRewardWasOffered == false)
+            _isRewardWasOffered = true;
+        else
+            return;
+
+        YandexMetrica.Send("RewardAdOffer");
     }
 
     private int CalculateStarsCount(float remain)
