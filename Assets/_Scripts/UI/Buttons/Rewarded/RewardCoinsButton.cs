@@ -35,6 +35,8 @@ public class RewardCoinsButton : MonoBehaviour
     private void OnRewardedCallback()
     {
         _wallet.Add(_award);
-        YandexMetrica.Send("moneyAdClick");
+#if !UNITY_EDITOR
+        YandexMetrica.Send("MoneyAdClick");
+#endif
     }
 }

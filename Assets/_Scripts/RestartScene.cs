@@ -8,7 +8,9 @@ public class RestartScene : MonoBehaviour
 {
     public void Restart()
     {
+#if !UNITY_EDITOR
         YandexSDK.Instance.ShowInterstitial();
+#endif
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

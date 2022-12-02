@@ -34,6 +34,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (_cardsHand == null)
             _cardsHand = FindObjectOfType<CardsHand>();
+
+        if (_buttonStartFight == null)
+            _buttonStartFight = FindObjectOfType<StartFightButton>().Button;
     }
 
     private void OnEnable()

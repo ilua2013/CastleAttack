@@ -10,6 +10,7 @@ public class EnemySpawnerUI : MonoBehaviour
     [SerializeField] private BattleSystem _battleSystem;
 
     private EnemySpawner _enemySpawner;
+    private string _initialText;
 
     private void OnValidate()
     {
@@ -18,6 +19,7 @@ public class EnemySpawnerUI : MonoBehaviour
 
     private void Start()
     {
+        _initialText = _text.text;
         SetSpawner();
     }
 
@@ -49,6 +51,6 @@ public class EnemySpawnerUI : MonoBehaviour
 
     private string GetWaveCount()
     {
-        return "Wave " + _enemySpawner.CurrentWave + "/" + _enemySpawner.WaveCount;
+        return $"{_initialText} " + _enemySpawner.CurrentWave + "/" + _enemySpawner.WaveCount;
     }
 }

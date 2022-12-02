@@ -55,7 +55,9 @@ public class WinPanel : MonoBehaviour
         else
             return;
 
+#if !UNITY_EDITOR
         YandexMetrica.Send("RewardAdOffer");
+#endif
     }
 
     private int CalculateStarsCount(float remain)

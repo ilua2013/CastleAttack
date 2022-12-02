@@ -107,7 +107,9 @@ public class LevelSystem : MonoBehaviour
 
     private void Fail()
     {
+#if !UNITY_EDITOR
         YandexMetrica.Send("Fail", new Dictionary<string, string>() { { "Level", $"{SceneManager.GetActiveScene().buildIndex - 2}" } });
+#endif
         Failed?.Invoke();
     }
 }

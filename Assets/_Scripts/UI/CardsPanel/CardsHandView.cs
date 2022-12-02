@@ -11,7 +11,7 @@ public class CardsHandView : MonoBehaviour
     private const float ScaleFactor = 1.2f;
     private const float OffsetXFactor = 2.5f;
 
-    private float _offsetX = 150f;
+    private float _offsetX = 180f;
 
     private List<CardHoverView> _cards;
     private List<CardMovement> _cardMovements = new List<CardMovement>();

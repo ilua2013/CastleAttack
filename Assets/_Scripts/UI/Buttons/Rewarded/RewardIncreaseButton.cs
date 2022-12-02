@@ -48,6 +48,8 @@ public class RewardIncreaseButton : MonoBehaviour
         Rewarded?.Invoke(_factor);
         gameObject.SetActive(false);
 
+#if !UNITY_EDITOR
         YandexMetrica.Send("RewardAdClick");
+#endif
     }
 }

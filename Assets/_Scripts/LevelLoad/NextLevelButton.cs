@@ -36,8 +36,10 @@ public class NextLevelButton : MonoBehaviour
         {
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted) == false)
             {
+#if !UNITY_EDITOR
                 YandexSDK.Instance.ShowInterstitial();
                 YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
+#endif
                 SceneManager.LoadScene(TutorialIndex);
                 return;
             }
@@ -45,7 +47,9 @@ public class NextLevelButton : MonoBehaviour
         else
         {
             SceneManager.LoadScene(TutorialIndex);
+#if !UNITY_EDITOR
             YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
+#endif
             return;
         }
 
@@ -54,11 +58,12 @@ public class NextLevelButton : MonoBehaviour
 
         if (levelIndex >= SceneManager.sceneCountInBuildSettings)
             levelIndex = FirstLevelIndex;
-#if UNITY_EDITOR == false
+
+#if !UNITY_EDITOR
         YandexSDK.Instance.ShowInterstitial();
+        YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", $"{levelIndex - 2}" } });
 #endif
 
-        YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", $"{levelIndex - 2}" } });
         SceneManager.LoadScene(levelIndex);
     }
 }

@@ -23,7 +23,7 @@ public class CollectionListView : MonoBehaviour
     private string _initialText;
     private Coroutine _coroutine;
 
-    private void Awake()
+    private void Start()
     {
         _initialText = _pages.text;
         _pages.text = _initialText + " " + 1;

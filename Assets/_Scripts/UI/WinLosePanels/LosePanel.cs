@@ -38,7 +38,9 @@ public class LosePanel : MonoBehaviour
         else
             return;
 
+#if !UNITY_EDITOR
         YandexMetrica.Send("ReviveAdOffer");
+#endif
     }
 
     private void OnRespawned()
@@ -46,6 +48,8 @@ public class LosePanel : MonoBehaviour
         _levelSystem.Wizzard.Fighter.RecoveryHealth(_levelSystem.Wizzard.Fighter.MaxHealth);
         _finishPanel.ClosePanel();
 
+#if !UNITY_EDITOR
         YandexMetrica.Send("ReviveAdClick");
+#endif
     }
 }
