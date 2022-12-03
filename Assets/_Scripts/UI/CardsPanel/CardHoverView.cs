@@ -37,7 +37,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void OnEnable()
     {
         _card.BeginDrag += OnBeginDrag;
-        Debug.Log("Drop register");
         _card.Drop += OnDrop;
         _card.CancelDrop += OnCancelDrag;
         _card.Used += OnUse;
@@ -136,7 +135,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void OnDrop(Card card, Vector3 mousePosition)
     {
-        Debug.Log("Drop");
         CanHover = false;
         Drop?.Invoke(this);
     }

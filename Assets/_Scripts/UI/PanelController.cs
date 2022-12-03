@@ -5,7 +5,8 @@ using System;
 public class PanelController : MonoBehaviour
 {
     [SerializeField] private Button _openButton;
-    [SerializeField] private Button[] _closeButtons;
+    [SerializeField] private Button _closeButtonVertical;
+    [SerializeField] private Button _closeButtonHorizontal;
     [SerializeField] private GameObject _background;
 
     public event Action Opened;
@@ -17,16 +18,16 @@ public class PanelController : MonoBehaviour
     {
         _openButton.onClick.AddListener(Open);
 
-        foreach (Button button in _closeButtons)
-            button.onClick.AddListener(Close);
+        _closeButtonVertical.onClick.AddListener(VerticalClose);
+        _closeButtonHorizontal.onClick.AddListener(HorizontalClose);
     }
 
     private void OnDisable()
     {
         _openButton.onClick.RemoveListener(Open);
 
-        foreach (Button button in _closeButtons)
-            button.onClick.RemoveListener(Close);
+        _closeButtonVertical.onClick.RemoveListener(VerticalClose);
+        _closeButtonHorizontal.onClick.RemoveListener(HorizontalClose);
     }
 
     private void Open()
@@ -37,7 +38,16 @@ public class PanelController : MonoBehaviour
         Opened?.Invoke();
     }
 
-    private void Close()
+    private void VerticalClose()
+    {
+        _background.SetActive(false);
+
+        IsOpened = false;
+        Closed?.Invoke();
+    }
+
+
+    private void HorizontalClose()
     {
         _background.SetActive(false);
 

@@ -29,7 +29,11 @@ public class RewardCoinsButton : MonoBehaviour
 
     private void OnClick()
     {
+#if UNITY_EDITOR
+        OnRewardedCallback();
+#else
         YandexSDK.Instance.ShowVideoAd(OnRewardedCallback);
+#endif
     }
 
     private void OnRewardedCallback()

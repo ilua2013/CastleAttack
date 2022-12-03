@@ -53,6 +53,12 @@ public class Projector : MonoBehaviour
 
     private void OnCardTaken(PointerEventData eventData, Card card)
     {
+        if (_projection != null)
+            Destroy(_projection.gameObject);
+
+        if (_projectionCross != null)
+            Destroy(_projectionCross.gameObject);
+
         _pointer = eventData;
         _projection = Instantiate(card.ProjectionPrefab);
         _projectionCross = Instantiate(_cross);

@@ -37,7 +37,6 @@ public class NextLevelButton : MonoBehaviour
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted) == false)
             {
 #if !UNITY_EDITOR
-                YandexSDK.Instance.ShowInterstitial();
                 YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
 #endif
                 SceneManager.LoadScene(TutorialIndex);
