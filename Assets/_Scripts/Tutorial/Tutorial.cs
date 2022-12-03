@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Agava.YandexMetrica;
 
 public class Tutorial : MonoBehaviour
 {
@@ -65,7 +66,12 @@ public class Tutorial : MonoBehaviour
         {        
             _panelViewSwitcher.PanelInstructinSpellAndMonster(true);
             ++_stepTutorial;
-            Debug.Log(_stepTutorial);           
+            Debug.Log(_stepTutorial);
+#if !UNITY_EDITOR
+
+            YandexMetrica.Send("StepTutorial 1");
+#endif
+            Debug.Log("Step 1");
             StartCoroutine(DelayGameStop());
         }
         
@@ -85,21 +91,39 @@ public class Tutorial : MonoBehaviour
             _tutorialEffects.EffectTwoThree();
             _panelViewSwitcher.TutorialFingerDraw(false);
             _panelViewSwitcher.AlarmCardCount(true);
-            StartCoroutine(DelayGameStop());           
             ++_stepTutorial;
+#if !UNITY_EDITOR
+            YandexMetrica.Send("StepTutorial 2");
+#endif
+            Debug.Log("Step 2");
             Debug.Log(_stepTutorial);
+           
+            StartCoroutine(DelayGameStop());           
+           
+
         }
         if (_isActivStepTwo)
         {
             _panelViewSwitcher.PanelTwoTutorial(true);
             _isActivStepTwo = false;
             ++_stepTutorial;
+#if !UNITY_EDITOR
+            YandexMetrica.Send("StepTutorial 6");
+#endif
+            Debug.Log("Step 6");
+            Debug.Log(_stepTutorial);
+
             StartCoroutine(DelayGameStop());
         }
         if (_isActivStepThree)
         {
             _panelViewSwitcher.PanelThree(true);
             _isActivStepThree = false;
+#if !UNITY_EDITOR
+            YandexMetrica.Send("StepTutorial 7");
+#endif
+            Debug.Log("Step 7");
+            Debug.Log(_stepTutorial);
             ++_stepTutorial;
             StartCoroutine(DelayGameStop());
         }
@@ -113,6 +137,10 @@ public class Tutorial : MonoBehaviour
             _tutorialEffects.EffectThreeFour();
             _isActivStepTwo = false;
             ++_stepTutorial;
+#if !UNITY_EDITOR
+            YandexMetrica.Send("Step 3");
+#endif
+            Debug.Log("Step 3");
             Debug.Log(_stepTutorial);
         }
     }
@@ -123,23 +151,23 @@ public class Tutorial : MonoBehaviour
         {
             _panelViewSwitcher.PanelMonstr(true);
             ++_stepTutorial;
-            StartCoroutine(DelayGameStop());
-            //GameSwitch(0, true);
+#if !UNITY_EDITOR
+            YandexMetrica.Send("Step 4");
+#endif
+            Debug.Log("Step 4");
             Debug.Log(_stepTutorial);
+            StartCoroutine(DelayGameStop());
         }
     }
 
-    private void StepFourFive(/*UnitCard cardLod, UnitCard cardNew*/)
+    private void StepFourFive()
     {
         if (_stepTutorial == 5)
         {
-            _panelViewSwitcher.UpgradeCardTutorial(true);
-            //_panelViewSwitcher.OnDrawOut(cardLod, cardNew);
+            _panelViewSwitcher.UpgradeCardTutorial(true);            
             ++_stepTutorial;
             StartCoroutine(DelayGameStop());
             Debug.Log(_stepTutorial);
-           
-
         }
     }
     private void StepFive()
@@ -151,6 +179,10 @@ public class Tutorial : MonoBehaviour
         _tutorialEffects.ParticleBox();
         _enemySpawner.TutorialEnemy(_targets);
         _panelViewSwitcher.PanelViewBox(true);
+#if !UNITY_EDITOR
+            YandexMetrica.Send("Step 5");
+#endif
+        Debug.Log("Step 5");
         ++_stepTutorial;
         Debug.Log(_stepTutorial);
         GameSwitch(0, true);       
