@@ -13,7 +13,7 @@ public class Mover
     private IUnit _unit;
     private Cell _currentCell;
     private Transform transform;
-    private float _speedAnimation = 5f;
+    private float _speedAnimation = 5.5f;
     private bool _init;
 
     public Cell CurrentCell => _currentCell;
@@ -76,7 +76,6 @@ public class Mover
             return;
 
         _currentCell.SetFree();
-        //_currentCell = null;
     }
 
     public void SetTransformOnCell(Cell cell)
@@ -96,11 +95,11 @@ public class Mover
             if (cell.Top == null)
                 ReachedHigherCell?.Invoke();
         }
-
+        float times = 0;
         while (time < _timeMove)
         {
             time = time > _timeMove ? _timeMove : time + Time.deltaTime;
-
+            times += Time.deltaTime;
             transform.position = startPos + (targetPos * (time / _timeMove));
             yield return null;
         }

@@ -14,8 +14,8 @@ public class Fighter
 
     private IUnit _unit;
     private Vector3 _startRotate;
-    private float _timeToDefaultRotate = 0.5f;
-    private float _speedRotate = 2.5f;
+    private float _timeToDefaultRotate = 1f;
+    private float _speedRotate = 3f;
     private int _health;
 
     public int Damage => _damage;
@@ -31,6 +31,7 @@ public class Fighter
     public event Action EffectDied;
     public event Action<Transform> Died_getKiller;
     public event Action Attacked;
+    public event Action RotatedToAttack;
     public event Action<int> Damaged;
     public event Action<int> Healed;
     public event Action<Fighter> Died_get;
@@ -57,10 +58,12 @@ public class Fighter
 
     public bool Attack(Fighter fighter)
     {
-        _unit.RotateTo(fighter.transform);
+        bool isFatal = false;
 
-        int damage = (int)DamageConditions.CalculateDamage(_type, fighter.FighterType, _damage);
-        bool isFatal = fighter.TakeDamage(this);
+        _unit.RotateTo(fighter.transform, () =>
+        {
+            isFatal = fighter.TakeDamage(this);
+        });
 
         if (fighter.FighterType == FighterType.MainTarget || fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
             TakeDamage(fighter);
@@ -83,6 +86,17 @@ public class Fighter
     {
         Died_get?.Invoke(this);
         Died?.Invoke();
+    }
+
+    public bool TakeDamage(Fighter fighter)
+    {
+        if (TakeDamage((int)DamageConditions.CalculateDamage(fighter.FighterType, _type, fighter.Damage)))
+        {
+            Died_getKiller?.Invoke(fighter.transform);
+            return true;
+        }
+
+        return false;
     }
 
     public bool TakeDamage(int damage)
@@ -109,18 +123,7 @@ public class Fighter
         return false;
     }
 
-    public bool TakeDamage(Fighter fighter)
-    {
-        if (TakeDamage(fighter.Damage))
-        {
-            Died_getKiller?.Invoke(fighter.transform);
-            return true;
-        }
-
-        return false;
-    }
-
-    public IEnumerator RotateTo(Transform lookAt, Action onFinish = null)
+    public IEnumerator RotateTo(Transform lookAt, Action onFinish = null, Action onRotatedAttack = null)
     {
         Vector3 target = lookAt.position - transform.position;
         target.y = 0;
@@ -132,6 +135,8 @@ public class Fighter
             yield return null;
         }
 
+        onRotatedAttack?.Invoke();
+        RotatedToAttack?.Invoke();
         yield return new WaitForSeconds(_timeToDefaultRotate);
 
         while (transform.forward != _startRotate)

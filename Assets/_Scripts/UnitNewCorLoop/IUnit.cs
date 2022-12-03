@@ -15,6 +15,6 @@ public interface IUnit
     public event Action Inited;
     void Init(UnitCard card, Cell cell);
     void DoStep();
-    void RotateTo(Transform transform);
+    void RotateTo(Transform transform, Action onRotated = null);
     void AnimationSizeUp();
 }

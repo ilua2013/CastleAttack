@@ -71,5 +71,5 @@ public class HealthBar : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void SetText() => _textHealth.text = _unit.Fighter.Health + "/" + _unit.Fighter.MaxHealth;
+    private void SetText() => _textHealth.text = _unit.Fighter.Health.ToString()/* + "/" + _unit.Fighter.MaxHealth*/;
 }

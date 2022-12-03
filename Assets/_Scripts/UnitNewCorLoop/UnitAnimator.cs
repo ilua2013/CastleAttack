@@ -25,13 +25,13 @@ public class UnitAnimator : MonoBehaviour
     private void OnEnable()
     {
         _mover.Moved += SetMove;
-        _fighter.Attacked += SetAttack;
+        _fighter.RotatedToAttack += SetAttack;
     }
 
     private void OnDisable()
     {
         _mover.Moved -= SetMove;
-        _fighter.Attacked -= SetAttack;
+        _fighter.RotatedToAttack -= SetAttack;
     }   
 
     private void SetAttack()

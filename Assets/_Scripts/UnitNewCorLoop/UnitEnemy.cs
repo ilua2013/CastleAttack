@@ -165,16 +165,16 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         action?.Invoke();
     }
 
-    public void RotateTo(Transform transform)
+    public void RotateTo(Transform transform, Action onRotated = null)
     {
         if (_coroutineRotateTo == null)
         {
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
         }
         else
         {
             StopCoroutine(_coroutineRotateTo);
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null));
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
         }
     }
 
