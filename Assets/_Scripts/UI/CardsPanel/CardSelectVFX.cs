@@ -5,13 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(CardHoverView))]
 public class CardSelectVFX : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _vfx;
-
+    private ParticleSystem _vfxSelect;
     private CardHoverView _cardHover;
 
     private void Awake()
     {
         _cardHover = GetComponent<CardHoverView>();
+        _vfxSelect = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -28,11 +28,11 @@ public class CardSelectVFX : MonoBehaviour
 
     private void OnEnter(CardHoverView card)
     {
-        _vfx.Play();
+        _vfxSelect.Play();
     }
 
     private void OnExit(CardHoverView card)
     {
-        _vfx.Stop();
+        _vfxSelect.Stop();
     }
 }
