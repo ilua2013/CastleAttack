@@ -226,7 +226,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
-
+    public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
 
     private int GetDamage(UnitCard card)
     {

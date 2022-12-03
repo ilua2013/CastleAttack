@@ -7,20 +7,33 @@ public class RagdollFriend : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private UnitFriend _unitFriend;
     [SerializeField] private float _timeDelay;
+    [SerializeField] private float _force;
     [SerializeField] private GameObject _unit;
     [SerializeField] private List<Rigidbody> _rigidbodies;
     [SerializeField] private Rigidbody _rigidbodyPlatform;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private Animator _animatorPlatform;
 
+    private Rigidbody[] _rigidbodysAll;
+
+    private void OnValidate()
+    {
+        foreach (var item in GetComponentsInChildren<Rigidbody>())
+        {
+            item.isKinematic = true;
+            item.mass = 1;
+        }
+    }
+
     private void Start()
     {
-        
         foreach (var rigi in _rigidbodies)
         {
             rigi.isKinematic = true;
         }
         _rigidbodyPlatform.isKinematic = true;
+
+        _rigidbodysAll = GetComponentsInChildren<Rigidbody>();
     }
 
     private void OnEnable()
@@ -40,6 +53,13 @@ public class RagdollFriend : MonoBehaviour
         {
             rigi.isKinematic = false;
         }
+
+        foreach (var item in _rigidbodysAll)
+        {
+            item.isKinematic = false;
+            item.useGravity = true;
+        }
+
         _rigidbodyPlatform.isKinematic = false;
         _animatorPlatform.enabled = false;
         _animator.enabled = false;
@@ -51,11 +71,45 @@ public class RagdollFriend : MonoBehaviour
         StartCoroutine(DelayDied());
     }
 
+    public void RagDollEnable(float force, Vector3 from)
+    {
+        foreach (var rigi in _rigidbodies)
+        {
+            rigi.isKinematic = false;
+        }
+
+        foreach (var item in _rigidbodysAll)
+        {
+            item.isKinematic = false;
+            item.useGravity = true;
+        }
+
+        _animatorPlatform.enabled = false;
+        _animator.enabled = false;
+
+        Invoke(nameof(EnableRigidbodyPlatform), 1f);
+
+        Vector3 forceFrom = transform.position - from;
+        forceFrom.y = 5f;
+
+        foreach (var rigi in _rigidbodies)
+            rigi.AddForce(forceFrom.normalized * force);
+
+        _particleSystem.Play();
+        StartCoroutine(DelayDied());
+    }
+
     private IEnumerator DelayDied()
     {
         yield return new WaitForSeconds(_timeDelay);
 
         GamesStatistics.RegisterFriendKill();
         Destroy(_unit);
+    }
+
+    private void EnableRigidbodyPlatform()
+    {
+        _rigidbodyPlatform.isKinematic = false;
+        _rigidbodyPlatform.useGravity = true;
     }
 }
