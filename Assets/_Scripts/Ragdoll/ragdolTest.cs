@@ -25,7 +25,7 @@ public class ragdolTest : MonoBehaviour
         if (startAttack)
         {
             startAttack = false;
-            _rag.RagDollEnable(attack, from.position);
+            //_rag.RagDollEnable(attack, from.position);
         }
     }
 }

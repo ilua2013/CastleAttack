@@ -7,7 +7,7 @@ public class RagdollFriend : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private UnitFriend _unitFriend;
     [SerializeField] private float _timeDelay;
-    [SerializeField] private float _force;
+    [SerializeField] private float _force = 850f;
     [SerializeField] private GameObject _unit;
     [SerializeField] private List<Rigidbody> _rigidbodies;
     [SerializeField] private Rigidbody _rigidbodyPlatform;
@@ -71,7 +71,7 @@ public class RagdollFriend : MonoBehaviour
         StartCoroutine(DelayDied());
     }
 
-    public void RagDollEnable(float force, Vector3 from)
+    public void RagDollEnable(Fighter fighter)
     {
         foreach (var rigi in _rigidbodies)
         {
@@ -89,11 +89,11 @@ public class RagdollFriend : MonoBehaviour
 
         Invoke(nameof(EnableRigidbodyPlatform), 1f);
 
-        Vector3 forceFrom = transform.position - from;
+        Vector3 forceFrom = transform.position - fighter.transform.position;
         forceFrom.y = 5f;
 
         foreach (var rigi in _rigidbodies)
-            rigi.AddForce(forceFrom.normalized * force);
+            rigi.AddForce(forceFrom.normalized * _force);
 
         _particleSystem.Play();
         StartCoroutine(DelayDied());

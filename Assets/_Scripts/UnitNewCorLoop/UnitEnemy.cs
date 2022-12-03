@@ -154,7 +154,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         {
             GamesStatistics.RegisterEnemyKill();
             LevelUppedTutorial?.Invoke();
-            gameObject.SetActive(false);
+            Invoke(nameof(Disable), 2.5f);
         }
     }
 
@@ -178,6 +178,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         }
     }
 
+    private void Disable() => gameObject.SetActive(false);
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
 }

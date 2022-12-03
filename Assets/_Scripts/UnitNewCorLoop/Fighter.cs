@@ -6,12 +6,13 @@ using System;
 [Serializable]
 public class Fighter
 {
+    public Transform transform { get; private set; }
+
     [SerializeField] private FighterType _type;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
 
     private IUnit _unit;
-    private Transform transform;
     private Vector3 _startRotate;
     private float _timeToDefaultRotate = 0.5f;
     private float _speedRotate = 2.5f;
@@ -28,6 +29,7 @@ public class Fighter
     public event Action Died;
     public event Action ReadyToDie;
     public event Action EffectDied;
+    public event Action<Transform> Died_getKiller;
     public event Action Attacked;
     public event Action<int> Damaged;
     public event Action<int> Healed;
@@ -58,10 +60,10 @@ public class Fighter
         _unit.RotateTo(fighter.transform);
 
         int damage = (int)DamageConditions.CalculateDamage(_type, fighter.FighterType, _damage);
-        bool isFatal = fighter.TakeDamage(damage);
+        bool isFatal = fighter.TakeDamage(this);
 
         if (fighter.FighterType == FighterType.MainTarget || fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-            TakeDamage(fighter.Damage);
+            TakeDamage(fighter);
 
         Attacked?.Invoke();
 
@@ -101,6 +103,17 @@ public class Fighter
             Die();
             EffectDied?.Invoke();
 
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TakeDamage(Fighter fighter)
+    {
+        if (TakeDamage(fighter.Damage))
+        {
+            Died_getKiller?.Invoke(fighter.transform);
             return true;
         }
 
