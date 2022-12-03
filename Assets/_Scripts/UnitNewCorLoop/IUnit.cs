@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
-public interface IUnit 
+public interface IUnit
 {
     Mover Mover { get; }
     Fighter Fighter { get; }
@@ -15,4 +16,5 @@ public interface IUnit
     void Init(UnitCard card, Cell cell);
     void DoStep();
     void RotateTo(Transform transform);
+    void AnimationSizeUp();
 }

@@ -13,6 +13,8 @@ public class Mover
     private IUnit _unit;
     private Cell _currentCell;
     private Transform transform;
+    private float _speedAnimation = 5f;
+    private bool _init;
 
     public Cell CurrentCell => _currentCell;
     public IUnit Unit => _unit;
@@ -30,6 +32,11 @@ public class Mover
             SetCurrentCell(_startCell);
         else
             SetCurrentCell(cell);
+
+        if (_init == false)
+            _unit.AnimationSizeUp();
+
+        _init = true;
     }
 
     public void SetStartCell(Cell cell)
@@ -95,6 +102,18 @@ public class Mover
             time = time > _timeMove ? _timeMove : time + Time.deltaTime;
 
             transform.position = startPos + (targetPos * (time / _timeMove));
+            yield return null;
+        }
+    }
+    
+    public IEnumerator AnimationSizeUp()
+    {
+        Vector3 startSize = transform.localScale;
+        transform.localScale = Vector3.zero;
+
+        while (Vector3.Distance(startSize, transform.localScale) > 0.001f)
+        {
+            transform.localScale = Vector3.Slerp(transform.localScale, startSize, _speedAnimation * Time.deltaTime);
             yield return null;
         }
     }
