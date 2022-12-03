@@ -40,8 +40,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void DropOut(Vector3 mousePosition)
     {
         Amount--;
-        gameObject.SetActive(false);
         Drop?.Invoke(this, mousePosition);
+        gameObject.SetActive(false);
     }
 
     public void CancleDrop()

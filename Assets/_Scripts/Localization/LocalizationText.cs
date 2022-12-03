@@ -14,7 +14,12 @@ public class LocalizationText : MonoBehaviour
     private void Awake()
     {
         _text = GetComponent<TMP_Text>();
+
+#if UNITY_EDITOR
+        _text.text = GetLabel(Language.ru);
+#else
         _text.text = GetLabel(Localization.Instance.Language);
+#endif
     }
 
     private string GetLabel(Language language)
