@@ -466,7 +466,6 @@ GameObject:
   - component: {fileID: 665712763735166884}
   - component: {fileID: 665712763735166883}
   - component: {fileID: 665712763735166882}
-  - component: {fileID: 665712763735166885}
   m_Layer: 5
   m_Name: SadSmile
   m_TagString: Untagged
@@ -483,7 +482,7 @@ RectTransform:
   m_GameObject: {fileID: 665712763735166887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 665712764145171978}
@@ -492,7 +491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13, y: 54}
+  m_AnchoredPosition: {x: -13, y: 103}
   m_SizeDelta: {x: 268.5439, y: 268.5439}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &665712763735166883
@@ -533,26 +532,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &665712763735166885
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665712763735166887}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 18a332473dcbaa44c8fa7164eb4a4a9b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &665712763797698101
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +569,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -49.1539, y: -194.99997}
+  m_AnchoredPosition: {x: -49.1539, y: -86}
   m_SizeDelta: {x: 556.8781, y: 503.1497}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &665712763797698096
@@ -1333,8 +1312,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286124321
-  m_fontColor: {r: 0.12941177, g: 0.06666667, b: 0.47450984, a: 1}
+    rgba: 4278255452
+  m_fontColor: {r: 0.36171424, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1387,7 +1366,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 47.3665, y: 7.3482704, z: 45.39358, w: 18.960659}
+  m_margin: {x: 47.3665, y: 33.41563, z: 45.39358, w: 18.960659}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1584,8 +1563,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000026703, y: -31.48591}
-  m_SizeDelta: {x: 184.6911, y: 95.1659}
+  m_AnchoredPosition: {x: -0.000026703, y: -29.7086}
+  m_SizeDelta: {x: 184.6911, y: 91.6113}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &637690760840397646
 CanvasRenderer:
@@ -1638,6 +1617,7 @@ GameObject:
   - component: {fileID: 4579479166092216378}
   - component: {fileID: 100450736687006441}
   - component: {fileID: 5761350070847558497}
+  - component: {fileID: 1912151711753260561}
   m_Layer: 5
   m_Name: RespawnButton
   m_TagString: Untagged
@@ -1664,8 +1644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000002861, y: 278.7}
-  m_SizeDelta: {x: 314.0313, y: 176.6087}
+  m_AnchoredPosition: {x: -0.000002861, y: 287.2397}
+  m_SizeDelta: {x: 314.0313, y: 254.704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7523208140745970254
 CanvasRenderer:
@@ -1690,12 +1670,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 0, y: 46.71, z: 0, w: 38.35}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: beba7d4a3c4665a4595fff88130263ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5946e8c2f196de74bb51752558111ef0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1761,3 +1741,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc95726188d1166429189fa78399f832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1912151711753260561
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8476293743806281811}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e1ab6f326f277484aaa1d73b423d39b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
