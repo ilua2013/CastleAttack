@@ -19,13 +19,16 @@ public class StepCounterUI : MonoBehaviour
             return;
         }
 
-        if (_unit.Fighter.FighterType == FighterType.MainWizzard || _unit.Fighter.FighterType == FighterType.MainTarget)
+        if (_unit.Fighter.FighterType == FighterType.MainWizzard || _unit.Fighter.FighterType == FighterType.Build)
             gameObject.SetActive(false);
+        else
+            gameObject.SetActive(true);
     }
 
     private void Awake()
     {
-        _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();
+        if (_iUnit == null)
+            _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();
     }
 
     private void OnEnable()

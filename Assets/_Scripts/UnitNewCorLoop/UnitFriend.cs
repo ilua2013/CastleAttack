@@ -133,7 +133,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
             Attacked?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.5f));
 
-            CurrentStep -= 2;
+            CurrentStep--;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Top))
         {

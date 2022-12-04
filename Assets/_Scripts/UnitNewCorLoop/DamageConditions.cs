@@ -4,36 +4,36 @@ using UnityEngine;
 
 public static class DamageConditions
 {
-    private const float ArcherToWarrior = 1f;
+    private const float ArcherToWarrior = 2f;
     private const float ArcherToCatapult = 1f;
-    private const float ArcherToTower = 1f;
+    private const float ArcherToShield = 1f;
     private const float ArcherToBuild = 1f;
     private const float ArcherToWizzard = 1f;
     private const float ArcherToMainTarget = 1f;
 
     private const float WarriorToArcher = 1f;
     private const float WarriorToCatapult = 1f;
-    private const float WarriorToTower = 1f;
+    private const float WarriorToShield = 2f;
     private const float WarriorToBuild = 1f;
     private const float WarriorToWizzard = 1f;
     private const float WarriorToMainTarget = 1f;
 
     private const float CatapultToArcher = 1f;
     private const float CatapultToWarrior = 1f;
-    private const float CatapultToTower = 1f;
-    private const float CatapultToBuild = 1f;
+    private const float CatapultToShield = 1f;
+    private const float CatapultToBuild = 2f;
     private const float CatapultToWizzard = 1f;
     private const float CatapultToMainTarget = 1f;
 
-    private const float TowerToArcher = 1f;
-    private const float TowerToWarrior = 1f;
-    private const float TowerToCatapult = 1f;
-    private const float TowerToBuild = 1f;
-    private const float TowerToWizzard = 1f;
-    private const float TowerToMainTarget = 1f;
+    private const float ShieldToArcher = 2f;
+    private const float ShieldToWarrior = 1f;
+    private const float ShieldToCatapult = 1f;
+    private const float ShieldToBuild = 1f;
+    private const float ShieldToWizzard = 1f;
+    private const float ShieldToMainTarget = 1f;
 
     private const float AttackSpellToArcher = 1f;
-    private const float AttackSpellToTower = 1f;
+    private const float AttackSpellToShield = 1f;
     private const float AttackSpellToBuild = 1f;
     private const float AttackSpellToWizzard = 1f;
     private const float AttackSpellToMainTarget = 0.2f;
@@ -48,10 +48,10 @@ public static class DamageConditions
             case FighterType.Archer:
                 switch (defensive)
                 {
-                    case FighterType.Tower:
-                        return damage * ArcherToTower;
+                    case FighterType.Shield:
+                        return damage * ArcherToShield;
 
-                    case FighterType.Warrior:
+                    case FighterType.Attacker:
                         return damage * ArcherToWarrior;
 
                     case FighterType.Catapult:
@@ -68,37 +68,37 @@ public static class DamageConditions
                 }
                 break;
 
-            case FighterType.Tower:
+            case FighterType.Shield:
                 switch (defensive)
                 {
                     case FighterType.Archer:
-                        return damage * TowerToArcher;
+                        return damage * ShieldToArcher;
 
-                    case FighterType.Warrior:
-                        return damage * TowerToWarrior;
+                    case FighterType.Attacker:
+                        return damage * ShieldToWarrior;
 
                     case FighterType.Catapult:
-                        return damage * TowerToCatapult;
+                        return damage * ShieldToCatapult;
 
                     case FighterType.Build:
-                        return damage * TowerToBuild;
+                        return damage * ShieldToBuild;
 
                     case FighterType.MainWizzard:
-                        return damage * TowerToWizzard;
+                        return damage * ShieldToWizzard;
 
                     case FighterType.MainTarget:
-                        return damage * TowerToMainTarget;
+                        return damage * ShieldToMainTarget;
                 }
                 break;
 
-            case FighterType.Warrior:
+            case FighterType.Attacker:
                 switch (defensive)
                 {
                     case FighterType.Archer:
                         return damage * WarriorToArcher;
 
-                    case FighterType.Tower:
-                        return damage * WarriorToTower;
+                    case FighterType.Shield:
+                        return damage * WarriorToShield;
 
                     case FighterType.Catapult:
                         return damage * WarriorToCatapult;
@@ -120,10 +120,10 @@ public static class DamageConditions
                     case FighterType.Archer:
                         return damage * CatapultToArcher;
 
-                    case FighterType.Tower:
-                        return damage * CatapultToTower;
+                    case FighterType.Shield:
+                        return damage * CatapultToShield;
 
-                    case FighterType.Warrior:
+                    case FighterType.Attacker:
                         return damage * CatapultToWarrior;
 
                     case FighterType.Build:
@@ -143,8 +143,8 @@ public static class DamageConditions
                     case FighterType.Archer:
                         return damage * AttackSpellToArcher;
 
-                    case FighterType.Tower:
-                        return damage * AttackSpellToTower;
+                    case FighterType.Shield:
+                        return damage * AttackSpellToShield;
 
                     case FighterType.Build:
                         return damage * AttackSpellToBuild;
@@ -160,7 +160,7 @@ public static class DamageConditions
                 }
         }
 
-        Debug.LogError("No Type");
+        Debug.LogError("No Type " + attacking + " " + defensive);
         return 0;
     }
 }

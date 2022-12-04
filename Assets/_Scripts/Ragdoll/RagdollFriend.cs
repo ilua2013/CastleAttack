@@ -23,6 +23,12 @@ public class RagdollFriend : MonoBehaviour
             item.isKinematic = true;
             item.mass = 1;
         }
+
+        if (GetComponentInParent<Platform>() != null)
+        {
+            _rigidbodyPlatform = GetComponentInParent<Platform>().GetComponent<Rigidbody>();
+            _animatorPlatform = GetComponentInParent<Platform>().GetComponent<Animator>();
+        }
     }
 
     private void Start()
@@ -31,6 +37,13 @@ public class RagdollFriend : MonoBehaviour
         {
             rigi.isKinematic = true;
         }
+
+        if (GetComponentInParent<Platform>() != null)
+        {
+            _rigidbodyPlatform = GetComponentInParent<Platform>().GetComponent<Rigidbody>();
+            _animatorPlatform = GetComponentInParent<Platform>().GetComponent<Animator>();
+        }
+
         _rigidbodyPlatform.isKinematic = true;
 
         _rigidbodysAll = GetComponentsInChildren<Rigidbody>();

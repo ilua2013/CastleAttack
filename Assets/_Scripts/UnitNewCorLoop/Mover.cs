@@ -13,7 +13,7 @@ public class Mover
     private IUnit _unit;
     private Cell _currentCell;
     private Transform transform;
-    private float _speedAnimation = 5.5f;
+    private float _speedAnimation = 6f;
     private bool _init;
 
     public Cell CurrentCell => _currentCell;

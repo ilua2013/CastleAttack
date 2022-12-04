@@ -15,6 +15,15 @@ public class Ragdoll : MonoBehaviour
 
     private Rigidbody[] _rigidbodysAll;
 
+    private void OnValidate()
+    {
+        if (GetComponentInParent<Platform>() != null)
+        {
+            _rigidbodyPlatform = GetComponentInParent<Platform>().GetComponent<Rigidbody>();
+            _animatorPlatform = GetComponentInParent<Platform>().GetComponent<Animator>();
+        }
+    }
+
     private void Start()
     {
         _particleSystem.Stop();
@@ -22,6 +31,13 @@ public class Ragdoll : MonoBehaviour
         {
             rigi.isKinematic = true;
         }
+
+        if (GetComponentInParent<Platform>() != null)
+        {
+            _rigidbodyPlatform = GetComponentInParent<Platform>().GetComponent<Rigidbody>();
+            _animatorPlatform = GetComponentInParent<Platform>().GetComponent<Animator>();
+        }
+
         _rigidbodyPlatform.isKinematic = true;
 
         _rigidbodysAll = GetComponentsInChildren<Rigidbody>();

@@ -15,6 +15,11 @@ public class UnitAnimator : MonoBehaviour
         Attack, Move
     }
 
+    private void OnValidate()
+    {
+        _animators = GetComponentsInChildren<Animator>();
+    }
+
     private void Awake()
     {
         _unit = GetComponent<IUnit>();

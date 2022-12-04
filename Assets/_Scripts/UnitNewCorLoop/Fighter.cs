@@ -152,5 +152,5 @@ public class Fighter
 
 public enum FighterType
 {
-    Catapult, Archer, Warrior, Tower, Build, MainTarget, MainWizzard, AttackSpell
+    Catapult, Archer, Attacker, Build, Shield, MainTarget, MainWizzard, AttackSpell
 }
