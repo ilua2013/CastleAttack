@@ -87,7 +87,6 @@ public class CardMovement : MonoBehaviour
 
     private void OnDrop(Card card, Vector3 mousePosition)
     {
-        Debug.Log("Drop movenewmtn");
         StartCoroutine(LerpScale(Vector3.zero));
     }
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CardSelectionView : MonoBehaviour
 {
-    private const float ScaleFactor = 1.2f;
+    private const float ScaleFactor = 1.32f;
 
     [SerializeField] private Transform[] _cardPlacements;
 
@@ -54,7 +54,7 @@ public class CardSelectionView : MonoBehaviour
             {
                 Register(cardHover, _cardPlacements[i].position);
                 cardHover.MoveTo(_cardPlacements[i].position, 5f);
-                cardHover.ScaleTo(cardHover.StartScaling);
+                cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
 
                 _cardHovers.Add(cardHover);
             }
@@ -63,12 +63,12 @@ public class CardSelectionView : MonoBehaviour
 
     private void OnCardHover(CardHoverView cardHover)
     {
-        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
+        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor * 1.2f);
     }
 
     private void OnCardRemoveHover(CardHoverView cardHover)
     {
-        cardHover.ResetToStartState();
+        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
     }
 
     private void Register(CardHoverView card, Vector3 startPosition)

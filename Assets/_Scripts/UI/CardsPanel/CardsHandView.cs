@@ -9,7 +9,7 @@ public class CardsHandView : MonoBehaviour
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
     private const float ScaleFactor = 1.2f;
-    private const float OffsetXFactor = 2.5f;
+    private const float OffsetXFactor = 5f;
 
     private float _offsetX = 180f;
 

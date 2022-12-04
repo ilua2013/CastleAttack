@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuLoader : MonoBehaviour
 {
+    private const int TutorialIndex = 2;
+    private const int MenuIndex = 1;
+
     [SerializeField] private string _sceneName;
 
     private void OnEnable()
@@ -19,6 +22,12 @@ public class MainMenuLoader : MonoBehaviour
 
     private void OnInitialized()
     {
-        SceneManager.LoadScene(_sceneName);
+        int index = TutorialIndex;
+
+        if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
+            if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
+                index = MenuIndex;
+
+        SceneManager.LoadScene(index);
     }
 }
