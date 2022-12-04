@@ -22,4 +22,9 @@ public class Phase
     public PhaseType PhaseType => _phaseType;
     public bool IsActive => _isActive;
     public float Delay => _delayTime;
+
+    public void TutorialSelectionCardEnable()
+    {
+        _isActive = true;
+    }
 }

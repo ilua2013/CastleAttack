@@ -28,7 +28,7 @@ public class Tutorial : MonoBehaviour
 
     private void OnEnable()
     {
-        _cardsSelection.CardSelected += StepOneTwo;
+        //_cardsSelection.CardSelected += StepOneTwo;
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
         //_cardReplenisher.CardUp += StepFourFive;
@@ -42,7 +42,8 @@ public class Tutorial : MonoBehaviour
 
     private void OnDisable()
     {
-        _cardsSelection.CardSelected -= StepOneTwo;
+       
+        //_cardsSelection.CardSelected -= StepOneTwo;
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
         //_cardReplenisher.CardUp -= StepFourFive;
@@ -56,12 +57,15 @@ public class Tutorial : MonoBehaviour
 
     private void Start()
     {
+        _cardsSelection.gameObject.SetActive(false);
         _buttonStartGame.gameObject.SetActive(false);
         _startFightButton.gameObject.SetActive(false);
+        StepOneTwo();
     }
 
-    private void StepOneTwo(Card card)
+    private void StepOneTwo(/*Card card*/)
     {
+       
         if ( _stepTutorial == 0 )
         {        
             _panelViewSwitcher.PanelInstructinSpellAndMonster(true);
@@ -207,9 +211,11 @@ public class Tutorial : MonoBehaviour
             case 1:
 
                 //StopCoroutine(DelayGameStop());
+                //_cardsSelection.Phases.
                 _tutorialEffects.EffectOneTwo();
                 _panelViewSwitcher.TutorialFingerDraw(true);
                 _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
+                _cardsSelection.TutorialPhaseEnable();
                 break;
 
             case 2:
