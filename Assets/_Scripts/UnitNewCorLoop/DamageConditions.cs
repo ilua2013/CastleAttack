@@ -160,7 +160,6 @@ public static class DamageConditions
                 }
         }
 
-        Debug.LogError("No Type " + attacking + " " + defensive);
-        return 0;
+        return damage;
     }
 }

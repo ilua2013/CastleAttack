@@ -20,7 +20,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public event Action<CardHoverView> Drop;
     public event Action<CardHoverView> CameBack;
     public event Action<CardHoverView, int> Used;
-    public event Action<CardHoverView> Selected;
 
     public Vector3 StartPosition { get; private set; }
     public Vector3 StartScaling { get; private set; } = new Vector3(1.5f, 1.5f, 1.5f);
@@ -40,7 +39,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.Drop += OnDrop;
         _card.CancelDrop += OnCancelDrag;
         _card.Used += OnUse;
-        _card.Clicked += OnClicked;
     }
 
     private void OnDisable()
@@ -49,7 +47,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _card.Drop -= OnDrop;
         _card.CancelDrop -= OnCancelDrag;
         _card.Used -= OnUse;
-        _card.Clicked -= OnClicked;
 
         transform.localScale = StartScaling;
     }
@@ -143,12 +140,6 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         CanHover = true;
         Used?.Invoke(this, count);
-    }
-
-    private void OnClicked(PointerEventData eventData, Card card)
-    {
-        CanHover = false;
-        Selected?.Invoke(this);
     }
 
     private IEnumerator LerpPosition(Vector3 to, float time, Action onEndCallback = null)

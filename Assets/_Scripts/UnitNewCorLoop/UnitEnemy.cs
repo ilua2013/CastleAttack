@@ -5,6 +5,7 @@ using System;
 
 public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
+    [field: SerializeField] public float DelayToDie { get; private set; } = 2.5f;
     [field: SerializeField] public int MaxStep { get; private set; } = 3;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field: SerializeField] public Mover Mover { get; private set; }
@@ -154,7 +155,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         {
             GamesStatistics.RegisterEnemyKill();
             LevelUppedTutorial?.Invoke();
-            Invoke(nameof(Disable), 2.5f);
+            Invoke(nameof(Disable), DelayToDie);
            
         }
     }

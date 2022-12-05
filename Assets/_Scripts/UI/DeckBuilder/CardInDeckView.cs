@@ -18,6 +18,7 @@ public class CardInDeckView : MonoBehaviour
     [SerializeField] private GameObject _coins;
     [SerializeField] private GameObject _button;
     [SerializeField] private GameObject _levelPanel;
+    [SerializeField] private bool _isMoveable;
 
     private string _level;
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -65,6 +66,7 @@ public class CardInDeckView : MonoBehaviour
     public void FillCard(Card card, bool smooth)
     {
         _card = card;
+        _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
         Transformation(card.transform, smooth);
