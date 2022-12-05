@@ -22,7 +22,7 @@ public class ShowDamageUI : MonoBehaviour
         else gameObject.SetActive(true);
     }
 
-    private void Awake()
+    private void Start()
     {
         if (_iUnit == null)
             _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();

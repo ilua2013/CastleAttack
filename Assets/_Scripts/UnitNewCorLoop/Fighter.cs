@@ -16,7 +16,7 @@ public class Fighter
     private Vector3 _startRotate;
     private float _timeToDefaultRotate = 1f;
     private float _speedRotate = 3f;
-    private int _health;
+    private int _health = 1;
 
     public int Damage => _damage;
     public int Health => _health;
