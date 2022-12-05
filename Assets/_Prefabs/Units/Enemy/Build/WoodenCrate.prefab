@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2803166038564414750}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -0.0073337555, y: 0.8399999, z: -0.03498459}
-  m_LocalScale: {x: 0.51387, y: 0.51387, z: 0.51387}
+  m_LocalPosition: {x: -0.0073337555, y: 0.769, z: -0.03498459}
+  m_LocalScale: {x: 0.7033126, y: 0.7033126, z: 0.7033126}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7190403635651762346}
@@ -9687,7 +9687,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244199501219097911}
   m_LocalRotation: {x: 0.40359366, y: -0, z: -0, w: 0.91493833}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9697,7 +9697,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.44}
+  m_AnchoredPosition: {x: 0, y: 5.039}
   m_SizeDelta: {x: 3.5891, y: 1.3966}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2322526936239220884
@@ -9814,7 +9814,6 @@ MonoBehaviour:
   _distanceAttack: []
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
-    _timeMove: 0
     _canMove: 0
   <Fighter>k__BackingField:
     _type: 3
@@ -19536,6 +19535,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7190403635651762346}
     m_Modifications:
+    - target: {fileID: 892161493658151363, guid: b508c84da7fcfbf4288d1a948668fe13, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3534533480928587615, guid: b508c84da7fcfbf4288d1a948668fe13, type: 3}
       propertyPath: m_Name
       value: Platform Enemy

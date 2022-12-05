@@ -7,12 +7,12 @@ using System;
 public class Mover
 {
     [SerializeField] private Cell _startCell;
-    [SerializeField] private float _timeMove;
     [SerializeField] private bool _canMove = true;
 
     private IUnit _unit;
     private Cell _currentCell;
     private Transform transform;
+    private float _timeMove = 0.6f;
     private float _speedAnimation = 6f;
     private bool _init;
 

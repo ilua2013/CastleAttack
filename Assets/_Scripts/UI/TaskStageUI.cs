@@ -42,22 +42,28 @@ public class TaskStageUI : MonoBehaviour
 
         _enemySpawner = _battleSystem.EnemySpawner;
 
-        _maxCount = _enemySpawner.GetBuildCount();
+        if (_enemySpawner.GetComponentInParent<Stage>().StageNumber == StageNumber.One || _enemySpawner.GetComponentInParent<Stage>().StageNumber == StageNumber.Two)
+            _maxCount = _enemySpawner.GetBuildCount();
+        else if (_enemySpawner.GetComponentInParent<Stage>().StageNumber == StageNumber.Three)
+            _maxCount = _enemySpawner.GetBossCount();
+
         UpdateView();
 
-        _enemySpawner.DiedBuild += UpdateView;
+        _enemySpawner.DiedTarget += UpdateView;
     }
 
     private void UpdateView()
     {
-        print("UpdateView");
         foreach (var item in _tasks)
         {
             if(_enemySpawner.GetComponentInParent<Stage>().StageNumber == item.StageNumber)
             {
                 _image.sprite = item.Sprite;
-                _text.text = _maxCount - _enemySpawner.GetBuildCount() + "/" + _maxCount;
-                print(_enemySpawner.GetBuildCount() + " count Build");
+
+                if (item.StageNumber == StageNumber.One || item.StageNumber == StageNumber.Two)
+                    _text.text = _maxCount - _enemySpawner.GetBuildCount() + "/" + _maxCount;
+                else if (item.StageNumber == StageNumber.Three)
+                    _text.text = 1 - _enemySpawner.GetBossCount() + "/" + _maxCount;
             }
         }
     }

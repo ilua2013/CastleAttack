@@ -117,26 +117,32 @@ public class BattleSystem : MonoBehaviour
     {
         while (CheckHaveStep() && _doStep == true)
         {
-            
-
             _friendFinishStep = false;
             _enemyFinishStep = false;
 
+            for (int i = _unitFriend.Count - 1; i > -1; i--)
+            {  // определяет верный порядок действий
+                _unitFriend[i].DoStep();
 
-
-            for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
-                _unitFriend[i].DoStep();          
+                while (_unitFriend.Count > i && _unitFriend[i].DoingStep == true)
+                    yield return null;
+            }
 
             while (_friendFinishStep == false)
             {
-                yield return new WaitForSeconds(0.2f);
+                //yield return new WaitForSeconds(0.2f);
                 CheckFinishStepFriend();
             }
 
-            yield return new WaitForSeconds(_delayBeetwenStep);
+            //yield return new WaitForSeconds(_delayBeetwenStep);
 
             for (int i = _unitEnemy.Count - 1; i > -1; i--)
+            {
                 _unitEnemy[i].DoStep();
+
+                while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
+                    yield return null;
+            }
 
             while (_enemyFinishStep == false)
             {
@@ -146,7 +152,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         StepFinished?.Invoke();
-        print("Update Step");
+
         foreach (var item in _unitFriend)
             item.UpdateStep();
 
@@ -204,7 +210,6 @@ public class BattleSystem : MonoBehaviour
         _unitFriend = units;
         foreach (var unit in _unitFriend)
         {
-            Debug.Log("Unit222");
             unit.Mover.ReachedTutorialHigherCell += TutorialStopUnit;
         }
         index = 20;
