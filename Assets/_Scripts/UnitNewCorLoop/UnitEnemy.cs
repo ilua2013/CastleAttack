@@ -50,9 +50,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void Awake()
     {
         CurrentStep = MaxStep;
-
-        if (Fighter.FighterType == FighterType.MainTarget)
-            Init(null, null);
     }
 
     private void Start()

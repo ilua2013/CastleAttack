@@ -62,7 +62,7 @@ public class LevelSystem : MonoBehaviour
         switch (_currentWave)
         {
             case StageNumber.One:
-                if (_enemySpawner1.HaveWave == false)
+                if (_enemySpawner1.TargetEnemy.Count == 0)
                 {
                     _currentWave++;
 
@@ -78,7 +78,7 @@ public class LevelSystem : MonoBehaviour
                 break;
 
             case StageNumber.Two:
-                if (_enemySpawner2.HaveWave == false)
+                if (_enemySpawner2.TargetEnemy.Count == 0)
                 {
                     _currentWave++;
 
@@ -94,7 +94,7 @@ public class LevelSystem : MonoBehaviour
                 break;
 
             case StageNumber.Three:
-                if (_enemySpawner3.HaveWave == false)
+                if (_enemySpawner3.TargetEnemy.Count == 0)
                 {
                     _battleSystem.StopDoStep();
 

@@ -8,24 +8,20 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private UnitEnemy _mainTarget;
     [SerializeField] private int _countSpawnWave;
-    [SerializeField] private int _waveCount;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
     [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
     [SerializeField] private BattleSystem _battleSystem;
-    [Header("Add Params")]
-    [SerializeField] private int _minusWaveOnDieBuild = 3;
+    [SerializeField] private List<UnitEnemy> _targetEnemy = new List<UnitEnemy>();
     [Header("StartUnit")]
     [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[20];
 
-    private int _currentWave = 0;
-
+    public List<UnitEnemy> TargetEnemy => _targetEnemy;
     public UnitEnemy[] EnemyStart => _enemysStart;
-    public int WaveCount => _waveCount;
-    public int CurrentWave => _currentWave;
-    public bool HaveWave => _waveCount > _currentWave;
+    public UnitEnemy MainTarget => _mainTarget;
 
     public event Action WaveCountChanged;
     public event Action DiedBuild;
+    public event Action DiedTarget;
     public event Action<UnitEnemy> Spawned_get;
 
     private void OnValidate()
@@ -54,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
         if (_mainTarget != null)
             _mainTarget.Fighter.Died_get += OnDieMainTarget;
     }
+
     private void OnDisable()
     {
         _battleSystem.StepFinished -= EnemySpawn;
@@ -70,8 +67,24 @@ public class EnemySpawner : MonoBehaviour
         {
             item.Init(null, null);
             Spawned_get?.Invoke(item);
-            if (item.Fighter.FighterType == FighterType.Build)
-                item.Fighter.Died_get += OnDieBuild;
+        }
+
+        foreach (var item in _targetEnemy)
+        {
+            item.Init(null, null);
+            Spawned_get?.Invoke(item);
+
+            item.Fighter.Died_get += RemoveDiedUnit;
+        }
+    }
+
+    public void RemoveDiedUnit(Fighter fighter)
+    {
+        if (_targetEnemy.Contains((UnitEnemy)fighter.Unit))
+        {
+            _targetEnemy.Remove((UnitEnemy)fighter.Unit);
+            DiedTarget?.Invoke();
+            fighter.Died_get -= RemoveDiedUnit;
         }
     }
 
@@ -81,25 +94,27 @@ public class EnemySpawner : MonoBehaviour
         Init();
     }
 
-    public void MinusWaveCount(int value)
-    {
-        _waveCount = _waveCount - value < 0 ? 0 : _waveCount - value;
-        _currentWave = _currentWave > _waveCount ? _waveCount : _currentWave;
-
-        WaveCountChanged?.Invoke();
-    }
-
     public int GetBuildCount()
     {
         int i = 0;
 
         foreach (var item in _enemysStart)
         {
-            print(item.Fighter.IsDead + " IsDead  -  " + item.Fighter.FighterType + " (" + item.Initialized + ")");
             if (item.Fighter.FighterType == FighterType.Build && item.Fighter.IsDead == false)
-            {
                 i++;
-            }
+        }
+        print(i + " s");
+        return i;
+    }
+
+    public int GetBossCount()
+    {
+        int i = 0;
+
+        foreach (var item in _enemysStart)
+        {
+            if (item.Fighter.FighterType == FighterType.MainTarget && item.Fighter.IsDead == false)
+                i++;
         }
 
         return i;
@@ -108,20 +123,15 @@ public class EnemySpawner : MonoBehaviour
     private void OnDieMainTarget(Fighter fighter)
     {
         fighter.Died_get -= OnDieMainTarget;
-        MinusWaveCount(_waveCount);
     }
 
     private void EnemySpawn()
     {
-        if (_cellsEnemySpawner.Count == 0)
+        if (_cellsEnemySpawner.Count == 0 || _targetEnemy.Count == 0)
         {
-            _currentWave++;
             WaveCountChanged?.Invoke();
             return;
         }
-
-        if (_currentWave >= _waveCount)
-            return;
 
         if (_battleSystem.UnitsFriend.Count == 0)
             RandomSpawn();
@@ -137,10 +147,6 @@ public class EnemySpawner : MonoBehaviour
                     break;
             }
         }
-
-        _currentWave++;
-
-        WaveCountChanged?.Invoke();
     }
 
     private void SpawnOnUnitFriend()
@@ -194,7 +200,6 @@ public class EnemySpawner : MonoBehaviour
     private void OnDieBuild(Fighter fighter)
     {
         fighter.Died_get -= OnDieBuild;
-        MinusWaveCount(_minusWaveOnDieBuild);
 
         DiedBuild?.Invoke();
     }

@@ -76,8 +76,8 @@ public class CellSpawner : MonoBehaviour
             if (i == 0)
                 SpawnCellWizzard();
 
-            if (i + 1 == _grid.x)
-                SpawnCellBoss();
+            //if (i + 1 == _grid.x)
+            //    SpawnCellBoss();
 
             offset.x = 0;
             offset.z += _offset.y;
