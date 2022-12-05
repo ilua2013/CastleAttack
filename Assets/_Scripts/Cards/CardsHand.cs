@@ -10,7 +10,6 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     [SerializeField] private Phase[] _phases;
 
     private ICardApplicable _currentTarget;
-    private Card _selectable;
     private List<Card> _cards = new List<Card>();
 
     public Phase[] Phases => _phases;
@@ -41,18 +40,28 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
             UnRegister(card);
     }
 
-    private void Update()
+    private void RegisterCard(Card card)
     {
-        if (Input.GetMouseButtonDown(0) && _selectable != null)
-            TryApplyCard(_selectable, Input.mousePosition);
-
-        if (_selectable != null)
-            CheckApplicablePlace(Input.mousePosition, _selectable);
+        card.BeginDrag += OnBeginDrag;
+        card.Drag += OnDrag;
+        card.EndDrag += OnEndDrag;
     }
 
-    private void CheckApplicablePlace(Vector3 mousePosition, Card card)
+    private void UnRegister(Card card)
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        card.BeginDrag -= OnBeginDrag;
+        card.Drag -= OnDrag;
+        card.EndDrag -= OnEndDrag;
+    }
+
+    private void OnBeginDrag(PointerEventData eventData, Card card)
+    {
+        CardTaken?.Invoke(eventData, card);
+    }
+
+    private void OnDrag(PointerEventData eventData, Card card)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
         RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
 
         if (hits.Length == 0)
@@ -76,58 +85,23 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         CanPlaceCard = false;
     }
 
-    private void TryApplyCard(Card card, Vector3 mousePosition)
+    private void OnEndDrag(PointerEventData eventData, Card card)
     {
-        bool result = TryApply(card, mousePosition);
+        bool result = TryApply(card, eventData.position);
 
         if (result == false)
         {
-            _selectable = null;
             card.CancleDrop();
             CancelDrop?.Invoke();
         }
+        else
+        {
+            CardDrop?.Invoke();
+        }
+
 
         if (_cards.Count <= 0)
             CardsEmpty?.Invoke();
-    }
-
-    private void RegisterCard(Card card)
-    {
-        card.Clicked += OnClicked;
-        card.BeginDrag += OnBeginDrag;
-        card.Drag += OnDrag;
-        card.EndDrag += OnEndDrag;
-    }
-
-    private void UnRegister(Card card)
-    {
-        card.Clicked -= OnClicked;
-        card.BeginDrag -= OnBeginDrag;
-        card.Drag -= OnDrag;
-        card.EndDrag -= OnEndDrag;
-    }
-
-    private void OnClicked(PointerEventData eventData, Card card)
-    {
-        CardTaken?.Invoke(eventData, card);
-        _selectable = card;
-    }
-
-    private void OnBeginDrag(PointerEventData eventData, Card card)
-    {
-        if (_selectable == null)
-            CardTaken?.Invoke(eventData, card);
-    }
-
-    private void OnDrag(PointerEventData eventData, Card card)
-    {
-        CheckApplicablePlace(eventData.position, card);
-    }
-
-    private void OnEndDrag(PointerEventData eventData, Card card)
-    {
-        if (_selectable == null)
-            TryApplyCard(card, eventData.position);
     }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
@@ -171,12 +145,9 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
                 {
                     if (card.Amount <= 1)
                     {
-                        _cards.Remove(card);
                         UnRegister(card);
+                        _cards.Remove(card);
                         card.DropOut(mousePosition);
-                        CardDrop?.Invoke();
-
-                        _selectable = null;
                     }
                     else
                     {

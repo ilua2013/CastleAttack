@@ -9,7 +9,7 @@ public class CardsHandView : MonoBehaviour
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
     private const float ScaleFactor = 1.2f;
-    private const float OffsetXFactor = 5f;
+    private const float OffsetXFactor = 2.5f;
 
     private float _offsetX = 180f;
 
@@ -117,12 +117,6 @@ public class CardsHandView : MonoBehaviour
         }
     }
 
-    private void OnSelected(CardHoverView card)
-    {
-        if (card.Card.Amount <= 1)
-            _cards.Remove(card);
-    }
-
     private void OnBeginDrag(CardHoverView card)
     {
         _cards.Remove(card);
@@ -137,9 +131,6 @@ public class CardsHandView : MonoBehaviour
 
     private void OnCancelDrop(CardHoverView card)
     {
-        if (_cards.Contains(card))
-            return;
-
         _cards.Add(card);
         Shuffling();
     }
@@ -152,7 +143,6 @@ public class CardsHandView : MonoBehaviour
         cardHover.Drop += OnDrop;
         cardHover.CancelDrop += OnCancelDrop;
         cardHover.Used += OnUsed;
-        cardHover.Selected += OnSelected;
 
         if (cardHover.TryGetComponent(out CardMovement movement))
             _cardMovements.Add(movement);
@@ -166,7 +156,6 @@ public class CardsHandView : MonoBehaviour
         cardHover.Drop -= OnDrop;
         cardHover.CancelDrop -= OnCancelDrop;
         cardHover.Used -= OnUsed;
-        cardHover.Selected -= OnSelected;
 
         if (cardHover.TryGetComponent(out CardMovement movement))
             _cardMovements.Remove(movement);
@@ -185,18 +174,12 @@ public class CardsHandView : MonoBehaviour
     {
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
 
-        if (_cards.Contains(cardHover) && card.gameObject.activeInHierarchy)
-            return;
-
         _cards.Add(cardHover);
         Shuffling();
     }
 
     private void OnUsed(CardHoverView card, int count)
     {
-        if (_cards.Contains(card))
-            return;
-
         _cards.Add(card);
         Shuffling();
     }
