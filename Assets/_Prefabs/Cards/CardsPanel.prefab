@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2120975630999082946}
   - component: {fileID: 2120975630999082947}
   - component: {fileID: 2120975630999082949}
-  - component: {fileID: 185364648003523849}
-  - component: {fileID: 3498368755755117975}
   - component: {fileID: 6475388175489201430}
+  - component: {fileID: 8024841844272176456}
+  - component: {fileID: 7874352096953930303}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3125d3080820f448276b068250dcdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &185364648003523849
+--- !u!114 &6475388175489201430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2120975630999082959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c8fe052ab3cb54c97c1944d6bcb9ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 85eae05e36385d74d98ee3e343103feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardsHand: {fileID: 8024841844272176456}
+  _cross: {fileID: 7945208566614889664, guid: c145e15f6f4026444a90ac9fb96950c4, type: 3}
+--- !u!114 &8024841844272176456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120975630999082959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9185ce0dae49af4eaf5eb05303a079d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _phases:
@@ -118,10 +132,9 @@ MonoBehaviour:
     _isActive: 0
     _delayTime: 0
   - _phaseType: 4
-    _isActive: 1
+    _isActive: 0
     _delayTime: 0
-  _capacity: 3
---- !u!114 &3498368755755117975
+--- !u!114 &7874352096953930303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,25 +143,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2120975630999082959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f97998767991ad4bb2a86ec533875c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e9e5206afcf4424fa5e9ce4c40718b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardsHand: {fileID: 185364648003523849}
+  _cardsHand: {fileID: 8024841844272176456}
   _cardsHandView: {fileID: 2120975630999082949}
---- !u!114 &6475388175489201430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120975630999082959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85eae05e36385d74d98ee3e343103feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cardsHand: {fileID: 185364648003523849}
-  _cross: {fileID: 7945208566614889664, guid: c145e15f6f4026444a90ac9fb96950c4, type: 3}
 --- !u!1 &8164881712411766592
 GameObject:
   m_ObjectHideFlags: 0

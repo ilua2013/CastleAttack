@@ -10,7 +10,7 @@ public class CardMovement : MonoBehaviour
     private const float LerpTime = 10f;
     private const float DistanceDelta = 0.1f;
     private const float AngleClamp = 35f;
-    private readonly Vector3 PlacementScale = Vector3.zero;
+    private readonly Vector3 PlacementScale = new Vector3 (0.5f,0.5f,0.5f);
 
     private Vector3 _initialScale;
     private Transform _draggingParent;
