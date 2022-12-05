@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animators:
-  - {fileID: 0}
+  - {fileID: 7950558914351854076}
   - {fileID: 7696961324146562407}
 --- !u!114 &8801586289200443270
 MonoBehaviour:
@@ -496,6 +496,16 @@ PrefabInstance:
 --- !u!4 &7628172289506055785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 471815717405744937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7950558914351854076 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 471815717405744937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5858710720802418466 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 471815717405744937}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &572015369756989070 stripped
@@ -935,9 +945,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 197142, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7696961324139292595 stripped
+--- !u!1 &7696961324139313463 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 166500, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
+  m_CorrespondingSourceObject: {fileID: 185568, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
+  m_PrefabInstance: {fileID: 7696961324139195863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7696961324139236941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 123802, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7696961324139341531 stripped
@@ -945,9 +960,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 150284, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7696961324139313463 stripped
+--- !u!1 &7696961324139219851 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 185568, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
+  m_CorrespondingSourceObject: {fileID: 108124, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7696961324139236601 stripped
@@ -965,11 +980,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 157590, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7696961324139219851 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 108124, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
-  m_PrefabInstance: {fileID: 7696961324139195863}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7696961324139323713 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 134294, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
@@ -980,9 +990,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 132324, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7696961324139236941 stripped
+--- !u!1 &7696961324139292595 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 123802, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
+  m_CorrespondingSourceObject: {fileID: 166500, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &3499758145133514810
@@ -1236,11 +1246,9 @@ MonoBehaviour:
   - {fileID: 2552602502391037406}
   - {fileID: 3719678763143091337}
   - {fileID: 3499758145133514810}
-  - {fileID: 8142742351165878112}
-  - {fileID: 8072690135289338998}
-  _rigidbodyPlatform: {fileID: 0}
+  _rigidbodyPlatform: {fileID: 5858710720802418466}
   _particleSystem: {fileID: 3544362600532817783}
-  _animatorPlatform: {fileID: 0}
+  _animatorPlatform: {fileID: 7950558914351854076}
 --- !u!54 &5160228940632511711
 Rigidbody:
   m_ObjectHideFlags: 0
