@@ -65,7 +65,7 @@ public class Fighter
             isFatal = fighter.TakeDamage(this);
         });
 
-        if (fighter.FighterType == FighterType.MainTarget || fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
+        if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
             TakeDamage(fighter);
 
         Attacked?.Invoke();
