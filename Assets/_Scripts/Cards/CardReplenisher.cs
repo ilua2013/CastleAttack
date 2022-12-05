@@ -68,13 +68,7 @@ public class CardReplenisher : MonoBehaviour
         CardUp?.Invoke(card, card.NextStage);
     }
 
-    private void OnCameBack(UnitCard card)
-    {
-        _cardsHand.CardComeBack(card);
-        _cardsHandView.CardComeBack(card);
-    }
-
-    private void CreateUnit(UnitCard card, Vector2 position)
+    private bool TryMergeCard(UnitCard card)
     {
         foreach (UnitCard unitCard in _unitCards)
         {
@@ -83,10 +77,27 @@ public class CardReplenisher : MonoBehaviour
                 if (unitCard.gameObject.activeInHierarchy)
                 {
                     unitCard.Merge();
-                    return;
+                    return true;
                 }
             }
         }
+
+        return false;
+    }
+
+    private void OnCameBack(UnitCard card)
+    {
+        if (TryMergeCard(card))
+            return;
+
+        _cardsHand.CardComeBack(card);
+        _cardsHandView.CardComeBack(card);
+    }
+
+    private void CreateUnit(UnitCard card, Vector2 position)
+    {
+        if (TryMergeCard(card))
+            return;
 
         UnitCard newCard = Instantiate(card, position, Quaternion.identity, _cardsHand.transform);
         newCard.gameObject.SetActive(true);
