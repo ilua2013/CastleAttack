@@ -155,6 +155,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             GamesStatistics.RegisterEnemyKill();
             LevelUppedTutorial?.Invoke();
             Invoke(nameof(Disable), 2.5f);
+           
         }
     }
 

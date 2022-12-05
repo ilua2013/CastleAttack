@@ -20,6 +20,7 @@ public class Mover
     public IUnit Unit => _unit;
 
     public event Action ReachedHigherCell;
+    public event Action ReachedTutorialHigherCell;
     public event Action Moved;
     public event Action<Cell> CellChanged;
 
@@ -90,11 +91,19 @@ public class Mover
         Vector3 targetPos = cell.transform.position - transform.position;
         float time = 0;
 
+        if (cell.CellIs == CellIs.Higher)
+        {
+            ReachedTutorialHigherCell?.Invoke();
+        }
+
         if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss)
         {
             if (cell.Top == null)
+            {
                 ReachedHigherCell?.Invoke();
-        }
+            }
+        }       
+
         float times = 0;
         while (time < _timeMove)
         {

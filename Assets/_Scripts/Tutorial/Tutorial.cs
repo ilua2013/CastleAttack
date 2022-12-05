@@ -22,6 +22,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private UnitEnemy _unitEnemy;
    
     private bool _isActivStepTwo = false;
+    //private bool _isHigherCell = false;
     private bool _isActivStepThree = false;
     private bool _isCountCardAlarm = true;
     private int _stepTutorial = 0;
@@ -72,7 +73,6 @@ public class Tutorial : MonoBehaviour
             ++_stepTutorial;
             Debug.Log(_stepTutorial);
 #if !UNITY_EDITOR
-
             YandexMetrica.Send("StepTutorial 1");
 #endif
             Debug.Log("Step 1");
@@ -153,7 +153,10 @@ public class Tutorial : MonoBehaviour
     {
         if (_stepTutorial == 3)
         {
+            //Debug.Log("Stoped");
+            //_isHigherCell = true;
             _panelViewSwitcher.PanelMonstr(true);
+          
             ++_stepTutorial;
 #if !UNITY_EDITOR
             YandexMetrica.Send("Step 4");
@@ -189,7 +192,7 @@ public class Tutorial : MonoBehaviour
         Debug.Log("Step 5");
         ++_stepTutorial;
         Debug.Log(_stepTutorial);
-        GameSwitch(0, true);       
+        StartCoroutine(DelayGameStop());
     }
 
     private void EndStep()
@@ -227,6 +230,7 @@ public class Tutorial : MonoBehaviour
 
             case 4:
                 _panelViewSwitcher.PanelMonstr(false);
+                _battleSystem.ReturnToHandFriend();
                 StepFive();
                 break;
 

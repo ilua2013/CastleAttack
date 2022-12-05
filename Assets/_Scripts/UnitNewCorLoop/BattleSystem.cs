@@ -44,9 +44,6 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
-
-        foreach (var unit in _unitFriend)
-            unit.Mover.ReachedHigherCell += TutorialStopUnit;
     }
 
     private void OnDisable()
@@ -71,14 +68,14 @@ public class BattleSystem : MonoBehaviour
     }
 
     public void ReturnToHandFriend()
-    {
+    {        
         for (int i = _unitFriend.Count - 1; i > -1; i--)
             _unitFriend[i].ReturnToHand();
     }
 
     private void TutorialStopUnit()
-    {
-        TutorialStopedUnit?.Invoke();
+    {       
+        TutorialStopedUnit?.Invoke();          
     }
 
     public void StopDoStep()
@@ -90,7 +87,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (unitFriend != null && _unitFriend.Contains(unitFriend) == false)
         {
-            _unitFriend.Add(unitFriend);
+            _unitFriend.Add(unitFriend);            
             unitFriend.Fighter.Died_get += RemoveUnit;
             unitFriend.FinishedStep += CheckFinishStepFriend;
             unitFriend.LevelUpped += AddUnit;
@@ -120,11 +117,15 @@ public class BattleSystem : MonoBehaviour
     {
         while (CheckHaveStep() && _doStep == true)
         {
+            
+
             _friendFinishStep = false;
             _enemyFinishStep = false;
 
+
+
             for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
-                _unitFriend[i].DoStep();
+                _unitFriend[i].DoStep();          
 
             while (_friendFinishStep == false)
             {
@@ -202,8 +203,9 @@ public class BattleSystem : MonoBehaviour
 
         _unitFriend = units;
         foreach (var unit in _unitFriend)
-        {           
-            unit.Mover.ReachedHigherCell += TutorialStopUnit;
+        {
+            Debug.Log("Unit222");
+            unit.Mover.ReachedTutorialHigherCell += TutorialStopUnit;
         }
         index = 20;
 
