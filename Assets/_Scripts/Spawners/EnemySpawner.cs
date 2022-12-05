@@ -15,15 +15,17 @@ public class EnemySpawner : MonoBehaviour
     [Header("Add Params")]
     [SerializeField] private int _minusWaveOnDieBuild = 3;
     [Header("StartUnit")]
-    [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[50];
+    [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[20];
 
     private int _currentWave = 0;
 
+    public UnitEnemy[] EnemyStart => _enemysStart;
     public int WaveCount => _waveCount;
     public int CurrentWave => _currentWave;
     public bool HaveWave => _waveCount > _currentWave;
 
     public event Action WaveCountChanged;
+    public event Action DiedBuild;
     public event Action<UnitEnemy> Spawned_get;
 
     private void OnValidate()
@@ -85,6 +87,22 @@ public class EnemySpawner : MonoBehaviour
         _currentWave = _currentWave > _waveCount ? _waveCount : _currentWave;
 
         WaveCountChanged?.Invoke();
+    }
+
+    public int GetBuildCount()
+    {
+        int i = 0;
+
+        foreach (var item in _enemysStart)
+        {
+            print(item.Fighter.IsDead + " IsDead  -  " + item.Fighter.FighterType + " (" + item.Initialized + ")");
+            if (item.Fighter.FighterType == FighterType.Build && item.Fighter.IsDead == false)
+            {
+                i++;
+            }
+        }
+
+        return i;
     }
 
     private void OnDieMainTarget(Fighter fighter)
@@ -177,5 +195,7 @@ public class EnemySpawner : MonoBehaviour
     {
         fighter.Died_get -= OnDieBuild;
         MinusWaveCount(_minusWaveOnDieBuild);
+
+        DiedBuild?.Invoke();
     }
 }
