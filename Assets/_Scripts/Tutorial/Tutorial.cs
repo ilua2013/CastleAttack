@@ -32,10 +32,8 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned += StepTwoThree;
         _battleSystem.StepStarted += StepThreeFour;
         //_cardReplenisher.CardUp += StepFourFive;
-        _battleSystem.DiedAllEnemy += EndStep;
+        //_battleSystem.DiedAllEnemy += EndStep;
         _battleSystem.TutorialStopedUnit += StopGame;
-        _levelSystem.Wave1Finished += EnabledWaveTwo;
-        _levelSystem.Wave2Finished += EnabledWaveThree;
         _buttonStartGame.onClick.AddListener(StartGamePause);
         _unitEnemy.LevelUppedTutorial += StepFourFive;
     }
@@ -47,9 +45,7 @@ public class Tutorial : MonoBehaviour
         _cardsHand.Spawned -= StepTwoThree;
         _battleSystem.StepStarted -= StepThreeFour;
         //_cardReplenisher.CardUp -= StepFourFive;
-        _battleSystem.DiedAllEnemy -= EndStep;
-        _levelSystem.Wave1Finished -= EnabledWaveTwo;
-        _levelSystem.Wave2Finished -= EnabledWaveThree;
+        //_battleSystem.DiedAllEnemy -= EndStep;
         _battleSystem.TutorialStopedUnit -= StopGame;
         _buttonStartGame.onClick.RemoveListener(StartGamePause);
         _unitEnemy.LevelUppedTutorial -= StepFourFive;

@@ -6,27 +6,27 @@ using System;
 
 public class CardsRewarder : MonoBehaviour
 {
-    private LevelSystem _levelSystem;
-    private DeckBuilder _deckBuilder;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private DeckBuilder _deckBuilder;
 
     private Card[] _rewardCards;
 
     public Card[] RewardCards => _rewardCards;
 
-    private void Awake()
+    private void OnValidate()
     {
-        _levelSystem = FindObjectOfType<LevelSystem>();
+        _battleSystem = FindObjectOfType<BattleSystem>();
         _deckBuilder = FindObjectOfType<DeckBuilder>();
     }
 
     private void OnEnable()
     {
-        _levelSystem.Wave3Finished += OnFinished;
+        _battleSystem.Win += OnFinished;
     }
 
     private void OnDisable()
     {
-        _levelSystem.Wave3Finished -= OnFinished;
+        _battleSystem.Win -= OnFinished;
     }
 
     private void OnFinished()

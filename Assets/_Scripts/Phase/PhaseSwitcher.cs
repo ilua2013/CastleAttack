@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class PhaseSwitcher : MonoBehaviour
 {
-    private LevelSystem _levelSystem;
-    private BattleSystem _battleSystem;
-    private CardsSelection _cardSelection;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardsSelection _cardSelection;
 
     private List<IPhaseHandler> _handlers = new List<IPhaseHandler>();
 
     public PhaseType CurrentPhase { get; private set; }
 
-    private void Awake()
+    private void OnValidate()
     {
-        _levelSystem = FindObjectOfType<LevelSystem>(true);
         _battleSystem = FindObjectOfType<BattleSystem>(true);
         _cardSelection = FindObjectOfType<CardsSelection>(true);
+    }
 
+    private void Awake()
+    {
         foreach (var item in FindObjectsOfType<MonoBehaviour>(true))
         {
             if (item is IPhaseHandler handler)
@@ -31,8 +32,6 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepFinished += OnStepFinished;
         _cardSelection.CardSelected += OnCardSelected;
         _cardSelection.Passed += OnCardSelectionPassed;
-        _levelSystem.Wave3Finished += OnFinished;
-        _levelSystem.Failed += OnFailed;
     }
 
     private void OnDisable()
@@ -41,14 +40,22 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepFinished -= OnStepFinished;
         _cardSelection.CardSelected -= OnCardSelected;
         _cardSelection.Passed -= OnCardSelectionPassed;
-        _levelSystem.Wave3Finished -= OnFinished;
-        _levelSystem.Failed -= OnFailed;
     }
 
     private void Start()
     {
         Switch(PhaseType.SelectionCard);
         CurrentPhase = PhaseType.SelectionCard;
+    }
+
+    public void Register(IPhaseHandler phaseHandler)
+    {
+        _handlers.Add(phaseHandler);
+    }
+
+    public void UnRegister(IPhaseHandler phaseHandler)
+    {
+        _handlers.Remove(phaseHandler);
     }
 
     private void OnStepStarted()

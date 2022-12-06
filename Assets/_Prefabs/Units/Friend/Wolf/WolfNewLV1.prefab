@@ -99,18 +99,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b58abcf18fe39443ab14e5e2a214bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxStep>k__BackingField: 1
   _distanceAttack:
   - Side: 1
     Distance: 2
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
-    _timeMove: 0.75
     _canMove: 1
+    _speedRotateToWizzard: 4
   <Fighter>k__BackingField:
     _type: 0
     _damage: 2
     _maxHealth: 8
+  _wizzard: {fileID: 0}
+  _phaseSwitcher: {fileID: 0}
+  _phases:
+  - _phaseType: 0
+    _isActive: 1
+    _delayTime: 0
+  - _phaseType: 1
+    _isActive: 1
+    _delayTime: 0
+  - _phaseType: 2
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 3
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 4
+    _isActive: 0
+    _delayTime: 0
 --- !u!114 &8636050476215644690
 MonoBehaviour:
   m_ObjectHideFlags: 0

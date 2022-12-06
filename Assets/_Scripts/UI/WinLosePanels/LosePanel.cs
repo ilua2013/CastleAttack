@@ -7,15 +7,19 @@ using UnityEngine;
 public class LosePanel : MonoBehaviour
 {
     [SerializeField] private RewardRespawnButton _respawnButton;
+    [SerializeField] private BattleSystem _battleSystem;
 
     private FinishPanel _finishPanel;
-    private LevelSystem _levelSystem;
 
     private bool _isReviveWasOffered;
 
+    private void OnValidate()
+    {
+        _battleSystem = FindObjectOfType<BattleSystem>();
+    }
+
     private void Awake()
     {
-        _levelSystem = FindObjectOfType<LevelSystem>();
         _finishPanel = GetComponent<FinishPanel>();
     }
 
@@ -45,7 +49,7 @@ public class LosePanel : MonoBehaviour
 
     private void OnRespawned()
     {
-        _levelSystem.Wizzard.Fighter.RecoveryHealth(_levelSystem.Wizzard.Fighter.MaxHealth);
+        _battleSystem.Wizzard.Fighter.RecoveryHealth(_battleSystem.Wizzard.Fighter.MaxHealth);
         _finishPanel.ClosePanel();
 
 #if !UNITY_EDITOR
