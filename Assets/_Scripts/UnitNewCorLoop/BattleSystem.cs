@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
+    [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private Button _buttonStartFight;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private float _delayBeetwenStep = 0.15f;
 
     private List<UnitFriend> _unitFriend = new List<UnitFriend>();
     private List<UnitEnemy> _unitEnemy = new List<UnitEnemy>();
@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
     private bool _enemyFinishStep;
 
     public int CountEnemy => _unitEnemy.Count;
+    public UnitFriend Wizzard => _wizzard;
     public EnemySpawner EnemySpawner => _enemySpawner;
     public List<UnitEnemy> UnitsEnemy => _unitEnemy;
     public List<UnitFriend> UnitsFriend => _unitFriend;
@@ -26,9 +27,9 @@ public class BattleSystem : MonoBehaviour
     public event Action StepFinished;
     public event Action StepStarted;
     public event Action RemovedDie;
-    public event Action DiedAllEnemy;
-    public event Action EnemySpawnerChanged;
     public event Action TutorialStopedUnit;
+    public event Action Lose;
+    public event Action Win;
 
     private void OnValidate()
     {
@@ -37,6 +38,15 @@ public class BattleSystem : MonoBehaviour
 
         if (_buttonStartFight == null)
             _buttonStartFight = FindObjectOfType<StartFightButton>().Button;
+
+        foreach (var item in FindObjectsOfType<UnitFriend>())
+        {
+            if (item.Fighter.FighterType == FighterType.MainWizzard)
+            {
+                _wizzard = item;
+                break;
+            }
+        }
     }
 
     private void OnEnable()
@@ -44,6 +54,7 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
+        _wizzard.Fighter.Died += InvokeLose;
     }
 
     private void OnDisable()
@@ -51,20 +62,10 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.RemoveListener(StartBattle);
         _cardsHand.Spawned -= AddUnit;
         _enemySpawner.Spawned_get -= AddUnit;
+        _wizzard.Fighter.Died -= InvokeLose;
 
         foreach (var unit in _unitFriend)
             unit.Mover.ReachedHigherCell -= TutorialStopUnit;
-    }
-
-    public void SetEnemySpawner(EnemySpawner enemySpawner)
-    {
-        _enemySpawner.Spawned_get -= AddUnit;
-        _enemySpawner = enemySpawner;
-        _enemySpawner.Spawned_get += AddUnit;
-
-        _unitEnemy.Clear();
-
-        EnemySpawnerChanged?.Invoke();
     }
 
     public void ReturnToHandFriend()
@@ -120,8 +121,8 @@ public class BattleSystem : MonoBehaviour
             _friendFinishStep = false;
             _enemyFinishStep = false;
 
-            for (int i = _unitFriend.Count - 1; i > -1; i--)
-            {  // определяет верный порядок действий
+            for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
+            {  
                 _unitFriend[i].DoStep();
 
                 while (_unitFriend.Count > i && _unitFriend[i].DoingStep == true)
@@ -129,12 +130,7 @@ public class BattleSystem : MonoBehaviour
             }
 
             while (_friendFinishStep == false)
-            {
-                //yield return new WaitForSeconds(0.2f);
                 CheckFinishStepFriend();
-            }
-
-            //yield return new WaitForSeconds(_delayBeetwenStep);
 
             for (int i = _unitEnemy.Count - 1; i > -1; i--)
             {
@@ -208,10 +204,12 @@ public class BattleSystem : MonoBehaviour
         }
 
         _unitFriend = units;
+
         foreach (var unit in _unitFriend)
         {
             unit.Mover.ReachedTutorialHigherCell += TutorialStopUnit;
         }
+
         index = 20;
 
         List<UnitEnemy> unitsEnemy = new List<UnitEnemy>();
@@ -238,8 +236,13 @@ public class BattleSystem : MonoBehaviour
         {
             _unitEnemy.Remove(unitEnemy);
 
-            if (_unitEnemy.Count == 0)
-                DiedAllEnemy?.Invoke();
+            if (_unitEnemy.Count == 0 && _enemySpawner.HaveWave == false)
+                Win?.Invoke();
         }
+    }
+
+    private void InvokeLose()
+    {
+        Lose?.Invoke();
     }
 }

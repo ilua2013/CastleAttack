@@ -9,11 +9,27 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
     [SerializeField] private Transform _panel;
     [SerializeField] private Transform _background;
     [SerializeField] private Phase[] _phases;
+    [SerializeField] private BattleSystem _battleSystem;
 
     public Phase[] Phases => _phases;
 
     public event Action Opened;
     public event Action Closed;
+
+    private void OnValidate()
+    {
+        _battleSystem = FindObjectOfType<BattleSystem>();
+    }
+
+    private void OnEnable()
+    {
+        _battleSystem.Win += OpenPanel;   
+    }
+
+    private void OnDisable()
+    {
+        _battleSystem.Win -= OpenPanel;
+    }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
@@ -21,11 +37,17 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
 
         yield return new WaitForSeconds(phase.Delay);
 
-        if (phase.IsActive)
-        {
-            StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
-            Opened?.Invoke();
-        }
+        //if (phase.IsActive)
+        //{
+        //    StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
+        //    Opened?.Invoke();
+        //}
+    }
+
+    public void OpenPanel()
+    {
+        StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
+        Opened?.Invoke();
     }
 
     public void ClosePanel()

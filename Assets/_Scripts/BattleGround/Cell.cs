@@ -36,14 +36,14 @@ public class Cell : MonoBehaviour
     {
         _this = this;
 
-        Vector3 right = new Vector3(1.5f, 0, 0);
-        Vector3 rightTop = new Vector3(1.5f, 0, 1.5f);
-        Vector3 rightBot = new Vector3(1.5f, 0, -1.5f);
-        Vector3 top = new Vector3(0, 0, 1.5f);
-        Vector3 bot = new Vector3(0, 0, -1.5f);
-        Vector3 left = new Vector3(-1.5f, 0, 0);
-        Vector3 leftTop = new Vector3(-1.5f, 0, 1.5f);
-        Vector3 leftBot = new Vector3(-1.5f, 0, -1.5f);
+        Vector3 right = new Vector3(2f, 0, 0);
+        Vector3 rightTop = new Vector3(2f, 0, 2f);
+        Vector3 rightBot = new Vector3(2f, 0, -2f);
+        Vector3 top = new Vector3(0, 0, 2f);
+        Vector3 bot = new Vector3(0, 0, -2f);
+        Vector3 left = new Vector3(-2f, 0, 0);
+        Vector3 leftTop = new Vector3(-2f, 0, 2f);
+        Vector3 leftBot = new Vector3(-2f, 0, -2f);
 
         Dictionary<Vector3, CellNeighbor> sides = new Dictionary<Vector3, CellNeighbor>() { {right, CellNeighbor.Right}, {rightBot, CellNeighbor.BotRight },
 {rightTop, CellNeighbor.TopRight }, {top, CellNeighbor.Top }, {bot, CellNeighbor.Bot },
