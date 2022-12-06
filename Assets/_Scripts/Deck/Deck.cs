@@ -14,11 +14,13 @@ public class Deck : MonoBehaviour
     private List<Card> _cards = new List<Card>();
 
     public List<Card> Cards => _cards;
+    public bool IsNotEmpty => _cards.Count > 0;
     public virtual DeckType DeckType { get; }
 
     public void Add(Card card)
     {
         _cards.Add(card);
+        card.transform.SetParent(transform);
         card.Save(DeckType);
     }
 

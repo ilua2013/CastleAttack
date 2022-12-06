@@ -37,10 +37,7 @@ public class CardsRewarder : MonoBehaviour
         {
             SetRandomAmount(card);
 
-            if (_deckBuilder.IsCombatDeckFull)
-                card.Save(DeckType.Common);
-            else
-                card.Save(DeckType.Combat);
+            card.Save(DeckType.Common);
         }
     }
 

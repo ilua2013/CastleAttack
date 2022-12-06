@@ -75,7 +75,7 @@ public class PhaseSwitcher : MonoBehaviour
         CurrentPhase = PhaseType.SelectionCard;
     }
 
-    private void OnCardSelected(Card card)
+    private void OnCardSelected()
     {
         Switch(PhaseType.CardPlacement);
         CurrentPhase = PhaseType.CardPlacement;

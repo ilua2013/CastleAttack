@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
@@ -8,7 +9,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     [field: SerializeField] public int MaxStep { get; private set; } = 3; 
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field:SerializeField] public Mover Mover { get; private set; }
-    [field:SerializeField] public Fighter Fighter { get; private set; }   
+    [field:SerializeField] public Fighter Fighter { get; private set; }
 
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }

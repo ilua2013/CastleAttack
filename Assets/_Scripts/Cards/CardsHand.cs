@@ -114,9 +114,13 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
             card.Activate(phase.IsActive);
     }
 
-    public void CardAdd(Card card)
+    public void CardAdd(Card card, bool isActive)
     {
         _cards.Add(card);
+
+        card.transform.SetParent(transform);
+        card.Activate(isActive);
+
         RegisterCard(card);
     }
 

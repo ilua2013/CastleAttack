@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DeckBuilder : MonoBehaviour
 {
     [SerializeField] private List<Card> _deckPrefabs;
-
     [SerializeField] private CommonDeck _commonDeck;
     [SerializeField] private CombatDeck _combatDeck;
 
     private List<Card> _cards = new List<Card>();
 
-    public bool IsCombatDeckFull => _combatDeck.IsFull; 
     public List<Card> Cards => _cards;
 
     private void Awake()
@@ -19,16 +18,28 @@ public class DeckBuilder : MonoBehaviour
         foreach (Card prefab in _deckPrefabs)
         {
             Card card = Create(prefab);
-            _cards.Add(card);
+            _combatDeck.Add(card);
+
+            for (int i = 0; i < card.CardSave.Amount - 1; i++)
+                _combatDeck.Add(Create(prefab));
 
             if (card.CardSave.IsAvailable == false)
                 continue;
 
-            if (card.CardSave.Deck == DeckType.Combat)
-                _combatDeck.Add(card);
-            else
-                _commonDeck.Add(card);
+            _commonDeck.Add(Create(prefab));
         }
+    }
+
+    public Card TakeCard(CardName name)
+    {
+        foreach (Card card in Cards)
+            if (card.Name == name)
+            {
+                _commonDeck.Add(card);
+                return card;
+            }
+
+        throw new ArgumentException($"This card {name} does not exist");
     }
 
     private Card Create(Card prefab)

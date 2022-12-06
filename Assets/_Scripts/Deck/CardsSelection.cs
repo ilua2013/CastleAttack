@@ -8,16 +8,18 @@ using UnityEngine.EventSystems;
 public class CardsSelection : MonoBehaviour, IPhaseHandler
 {
     [SerializeField] private int _count;
+    [SerializeField] private float _showDelay;
     [SerializeField] private Phase[] _phases;
 
     private CombatDeck _deck;
-    private CardReplenisher _cardReplenisher;
+    private CardsHand _cardsHand;
+    private CardsHandView _cardsHandView;
     private DeckCounter _deckCounter;
     private Card[] _selectedCards;
     private float _delayTime = 0; 
 
     public event Action<Card[]> DrawnOut;
-    public event Action<Card> CardSelected;
+    public event Action CardSelected;
     public event Action Passed;
 
     public Phase[] Phases => _phases;
@@ -25,17 +27,21 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     private void Awake()
     {
         _deck = FindObjectOfType<CombatDeck>();
-        _cardReplenisher = FindObjectOfType<CardReplenisher>();
+        _cardsHand = FindObjectOfType<CardsHand>();
         _deckCounter = FindObjectOfType<DeckCounter>();
+        _cardsHandView = _cardsHand.GetComponent<CardsHandView>();
 
         if (_deck == null)
             throw new NullReferenceException(nameof(_deck));
 
-        if (_cardReplenisher == null)
-            throw new NullReferenceException(nameof(_cardReplenisher));
+        if (_cardsHand == null)
+            throw new NullReferenceException(nameof(_cardsHand));
 
         if (_deckCounter == null)
             throw new NullReferenceException(nameof(_deckCounter));
+
+        if (_cardsHandView == null)
+            throw new NullReferenceException(nameof(_cardsHandView));
     }
 
    public void TutorialPhaseEnable()
@@ -71,29 +77,32 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             return;
         }
 
-        _selectedCards = _deck.ShowRandomCards(_count);
+        if (_deck.IsNotEmpty)
+            _selectedCards = _deck.ShowRandomCards(_count);
 
         foreach (Card card in _selectedCards)
         {
             card.gameObject.SetActive(true);
-            card.Clicked += OnCardSelect;
+            card.Activate(false);
         }
 
         DrawnOut?.Invoke(_selectedCards);
+
+        StartCoroutine(OnCardSelect());
     }
 
-    private void OnCardSelect(PointerEventData eventData, Card card)
+    private IEnumerator OnCardSelect()
     {
-        foreach (Card selectedCard in _selectedCards)
-        {
-            selectedCard.Clicked -= OnCardSelect;
-            selectedCard.gameObject.SetActive(false);
-        }
+        yield return new WaitForSeconds(_showDelay);
 
-        _deck.ReturnCards(_selectedCards);
-        _cardReplenisher.Create(card, eventData.position);
+        foreach (Card card in _selectedCards)
+            _cardsHand.CardAdd(card, false);
 
-        CardSelected?.Invoke(card);
+        _cardsHandView.CardAdd(_selectedCards);
+
+        yield return new WaitForSeconds(0.5f);
+
         gameObject.SetActive(false);
+        CardSelected?.Invoke();
     }
 }
