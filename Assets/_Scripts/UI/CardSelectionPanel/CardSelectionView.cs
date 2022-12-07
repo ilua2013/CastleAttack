@@ -42,11 +42,14 @@ public class CardSelectionView : MonoBehaviour
 
     private void OnDrawOut(Card[] cards)
     {
-        if (cards.Length != _cardPlacements.Length)
-            throw new InvalidOperationException($"cards.Length != _cardPlacements.Length");
-
         for (int i = 0; i < _cardPlacements.Length; i++)
         {
+            if (i >= cards.Length)
+            {
+                _cardPlacements[i].gameObject.SetActive(false);
+                continue;
+            }
+
             cards[i].transform.SetParent(_cardPlacements[i]);
             cards[i].transform.position = _deckCounterView.transform.position;
 

@@ -77,8 +77,13 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
             return;
         }
 
-        if (_deck.IsNotEmpty)
-            _selectedCards = _deck.ShowRandomCards(_count);
+        if (_deck.IsEmpty)
+        {
+            CardSelected?.Invoke();
+            return;
+        }
+
+        _selectedCards = _deck.TakeRandomCards(_count);
 
         foreach (Card card in _selectedCards)
         {

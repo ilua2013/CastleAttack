@@ -47,6 +47,7 @@ public class CardInShopView : MonoBehaviour
     public void FillCard(Card card, bool isNew)
     {
         _card = card;
+        _card.gameObject.SetActive(_card.CardSave.IsAvailable);
         _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
