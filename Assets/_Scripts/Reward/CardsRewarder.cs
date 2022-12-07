@@ -21,12 +21,12 @@ public class CardsRewarder : MonoBehaviour
 
     private void OnEnable()
     {
-        _battleSystem.Win += OnFinished;
+        //_battleSystem.Win += OnFinished;
     }
 
     private void OnDisable()
     {
-        _battleSystem.Win -= OnFinished;
+        //_battleSystem.Win -= OnFinished;
     }
 
     private void OnFinished()
