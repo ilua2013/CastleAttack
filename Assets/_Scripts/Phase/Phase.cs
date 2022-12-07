@@ -27,4 +27,9 @@ public class Phase
     {
         _isActive = true;
     }
+
+    public void TutorialSelectionCardDisable()
+    {
+        _isActive = false;
+    }
 }

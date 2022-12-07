@@ -44,6 +44,12 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         phase.TutorialSelectionCardEnable();
     }
 
+    public void TutorialPhaseDisable()
+    {
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == PhaseType.SelectionCard);
+        phase.TutorialSelectionCardDisable();
+    }
+
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);

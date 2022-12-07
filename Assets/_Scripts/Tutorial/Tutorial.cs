@@ -21,8 +21,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private TutorialPanelViewSwitcher _panelViewSwitcher;
     [SerializeField] private UnitEnemy _unitEnemy;
    
-    private bool _isActivStepTwo = false;
-    //private bool _isHigherCell = false;
+    private bool _isActivStepTwo = false;    
     private bool _isActivStepThree = false;
     private bool _isCountCardAlarm = true;
     private int _stepTutorial = 0;
@@ -64,7 +63,7 @@ public class Tutorial : MonoBehaviour
         StepOneTwo();
     }
 
-    private void StepOneTwo(/*Card card*/)
+    private void StepOneTwo()
     {
        
         if ( _stepTutorial == 0 )
@@ -152,9 +151,7 @@ public class Tutorial : MonoBehaviour
     private void StopGame()
     {
         if (_stepTutorial == 3)
-        {
-            //Debug.Log("Stoped");
-            //_isHigherCell = true;
+        {           
             _panelViewSwitcher.PanelMonstr(true);
           
             ++_stepTutorial;
@@ -179,6 +176,7 @@ public class Tutorial : MonoBehaviour
     }
     private void StepFive()
     {
+        _cardsSelection.TutorialPhaseDisable();
         foreach (var target in _targets)
         {
             target.gameObject.SetActive(true);
@@ -211,10 +209,7 @@ public class Tutorial : MonoBehaviour
 
         switch (_stepTutorial)
         {
-            case 1:
-
-                //StopCoroutine(DelayGameStop());
-                //_cardsSelection.Phases.
+            case 1:               
                 _tutorialEffects.EffectOneTwo();
                 _panelViewSwitcher.TutorialFingerDraw(true);
                 _panelViewSwitcher.PanelInstructinSpellAndMonster(false);
@@ -230,29 +225,25 @@ public class Tutorial : MonoBehaviour
 
             case 4:
                 _panelViewSwitcher.PanelMonstr(false);
-                _battleSystem.ReturnToHandFriend();
+                _battleSystem.ReturnToHandFriend();               
                 StepFive();
                 break;
 
-            case 5:
-                StartCoroutine(PanelVievBox());
-                //_panelViewSwitcher.PanelViewBox(false);
-                //_panelViewSwitcher.UpgradeCardTutorial(false);
-                //StepFive();
+            case 5:               
+                _panelViewSwitcher.PanelViewBox(false);
+                _cardsSelection.TutorialPhaseEnable();              
                 break;
 
             case 6:
-                _panelViewSwitcher.UpgradeCardTutorial(false);
-                //_panelViewSwitcher.PanelViewBox(false);
+                _panelViewSwitcher.UpgradeCardTutorial(false);                
                 break;
 
             case 7:
                 _panelViewSwitcher.PanelTwoTutorial(false);
-                //_panelViewSwitcher.PanelTwoTutorial(false);
+               
                 break;
             case 8:
-                _panelViewSwitcher.PanelThree(false);
-                //_panelViewSwitcher.PanelThree(false);
+                _panelViewSwitcher.PanelThree(false);              
                 break;
 
 
@@ -260,13 +251,7 @@ public class Tutorial : MonoBehaviour
                 break;
         }
 
-    }
-
-    private IEnumerator PanelVievBox()
-    {
-        yield return new WaitForSeconds(2.3f);
-        _panelViewSwitcher.PanelViewBox(false);
-    }
+    }  
 
     private void EnabledWaveThree()
     {
