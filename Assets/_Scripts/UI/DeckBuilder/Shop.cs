@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private Deck _deck;
-
+    private CommonDeck _deck;
     private List<CardInShopView> _views;
     private List<Card> _cards = new List<Card>();
 
@@ -16,6 +15,7 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
+        _deck = FindObjectOfType<CommonDeck>();
         _views = GetComponentsInChildren<CardInShopView>().ToList();
     }
 

@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 public class DeckLoader : MonoBehaviour
 {
-    [SerializeField] private Deck _deck;
-
+    private CommonDeck _deck;
     private List<CardInDeckView> _views;
     private List<Card> _cards = new List<Card>();
 
     private void Awake()
     {
+        _deck = FindObjectOfType<CommonDeck>();
         _views = GetComponentsInChildren<CardInDeckView>().ToList();
     }
 

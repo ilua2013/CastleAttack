@@ -8,10 +8,10 @@ public class CombatDeck : Deck
 {
     public override DeckType DeckType => DeckType.Combat;
 
-    public Card[] ShowRandomCards(int count)
+    public Card[] TakeRandomCards(int count)
     {
         if (count > Cards.Count)
-            throw new ArgumentOutOfRangeException($"{count} is more then cards in the Deck");
+            count = Cards.Count;
 
         List<Card> result = new List<Card>(count);
 
@@ -26,7 +26,7 @@ public class CombatDeck : Deck
             }
 
             result.Add(card);
-            Cards.Remove(card);
+            Remove(card);
         }
 
         return result.ToArray();

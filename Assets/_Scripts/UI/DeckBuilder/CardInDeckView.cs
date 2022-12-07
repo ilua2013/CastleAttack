@@ -71,7 +71,7 @@ public class CardInDeckView : MonoBehaviour
     public void FillCard(Card card, bool smooth)
     {
         _card = card;
-        _card.gameObject.SetActive(true);
+        _card.gameObject.SetActive(_card.CardSave.IsAvailable);
         _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
@@ -122,10 +122,9 @@ public class CardInDeckView : MonoBehaviour
     {
         if (card.Name == _cardName)
         {
-            Card newCard = _deck.TakeCard(_cardName);
-            newCard.Save(card.CardSave);
+            _card.Save(card.CardSave);
 
-            FillCard(newCard, false);
+            FillCard(_card, false);
         }
     }
 }
