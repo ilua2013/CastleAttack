@@ -51,6 +51,7 @@ public class RagdollFriend : MonoBehaviour
 
     private void OnEnable()
     {
+        if(_particleSystem != null)
         _particleSystem.Stop();
         _unitFriend.Fighter.EffectDied += RagDollEnable;
     }
@@ -80,6 +81,7 @@ public class RagdollFriend : MonoBehaviour
         //{
         //    rigi.AddForce(Vector3.up * 800);
         //}
+        if(_particleSystem)
         _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
@@ -107,8 +109,8 @@ public class RagdollFriend : MonoBehaviour
 
         //foreach (var rigi in _rigidbodies)
         //    rigi.AddForce(forceFrom.normalized * _force);
-
-        _particleSystem.Play();
+        if (_particleSystem)
+            _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
 

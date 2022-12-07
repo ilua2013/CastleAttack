@@ -58,13 +58,11 @@ public class OpenCardButton : MonoBehaviour
 
     private void OpenCard()
     {
-        Card card = Instantiate(_deck.TakeCard(_view.CardName));
+        _view.Card.gameObject.SetActive(true);
+        _view.Card.CardSave.SetAvailable(true);
+        _view.Card.Save(_view.Card.CardSave);
 
-        card.gameObject.SetActive(true);
-        card.CardSave.SetAvailable(true);
-        card.Save(card.CardSave);
-
-        _view.FillCard(card, true);
+        _view.FillCard(_view.Card, true);
         gameObject.SetActive(false);
     }
 }

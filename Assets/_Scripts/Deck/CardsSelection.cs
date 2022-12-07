@@ -60,7 +60,20 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-        yield return new WaitForSeconds(phase.Delay);       
+        yield return new WaitForSeconds(phase.Delay);
+
+        if (!_deckCounter.CanTakeCard)
+        {
+            Passed?.Invoke();
+            gameObject.SetActive(false);
+            yield break;
+        }
+
+        if (_deck.IsEmpty)
+        {
+            CardSelected?.Invoke();
+            yield break;
+        }
 
         gameObject.SetActive(phase.IsActive);
 
@@ -70,15 +83,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private void DrawOutCards()
     {
-        if (!_deckCounter.CanTakeCard)
-        {
-            Passed?.Invoke();
-            gameObject.SetActive(false);
-            return;
-        }
-
-        if (_deck.IsNotEmpty)
-            _selectedCards = _deck.ShowRandomCards(_count);
+        _selectedCards = _deck.TakeRandomCards(_count);
 
         foreach (Card card in _selectedCards)
         {

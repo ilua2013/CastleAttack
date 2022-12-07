@@ -11,4 +11,5 @@ public enum CardName
     Crocodile,
     Lizard,
     Wolf,
+    Ork,
 }

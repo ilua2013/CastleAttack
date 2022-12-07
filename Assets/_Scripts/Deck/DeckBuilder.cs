@@ -23,34 +23,24 @@ public class DeckBuilder : MonoBehaviour
         foreach (Card prefab in _deckPrefabs)
         {
             Card card = Create(prefab);
-            _combatDeck.Add(card);
 
-            for (int i = 0; i < card.CardSave.Amount - 1; i++)
-                _combatDeck.Add(Create(prefab));
+            if (card.CardSave.IsAvailable)
+            {
+                _combatDeck.Add(card);
 
-            if (card.CardSave.IsAvailable == false)
-                continue;
+                for (int i = 0; i < card.CardSave.Amount - 1; i++)
+                    _combatDeck.Add(Create(prefab));
+            }
 
             _commonDeck.Add(Create(prefab));
         }
-    }
-
-    public Card TakeCard(CardName name)
-    {
-        foreach (Card card in Cards)
-            if (card.Name == name)
-            {
-                _commonDeck.Add(card);
-                return card;
-            }
-
-        throw new ArgumentException($"This card {name} does not exist");
     }
 
     private Card Create(Card prefab)
     {
         Card card = Instantiate(prefab);
 
+        card.gameObject.SetActive(false);
         card.Activate(true);
         card.Load();
 
