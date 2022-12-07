@@ -429,6 +429,11 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 3002225972330445656}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &9108643653767400275 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 3002225972330445656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2942541099206619903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
@@ -658,6 +663,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2942541099206619903}
     m_Modifications:
+    - target: {fileID: 774146860142967563, guid: cab979811ccae1541b2a79dd9d35683a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2236454621103541265, guid: cab979811ccae1541b2a79dd9d35683a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -886,7 +895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 6031638086841668508}
   _unitFriend: {fileID: 8801586289200443270}
-  _timeDelay: 4
+  _timeDelay: 1
   _force: 850
   _unit: {fileID: 1710454381889582042}
   _rigidbodies:
@@ -900,9 +909,9 @@ MonoBehaviour:
   - {fileID: 1022108474826966721}
   - {fileID: 5216184295020720291}
   - {fileID: 4073018738559264111}
-  _rigidbodyPlatform: {fileID: 0}
+  _rigidbodyPlatform: {fileID: 9108643653767400275}
   _particleSystem: {fileID: 3544362600532817783}
-  _animatorPlatform: {fileID: 0}
+  _animatorPlatform: {fileID: 4715332915676747149}
 --- !u!54 &7804032435468209394
 Rigidbody:
   m_ObjectHideFlags: 0
