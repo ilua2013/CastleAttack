@@ -80,14 +80,9 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
         if (_deck.IsEmpty)
         {
-<<<<<<< Updated upstream
-            CardSelected?.Invoke();
-            return;
-=======
             Passed?.Invoke();
             gameObject.SetActive(false);
-            yield break;
->>>>>>> Stashed changes
+            return;
         }
 
         _selectedCards = _deck.TakeRandomCards(_count);
