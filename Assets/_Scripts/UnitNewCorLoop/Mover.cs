@@ -8,6 +8,8 @@ public class Mover
 {
     [SerializeField] private Cell _startCell;
     [SerializeField] private bool _canMove = true;
+    [Header("Rotate Params")]
+    [SerializeField] private float _speedRotateToWizzard;
 
     private IUnit _unit;
     private Cell _currentCell;
@@ -23,6 +25,7 @@ public class Mover
     public event Action ReachedTutorialHigherCell;
     public event Action Moved;
     public event Action<Cell> CellChanged;
+    //public event Action Died;
 
     public void Init(IUnit unit, Transform unitTransform, Cell cell = null)
     {
@@ -73,6 +76,7 @@ public class Mover
 
     public void Die()
     {
+        //Died?.Invoke();
         if (_currentCell == null)
             return;
 
@@ -122,6 +126,19 @@ public class Mover
         while (Vector3.Distance(startSize, transform.localScale) > 0.001f)
         {
             transform.localScale = Vector3.Slerp(transform.localScale, startSize, _speedAnimation * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    public IEnumerator RotateTo(Vector3 lookAt)
+    {
+        Vector3 target = lookAt - transform.position;
+        target.y = 0;
+
+        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+        {
+            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotateToWizzard * Time.deltaTime);
+
             yield return null;
         }
     }

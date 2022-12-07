@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
+public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 {
-    [field: SerializeField] public int MaxStep { get; private set; } = 3; 
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field:SerializeField] public Mover Mover { get; private set; }
-    [field:SerializeField] public Fighter Fighter { get; private set; }   
+    [field:SerializeField] public Fighter Fighter { get; private set; }
+    [Header("Rotate to wizzard")]
+    [SerializeField] private UnitFriend _wizzard;
+    [SerializeField] private PhaseSwitcher _phaseSwitcher;
+    [SerializeField] private Phase[] _phases;
 
+    public int MaxStep { get; private set; } = 1; 
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
@@ -20,6 +25,8 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
 
     public bool DoingStep => _doingStep;
     public DistanceAttack[] DistanceAttack => _distanceAttack;
+
+    public Phase[] Phases => throw new NotImplementedException();
 
     public event Action Returned;
     public event Action Attacked;
@@ -64,6 +71,9 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
         Fighter.Died -= OnDie;
         Mover.ReachedHigherCell -= ReturnToHand;
         Mover.CellChanged -= StartMove;
+
+        if(_phaseSwitcher != null)
+        _phaseSwitcher.UnRegister(this);
     }
 
     public void LevelUp(UnitFriend unit)
@@ -80,6 +90,23 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
 
+        _phaseSwitcher = FindObjectOfType<PhaseSwitcher>();
+        _phaseSwitcher.Register(this);
+
+        foreach (var item in FindObjectsOfType<UnitFriend>())
+        {
+            if (item.Fighter.FighterType == FighterType.MainWizzard)
+                _wizzard = item;
+        }
+
+        if (Fighter.FighterType != FighterType.MainWizzard)
+        {
+            Vector3 target = _wizzard.transform.position - transform.position;
+            target.y = 0;
+            transform.forward = target;
+        }
+
+
         Mover.Init(this, transform, currentCell);
 
         if (Card != null)
@@ -95,6 +122,15 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         CurrentStep = currentStep;
+
+        _phaseSwitcher = FindObjectOfType<PhaseSwitcher>();
+        _phaseSwitcher.Register(this);
+
+        foreach (var item in FindObjectsOfType<UnitFriend>())
+        {
+            if (item.Fighter.FighterType == FighterType.MainWizzard)
+                _wizzard = item;
+        }
 
         Mover.Init(this, transform, currentCell);
 
@@ -252,6 +288,21 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack
             health += 4;
 
         return health;
+    }
+
+    public IEnumerator SwitchPhase(PhaseType phaseType)
+    {
+        if (Fighter.FighterType != FighterType.MainWizzard)
+        {
+            Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
+
+            yield return new WaitForSeconds(phase.Delay);
+
+            if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
+                StartCoroutine(Mover.RotateTo(_wizzard.transform.position));
+            else if (phase.IsActive && phase.PhaseType == PhaseType.Battle)
+                StartCoroutine(Mover.RotateTo(transform.position + new Vector3(0, 0, 5)));
+        }
     }
 }
 

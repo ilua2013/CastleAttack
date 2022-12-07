@@ -43,7 +43,7 @@ public class PanelOpenView : MonoBehaviour
         transform.localScale = from;
 
         float distanceDelta = 0.001f;
-        float lerpTime = 5f;
+        float lerpTime = 8f;
 
         while (Vector3.Distance(transform.localScale, to) > distanceDelta)
         {

@@ -9,7 +9,7 @@ public class CardsHandView : MonoBehaviour
     private const float Radius = 3.89f;
     private const float Angle = 1.33f;
     private const float ScaleFactor = 1.2f;
-    private const float OffsetXFactor = 20f;
+    private const float OffsetXFactor = 10f;
 
     private float _offsetX = 250f;
 
@@ -51,6 +51,7 @@ public class CardsHandView : MonoBehaviour
 
     private void Shuffling()
     {
+        Debug.Log("Shuffle");
         float number = -(float)(_cards.Count - 1) / 2;
         float offsetX = _offsetX - _cards.Count * OffsetXFactor;
 
@@ -104,6 +105,7 @@ public class CardsHandView : MonoBehaviour
         {
             Vector3 hoverPosition = card.StartPosition + Vector3.up * HoverOffsetY;
 
+            card.SaveStartState(card.StartPosition, card.transform.GetSiblingIndex());
             card.MoveTo(hoverPosition);
             card.ScaleTo(card.StartScaling * ScaleFactor);
             card.BringForward();
@@ -132,7 +134,9 @@ public class CardsHandView : MonoBehaviour
 
     private void OnCancelDrop(CardHoverView card)
     {
-        _cards.Add(card);
+        if (_cards.Contains(card) == false)
+            _cards.Add(card);
+
         Shuffling();
     }
 
@@ -165,9 +169,30 @@ public class CardsHandView : MonoBehaviour
     public void CardAdd(Card card)
     {
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
-        Register(cardHover);
 
-        _cards.Add(cardHover);
+        if (_cards.Contains(cardHover) == false)
+            _cards.Add(cardHover);
+
+        Register(cardHover);
+        Shuffling();
+    }
+
+    public void CardAdd(Card[] cards)
+    {
+        List<CardHoverView> cardsHover = new List<CardHoverView>();
+
+        foreach (Card card in cards)
+        {
+            CardHoverView cardHover = card.GetComponent<CardHoverView>();
+            cardsHover.Add(cardHover);
+
+            if (_cards.Contains(cardHover) == false)
+            {
+                _cards.Add(cardHover);
+                Register(cardHover);
+            }
+        }
+
         Shuffling();
     }
 
@@ -175,13 +200,17 @@ public class CardsHandView : MonoBehaviour
     {
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
 
-        _cards.Add(cardHover);
+        if (_cards.Contains(cardHover) == false)
+            _cards.Add(cardHover);
+
         Shuffling();
     }
 
     private void OnUsed(CardHoverView card, int count)
     {
-        _cards.Add(card);
+        if (_cards.Contains(card) == false)
+            _cards.Add(card);
+
         Shuffling();
     }
 }

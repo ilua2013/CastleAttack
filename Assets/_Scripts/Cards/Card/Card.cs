@@ -90,6 +90,16 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         Saved?.Invoke(_cardSave);
     }
 
+    public void Save(CardSave save)
+    {
+        _cardSave = save;
+
+        Saves.SetCard(Name.ToString(), _cardSave);
+        Saves.Save();
+
+        Saved?.Invoke(_cardSave);
+    }
+
     public void Load()
     {
         if (Saves.HasKey(Name.ToString()))

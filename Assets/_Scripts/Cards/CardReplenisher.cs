@@ -106,7 +106,7 @@ public class CardReplenisher : MonoBehaviour
         newCard.CameBack += OnCameBack;
 
         _unitCards.Add(newCard);
-        _cardsHand.CardAdd(newCard);
+        _cardsHand.CardAdd(newCard, true);
         _cardsHandView.CardAdd(newCard);
     }
 
@@ -128,7 +128,7 @@ public class CardReplenisher : MonoBehaviour
         newCard.gameObject.SetActive(true);
 
         _spellCards.Add(newCard);
-        _cardsHand.CardAdd(newCard);
+        _cardsHand.CardAdd(newCard, true);
         _cardsHandView.CardAdd(newCard);
     }
 }

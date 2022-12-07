@@ -62,51 +62,51 @@ public class RagdollFriend : MonoBehaviour
 
     private void RagDollEnable()
     {
-        foreach (var rigi in _rigidbodies)
-        {
-            rigi.isKinematic = false;
-        }
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //    rigi.isKinematic = false;
+        //}
 
-        foreach (var item in _rigidbodysAll)
-        {
-            item.isKinematic = false;
-            item.useGravity = true;
-        }
+        //foreach (var item in _rigidbodysAll)
+        //{
+        //    item.isKinematic = false;
+        //    item.useGravity = true;
+        //}
 
-        _rigidbodyPlatform.isKinematic = false;
-        _animatorPlatform.enabled = false;
-        _animator.enabled = false;
-        foreach (var rigi in _rigidbodies)
-        {
-            rigi.AddForce(Vector3.up * 800);
-        }
+        //_rigidbodyPlatform.isKinematic = false;
+        //_animatorPlatform.enabled = false;
+        //_animator.enabled = false;
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //    rigi.AddForce(Vector3.up * 800);
+        //}
         _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
 
     public void RagDollEnable(Fighter fighter)
     {
-        foreach (var rigi in _rigidbodies)
-        {
-            rigi.isKinematic = false;
-        }
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //    rigi.isKinematic = false;
+        //}
 
-        foreach (var item in _rigidbodysAll)
-        {
-            item.isKinematic = false;
-            item.useGravity = true;
-        }
+        //foreach (var item in _rigidbodysAll)
+        //{
+        //    item.isKinematic = false;
+        //    item.useGravity = true;
+        //}
 
-        _animatorPlatform.enabled = false;
-        _animator.enabled = false;
+        //_animatorPlatform.enabled = false;
+        //_animator.enabled = false;
 
-        Invoke(nameof(EnableRigidbodyPlatform), 1f);
+        //Invoke(nameof(EnableRigidbodyPlatform), 1f);
 
-        Vector3 forceFrom = transform.position - fighter.transform.position;
-        forceFrom.y = 5f;
+        //Vector3 forceFrom = transform.position - fighter.transform.position;
+        //forceFrom.y = 5f;
 
-        foreach (var rigi in _rigidbodies)
-            rigi.AddForce(forceFrom.normalized * _force);
+        //foreach (var rigi in _rigidbodies)
+        //    rigi.AddForce(forceFrom.normalized * _force);
 
         _particleSystem.Play();
         StartCoroutine(DelayDied());

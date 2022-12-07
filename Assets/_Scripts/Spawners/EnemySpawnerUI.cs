@@ -23,16 +23,6 @@ public class EnemySpawnerUI : MonoBehaviour
         SetSpawner();
     }
 
-    private void OnEnable()
-    {
-        _battleSystem.EnemySpawnerChanged += SetSpawner;
-    }
-
-    private void OnDisable()
-    {
-        _battleSystem.EnemySpawnerChanged -= SetSpawner;
-    }
-
     public void SetSpawner()
     {
         if (_enemySpawner != null)
@@ -51,6 +41,6 @@ public class EnemySpawnerUI : MonoBehaviour
 
     private string GetWaveCount()
     {
-        return $"{_initialText} "/* + _enemySpawner.CurrentWave + "/" + _enemySpawner.WaveCount*/;
+        return $"{_initialText} " + _enemySpawner.CurrentWave + "/" + _enemySpawner.WaveCount;
     }
 }

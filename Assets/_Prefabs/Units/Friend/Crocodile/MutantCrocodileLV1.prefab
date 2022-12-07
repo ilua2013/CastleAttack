@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b58abcf18fe39443ab14e5e2a214bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxStep>k__BackingField: 2
   _distanceAttack:
   - Side: 0
     Distance: 1
@@ -111,10 +110,29 @@ MonoBehaviour:
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
     _canMove: 1
+    _speedRotateToWizzard: 4
   <Fighter>k__BackingField:
     _type: 2
     _damage: 3
     _maxHealth: 6
+  _wizzard: {fileID: 0}
+  _phaseSwitcher: {fileID: 0}
+  _phases:
+  - _phaseType: 0
+    _isActive: 1
+    _delayTime: 0
+  - _phaseType: 1
+    _isActive: 1
+    _delayTime: 0
+  - _phaseType: 2
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 3
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 4
+    _isActive: 0
+    _delayTime: 0
 --- !u!114 &6118880768389054476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,7 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 98976c6360cf0ef42bc60d4aa956e765, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 98976c6360cf0ef42bc60d4aa956e765, type: 3}
       propertyPath: m_Controller
@@ -825,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 4185033222530160412}
   _unitFriend: {fileID: 8801586289200443270}
-  _timeDelay: 4
+  _timeDelay: 2
   _force: 0
   _unit: {fileID: 1710454381889582042}
   _rigidbodies:
