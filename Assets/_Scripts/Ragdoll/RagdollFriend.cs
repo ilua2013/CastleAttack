@@ -51,6 +51,7 @@ public class RagdollFriend : MonoBehaviour
 
     private void OnEnable()
     {
+        if(_particleSystem != null)
         _particleSystem.Stop();
         _unitFriend.Fighter.EffectDied += RagDollEnable;
     }
