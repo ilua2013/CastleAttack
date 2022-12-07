@@ -3766,16 +3766,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b409373af39b3c43bb0520f65468866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTarget: {fileID: 223920037}
-  _countSpawnWave: 2
+  _battleSystem: {fileID: 261631192}
+  _waveCount: 0
+  _countSpawnOneWave: 0
   _cellsEnemySpawner: []
   _enemyUnitsPrefab:
   - {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
   - {fileID: 2275570904515265033, guid: f803753088f3c774d9f68296096edbc8, type: 3}
   - {fileID: 2275570904515265033, guid: 8a7be46dfd13aaf4ba4823ef0613c005, type: 3}
   - {fileID: 2275570904515265033, guid: b2ce1dc4192bcf54cb22a7dfdcb6a536, type: 3}
-  _battleSystem: {fileID: 261631192}
-  _targetEnemy: []
   _enemysStart: []
 --- !u!1 &158390703
 GameObject:
@@ -7173,10 +7172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7d033fc5ae39c419de737e573e1e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wizzard: {fileID: 1815801330}
   _buttonStartFight: {fileID: 1818306942}
   _cardsHand: {fileID: 454188893}
   _enemySpawner: {fileID: 1575947823}
-  _delayBeetwenStep: 0.8
 --- !u!1001 &262873638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11498,16 +11497,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b409373af39b3c43bb0520f65468866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTarget: {fileID: 616540168}
-  _countSpawnWave: 2
+  _battleSystem: {fileID: 261631192}
+  _waveCount: 0
+  _countSpawnOneWave: 0
   _cellsEnemySpawner: []
   _enemyUnitsPrefab:
   - {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
   - {fileID: 2275570904515265033, guid: f803753088f3c774d9f68296096edbc8, type: 3}
   - {fileID: 2275570904515265033, guid: 8a7be46dfd13aaf4ba4823ef0613c005, type: 3}
   - {fileID: 2275570904515265033, guid: b2ce1dc4192bcf54cb22a7dfdcb6a536, type: 3}
-  _battleSystem: {fileID: 261631192}
-  _targetEnemy: []
   _enemysStart: []
 --- !u!1001 &428078328
 PrefabInstance:
@@ -47528,11 +47526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5ac83f1509c244fb925e1ac8051b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wizzard: {fileID: 1815801330}
-  _battleSystem: {fileID: 261631192}
-  _enemySpawner1: {fileID: 1575947823}
-  _enemySpawner2: {fileID: 155596776}
-  _enemySpawner3: {fileID: 425787139}
 --- !u!1 &1461650536
 GameObject:
   m_ObjectHideFlags: 0
@@ -49941,24 +49934,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b409373af39b3c43bb0520f65468866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTarget: {fileID: 0}
-  _countSpawnWave: 1
-  _cellsEnemySpawner:
-  - {fileID: 1375718133}
-  - {fileID: 597918220}
-  - {fileID: 335773558}
-  - {fileID: 2036168986}
-  - {fileID: 718535787}
-  - {fileID: 1415802027}
-  - {fileID: 644724007}
-  - {fileID: 1093165828}
+  _battleSystem: {fileID: 261631192}
+  _waveCount: 0
+  _countSpawnOneWave: 0
+  _cellsEnemySpawner: []
   _enemyUnitsPrefab:
   - {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
   - {fileID: 2275570904515265033, guid: f803753088f3c774d9f68296096edbc8, type: 3}
   - {fileID: 2275570904515265033, guid: 8a7be46dfd13aaf4ba4823ef0613c005, type: 3}
   - {fileID: 2275570904515265033, guid: b2ce1dc4192bcf54cb22a7dfdcb6a536, type: 3}
-  _battleSystem: {fileID: 261631192}
-  _targetEnemy: []
   _enemysStart:
   - {fileID: 1192444798}
   - {fileID: 107712278}
@@ -58062,15 +58046,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b58abcf18fe39443ab14e5e2a214bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxStep>k__BackingField: 3
   _distanceAttack: []
   <Mover>k__BackingField:
     _startCell: {fileID: 1622225494}
     _canMove: 0
+    _speedRotateToWizzard: 0
   <Fighter>k__BackingField:
     _type: 6
     _damage: 2
     _maxHealth: 100
+  _wizzard: {fileID: 0}
+  _phaseSwitcher: {fileID: 0}
+  _phases: []
 --- !u!95 &1815801331
 Animator:
   serializedVersion: 4
@@ -58098,8 +58085,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815801328}
-  m_LocalRotation: {x: 0.011216805, y: 0.93439263, z: 0.3556081, w: 0.01809623}
-  m_LocalPosition: {x: 1.82, y: 0.42055094, z: 19.9}
+  m_LocalRotation: {x: 0.121083125, y: 0.8825859, z: 0.3345472, w: 0.30734232}
+  m_LocalPosition: {x: 0.48, y: 1.44, z: 18.86}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58168,7 +58155,7 @@ Transform:
   - {fileID: 1143243931}
   m_Father: {fileID: 0}
   m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: -41.617, y: 176.795, z: 2.594}
+  m_LocalEulerAnglesHint: {x: -31.071, y: 133.283, z: 29.316}
 --- !u!114 &1818306942 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8184307487674489227, guid: 5f66c39c97497fe45ae05cc7f3f6af8b, type: 3}
@@ -61477,6 +61464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dbe22914b781b4d9c66714736d8729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _battleSystem: {fileID: 261631192}
+  _cardSelection: {fileID: 5345148259558757799}
 --- !u!4 &1960890433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 405526, guid: e10330cd20753a243bc0950bdfe1921c, type: 3}
@@ -66448,6 +66437,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f66c39c97497fe45ae05cc7f3f6af8b, type: 3}
+--- !u!114 &5345148259558757799 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2990938567574472404, guid: 5f66c39c97497fe45ae05cc7f3f6af8b, type: 3}
+  m_PrefabInstance: {fileID: 5345148259558757798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b85a75f56cdeb4ba64591e0e2c9fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8740539488293107541
 PrefabInstance:
   m_ObjectHideFlags: 0
