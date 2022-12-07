@@ -167,7 +167,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
                 EnemyKilled?.Invoke(enemy);
 
             Attacked?.Invoke();
-            StartCoroutine(FinishStep(FinishedStep, 0.5f));
+            StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
             CurrentStep--;
         }
@@ -176,7 +176,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             Mover.Move(Mover.CurrentCell.Top);
 
             Moved?.Invoke();
-            StartCoroutine(FinishStep(FinishedStep, 0.7f));
+            StartCoroutine(FinishStep(FinishedStep, 0.6f));
 
             CurrentStep--;
         }

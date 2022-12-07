@@ -14,7 +14,7 @@ public class Mover
     private IUnit _unit;
     private Cell _currentCell;
     private Transform transform;
-    private float _timeMove = 0.6f;
+    private float _timeMove = 0.5f;
     private float _speedAnimation = 6f;
     private bool _init;
 
@@ -130,14 +130,19 @@ public class Mover
         }
     }
 
-    public IEnumerator RotateTo(Vector3 lookAt)
+    public IEnumerator RotateTo(Vector3 lookAt, float time = 0.5f)
     {
         Vector3 target = lookAt - transform.position;
+        Vector3 startForward = transform.forward;
+        float ellapsedTime = 0;
         target.y = 0;
 
-        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+        while (ellapsedTime < time)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotateToWizzard * Time.deltaTime);
+            ellapsedTime = ellapsedTime > time ? time : ellapsedTime + Time.deltaTime;
+            transform.forward = startForward + (target * (ellapsedTime / time));
+
+            //transform.forward = Vector3.MoveTowards(transform.forward, target.normalized, _speedRotateToWizzard * Time.deltaTime);
 
             yield return null;
         }
