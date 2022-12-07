@@ -12,7 +12,7 @@ public class UnitAnimator : MonoBehaviour
 
     enum State
     {
-        Attack, Move
+        Attack, Move, Died, Hit
     }
 
     private void OnValidate()
@@ -31,12 +31,16 @@ public class UnitAnimator : MonoBehaviour
     {
         _mover.Moved += SetMove;
         _fighter.RotatedToAttack += SetAttack;
+        _fighter.Died += SetDie;
+        _fighter.Damaged += SetDamage;
     }
 
     private void OnDisable()
     {
         _mover.Moved -= SetMove;
         _fighter.RotatedToAttack -= SetAttack;
+        _fighter.Died -= SetDie;
+        _fighter.Damaged -= SetDamage;
     }   
 
     private void SetAttack()
@@ -48,11 +52,27 @@ public class UnitAnimator : MonoBehaviour
                
     }
 
+    private void SetDie()
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.Died.ToString());
+        }
+    }
+
     private void SetMove()
     {
         foreach (var animator in _animators)
         {
             animator.SetTrigger(State.Move.ToString());
         }             
+    }
+
+    private void SetDamage(int damage)
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.Hit.ToString());
+        }
     }
 }

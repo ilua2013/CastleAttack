@@ -105,7 +105,6 @@ MonoBehaviour:
     Distance: 2
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
-    _timeMove: 0.75
     _canMove: 1
   <Fighter>k__BackingField:
     _type: 0
@@ -668,6 +667,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WolfDragon
       objectReference: {fileID: 0}
+    - target: {fileID: 2959693967569463340, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3357513263215317997, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1033,7 +1036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 1898385023324757438}
   _unitFriend: {fileID: 8801586289200443270}
-  _timeDelay: 4
+  _timeDelay: 2
   _force: 0
   _unit: {fileID: 1710454381889582042}
   _rigidbodies:

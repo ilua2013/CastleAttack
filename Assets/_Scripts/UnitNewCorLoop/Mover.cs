@@ -23,6 +23,7 @@ public class Mover
     public event Action ReachedTutorialHigherCell;
     public event Action Moved;
     public event Action<Cell> CellChanged;
+    //public event Action Died;
 
     public void Init(IUnit unit, Transform unitTransform, Cell cell = null)
     {
@@ -73,6 +74,7 @@ public class Mover
 
     public void Die()
     {
+        //Died?.Invoke();
         if (_currentCell == null)
             return;
 

@@ -55,46 +55,46 @@ public class Ragdoll : MonoBehaviour
 
     private void RagDollEnable(Vector3 force)
     {
-        foreach (var rigi in _rigidbodies)
-        {
-            rigi.isKinematic = false;
-        }
-        _rigidbodyPlatform.isKinematic = false;
-        _animatorPlatform.enabled = false;
-        _animator.enabled = false;
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //    rigi.isKinematic = false;
+        //}
+        //_rigidbodyPlatform.isKinematic = false;
+        //_animatorPlatform.enabled = false;
+        //_animator.enabled = false;
 
-        Invoke(nameof(EnableRigidbodyPlatform), 1f);
+        //Invoke(nameof(EnableRigidbodyPlatform), 1f);
 
-        foreach (var rigi in _rigidbodies)
-        {
-            // rigi.AddForce(Vector3.up * 800);
-            rigi.AddForce(force);
-        }
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //    // rigi.AddForce(Vector3.up * 800);
+        //    rigi.AddForce(force);
+        //}
         _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
 
     public void RagDollEnable()
     {
-        foreach (var rigi in _rigidbodies)
-            rigi.isKinematic = false;
+        //foreach (var rigi in _rigidbodies)
+        //    rigi.isKinematic = false;
 
-        foreach (var item in _rigidbodysAll)
-        {
-            item.isKinematic = false;
-            item.useGravity = true;
-        }
+        //foreach (var item in _rigidbodysAll)
+        //{
+        //    item.isKinematic = false;
+        //    item.useGravity = true;
+        //}
 
-        _rigidbodyPlatform.isKinematic = false;
-        _animatorPlatform.enabled = false;
-        _animator.enabled = false;
+        //_rigidbodyPlatform.isKinematic = false;
+        //_animatorPlatform.enabled = false;
+        //_animator.enabled = false;
 
-        Invoke(nameof(EnableRigidbodyPlatform), 1f);
+        //Invoke(nameof(EnableRigidbodyPlatform), 1f);
 
-        foreach (var rigi in _rigidbodies)
-        {
-             rigi.AddForce(Vector3.up * 800);
-        }
+        //foreach (var rigi in _rigidbodies)
+        //{
+        //     rigi.AddForce(Vector3.up * 800);
+        //}
         _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
