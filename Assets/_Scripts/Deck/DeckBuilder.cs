@@ -13,6 +13,11 @@ public class DeckBuilder : MonoBehaviour
 
     public List<Card> Cards => _cards;
 
+    private void OnValidate()
+    {
+        _commonDeck = FindObjectOfType<CommonDeck>();
+    }
+
     private void Awake()
     {
         foreach (Card prefab in _deckPrefabs)
