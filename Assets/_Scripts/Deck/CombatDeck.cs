@@ -8,6 +8,8 @@ public class CombatDeck : Deck
 {
     public override DeckType DeckType => DeckType.Combat;
 
+    public event Action CardTaken;
+
     public Card[] TakeRandomCards(int count)
     {
         if (count > Cards.Count)
@@ -27,17 +29,14 @@ public class CombatDeck : Deck
 
             result.Add(card);
             Remove(card);
+            CardTaken?.Invoke();
         }
 
         return result.ToArray();
     }
 
-    public void ReturnCards(Card[] cards)
+    public void ReturnCard(Card card)
     {
-        foreach (Card card in cards)
-        {
-            card.transform.SetParent(transform);
-            card.gameObject.SetActive(false);
-        }
+        Add(card);
     }
 }

@@ -7,6 +7,7 @@ using System.Collections;
 
 public class CardsHand : MonoBehaviour, IPhaseHandler
 {
+    [SerializeField] private int _capacity;
     [SerializeField] private Phase[] _phases;
 
     private BattleSystem _battleSystem;
@@ -15,6 +16,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
 
     public Phase[] Phases => _phases;
 
+    public bool CanTakeCard => _cards.Count < _capacity;
     public bool CanPlaceCard { get; private set; }
     public ICardApplicable CurrentTarget => _currentTarget;
 

@@ -7,12 +7,13 @@ using System.Linq;
 public class CardSelectionView : MonoBehaviour
 {
     private const float ScaleFactor = 1.32f;
+    private const float MoveSpeed = 10f;
 
     [SerializeField] private Transform[] _cardPlacements;
 
-    private List<CardHoverView> _cardHovers = new List<CardHoverView>();
     private CardsSelection _cardsSelection;
     private DeckCounterView _deckCounterView;
+
     private bool _isActivTutor = false;
 
     private void Awake()
@@ -30,14 +31,13 @@ public class CardSelectionView : MonoBehaviour
     private void OnEnable()
     {
         _cardsSelection.DrawnOut += OnDrawOut;
+        _cardsSelection.CardReturned += OnReturned;
     }
 
     private void OnDisable()
     {
         _cardsSelection.DrawnOut -= OnDrawOut;
-
-        foreach (CardHoverView cardHover in _cardHovers)
-            UnRegister(cardHover);
+        _cardsSelection.CardReturned -= OnReturned;
     }
 
     private void OnDrawOut(Card[] cards)
@@ -54,36 +54,22 @@ public class CardSelectionView : MonoBehaviour
             cards[i].transform.position = _deckCounterView.transform.position;
 
             if (cards[i].TryGetComponent(out CardHoverView cardHover))
-            {
-                Register(cardHover, _cardPlacements[i].position);
-                cardHover.MoveTo(_cardPlacements[i].position, 5f);
-                cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
-
-                _cardHovers.Add(cardHover);
-            }
+                MoveCard(cardHover, _cardPlacements[i].position, Vector3.zero);
         }
     }
 
-    private void OnCardHover(CardHoverView cardHover)
+    private void OnReturned(Card card)
     {
-        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor * 1.2f);
+        if (card.TryGetComponent(out CardHoverView cardHover))
+            MoveCard(cardHover, _deckCounterView.transform.position, cardHover.transform.localScale, () => cardHover.gameObject.SetActive(false));
     }
 
-    private void OnCardRemoveHover(CardHoverView cardHover)
+    private void MoveCard(CardHoverView cardHover, Vector3 position, Vector3 startScale, Action onReached = null)
     {
+        cardHover.transform.localScale = startScale;
+        
+        cardHover.SaveStartState(position, cardHover.transform.GetSiblingIndex());
+        cardHover.MoveTo(position, MoveSpeed, onReached);
         cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
-    }
-
-    private void Register(CardHoverView card, Vector3 startPosition)
-    {
-        card.SaveStartState(startPosition, card.transform.GetSiblingIndex());
-        card.Enter += OnCardHover;
-        card.Exit += OnCardRemoveHover;
-    }
-
-    private void UnRegister(CardHoverView card)
-    {
-        card.Enter -= OnCardHover;
-        card.Exit -= OnCardRemoveHover;
     }
 }
