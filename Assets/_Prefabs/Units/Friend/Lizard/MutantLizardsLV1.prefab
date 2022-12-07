@@ -87,7 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animators:
   - {fileID: 7950558914351854076}
-  - {fileID: 7696961324146562407}
 --- !u!114 &8801586289200443270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,18 +507,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
---- !u!54 &5858710720802418466 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 471815717405744937}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &572015369756989070 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 471815717405744937}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7628172289506055785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
@@ -528,6 +518,11 @@ Transform:
 --- !u!95 &7950558914351854076 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 471815717405744937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &572015369756989070 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 471815717405744937}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &479911072031160184
@@ -770,6 +765,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GasExplosionFire
       objectReference: {fileID: 0}
+    - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -856,11 +855,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
---- !u!198 &3544362600532817783 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19807718, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
-  m_PrefabInstance: {fileID: 3544362600514849425}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3544362600514481429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
@@ -945,16 +939,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9550000, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
 --- !u!1 &7696961324139237955 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 130964, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
-  m_PrefabInstance: {fileID: 7696961324139195863}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7696961324146562407 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9550000, guid: c644a2181ac22e740968a7ece97e8f36, type: 3}
   m_PrefabInstance: {fileID: 7696961324139195863}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &576155820483833762
@@ -969,17 +959,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb41b5c70820ba4ab1095a4fe529ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 7696961324146562407}
   _unitFriend: {fileID: 8801586289200443270}
   _timeDelay: 2
-  _force: 0
-  _unit: {fileID: 1710454381889582042}
-  _rigidbodies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _rigidbodyPlatform: {fileID: 5858710720802418466}
-  _particleSystem: {fileID: 3544362600532817783}
-  _animatorPlatform: {fileID: 7950558914351854076}

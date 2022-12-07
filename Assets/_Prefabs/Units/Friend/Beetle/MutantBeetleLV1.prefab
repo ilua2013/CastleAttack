@@ -537,8 +537,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+--- !u!4 &1386745491539200657 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 1315817154210562870}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9012326379601054326 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
@@ -547,16 +553,6 @@ Transform:
 --- !u!95 &8833967258070789603 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 1315817154210562870}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &5008234798734324541 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 1315817154210562870}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1386745491539200657 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 1315817154210562870}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1327953015719747256
@@ -777,18 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb41b5c70820ba4ab1095a4fe529ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _unitFriend: {fileID: 8801586289200443270}
-  _timeDelay: 2
-  _force: 0
-  _unit: {fileID: 1710454381889582042}
-  _rigidbodies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _rigidbodyPlatform: {fileID: 5008234798734324541}
-  _particleSystem: {fileID: 4007917741196102162}
-  _animatorPlatform: {fileID: 8833967258070789603}
+  _timeDelay: 1
 --- !u!1001 &4007917741210400756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -799,6 +785,10 @@ PrefabInstance:
     - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_Name
       value: GasExplosionFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_RootOrder
@@ -886,11 +876,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
---- !u!198 &4007917741196102162 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19807718, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
-  m_PrefabInstance: {fileID: 4007917741210400756}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4007917741210243184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}

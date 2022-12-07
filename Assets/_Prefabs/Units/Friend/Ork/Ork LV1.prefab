@@ -484,6 +484,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 379ed4bfef5273548a6949213a68113c, type: 3}
+--- !u!1 &1810834457380580341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3950677229691931378, guid: 379ed4bfef5273548a6949213a68113c, type: 3}
+  m_PrefabInstance: {fileID: 3455035356946620679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7948947613352264108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810834457380580341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb41b5c70820ba4ab1095a4fe529ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitFriend: {fileID: 8801586289200443270}
+  _timeDelay: 2
 --- !u!1001 &3544362600514849425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -494,6 +513,10 @@ PrefabInstance:
     - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_Name
       value: GasExplosionFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_RootOrder
@@ -665,7 +688,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
 --- !u!4 &2615055674326364750 stripped
 Transform:

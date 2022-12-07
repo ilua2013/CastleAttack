@@ -86,7 +86,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animators:
   - {fileID: 2872919329895028132}
-  - {fileID: 1898385023324757438}
 --- !u!114 &8801586289200443270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,6 +577,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GasExplosionFire
       objectReference: {fileID: 0}
+    - target: {fileID: 180860, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -664,11 +667,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
---- !u!198 &3544362600532817783 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19807718, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
-  m_PrefabInstance: {fileID: 3544362600514849425}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3544362600514481429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 419716, guid: 89fdb9fee1f1fe94cb02018221255e50, type: 3}
@@ -745,13 +743,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2959693967569463340, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
---- !u!95 &1898385023324757438 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2959693967569463340, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
-  m_PrefabInstance: {fileID: 3695936755215218066}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1628335828935998661 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2725689508802382167, guid: 4707832b20bc34e449278559c05d7f04, type: 3}
@@ -769,18 +763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb41b5c70820ba4ab1095a4fe529ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 1898385023324757438}
   _unitFriend: {fileID: 8801586289200443270}
   _timeDelay: 2
-  _force: 0
-  _unit: {fileID: 1710454381889582042}
-  _rigidbodies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _rigidbodyPlatform: {fileID: 1785384240092646266}
-  _particleSystem: {fileID: 3544362600532817783}
-  _animatorPlatform: {fileID: 2872919329895028132}
 --- !u!1001 &5693849796454169457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -836,25 +820,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+--- !u!4 &2329506242126574129 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_PrefabInstance: {fileID: 5693849796454169457}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2872919329895028132 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 5693849796454169457}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1785384240092646266 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 5693849796454169457}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5654431163999269590 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
-  m_PrefabInstance: {fileID: 5693849796454169457}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2329506242126574129 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 5693849796454169457}
   m_PrefabAsset: {fileID: 0}
