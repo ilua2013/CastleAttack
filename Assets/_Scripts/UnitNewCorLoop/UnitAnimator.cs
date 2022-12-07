@@ -10,9 +10,10 @@ public class UnitAnimator : MonoBehaviour
     private Mover _mover;
     private Fighter _fighter;
 
+
     enum State
     {
-        Attack, Move, Died, Hit
+        Attack, Move, Died, Hit, ForMage
     }
 
     private void OnValidate()
@@ -33,6 +34,8 @@ public class UnitAnimator : MonoBehaviour
         _fighter.RotatedToAttack += SetAttack;
         _fighter.Died += SetDie;
         _fighter.Damaged += SetDamage;
+        _unit.EndedSteps += SetForMage;
+
     }
 
     private void OnDisable()
@@ -41,6 +44,7 @@ public class UnitAnimator : MonoBehaviour
         _fighter.RotatedToAttack -= SetAttack;
         _fighter.Died -= SetDie;
         _fighter.Damaged -= SetDamage;
+        _unit.FinishedStep -= SetForMage;
     }   
 
     private void SetAttack()
@@ -75,4 +79,20 @@ public class UnitAnimator : MonoBehaviour
             animator.SetTrigger(State.Hit.ToString());
         }
     }
+
+    private void SetForMage()
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.ForMage.ToString());
+        }
+    }
+
+    //private void SetOutMage()
+    //{
+    //    foreach (var animator in _animators)
+    //    {
+    //        animator.SetTrigger(State.OutMage.ToString());
+    //    }
+    //}
 }

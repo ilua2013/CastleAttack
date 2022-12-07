@@ -9,6 +9,7 @@ public interface IUnit
     UnitCard Card { get; }
     public event Action FinishedStep;
     public event Action StepChanged;
+    public event Action EndedSteps;
     int MaxStep { get; }
     int CurrentStep { get; }
     bool Initialized { get; }

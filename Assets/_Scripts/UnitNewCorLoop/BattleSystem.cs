@@ -29,6 +29,7 @@ public class BattleSystem : MonoBehaviour
     public event Action DiedAllEnemy;
     public event Action EnemySpawnerChanged;
     public event Action TutorialStopedUnit;
+    //public event Action PlatformFinichStep;
 
     private void OnValidate()
     {
@@ -180,7 +181,7 @@ public class BattleSystem : MonoBehaviour
             if (item.DoingStep == true)
                 return;
         }
-
+        //PlatformFinichStep?.Invoke();
         _friendFinishStep = true;
     }
 
