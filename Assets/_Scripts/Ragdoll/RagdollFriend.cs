@@ -81,6 +81,7 @@ public class RagdollFriend : MonoBehaviour
         //{
         //    rigi.AddForce(Vector3.up * 800);
         //}
+        if(_particleSystem)
         _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
@@ -108,8 +109,8 @@ public class RagdollFriend : MonoBehaviour
 
         //foreach (var rigi in _rigidbodies)
         //    rigi.AddForce(forceFrom.normalized * _force);
-
-        _particleSystem.Play();
+        if (_particleSystem)
+            _particleSystem.Play();
         StartCoroutine(DelayDied());
     }
 
