@@ -49,6 +49,15 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             Mover.SetStartCell(cell);
             transform.position = cell.transform.position;
         }
+
+        if(Fighter.FighterType == FighterType.MainWizzard)
+        {
+            foreach (var item in FindObjectsOfType<Cell>())
+            {
+                if (item.CellIs == CellIs.Wizzard)
+                    Mover.SetStartCell(item);
+            }
+        }
     }
 
     private void Awake()
