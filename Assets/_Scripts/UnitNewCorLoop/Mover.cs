@@ -135,12 +135,16 @@ public class Mover
         Vector3 target = lookAt - transform.position;
         Vector3 startForward = transform.forward;
         float ellapsedTime = 0;
+        float percent = 0;
         target.y = 0;
 
         while (ellapsedTime < time)
         {
             ellapsedTime = ellapsedTime > time ? time : ellapsedTime + Time.deltaTime;
-            transform.forward = startForward + (target * (ellapsedTime / time));
+
+            percent = ellapsedTime / time;
+
+            transform.forward = startForward * (1 - percent) + (target.normalized * percent);
 
             //transform.forward = Vector3.MoveTowards(transform.forward, target.normalized, _speedRotateToWizzard * Time.deltaTime);
 

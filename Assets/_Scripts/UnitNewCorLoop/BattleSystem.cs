@@ -121,7 +121,7 @@ public class BattleSystem : MonoBehaviour
             _friendFinishStep = false;
             _enemyFinishStep = false;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.6f);
 
             for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
             {  
