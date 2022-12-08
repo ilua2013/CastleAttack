@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageView : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour _iUnit;
+    //[SerializeField] private Animator _animator;
     [SerializeField] private TMP_Text _textDamage;
-    [SerializeField] private RectTransform _textDamageTransform;   
+    //[SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private Image _broken;   
     [SerializeField] private float _timeViewDamage;
 
     private int _healt;
@@ -30,19 +33,21 @@ public class DamageView : MonoBehaviour
     private void OnEnable()
     {        
         _unit.Fighter.Damaged += DamageViewText;
-        _unit.Fighter.EffectDied += DisableText;
+        //_unit.Fighter.EffectDied += DisableText;
     }
 
     private void OnDisable()
     {       
         _unit.Fighter.Damaged -= DamageViewText;
-        _unit.Fighter.EffectDied -= DisableText;
+        //_unit.Fighter.EffectDied -= DisableText;
     }
 
     private void DamageViewText(int damage)
-    {       
-        _textDamage.gameObject.SetActive(true);
-        if(_healt>=damage)
+    {
+        _broken.gameObject.SetActive(true);
+        //_animator.Play("DownBroken");
+        //Image broken = Instantiate(_broken, _rectTransform);
+        if (_healt>=damage)
         _textDamage.text = $"{-damage}";
         else
             _textDamage.text = $"{-_healt}";
@@ -54,12 +59,15 @@ public class DamageView : MonoBehaviour
     {
         
             yield return new WaitForSeconds(_timeViewDamage);
-        
-        _textDamage.gameObject.SetActive(false);
+        _broken.gameObject.SetActive(false);
+        /* Destroy(image)*/
+        //;
+        //_textDamage.gameObject.SetActive(false);
     }
 
-    private void DisableText()
-    {
-        _textDamage.gameObject.SetActive(false);
-    }
+    //private void DisableText()
+    //{
+    //    transform.parent = null;
+    //    _broken.gameObject.SetActive(false);
+    //}
 }
