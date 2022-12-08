@@ -6,6 +6,7 @@ public class UnitAnimator : MonoBehaviour
 {
     [SerializeField] private Animator[] _animators;
 
+    private float _delayAnimationDamage = 0.35f;
     private IUnit _unit;
     private Mover _mover;
     private Fighter _fighter;
@@ -31,16 +32,16 @@ public class UnitAnimator : MonoBehaviour
     {
         _mover.Moved += SetMove;
         _fighter.RotatedToAttack += SetAttack;
-        _fighter.Died += SetDie;
-        _fighter.Damaged += SetDamage;
+        _fighter.Died += StartSetDie;
+        _fighter.Damaged += StartSetDamage;
     }
 
     private void OnDisable()
     {
         _mover.Moved -= SetMove;
         _fighter.RotatedToAttack -= SetAttack;
-        _fighter.Died -= SetDie;
-        _fighter.Damaged -= SetDamage;
+        _fighter.Died -= StartSetDie;
+        _fighter.Damaged -= StartSetDamage;
     }   
 
     private void SetAttack()
@@ -51,6 +52,8 @@ public class UnitAnimator : MonoBehaviour
         }
                
     }
+
+    private void StartSetDie() => Invoke(nameof(SetDie), _delayAnimationDamage);
 
     private void SetDie()
     {
@@ -68,7 +71,9 @@ public class UnitAnimator : MonoBehaviour
         }             
     }
 
-    private void SetDamage(int damage)
+    private void StartSetDamage(int damage) => Invoke(nameof(SetDamage), _delayAnimationDamage);
+
+    private void SetDamage()
     {
         foreach (var animator in _animators)
         {

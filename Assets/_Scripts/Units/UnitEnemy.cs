@@ -177,6 +177,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         }
     }
 
+    public Arrow SpawnArrow(Arrow arrow, Vector3 position)
+    {
+        return Instantiate(arrow, position, Quaternion.identity);
+    }
+
     private void Disable() => gameObject.SetActive(false);
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
