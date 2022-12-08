@@ -61,6 +61,11 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Exit?.Invoke(this);
     }
 
+    public void SaveStartIndex(int index)
+    {
+        StartIndex = index;
+    }
+
     public void SaveStartState(Vector3 position, int index)
     {
         StartPosition = position;
@@ -146,7 +151,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         while (Vector3.Distance(transform.position, to) > DistanceDelta)
         {
-            transform.position = Vector3.Lerp(transform.position, to, time * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, to, time * 200 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 

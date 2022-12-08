@@ -19,7 +19,8 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
 
-    private Coroutine _coroutineRotateTo;
+    private IEnumerator _coroutineRotateTo;
+    private IEnumerator _coroutineRotateToWizzard;
     private bool _isTutorialUnitStop = true;
     private bool _doingStep;
 
@@ -259,15 +260,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public void RotateTo(Transform transform, Action onRotated = null)
     {
-        if (_coroutineRotateTo == null)
-        {
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
-        }
-        else
+        if (_coroutineRotateTo != null)
         {
             StopCoroutine(_coroutineRotateTo);
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
+            _coroutineRotateTo = null;
         }
+
+        _coroutineRotateTo = Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated);
+        StartCoroutine(_coroutineRotateTo);
     }
 
     private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
@@ -308,10 +308,33 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             yield return new WaitForSeconds(phase.Delay);
 
             if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
-                StartCoroutine(Mover.RotateTo(_wizzard.transform.position));
+            {
+                if (_coroutineRotateToWizzard != null)
+                {
+                    StopCoroutine(_coroutineRotateToWizzard);
+                    _coroutineRotateToWizzard = null;
+                }
+
+                _coroutineRotateToWizzard = Mover.RotateTo(_wizzard.transform.position, () => _coroutineRotateToWizzard = null);
+                StartCoroutine(_coroutineRotateToWizzard);
+            }
             else if (phase.IsActive && phase.PhaseType == PhaseType.Battle)
-                StartCoroutine(Mover.RotateTo(transform.position + new Vector3(0, 0, 5)));
+            {
+                if (_coroutineRotateToWizzard != null)
+                {
+                    StopCoroutine(_coroutineRotateToWizzard);
+                    _coroutineRotateToWizzard = null;
+                }
+
+                _coroutineRotateToWizzard = Mover.RotateTo(transform.position + new Vector3(0, 0, 5), () => _coroutineRotateToWizzard = null);
+                StartCoroutine(_coroutineRotateToWizzard);
+            }
         }
+    }
+
+    public Arrow SpawnArrow(Arrow arrow, Vector3 position)
+    {
+        return Instantiate(arrow, position, Quaternion.identity);
     }
 }
 

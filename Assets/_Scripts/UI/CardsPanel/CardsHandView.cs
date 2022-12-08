@@ -11,7 +11,7 @@ public class CardsHandView : MonoBehaviour
     private const float ScaleFactor = 1.2f;
     private const float OffsetXFactor = 10f;
 
-    private float _offsetX = 250f;
+    private float _offsetX = 180f;
 
     private List<CardHoverView> _cards;
     private List<CardMovement> _cardMovements = new List<CardMovement>();
@@ -25,17 +25,13 @@ public class CardsHandView : MonoBehaviour
     private void OnEnable()
     {
         foreach (CardHoverView card in _cards)
-        {
             Register(card);
-        }
     }
 
     private void OnDisable()
     {
         foreach (CardHoverView card in _cards)
-        {
             UnRegister(card);
-        }
     }
 
     private void Start()
@@ -51,7 +47,6 @@ public class CardsHandView : MonoBehaviour
 
     private void Shuffling()
     {
-        Debug.Log("Shuffle");
         float number = -(float)(_cards.Count - 1) / 2;
         float offsetX = _offsetX - _cards.Count * OffsetXFactor;
 
@@ -128,6 +123,8 @@ public class CardsHandView : MonoBehaviour
 
     private void OnDrop(CardHoverView card)
     {
+        Debug.Log("OnDrop");
+
         _cards.Remove(card);
         Shuffling();
     }
@@ -169,28 +166,12 @@ public class CardsHandView : MonoBehaviour
     public void CardAdd(Card card)
     {
         CardHoverView cardHover = card.GetComponent<CardHoverView>();
+        cardHover.SaveStartIndex(cardHover.transform.GetSiblingIndex());
 
         if (_cards.Contains(cardHover) == false)
-            _cards.Add(cardHover);
-
-        Register(cardHover);
-        Shuffling();
-    }
-
-    public void CardAdd(Card[] cards)
-    {
-        List<CardHoverView> cardsHover = new List<CardHoverView>();
-
-        foreach (Card card in cards)
         {
-            CardHoverView cardHover = card.GetComponent<CardHoverView>();
-            cardsHover.Add(cardHover);
-
-            if (_cards.Contains(cardHover) == false)
-            {
-                _cards.Add(cardHover);
-                Register(cardHover);
-            }
+            _cards.Add(cardHover);
+            Register(cardHover);
         }
 
         Shuffling();

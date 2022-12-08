@@ -130,25 +130,28 @@ public class Mover
         }
     }
 
-    public IEnumerator RotateTo(Vector3 lookAt, float time = 0.5f)
+    public IEnumerator RotateTo(Vector3 lookAt, Action onRotated = null, float time = 0.5f)
     {
         Vector3 target = lookAt - transform.position;
         Vector3 startForward = transform.forward;
+        Vector3 forward = transform.forward;
         float ellapsedTime = 0;
         float percent = 0;
         target.y = 0;
 
-        while (ellapsedTime < time)
+        while (Vector3.Distance(target.normalized, transform.forward) > 0.01f)
         {
             ellapsedTime = ellapsedTime > time ? time : ellapsedTime + Time.deltaTime;
 
             percent = ellapsedTime / time;
 
-            transform.forward = startForward * (1 - percent) + (target.normalized * percent);
-
-            //transform.forward = Vector3.MoveTowards(transform.forward, target.normalized, _speedRotateToWizzard * Time.deltaTime);
-
+            //transform.forward = startForward.normalized * (1 - percent) + (target.normalized * percent);
+            forward = Vector3.MoveTowards(forward, target.normalized, 15 * Time.deltaTime);
+            transform.forward = forward;
+            //transform.forward = Vector3.RotateTowards(transform.forward, target, 15 * Time.deltaTime, 15 * Time.deltaTime);
             yield return null;
         }
+
+        onRotated?.Invoke();
     }
 }

@@ -7,14 +7,15 @@ using System.Collections;
 
 public class CardsHand : MonoBehaviour, IPhaseHandler
 {
+    [SerializeField] private int _capacity;
     [SerializeField] private Phase[] _phases;
 
-    private BattleSystem _battleSystem;
     private ICardApplicable _currentTarget;
     private List<Card> _cards = new List<Card>();
 
     public Phase[] Phases => _phases;
 
+    public bool CanTakeCard => _cards.Count < _capacity;
     public bool CanPlaceCard { get; private set; }
     public ICardApplicable CurrentTarget => _currentTarget;
 
@@ -26,7 +27,6 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
 
     private void Awake()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>(true);
         _cards = GetComponentsInChildren<Card>().ToList();
     }
 
@@ -34,16 +34,12 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     {
         foreach (var card in _cards)
             RegisterCard(card);
-
-        _battleSystem.Win += OnWin;
     }
 
     private void OnDisable()
     {
         foreach (var card in _cards)
             UnRegister(card);
-
-        _battleSystem.Win -= OnWin;
     }
 
     private void RegisterCard(Card card)
@@ -172,17 +168,5 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         }
 
         return false;
-    }
-
-    private void OnWin()
-    {
-        foreach (Card card in _cards)
-        {
-            if (card.gameObject.activeInHierarchy)
-                continue;
-
-            card.CardSave.Add(1);
-            card.Save();
-        }
     }
 }

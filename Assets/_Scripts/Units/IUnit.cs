@@ -17,4 +17,5 @@ public interface IUnit
     void DoStep();
     void RotateTo(Transform transform, Action onRotated = null);
     void AnimationSizeUp();
+    Arrow SpawnArrow(Arrow arrow, Vector3 position);
 }

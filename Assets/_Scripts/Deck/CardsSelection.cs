@@ -19,6 +19,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     private float _delayTime = 0; 
 
     public event Action<Card[]> DrawnOut;
+    public event Action<Card> CardReturned;
     public event Action CardSelected;
     public event Action Passed;
 
@@ -60,20 +61,7 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-        yield return new WaitForSeconds(phase.Delay);
-
-        if (!_deckCounter.CanTakeCard)
-        {
-            Passed?.Invoke();
-            gameObject.SetActive(false);
-            yield break;
-        }
-
-        if (_deck.IsEmpty)
-        {
-            CardSelected?.Invoke();
-            yield break;
-        }
+        yield return new WaitForSeconds(phase.Delay);       
 
         gameObject.SetActive(phase.IsActive);
 
@@ -83,6 +71,20 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     private void DrawOutCards()
     {
+        if (!_deckCounter.CanTakeCard)
+        {
+            Passed?.Invoke();
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (_deck.IsEmpty)
+        {
+            Passed?.Invoke();
+            gameObject.SetActive(false);
+            return;
+        }
+
         _selectedCards = _deck.TakeRandomCards(_count);
 
         foreach (Card card in _selectedCards)
@@ -101,13 +103,22 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         yield return new WaitForSeconds(_showDelay);
 
         foreach (Card card in _selectedCards)
-            _cardsHand.CardAdd(card, false);
-
-        _cardsHandView.CardAdd(_selectedCards);
+        {
+            if (_cardsHand.CanTakeCard)
+            {
+                _cardsHand.CardAdd(card, false);
+                _cardsHandView.CardAdd(card);
+            }
+            else
+            {
+                _deck.ReturnCard(card);
+                CardReturned?.Invoke(card);
+            }
+        }
 
         yield return new WaitForSeconds(0.5f);
 
-        gameObject.SetActive(false);
         CardSelected?.Invoke();
+        gameObject.SetActive(false);
     }
 }
