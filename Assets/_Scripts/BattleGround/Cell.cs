@@ -16,6 +16,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _right;
     [SerializeField] private Cell _this;
 
+    private CellView _view;
     private IUnit _currentUnit;
 
     public Cell Top => _top;
@@ -31,9 +32,11 @@ public class Cell : MonoBehaviour
     public IUnit CurrentUnit => _currentUnit;
     public int Number => _number;
     public bool IsFree => _currentUnit == null;
+    public CellView CellView => _view;
 
     private void OnValidate()
     {
+        _view = GetComponentInChildren<CellView>();
         _this = this;
 
         Vector3 right = new Vector3(2f, 0, 0);

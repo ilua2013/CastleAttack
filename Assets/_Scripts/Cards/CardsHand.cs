@@ -15,9 +15,12 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
 
     public Phase[] Phases => _phases;
 
+    public int Capacity => _capacity;
+    public int CardsCount => _cards.Count;
     public bool CanTakeCard => _cards.Count < _capacity;
     public bool CanPlaceCard { get; private set; }
     public ICardApplicable CurrentTarget => _currentTarget;
+
 
     public event Action<UnitFriend> Spawned;
     public event Action<PointerEventData, Card> CardTaken;

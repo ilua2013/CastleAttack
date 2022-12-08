@@ -9,6 +9,7 @@ public class CombatDeck : Deck
     public override DeckType DeckType => DeckType.Combat;
 
     public event Action CardTaken;
+    public event Action CardReturned;
 
     public Card[] TakeRandomCards(int count)
     {
@@ -38,5 +39,6 @@ public class CombatDeck : Deck
     public void ReturnCard(Card card)
     {
         Add(card);
+        CardReturned?.Invoke();
     }
 }

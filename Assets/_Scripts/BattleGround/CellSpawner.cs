@@ -21,6 +21,9 @@ public class CellSpawner : MonoBehaviour
 
     private List<Cell> _cells = new List<Cell>();
 
+    public List<Cell> Cells => _cells;
+    public int Rows => (int)_grid.x;
+
     private void OnValidate()
     {
         if(_activeSpawnCell)
