@@ -23,12 +23,12 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
 
     private void OnEnable()
     {
-        _battleSystem.Win += OpenPanel;   
+        _battleSystem.Win += OnOpen;   
     }
 
     private void OnDisable()
     {
-        _battleSystem.Win -= OpenPanel;
+        _battleSystem.Win -= OnOpen;
     }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
@@ -46,13 +46,22 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
 
     public void OpenPanel()
     {
+        Debug.Log("open");
         StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
-        Opened?.Invoke();
     }
 
     public void ClosePanel()
     {
         StartCoroutine(ScalePanel(Vector3.one, Vector3.zero, false));
+    }
+
+    private void OnOpen()
+    {
+        Opened?.Invoke();
+    }
+
+    private void OnClose()
+    {
         Closed?.Invoke();
     }
 

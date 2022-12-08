@@ -78,6 +78,9 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnStepFinished()
     {
+        if (_battleSystem.CountEnemy <= 0)
+            return;
+
         Switch(PhaseType.SelectionCard);
         CurrentPhase = PhaseType.SelectionCard;
     }

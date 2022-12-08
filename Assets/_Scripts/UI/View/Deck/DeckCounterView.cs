@@ -18,11 +18,13 @@ public class DeckCounterView : MonoBehaviour
     private void OnEnable()
     {
         _deck.CardTaken += OnDecreased;
+        _deck.CardReturned += OnDecreased;
     }
 
     private void OnDisable()
     {
         _deck.CardTaken -= OnDecreased;
+        _deck.CardReturned -= OnDecreased;
     }
 
     private void OnDecreased()
