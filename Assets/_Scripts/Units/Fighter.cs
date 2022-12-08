@@ -32,6 +32,7 @@ public class Fighter
     public event Action ReadyToDie;
     public event Action EffectDied;
     public event Action<Transform> Died_getKiller;
+    public event Action<Transform> Attacked_get;
     public event Action Attacked;
     public event Action RotatedToAttack;
     public event Action<int> Damaged;
@@ -77,9 +78,10 @@ public class Fighter
         }
 
         if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-            TakeDamage(fighter);
+            fighter.Attack(this);
 
         Attacked?.Invoke();
+        Attacked_get?.Invoke(fighter.transform);
 
         return isFatal;
     }
