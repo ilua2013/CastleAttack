@@ -154,10 +154,10 @@ public class Fighter
         
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
 
-        while (transform.forward != new Vector3(0, 0, 1))
+        while (Vector3.Distance (transform.forward, new Vector3(0,0,1)) > 0.01f)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(0,0,1), _speedRotate * Time.deltaTime);
-            Debug.Log("zzz");
+            Debug.Log("zzz " + Vector3.Distance(transform.forward, new Vector3(0, 0, 1)));
             yield return null;
         }
 
