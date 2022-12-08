@@ -46,7 +46,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void CancleDrop()
     {
-        CancelDrop?.Invoke(this);
+        if (IsActive)
+            CancelDrop?.Invoke(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -69,7 +70,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Clicked?.Invoke(eventData, this);
+        if (IsActive)
+            Clicked?.Invoke(eventData, this);
     }
 
     public void Save()

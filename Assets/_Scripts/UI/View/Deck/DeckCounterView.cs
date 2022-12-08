@@ -8,25 +8,25 @@ public class DeckCounterView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _countText;
 
-    private DeckCounter _deckCounter;
+    private CombatDeck _deck;
 
     private void Awake()
     {
-        _deckCounter = GetComponent<DeckCounter>();
+        _deck = FindObjectOfType<CombatDeck>();
     }
 
     private void OnEnable()
     {
-        _deckCounter.Decreased += OnDecreased;
+        _deck.CardTaken += OnDecreased;
     }
 
     private void OnDisable()
     {
-        _deckCounter.Decreased -= OnDecreased;
+        _deck.CardTaken -= OnDecreased;
     }
 
-    private void OnDecreased(int count)
+    private void OnDecreased()
     {
-        _countText.text = count.ToString();
+        _countText.text = _deck.Cards.Count.ToString();
     }
 }
