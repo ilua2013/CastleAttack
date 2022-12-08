@@ -52,6 +52,6 @@ public class Arrow : MonoBehaviour
 
         onEnd?.Invoke();
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 0.2f);
     }
 }

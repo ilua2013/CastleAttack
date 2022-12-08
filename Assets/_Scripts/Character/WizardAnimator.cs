@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WizardAnimator : MonoBehaviour
 {
+    [SerializeField] private Arrow _arrow;
+    [SerializeField] private Transform _stick;
+
     private Animator _animator;
     private UnitFriend _unitFriend;
 
@@ -16,6 +19,7 @@ public class WizardAnimator : MonoBehaviour
         SpellCast,
         Damage,
         Death,
+        Attack,
     }
 
     private void Awake()
@@ -37,6 +41,7 @@ public class WizardAnimator : MonoBehaviour
 
         _unitFriend.Fighter.Damaged += OnDamaged;
         _unitFriend.Fighter.Died += OnDie;
+        _unitFriend.Fighter.Attacked_get += OnAttacked;
     }
 
     private void OnDisable()
@@ -49,6 +54,7 @@ public class WizardAnimator : MonoBehaviour
 
         _unitFriend.Fighter.Damaged -= OnDamaged;
         _unitFriend.Fighter.Died -= OnDie;
+        _unitFriend.Fighter.Attacked_get -= OnAttacked;
     }
 
     private void OnSpellCast(Vector3 place, Spell spell)
@@ -64,6 +70,14 @@ public class WizardAnimator : MonoBehaviour
     private void OnDamaged(int damage)
     {
         _animator.Play(State.Damage.ToString());
+    }
+
+    private void OnAttacked(Transform target)
+    {
+        Arrow projectile = Instantiate(_arrow, _stick.position, Quaternion.identity);
+        projectile.FlyTo(target.position);
+
+        _animator.Play(State.Attack.ToString());
     }
 
     private void OnDie()

@@ -1850,6 +1850,7 @@ GameObject:
   - component: {fileID: 7196459322372414191}
   - component: {fileID: 7196459322372414184}
   - component: {fileID: 7196459322372414185}
+  - component: {fileID: 5159741052105280475}
   m_Layer: 0
   m_Name: Wizzard
   m_TagString: Untagged
@@ -1916,9 +1917,23 @@ MonoBehaviour:
     _type: 6
     _damage: 2
     _maxHealth: 10
-  _wizzard: {fileID: 0}
+    _arrow: {fileID: 0}
   _phaseSwitcher: {fileID: 0}
   _phases: []
+--- !u!114 &5159741052105280475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7196459322372414187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f329a6fcb99844b9fed2f42d0d2389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrow: {fileID: 3907748128250166808, guid: 06141828e53cbdc4e8c43c83b2f996ce, type: 3}
+  _stick: {fileID: 6670680552085092425}
 --- !u!1 &7196459322381228295
 GameObject:
   m_ObjectHideFlags: 0
@@ -13316,6 +13331,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8184210407739381319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6670680552085092425}
+  m_Layer: 0
+  m_Name: StaffSphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6670680552085092425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8184210407739381319}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.418, y: 0, z: -0.009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1217025629774000129}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1217025629774391937
 PrefabInstance:
   m_ObjectHideFlags: 0

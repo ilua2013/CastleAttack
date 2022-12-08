@@ -10,7 +10,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     [field:SerializeField] public Mover Mover { get; private set; }
     [field:SerializeField] public Fighter Fighter { get; private set; }
     [Header("Rotate to wizzard")]
-    [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private PhaseSwitcher _phaseSwitcher;
     [SerializeField] private Phase[] _phases;
 
@@ -73,14 +72,12 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     {
         Fighter.Died += OnDie;
         Mover.ReachedHigherCell += ReturnToHand;
-        Mover.CellChanged += StartMove;
     }
 
     private void OnDisable()
     {
         Fighter.Died -= OnDie;
         Mover.ReachedHigherCell -= ReturnToHand;
-        Mover.CellChanged -= StartMove;
 
         if(_phaseSwitcher != null)
         _phaseSwitcher.UnRegister(this);
@@ -103,17 +100,9 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         _phaseSwitcher = FindObjectOfType<PhaseSwitcher>();
         _phaseSwitcher.Register(this);
 
-        foreach (var item in FindObjectsOfType<UnitFriend>())
-        {
-            if (item.Fighter.FighterType == FighterType.MainWizzard)
-                _wizzard = item;
-        }
-
         if (Fighter.FighterType != FighterType.MainWizzard)
         {
-            Vector3 target = _wizzard.transform.position - transform.position;
-            target.y = 0;
-            transform.forward = target;
+            transform.forward = new Vector3(0,0,-1);
         }
 
 
@@ -135,12 +124,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         _phaseSwitcher = FindObjectOfType<PhaseSwitcher>();
         _phaseSwitcher.Register(this);
-
-        foreach (var item in FindObjectsOfType<UnitFriend>())
-        {
-            if (item.Fighter.FighterType == FighterType.MainWizzard)
-                _wizzard = item;
-        }
 
         Mover.Init(this, transform, currentCell);
 
@@ -173,17 +156,16 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         if (enemy != null)
         {
-            if (Fighter.Attack(enemy.Fighter))
+            if (Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f))))
                 EnemyKilled?.Invoke(enemy);
 
             Attacked?.Invoke();
-            StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
             CurrentStep--;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Top))
         {
-            Mover.Move(Mover.CurrentCell.Top);
+            Mover.Move(Mover.CurrentCell.Top, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
             Moved?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.6f));
@@ -251,26 +233,27 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         }      
     }
 
-    private IEnumerator FinishStep(Action action, float time)
+    public IEnumerator FinishStep(Action action, float time)
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
         action?.Invoke();
     }
 
-    public void RotateTo(Transform transform, Action onRotated = null)
+    public void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
     {
+        print("RotateFighter");
         if (_coroutineRotateTo != null)
         {
             StopCoroutine(_coroutineRotateTo);
             _coroutineRotateTo = null;
         }
 
-        _coroutineRotateTo = Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated);
+        _coroutineRotateTo = Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
         StartCoroutine(_coroutineRotateTo);
     }
 
-    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+    public void StartMove(Cell cell, Action onEnd = null) => StartCoroutine(Mover.MoveTo(cell, onEnd));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
 
     private int GetDamage(UnitCard card)
@@ -309,25 +292,27 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
             if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
             {
-                if (_coroutineRotateToWizzard != null)
+                print("эта залупа вызвалась");
+                if (_coroutineRotateTo != null)
                 {
-                    StopCoroutine(_coroutineRotateToWizzard);
-                    _coroutineRotateToWizzard = null;
+                    StopCoroutine(_coroutineRotateTo);
+                    _coroutineRotateTo = null;
                 }
 
-                _coroutineRotateToWizzard = Mover.RotateTo(_wizzard.transform.position, () => _coroutineRotateToWizzard = null);
-                StartCoroutine(_coroutineRotateToWizzard);
+                _coroutineRotateTo = Mover.RotateTo(new Vector3(0,180,0), () => _coroutineRotateTo = null);
+                StartCoroutine(_coroutineRotateTo);
             }
             else if (phase.IsActive && phase.PhaseType == PhaseType.Battle)
             {
-                if (_coroutineRotateToWizzard != null)
+                print("эта залупа вызвалась 2");
+                if (_coroutineRotateTo != null)
                 {
-                    StopCoroutine(_coroutineRotateToWizzard);
-                    _coroutineRotateToWizzard = null;
+                    StopCoroutine(_coroutineRotateTo);
+                    _coroutineRotateTo = null;
                 }
 
-                _coroutineRotateToWizzard = Mover.RotateTo(transform.position + new Vector3(0, 0, 5), () => _coroutineRotateToWizzard = null);
-                StartCoroutine(_coroutineRotateToWizzard);
+                _coroutineRotateTo = Mover.RotateTo(new Vector3(0,0,0), () => _coroutineRotateTo = null);
+                StartCoroutine(_coroutineRotateTo);
             }
         }
     }

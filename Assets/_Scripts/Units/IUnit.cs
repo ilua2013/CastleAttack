@@ -15,7 +15,9 @@ public interface IUnit
     public event Action Inited;
     void Init(UnitCard card, Cell cell);
     void DoStep();
-    void RotateTo(Transform transform, Action onRotated = null);
+    void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null);
     void AnimationSizeUp();
+    void StartMove(Cell cell, Action onEnd = null);
+    IEnumerator FinishStep(Action action, float time);
     Arrow SpawnArrow(Arrow arrow, Vector3 position);
 }

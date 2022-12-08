@@ -16,6 +16,7 @@ public class Fighter
     private IUnit _unit;
     private Vector3 _startRotate;
     private float _timeToDefaultRotate = 1f;
+    private float _timeToMakeDamage = 0.35f;
     private float _speedRotate = 3f;
     private int _health = 1;
 
@@ -31,6 +32,7 @@ public class Fighter
     public event Action ReadyToDie;
     public event Action EffectDied;
     public event Action<Transform> Died_getKiller;
+    public event Action<Transform> Attacked_get;
     public event Action Attacked;
     public event Action RotatedToAttack;
     public event Action<int> Damaged;
@@ -57,7 +59,7 @@ public class Fighter
         _startRotate = transform.forward;
     }
 
-    public bool Attack(Fighter fighter)
+    public bool Attack(Fighter fighter, Action onEnd = null)
     {
         bool isFatal = false;
 
@@ -67,20 +69,19 @@ public class Fighter
             arrow.FlyTo(fighter.transform.position, () =>
             {
                 isFatal = fighter.TakeDamage(this);
+                onEnd?.Invoke();
             });
         }
         else
         {
-            _unit.RotateTo(fighter.transform, () =>
-            {
-                isFatal = fighter.TakeDamage(this);
-            });
+            _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
         }
 
         if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-            TakeDamage(fighter);
+            fighter.Attack(this);
 
         Attacked?.Invoke();
+        Attacked_get?.Invoke(fighter.transform);
 
         return isFatal;
     }
@@ -102,7 +103,7 @@ public class Fighter
 
     public bool TakeDamage(Fighter fighter)
     {
-        if (TakeDamage((int)DamageConditions.CalculateDamage(fighter.FighterType, _type, fighter.Damage)))
+        if (TakeDamage(fighter.Damage))
         {
             Died_getKiller?.Invoke(fighter.transform);
             return true;
@@ -137,25 +138,41 @@ public class Fighter
 
     public IEnumerator RotateTo(Transform lookAt, Action onFinish = null, Action onRotatedAttack = null)
     {
+        Debug.Log("ROTATE TO " + lookAt.name.ToString());
         Vector3 target = lookAt.position - transform.position;
+        Vector3 defaultRotate;
         target.y = 0;
+
+        if (_unit is UnitFriend unitFriend)
+            defaultRotate = Vector3.zero;
+        else
+            defaultRotate = new Vector3(0, 180, 0);
 
         while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+            Debug.Log("xxx");
             yield return null;
         }
+
+        RotatedToAttack?.Invoke();
+        Debug.Log("a1");
+        yield return new WaitForSeconds(_timeToMakeDamage);
+        Debug.Log("a2");
 
         onRotatedAttack?.Invoke();
-        RotatedToAttack?.Invoke();
-        yield return new WaitForSeconds(_timeToDefaultRotate);
+        
+        yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
+        Debug.Log("a3");
 
-        while (transform.forward != _startRotate)
+        while (transform.eulerAngles != defaultRotate)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, _startRotate, _speedRotate * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
+            Debug.Log("zzz ");
             yield return null;
         }
 
+        Debug.Log("a4");
         onFinish?.Invoke();
     }
 }
