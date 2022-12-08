@@ -61,13 +61,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnEnable()
     {
         Fighter.Died += OnDie;
-        Mover.CellChanged += StartMove;
     }
 
     private void OnDisable()
     {
         Fighter.Died -= OnDie;
-        Mover.CellChanged -= StartMove;
     }
 
     public void Init(UnitCard card, Cell cell)
@@ -90,16 +88,15 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
         if (enemy != null)
         {
-            Fighter.Attack(enemy.Fighter);
+            Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
             Attacked?.Invoke();
-            StartCoroutine(FinishStep(FinishedStep, 0.5f));
 
             CurrentStep--;
         }
         else if (Mover.CanMove(Mover.CurrentCell.Bot))
         {
-            Mover.Move(Mover.CurrentCell.Bot);
+            Mover.Move(Mover.CurrentCell.Bot, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
             Moved?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.7f));
@@ -157,23 +154,23 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         }
     }
 
-    private IEnumerator FinishStep(Action action, float time)
+    public IEnumerator FinishStep(Action action, float time)
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
         action?.Invoke();
     }
 
-    public void RotateTo(Transform transform, Action onRotated = null)
+    public void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
     {
         if (_coroutineRotateTo == null)
         {
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
         }
         else
         {
             StopCoroutine(_coroutineRotateTo);
-            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated));
+            _coroutineRotateTo = StartCoroutine(Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
         }
     }
 
@@ -183,6 +180,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     }
 
     private void Disable() => gameObject.SetActive(false);
-    private void StartMove(Cell cell) => StartCoroutine(Mover.MoveTo(cell));
+    public void StartMove(Cell cell, Action onEnd = null) => StartCoroutine(Mover.MoveTo(cell, onEnd));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
 }

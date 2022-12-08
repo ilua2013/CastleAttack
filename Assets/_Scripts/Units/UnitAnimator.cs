@@ -6,7 +6,7 @@ public class UnitAnimator : MonoBehaviour
 {
     [SerializeField] private Animator[] _animators;
 
-    private float _delayAnimationDamage = 0.35f;
+    private float _delayAnimationDamage = 0;//0.35f;
     private IUnit _unit;
     private Mover _mover;
     private Fighter _fighter;

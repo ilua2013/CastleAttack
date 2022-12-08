@@ -65,10 +65,11 @@ public class Mover
             return true;
     }
 
-    public void Move(Cell cell)
+    public void Move(Cell cell, Action onEnd = null)
     {
         _currentCell.SetFree();
         SetCurrentCell(cell);
+        _unit.StartMove(cell, onEnd);
 
         Moved?.Invoke();
         CellChanged?.Invoke(cell);
@@ -89,7 +90,7 @@ public class Mover
         transform.position = cell.transform.position;
     }
 
-    public IEnumerator MoveTo(Cell cell)
+    public IEnumerator MoveTo(Cell cell, Action onEnd = null)
     {
         Vector3 startPos = transform.position;
         Vector3 targetPos = cell.transform.position - transform.position;
@@ -116,6 +117,8 @@ public class Mover
             transform.position = startPos + (targetPos * (time / _timeMove));
             yield return null;
         }
+
+        onEnd?.Invoke();
     }
     
     public IEnumerator AnimationSizeUp()
@@ -130,28 +133,32 @@ public class Mover
         }
     }
 
-    public IEnumerator RotateTo(Vector3 lookAt, Action onRotated = null, float time = 0.5f)
+    public IEnumerator RotateTo(Vector3 targetEuler, Action onRotated = null, float time = 0.5f)
     {
-        Vector3 target = lookAt - transform.position;
+        Vector3 target = targetEuler - transform.position;
         Vector3 startForward = transform.forward;
         Vector3 forward = transform.forward;
         float ellapsedTime = 0;
         float percent = 0;
+        float timeMax = 0;
         target.y = 0;
 
-        while (Vector3.Distance(target.normalized, transform.forward) > 0.01f)
+        while (transform.eulerAngles != targetEuler)
         {
+            Debug.Log("RotateToMover in While");
             ellapsedTime = ellapsedTime > time ? time : ellapsedTime + Time.deltaTime;
-
+            timeMax += Time.deltaTime;
             percent = ellapsedTime / time;
 
+            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(targetEuler), 1100 * Time.deltaTime);
+
             //transform.forward = startForward.normalized * (1 - percent) + (target.normalized * percent);
-            forward = Vector3.MoveTowards(forward, target.normalized, 15 * Time.deltaTime);
-            transform.forward = forward;
+            //forward = Vector3.MoveTowards(forward, target.normalized, 15 * Time.deltaTime);
+            //transform.forward = forward;
             //transform.forward = Vector3.RotateTowards(transform.forward, target, 15 * Time.deltaTime, 15 * Time.deltaTime);
             yield return null;
         }
-
+        Debug.Log(timeMax + " Time");
         onRotated?.Invoke();
     }
 }

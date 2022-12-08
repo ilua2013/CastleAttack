@@ -16,6 +16,7 @@ public class Fighter
     private IUnit _unit;
     private Vector3 _startRotate;
     private float _timeToDefaultRotate = 1f;
+    private float _timeToMakeDamage = 0.35f;
     private float _speedRotate = 3f;
     private int _health = 1;
 
@@ -57,7 +58,7 @@ public class Fighter
         _startRotate = transform.forward;
     }
 
-    public bool Attack(Fighter fighter)
+    public bool Attack(Fighter fighter, Action onEnd = null)
     {
         bool isFatal = false;
 
@@ -67,14 +68,12 @@ public class Fighter
             arrow.FlyTo(fighter.transform.position, () =>
             {
                 isFatal = fighter.TakeDamage(this);
+                onEnd?.Invoke();
             });
         }
         else
         {
-            _unit.RotateTo(fighter.transform, () =>
-            {
-                isFatal = fighter.TakeDamage(this);
-            });
+            _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
         }
 
         if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
@@ -102,7 +101,7 @@ public class Fighter
 
     public bool TakeDamage(Fighter fighter)
     {
-        if (TakeDamage((int)DamageConditions.CalculateDamage(fighter.FighterType, _type, fighter.Damage)))
+        if (TakeDamage(fighter.Damage))
         {
             Died_getKiller?.Invoke(fighter.transform);
             return true;
@@ -137,6 +136,7 @@ public class Fighter
 
     public IEnumerator RotateTo(Transform lookAt, Action onFinish = null, Action onRotatedAttack = null)
     {
+        Debug.Log("ROTATE TO " + lookAt.name.ToString());
         Vector3 target = lookAt.position - transform.position;
         target.y = 0;
 
@@ -146,13 +146,18 @@ public class Fighter
             yield return null;
         }
 
-        onRotatedAttack?.Invoke();
         RotatedToAttack?.Invoke();
-        yield return new WaitForSeconds(_timeToDefaultRotate);
 
-        while (transform.forward != _startRotate)
+        yield return new WaitForSeconds(_timeToMakeDamage);
+
+        onRotatedAttack?.Invoke();
+        
+        yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
+
+        while (transform.forward != new Vector3(0, 0, 1))
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, _startRotate, _speedRotate * Time.deltaTime);
+            transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(0,0,1), _speedRotate * Time.deltaTime);
+            Debug.Log("zzz");
             yield return null;
         }
 
