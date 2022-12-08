@@ -12,6 +12,8 @@ public class WinPanel : MonoBehaviour
     [SerializeField] private RewardIncreaseButton _increaseButton;
     [SerializeField] private RewardStepsAnimation _stepsAnimation;
 
+    private CellWinAnimations _cellWinAnimations;
+    private DemolishAnimations _demolishAnimations;
     private CardsRewarder _levelRewarder;
     private FinishPanel _finishPanel;
     private bool _isRewardWasOffered;
@@ -26,6 +28,8 @@ public class WinPanel : MonoBehaviour
     private void Awake()
     {
         _levelRewarder = FindObjectOfType<CardsRewarder>();
+        _cellWinAnimations = FindObjectOfType<CellWinAnimations>();
+        _demolishAnimations = FindObjectOfType<DemolishAnimations>();
         _finishPanel = GetComponent<FinishPanel>();
     }
 
@@ -41,14 +45,19 @@ public class WinPanel : MonoBehaviour
 
     private void OnOpened()
     {
+        int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
+
         Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
         Saves.Save();
 
         _increaseButton.Init(_levelRewarder.RewardCards);
-        //_cardRewardPanel.ShowCards(_levelRewarder.RewardCards);
 
-        int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
-        _stepsAnimation.Play(starsCount);
+        _cellWinAnimations.Play(() => 
+        _demolishAnimations.Play(() => 
+        {
+            _finishPanel.OpenPanel();
+            _stepsAnimation.Play(starsCount);
+        }));
 
         if (_isRewardWasOffered == false)
             _isRewardWasOffered = true;

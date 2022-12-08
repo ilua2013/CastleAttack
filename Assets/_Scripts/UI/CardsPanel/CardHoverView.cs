@@ -76,6 +76,9 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         CanHover = true;
 
+        if (enabled == false || gameObject.activeInHierarchy == false)
+            return;
+
         if (_coroutinePosition != null)
             StopCoroutine(_coroutinePosition);
 
@@ -90,6 +93,9 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void MoveTo(Vector3 position, Action onEndCallback = null)
     {
+        if (enabled == false || gameObject.activeInHierarchy == false)
+            return;
+
         if (_coroutinePosition != null)
             StopCoroutine(_coroutinePosition);
 
@@ -98,6 +104,9 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void MoveTo(Vector3 position, float lerpTime, Action onEndCallback = null)
     {
+        if (enabled == false || gameObject.activeInHierarchy == false)
+            return;
+
         if (_coroutinePosition != null)
             StopCoroutine(_coroutinePosition);
 
@@ -106,6 +115,9 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ScaleTo(Vector3 scale)
     {
+        if (enabled == false || gameObject.activeInHierarchy == false)
+            return;
+
         if (_coroutineScaling != null)
             StopCoroutine(_coroutineScaling);
 
