@@ -11,6 +11,7 @@ public class Fighter
     [SerializeField] private FighterType _type;
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
+    [SerializeField] private Arrow _arrow;
 
     private IUnit _unit;
     private Vector3 _startRotate;
@@ -60,10 +61,21 @@ public class Fighter
     {
         bool isFatal = false;
 
-        _unit.RotateTo(fighter.transform, () =>
+        if (_type == FighterType.Archer)
         {
-            isFatal = fighter.TakeDamage(this);
-        });
+            Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
+            arrow.FlyTo(fighter.transform.position, () =>
+            {
+                isFatal = fighter.TakeDamage(this);
+            });
+        }
+        else
+        {
+            _unit.RotateTo(fighter.transform, () =>
+            {
+                isFatal = fighter.TakeDamage(this);
+            });
+        }
 
         if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
             TakeDamage(fighter);
@@ -131,7 +143,6 @@ public class Fighter
         while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
-
             yield return null;
         }
 
@@ -142,7 +153,6 @@ public class Fighter
         while (transform.forward != _startRotate)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, _startRotate, _speedRotate * Time.deltaTime);
-
             yield return null;
         }
 

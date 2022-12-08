@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CardSelectionView : MonoBehaviour
 {
-    private const float ScaleFactor = 1.32f;
+    private const float ScaleFactor = 0.2f;
     private const float MoveSpeed = 10f;
 
     [SerializeField] private Transform[] _cardPlacements;
@@ -54,22 +54,20 @@ public class CardSelectionView : MonoBehaviour
             cards[i].transform.position = _deckCounterView.transform.position;
 
             if (cards[i].TryGetComponent(out CardHoverView cardHover))
-                MoveCard(cardHover, _cardPlacements[i].position, Vector3.zero);
+                MoveCard(cardHover, _cardPlacements[i].position, cardHover.StartScaling);
         }
     }
 
     private void OnReturned(Card card)
     {
         if (card.TryGetComponent(out CardHoverView cardHover))
-            MoveCard(cardHover, _deckCounterView.transform.position, cardHover.transform.localScale, () => cardHover.gameObject.SetActive(false));
+            MoveCard(cardHover, _deckCounterView.transform.position, cardHover.transform.localScale * ScaleFactor, () => cardHover.gameObject.SetActive(false));
     }
 
     private void MoveCard(CardHoverView cardHover, Vector3 position, Vector3 startScale, Action onReached = null)
     {
-        cardHover.transform.localScale = startScale;
-        
         cardHover.SaveStartState(position, cardHover.transform.GetSiblingIndex());
         cardHover.MoveTo(position, MoveSpeed, onReached);
-        cardHover.ScaleTo(cardHover.StartScaling * ScaleFactor);
+        cardHover.ScaleTo(startScale);
     }
 }
