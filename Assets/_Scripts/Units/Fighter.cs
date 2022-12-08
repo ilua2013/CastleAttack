@@ -138,29 +138,39 @@ public class Fighter
     {
         Debug.Log("ROTATE TO " + lookAt.name.ToString());
         Vector3 target = lookAt.position - transform.position;
+        Vector3 defaultRotate;
         target.y = 0;
+
+        if (_unit is UnitFriend unitFriend)
+            defaultRotate = Vector3.zero;
+        else
+            defaultRotate = new Vector3(0, 180, 0);
 
         while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+            Debug.Log("xxx");
             yield return null;
         }
 
         RotatedToAttack?.Invoke();
-
+        Debug.Log("a1");
         yield return new WaitForSeconds(_timeToMakeDamage);
+        Debug.Log("a2");
 
         onRotatedAttack?.Invoke();
         
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
+        Debug.Log("a3");
 
-        while (Vector3.Distance (transform.forward, new Vector3(0,0,1)) > 0.01f)
+        while (transform.eulerAngles != defaultRotate)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(0,0,1), _speedRotate * Time.deltaTime);
-            Debug.Log("zzz " + Vector3.Distance(transform.forward, new Vector3(0, 0, 1)));
+            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
+            Debug.Log("zzz ");
             yield return null;
         }
 
+        Debug.Log("a4");
         onFinish?.Invoke();
     }
 }

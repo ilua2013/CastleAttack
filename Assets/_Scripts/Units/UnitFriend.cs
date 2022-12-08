@@ -249,7 +249,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             _coroutineRotateTo = null;
         }
 
-        _coroutineRotateTo = Fighter.RotateTo(transform, () => _coroutineRotateTo = null, onRotated);
+        _coroutineRotateTo = Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
         StartCoroutine(_coroutineRotateTo);
     }
 
