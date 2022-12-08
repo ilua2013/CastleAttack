@@ -32,6 +32,7 @@ public class Fighter
     public event Action ReadyToDie;
     public event Action EffectDied;
     public event Action<Transform> Died_getKiller;
+    public event Action<Transform> Attacked_get;
     public event Action Attacked;
     public event Action RotatedToAttack;
     public event Action<int> Damaged;
@@ -77,9 +78,10 @@ public class Fighter
         }
 
         if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-            TakeDamage(fighter);
+            fighter.Attack(this);
 
         Attacked?.Invoke();
+        Attacked_get?.Invoke(fighter.transform);
 
         return isFatal;
     }
@@ -154,10 +156,10 @@ public class Fighter
         
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
 
-        while (Vector3.Distance (transform.forward, new Vector3(0,0,1)) > 0.01f)
+        while (transform.eulerAngles != Vector3.zero)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(0,0,1), _speedRotate * Time.deltaTime);
-            Debug.Log("zzz " + Vector3.Distance(transform.forward, new Vector3(0, 0, 1)));
+            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(Vector3.zero), 600 * Time.deltaTime);
+            Debug.Log("zzz ");
             yield return null;
         }
 
