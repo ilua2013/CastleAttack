@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour _unit;    
+    [SerializeField] private MonoBehaviour _unit;
     [SerializeField] private Unit _unitType;
 
     private IRadiusAttack _radiusAttack;
     private IUnit _unitStep;
     private bool _isShow = true;
 
-    private List<Cell> _cells = new List<Cell>();   
+    private List<Cell> _cells = new List<Cell>();
 
     public List<Cell> ViewCells()
     {
@@ -19,7 +19,7 @@ public class RadiusAttackView : MonoBehaviour
 
     private void Awake()
     {
-        _unitStep = GetComponent<IUnit>();       
+        _unitStep = GetComponent<IUnit>();
     }
 
     public void ShowRadius(Cell cell, DistanceAttack[] attacks)
@@ -39,17 +39,21 @@ public class RadiusAttackView : MonoBehaviour
     }
 
     public void ShowRadius()
-    {        
-            UnSelectionCells(_cells);
-            _cells.Clear();
-            _cells = ViewCells();
-            SelectionCells(_cells);      
+    {
+        UnSelectionCells(_cells);
+        _cells.Clear();
+        _cells = ViewCells();
+        SelectionCells(_cells);
     }
 
     private void OnEnable()
     {
-        _unitStep.UnitSteped += AllowedShow;
-        _unitStep.FinishedStep += FinishStepGlear;
+        if (_unitType != Unit.Spell)
+        {
+            _unitStep.UnitSteped += AllowedShow;
+            _unitStep.FinishedStep += FinishStepGlear;
+        }
+
         _radiusAttack = _unit.GetComponent<IRadiusAttack>();
         _radiusAttack.Inited += InitedCells;
 
@@ -59,10 +63,12 @@ public class RadiusAttackView : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_unitType != Unit.Spell)
+        {
+            _unitStep.UnitSteped -= AllowedShow;
+            _unitStep.FinishedStep -= FinishStepGlear;
+        }
         _radiusAttack.Inited -= InitedCells;
-        _unitStep.UnitSteped -= AllowedShow;
-        _unitStep.FinishedStep -= FinishStepGlear;
-
         if (_radiusAttack.Mover != null)
             _radiusAttack.Mover.Moved -= OnMoved;
 
@@ -76,9 +82,9 @@ public class RadiusAttackView : MonoBehaviour
         {
             UnitDisable();
         }
-            
+
         else
-            ShowRadius();       
+            ShowRadius();
     }
 
     private void FinishStepGlear()
@@ -87,7 +93,7 @@ public class RadiusAttackView : MonoBehaviour
     }
 
     private void OnMoved()
-    {          
+    {
         ShowRadius();
     }
 
@@ -108,16 +114,16 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (_isShow)
-                {
-                    if (_unitType == Unit.Enemy)
-                        highlighting.SelectEnemy();
-                    if (_unitType == Unit.Friend)
-                        highlighting.SelectFriend();
-                    if (_unitType == Unit.Spell)
-                        highlighting.SelectSpell();
-                }
-                
+                //if (_isShow)
+                //{
+                if (_unitType == Unit.Enemy)
+                    highlighting.SelectEnemy();
+                if (_unitType == Unit.Friend)
+                    highlighting.SelectFriend();
+                if (_unitType == Unit.Spell)
+                    highlighting.SelectSpell();
+                //}
+
             }
         }
     }
@@ -132,7 +138,7 @@ public class RadiusAttackView : MonoBehaviour
                 {
                     if (_unitType == Unit.Enemy)
                         highlighting.UnSelectEnemy();
-                    if(_unitType == Unit.Friend)
+                    if (_unitType == Unit.Friend)
                         highlighting.UnSelectFriend();
                     if (_unitType == Unit.Spell)
                         highlighting.UnSelectSpell();
