@@ -12,4 +12,8 @@ public enum CardName
     Lizard,
     Wolf,
     Ork,
+    Firewall,
+    Fireline,
+    Icewall,
+    Fireball,
 }

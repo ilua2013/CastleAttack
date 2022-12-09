@@ -57,6 +57,11 @@ public class Mover
         _currentCell.StateUnitOnCell(_unit);
     }
 
+    public void SetMove(bool isCanMove)
+    {
+        _canMove = isCanMove;
+    }
+
     public bool CanMove(Cell cell)
     {
         if (_canMove == false || cell == null || cell.IsFree == false)

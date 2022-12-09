@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4467084045058714823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4467084045058714822}
+  - component: {fileID: 7517685487158436562}
+  - component: {fileID: 6385427553526047650}
+  m_Layer: 0
+  m_Name: Icewall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4467084045058714822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467084045058714823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.79, y: 0, z: 32.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7517685487158436562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467084045058714823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0a2123514c4774a9e52d4badd27c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceAttacks:
+  - Side: 0
+    Distance: 0
+  - Side: 1
+    Distance: 1
+  - Side: 2
+    Distance: 0
+  - Side: 3
+    Distance: 1
+  - Side: 4
+    Distance: 0
+  - Side: 5
+    Distance: 0
+  - Side: 6
+    Distance: 0
+  - Side: 7
+    Distance: 0
+  - Side: 8
+    Distance: 1
+  _affectDelay: 1
+  _lifeTime: 2
+  _maxTicks: 3
+  _fighterType: 7
+--- !u!114 &6385427553526047650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467084045058714823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d5ebeea8a0ba6488d3b314645477c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _soundEffects:
+    - SoundEffectType: 4
+      AudioClips:
+      - {fileID: 8300000, guid: 42200c0d4c76b3d4da2a0208601694bb, type: 3}
