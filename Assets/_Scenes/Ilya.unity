@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -874,6 +874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Decks
       objectReference: {fileID: 0}
+    - target: {fileID: 3803725951201185590, guid: 7b76c87259854a341908504530351c45, type: 3}
+      propertyPath: _commonDeck
+      value: 
+      objectReference: {fileID: 475986965}
     - target: {fileID: 3803725951201185591, guid: 7b76c87259854a341908504530351c45, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -930,7 +934,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5991682972271489639, guid: 7b76c87259854a341908504530351c45, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7b76c87259854a341908504530351c45, type: 3}
 --- !u!1001 &33483181
 PrefabInstance:
@@ -7840,6 +7845,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: be889e3271330c04ab56d7f0582a243d, type: 3}
   m_PrefabInstance: {fileID: 474559820}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &475986962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2983113014892292466, guid: 7b76c87259854a341908504530351c45, type: 3}
+  m_PrefabInstance: {fileID: 28870236}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &475986965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475986962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb47c17c7ce0044eb736c6f21466242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &492772782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21911,6 +21933,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 452.19995
       objectReference: {fileID: 0}
+    - target: {fileID: 1750044245562598715, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+      propertyPath: _commonDeck
+      value: 
+      objectReference: {fileID: 1568325715}
     - target: {fileID: 2178315872821890232, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -24930,6 +24956,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 439782, guid: 8176d927b34bcb748b33cf131c6f0600, type: 3}
   m_PrefabInstance: {fileID: 1564371510}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1568325715 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 300425810615391980, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+  m_PrefabInstance: {fileID: 1353735468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb47c17c7ce0044eb736c6f21466242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1572859737
 PrefabInstance:
   m_ObjectHideFlags: 0
