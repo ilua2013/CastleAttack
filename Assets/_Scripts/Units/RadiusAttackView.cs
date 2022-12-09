@@ -3,16 +3,23 @@ using UnityEngine;
 
 public class RadiusAttackView : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour _unit;
+    [SerializeField] private MonoBehaviour _unit;    
     [SerializeField] private Unit _unitType;
 
     private IRadiusAttack _radiusAttack;
+    private IUnit _unitStep;
+    private bool _isShow = true;
 
-    private List<Cell> _cells = new List<Cell>();
+    private List<Cell> _cells = new List<Cell>();   
 
     public List<Cell> ViewCells()
     {
         return _cells = _radiusAttack.RadiusView();
+    }
+
+    private void Awake()
+    {
+        _unitStep = GetComponent<IUnit>();       
     }
 
     public void ShowRadius(Cell cell, DistanceAttack[] attacks)
@@ -32,15 +39,17 @@ public class RadiusAttackView : MonoBehaviour
     }
 
     public void ShowRadius()
-    {
-        UnSelectionCells(_cells);
-        _cells.Clear();
-        _cells = ViewCells();
-        SelectionCells(_cells);
+    {        
+            UnSelectionCells(_cells);
+            _cells.Clear();
+            _cells = ViewCells();
+            SelectionCells(_cells);      
     }
 
     private void OnEnable()
     {
+        _unitStep.UnitSteped += AllowedShow;
+        _unitStep.FinishedStep += FinishStepGlear;
         _radiusAttack = _unit.GetComponent<IRadiusAttack>();
         _radiusAttack.Inited += InitedCells;
 
@@ -51,6 +60,8 @@ public class RadiusAttackView : MonoBehaviour
     private void OnDisable()
     {
         _radiusAttack.Inited -= InitedCells;
+        _unitStep.UnitSteped -= AllowedShow;
+        _unitStep.FinishedStep -= FinishStepGlear;
 
         if (_radiusAttack.Mover != null)
             _radiusAttack.Mover.Moved -= OnMoved;
@@ -58,8 +69,25 @@ public class RadiusAttackView : MonoBehaviour
         UnitDisable();
     }
 
-    private void OnMoved()
+    private void AllowedShow(bool isSteped)
     {
+        _isShow = isSteped;
+        if (isSteped == false)
+        {
+            UnitDisable();
+        }
+            
+        else
+            ShowRadius();       
+    }
+
+    private void FinishStepGlear()
+    {
+        UnSelectionCells(_cells);
+    }
+
+    private void OnMoved()
+    {          
         ShowRadius();
     }
 
@@ -80,12 +108,16 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
-                if (_unitType == Unit.Enemy)
-                    highlighting.SelectEnemy();
-                if(_unitType == Unit.Friend)
-                    highlighting.SelectFriend();
-                if (_unitType == Unit.Spell)
-                    highlighting.SelectSpell();
+                if (_isShow)
+                {
+                    if (_unitType == Unit.Enemy)
+                        highlighting.SelectEnemy();
+                    if (_unitType == Unit.Friend)
+                        highlighting.SelectFriend();
+                    if (_unitType == Unit.Spell)
+                        highlighting.SelectSpell();
+                }
+                
             }
         }
     }
