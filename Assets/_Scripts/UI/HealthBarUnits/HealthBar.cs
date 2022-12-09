@@ -13,6 +13,9 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private MonoBehaviour _iUnit;
     [SerializeField] private TMP_Text _textHealth;
     [SerializeField] private Slider _bar;
+    [SerializeField] private Vector3 _posistionViewWizzard;
+
+    private Vector3 _startPos;
 
     private IUnit _unit => (IUnit)_iUnit;
 
@@ -25,6 +28,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         _iUnit = (MonoBehaviour)GetComponentInParent<IUnit>();
+        _startPos = transform.localPosition;
 
         if (_unit.Fighter.Health == 0)
             _bar.value = _unit.Fighter.MaxHealth;
@@ -38,6 +42,12 @@ public class HealthBar : MonoBehaviour
         _unit.Inited += StartOnHealthChanged;
         _unit.Fighter.Damaged += OnHealthChanged;
         _unit.Fighter.Healed += OnHealthChanged;
+
+        if(_unit is UnitFriend unitFriend)
+        {
+            unitFriend.RotatedToBattle += PutDefaultPosition;
+            unitFriend.RotatedToWizzard += PutPositionViewWizzard;
+        }
     }
 
     private void OnDisable()
@@ -46,6 +56,22 @@ public class HealthBar : MonoBehaviour
         _unit.Inited -= StartOnHealthChanged;
         _unit.Fighter.Damaged -= OnHealthChanged;
         _unit.Fighter.Healed -= OnHealthChanged;
+
+        if (_unit is UnitFriend unitFriend)
+        {
+            unitFriend.RotatedToBattle -= PutDefaultPosition;
+            unitFriend.RotatedToWizzard -= PutPositionViewWizzard;
+        }
+    }
+
+    private void PutPositionViewWizzard()
+    {
+        transform.localPosition = _posistionViewWizzard;
+    }
+
+    private void PutDefaultPosition()
+    {
+        transform.localPosition = _startPos;
     }
 
     private void StartOnHealthChanged() => OnHealthChanged(0);

@@ -6,6 +6,16 @@ public class UILookCamera : MonoBehaviour
 {
     private Camera _camera;
 
+    private void OnValidate()
+    {
+        _camera = Camera.main;
+        Vector3 targetLook = _camera.transform.position - transform.position;
+        targetLook.x = 0;
+
+        //transform.LookAt(transform.position * 2 - _camera.transform.position);
+        transform.forward = -targetLook;
+    }
+
     private void Awake()
     {
         _camera = Camera.main;

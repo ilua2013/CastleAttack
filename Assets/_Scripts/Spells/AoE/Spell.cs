@@ -5,44 +5,49 @@ using UnityEngine;
 
 public abstract class Spell : MonoBehaviour
 {
-    private const float Interval = 1f;
-
     [SerializeField] private DistanceAttack[] _distanceAttacks;
-    [SerializeField] private float _lifetime;
+    [SerializeField] private float _affectDelay;
+    [SerializeField] private float _lifeTime;
+    [SerializeField] private int _maxTicks;
+
+    private BattleSystem _battleSystem;
+    private Cell _cell;
+    private CardSave _save;
+    private int _ticks;
 
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
 
     public event Action Dispelled;
     public event Action WasCast;
 
-    public void Cast(Cell cell, CardSave save, Action onEndCallback = null)
+    public void Cast(Cell cell, CardSave save, BattleSystem battleSystem, Action onEndCallback = null)
     {
-        StartCoroutine(Live(onEndCallback, cell, save));
+        _battleSystem = battleSystem;
+        _cell = cell;
+        _save = save;
+
+        StartCoroutine(Live());
+
+        _battleSystem.StepFinished += OnStepFinished;
+        OnStepFinished();
+
         WasCast?.Invoke();
     }
 
-    protected abstract void Affect(Cell cell, CardSave save);
+    protected abstract void Affect(Cell cell, CardSave save, float delay);
 
-    private IEnumerator Live(Action onDeathCallback, Cell cell, CardSave save)
+    private void OnStepFinished()
     {
-        float elapsed = 0;
-        float ticks = 0;
+        Affect(_cell, _save, _affectDelay);
+        _ticks++;
+    }
 
-        while (elapsed < _lifetime)
-        {
-            if (ticks >= Interval)
-            {
-                ticks = 0;
-                Affect(cell, save);
-            }
+    private IEnumerator Live()
+    {
+        yield return new WaitWhile(() => _ticks < _maxTicks);
+        yield return new WaitForSeconds(_lifeTime);
 
-            ticks += Time.deltaTime;
-            elapsed += Time.deltaTime;
-
-            yield return null;
-        }
-
-        onDeathCallback?.Invoke();
+        _battleSystem.StepFinished -= OnStepFinished;
         Dispelled?.Invoke();
     }
 }

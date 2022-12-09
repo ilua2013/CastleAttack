@@ -99,6 +99,8 @@ public class CellSpawner : MonoBehaviour
         cell.SetType(CellIs.Wizzard);
         cell.gameObject.name += " Wizzard";
 
+        cell.GetComponentInChildren<CellView>().gameObject.SetActive(false);
+
         foreach (var item in _cells)
             item.SetCell(cell, CellNeighbor.Bot);
     }

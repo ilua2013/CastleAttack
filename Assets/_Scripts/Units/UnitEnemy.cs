@@ -30,6 +30,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action FinishedStep;
     public event Action StepChanged;
     public event Action LevelUppedTutorial;
+    public event Action<bool> UnitSteped;
 
     private void OnValidate()
     {
@@ -85,6 +86,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
         UnitFriend enemy = TryAttack();
         _doingStep = true;
+        UnitSteped?.Invoke(_doingStep);
 
         if (enemy != null)
         {
@@ -158,6 +160,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
+        UnitSteped?.Invoke(_doingStep);
         action?.Invoke();
     }
 

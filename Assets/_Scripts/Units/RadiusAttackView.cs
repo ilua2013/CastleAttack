@@ -7,12 +7,19 @@ public class RadiusAttackView : MonoBehaviour
     [SerializeField] private Unit _unitType;
 
     private IRadiusAttack _radiusAttack;
+    private IUnit _unitStep;
+    private bool _isShow = true;
 
     private List<Cell> _cells = new List<Cell>();
 
     public List<Cell> ViewCells()
     {
         return _cells = _radiusAttack.RadiusView();
+    }
+
+    private void Awake()
+    {
+        _unitStep = GetComponent<IUnit>();
     }
 
     public void ShowRadius(Cell cell, DistanceAttack[] attacks)
@@ -41,6 +48,12 @@ public class RadiusAttackView : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_unitType != Unit.Spell)
+        {
+            _unitStep.UnitSteped += AllowedShow;
+            _unitStep.FinishedStep += FinishStepGlear;
+        }
+
         _radiusAttack = _unit.GetComponent<IRadiusAttack>();
         _radiusAttack.Inited += InitedCells;
 
@@ -50,12 +63,33 @@ public class RadiusAttackView : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_unitType != Unit.Spell)
+        {
+            _unitStep.UnitSteped -= AllowedShow;
+            _unitStep.FinishedStep -= FinishStepGlear;
+        }
         _radiusAttack.Inited -= InitedCells;
-
         if (_radiusAttack.Mover != null)
             _radiusAttack.Mover.Moved -= OnMoved;
 
         UnitDisable();
+    }
+
+    private void AllowedShow(bool isSteped)
+    {
+        _isShow = isSteped;
+        if (isSteped == false)
+        {
+            UnitDisable();
+        }
+
+        else
+            ShowRadius();
+    }
+
+    private void FinishStepGlear()
+    {
+        UnSelectionCells(_cells);
     }
 
     private void OnMoved()
@@ -80,12 +114,16 @@ public class RadiusAttackView : MonoBehaviour
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
             {
+                //if (_isShow)
+                //{
                 if (_unitType == Unit.Enemy)
                     highlighting.SelectEnemy();
-                if(_unitType == Unit.Friend)
+                if (_unitType == Unit.Friend)
                     highlighting.SelectFriend();
                 if (_unitType == Unit.Spell)
                     highlighting.SelectSpell();
+                //}
+
             }
         }
     }
@@ -100,7 +138,7 @@ public class RadiusAttackView : MonoBehaviour
                 {
                     if (_unitType == Unit.Enemy)
                         highlighting.UnSelectEnemy();
-                    if(_unitType == Unit.Friend)
+                    if (_unitType == Unit.Friend)
                         highlighting.UnSelectFriend();
                     if (_unitType == Unit.Spell)
                         highlighting.UnSelectSpell();

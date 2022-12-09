@@ -36,8 +36,11 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action StopUnit;
     public event Action FinishedStep;
     public event Action StepChanged;
+    public event Action RotatedToWizzard;
+    public event Action RotatedToBattle;
     public event Action<UnitEnemy> EnemyKilled;
-    public event Action<UnitFriend> LevelUpped;
+    public event Action<UnitFriend> LevelUpped; 
+    public event Action<bool> UnitSteped;
 
     private void OnValidate()
     {
@@ -103,6 +106,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         if (Fighter.FighterType != FighterType.MainWizzard)
         {
             transform.forward = new Vector3(0,0,-1);
+            RotatedToWizzard?.Invoke();
         }
 
 
@@ -153,6 +157,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         UnitEnemy enemy = TryAttack();
         _doingStep = true;
+        UnitSteped?.Invoke(_doingStep);
 
         if (enemy != null)
         {
@@ -237,6 +242,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
+        UnitSteped?.Invoke(_doingStep);
         action?.Invoke();
     }
 
@@ -292,25 +298,23 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
             if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
             {
-                print("эта залупа вызвалась");
                 if (_coroutineRotateTo != null)
                 {
                     StopCoroutine(_coroutineRotateTo);
                     _coroutineRotateTo = null;
                 }
-
+                RotatedToWizzard?.Invoke();
                 _coroutineRotateTo = Mover.RotateTo(new Vector3(0,180,0), () => _coroutineRotateTo = null);
                 StartCoroutine(_coroutineRotateTo);
             }
             else if (phase.IsActive && phase.PhaseType == PhaseType.Battle)
             {
-                print("эта залупа вызвалась 2");
                 if (_coroutineRotateTo != null)
                 {
                     StopCoroutine(_coroutineRotateTo);
                     _coroutineRotateTo = null;
                 }
-
+                RotatedToBattle?.Invoke();
                 _coroutineRotateTo = Mover.RotateTo(new Vector3(0,0,0), () => _coroutineRotateTo = null);
                 StartCoroutine(_coroutineRotateTo);
             }
