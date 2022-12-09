@@ -6,6 +6,7 @@ using UnityEngine;
 public class SpellSpawner : MonoBehaviour, ICardApplicable
 {
     private Cell _cell;
+    private BattleSystem _battleSystem;
 
     public UnitFriend Spawned { get; private set; }
 
@@ -18,6 +19,7 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
     private void Awake()
     {
         _cell = GetComponent<Cell>();
+        _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     public bool TryApplyFriend(Card card, Vector3 place)
@@ -26,7 +28,7 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
         {
             Spell spell = Instantiate(spellCard.SpellPrefab, transform.position, Quaternion.identity);
 
-            spell.Cast(_cell, card.CardSave);
+            spell.Cast(_cell, card.CardSave, _battleSystem);
             Cast?.Invoke(place, spell);
             return true;
         }

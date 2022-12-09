@@ -20,14 +20,21 @@ public class MeteorSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect(Cell cell, CardSave save)
+    protected override void Affect(Cell cell, CardSave save, float delay)
     {
+        StartCoroutine(ApplyDamage(cell, save.UnitStats.Damage, delay));
+    }
+
+    private IEnumerator ApplyDamage(Cell cell, int damage, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
 
         foreach (UnitEnemy enemy in enemies)
         {
-            int damage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, save.UnitStats.Damage);
-            enemy.Fighter.TakeDamage(damage);
+            int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
+            enemy.Fighter.TakeDamage(totalDamage);
         }
     }
 

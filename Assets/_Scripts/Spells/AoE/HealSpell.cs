@@ -19,12 +19,19 @@ public class HealSpell : Spell
         Dispelled -= OnDispelled;
     }
 
-    protected override void Affect(Cell cell, CardSave save)
+    protected override void Affect(Cell cell, CardSave save, float delay)
     {
+        StartCoroutine(Heal(cell, _recovery, delay));
+    }
+
+    private IEnumerator Heal(Cell cell, int value, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         List<UnitFriend> units = cell.GetFriendUnits(DistanceAttacks);
 
         foreach (UnitFriend unit in units)
-            unit.Fighter.RecoveryHealth(save.UnitStats.MaxHealth);
+            unit.Fighter.RecoveryHealth(value);
     }
 
     private void OnDispelled()
