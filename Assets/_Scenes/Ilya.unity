@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.41509432, g: 0.41274473, b: 0.41274473, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3246,17 +3246,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 455398, guid: 74e2774195e6ca54daf6f19e8679c214, type: 3}
   m_PrefabInstance: {fileID: 173302216}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &184188305 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7877839582000147479, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
-  m_PrefabInstance: {fileID: 556181569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &187148554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11777,14 +11766,10 @@ PrefabInstance:
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
-<<<<<<< Updated upstream
-      objectReference: {fileID: 2126768455}
-=======
       objectReference: {fileID: 880782416}
->>>>>>> Stashed changes
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Fighter>k__BackingField._maxHealth
-      value: 40
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2283506425688506818, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: m_text
@@ -12584,11 +12569,7 @@ PrefabInstance:
     - target: {fileID: 7196459322372414185, guid: 1c2d2de1cefde1d4483c510440079ca0, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
-<<<<<<< Updated upstream
-      objectReference: {fileID: 184188305}
-=======
-      objectReference: {fileID: 1742299819}
->>>>>>> Stashed changes
+      objectReference: {fileID: 1065669874}
     - target: {fileID: 7196459322372414187, guid: 1c2d2de1cefde1d4483c510440079ca0, type: 3}
       propertyPath: m_Name
       value: Wizzard
@@ -16424,17 +16405,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c3fcd6004093e7418588846f143dcaa, type: 3}
   m_PrefabInstance: {fileID: 971172565}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &995625258 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3337118875691626115, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
-  m_PrefabInstance: {fileID: 556181569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &997269125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17027,14 +16997,10 @@ PrefabInstance:
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Mover>k__BackingField._startCell
       value: 
-<<<<<<< Updated upstream
-      objectReference: {fileID: 2139495007}
-=======
-      objectReference: {fileID: 995625258}
->>>>>>> Stashed changes
+      objectReference: {fileID: 1500141386}
     - target: {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: <Fighter>k__BackingField._maxHealth
-      value: 40
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2333428208713342117, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -17884,6 +17850,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 475232, guid: e8cf581202dcceb479b669f9f973d29b, type: 3}
   m_PrefabInstance: {fileID: 1062756978}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1065669874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7877839582000147479, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
+  m_PrefabInstance: {fileID: 556181569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1075915362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23724,6 +23701,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500141386 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3337118875691626115, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
+  m_PrefabInstance: {fileID: 556181569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1510495360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27530,17 +27518,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 405974, guid: 14da64593db4ed6499b78711c2695f89, type: 3}
   m_PrefabInstance: {fileID: 1741050821}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1742299819 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7877839582000147479, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
-  m_PrefabInstance: {fileID: 556181569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1746804441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34804,17 +34781,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 467750, guid: a5d47e9cdfeba484f8f8f62f424a717f, type: 3}
   m_PrefabInstance: {fileID: 2116170025}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2126768455 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1304106199739314529, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
-  m_PrefabInstance: {fileID: 556181569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2135451059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34955,17 +34921,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 419706, guid: 7cdf12889363f9d4a85110bbeabbff28, type: 3}
   m_PrefabInstance: {fileID: 2136147442}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2139495007 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3337118875691626115, guid: 3fb5c603046d6174bb71feac674b694e, type: 3}
-  m_PrefabInstance: {fileID: 556181569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e446c99559f9141b7849691d8e1dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &398061117906878192
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36054,7 +36009,7 @@ PrefabInstance:
     - target: {fileID: 686883698167672173, guid: 6d7d9131869029f499eb90b3586d5cfd, type: 3}
       propertyPath: _iUnit
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6685718128881365178}
     - target: {fileID: 944989982767187113, guid: 6d7d9131869029f499eb90b3586d5cfd, type: 3}
       propertyPath: m_Name
       value: HealthBar Enemy
@@ -36146,7 +36101,7 @@ PrefabInstance:
     - target: {fileID: 3127858744070307618, guid: 6d7d9131869029f499eb90b3586d5cfd, type: 3}
       propertyPath: _iUnit
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6685718128881365178}
     - target: {fileID: 8278671431669680513, guid: 6d7d9131869029f499eb90b3586d5cfd, type: 3}
       propertyPath: m_Value
       value: 0
