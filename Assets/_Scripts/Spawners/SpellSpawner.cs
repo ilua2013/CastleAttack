@@ -14,7 +14,8 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
 
     public Cell Cell => _cell;
 
-    public event Action<Vector3, Spell> Cast;
+    public event Action Cast;
+    public event Action<Vector3, Spell> Cast_get;
 
     private void Awake()
     {
@@ -28,8 +29,10 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
         {
             Spell spell = Instantiate(spellCard.SpellPrefab, transform.position, Quaternion.identity);
 
+
             spell.Cast(_cell, card.CardSave, _battleSystem);
-            Cast?.Invoke(place, spell);
+            Cast_get?.Invoke(place, spell);
+            Cast?.Invoke();
             return true;
         }
         return false;

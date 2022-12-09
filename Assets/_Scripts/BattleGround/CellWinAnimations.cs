@@ -17,7 +17,7 @@ public class CellWinAnimations : MonoBehaviour
     private void Awake()
     {
         _cellSpawner = GetComponent<CellSpawner>();
-        _cells = FindObjectsOfType<Cell>().ToList();
+        _cells = GetComponentsInChildren<Cell>().ToList();
     }
 
     public void Play(Action onEnd = null)
@@ -45,12 +45,12 @@ public class CellWinAnimations : MonoBehaviour
 
     private List<CellView> GetRow(int row)
     {
-        List<CellView> _views = new List<CellView>();
+        List<CellView> views = new List<CellView>();
 
         foreach (Cell cell in _cells)
-            if (cell.Number == row)
-                _views.Add(cell.CellView);
+            if (cell.Number == row && cell.CellIs != CellIs.Wizzard)
+                views.Add(cell.CellView);
 
-        return _views;
+        return views;
     }
 }

@@ -17,7 +17,8 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
     public SpawnerType SpawnerType => _type;
     public Cell Cell => _cell;
 
-    public event Action<IUnit> SpawnedUnit;
+    public event Action<IUnit> SpawnedUnit_get;
+    public event Action SpawnedUnit;
 
     private void Awake()
     {
@@ -49,7 +50,8 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
             unitFriend.Init(unitCard, _cell);
 
-            SpawnedUnit?.Invoke(unitFriend);
+            SpawnedUnit_get?.Invoke(unitFriend);
+            SpawnedUnit?.Invoke();
             _sounds.Play(SoundEffectType.Spawn);
 
             return true;
@@ -64,7 +66,8 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
 
         unit.Init(unitEnemy.Card, _cell);
 
-        SpawnedUnit?.Invoke(unit);
+        SpawnedUnit_get?.Invoke(unit);
+        SpawnedUnit?.Invoke();
 
         return unit;
     }

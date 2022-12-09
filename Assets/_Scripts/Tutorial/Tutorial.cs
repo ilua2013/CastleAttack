@@ -30,7 +30,7 @@ public class Tutorial : MonoBehaviour
     {
         //_cardsSelection.CardSelected += StepOneTwo;
         _cardsHand.Spawned += StepTwoThree;
-        _battleSystem.StepStarted += StepThreeFour;
+        _battleSystem.BattleStarted += StepThreeFour;
         //_cardReplenisher.CardUp += StepFourFive;
         //_battleSystem.DiedAllEnemy += EndStep;
         _battleSystem.TutorialStopedUnit += StopGame;
@@ -43,7 +43,7 @@ public class Tutorial : MonoBehaviour
        
         //_cardsSelection.CardSelected -= StepOneTwo;
         _cardsHand.Spawned -= StepTwoThree;
-        _battleSystem.StepStarted -= StepThreeFour;
+        _battleSystem.BattleStarted -= StepThreeFour;
         //_cardReplenisher.CardUp -= StepFourFive;
         //_battleSystem.DiedAllEnemy -= EndStep;
         _battleSystem.TutorialStopedUnit -= StopGame;
