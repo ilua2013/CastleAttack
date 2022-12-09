@@ -37,7 +37,8 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action FinishedStep;
     public event Action StepChanged;
     public event Action<UnitEnemy> EnemyKilled;
-    public event Action<UnitFriend> LevelUpped;
+    public event Action<UnitFriend> LevelUpped; 
+    public event Action<bool> UnitSteped;
 
     private void OnValidate()
     {
@@ -153,6 +154,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         UnitEnemy enemy = TryAttack();
         _doingStep = true;
+        UnitSteped?.Invoke(_doingStep);
 
         if (enemy != null)
         {
@@ -237,6 +239,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
+        UnitSteped?.Invoke(_doingStep);
         action?.Invoke();
     }
 
