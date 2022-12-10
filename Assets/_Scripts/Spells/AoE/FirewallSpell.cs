@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class FirewallSpell : Spell
 {
-    [SerializeField] private int _damage;
     [SerializeField] private FighterType _fighterType;
 
-    public int Damage => _damage;
+    private Cell _cell;
+    private UnitStats _stats;
 
     private void OnEnable()
     {
         Dispelled += OnDispelled;
+        FightStarted += OnFightStarted;
+        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
+        FightStarted -= OnFightStarted;
+        WasCast -= OnCast;
     }
 
-    protected override void Affect(Cell cell, CardSave save, float delay)
+    protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
-        StartCoroutine(Fire(cell, _damage, delay));
+        Tick();
+        StartCoroutine(Fire(cell, stats.Damage, delay));
     }
 
     private IEnumerator Fire(Cell cell, int damage, float delay)
@@ -35,6 +40,17 @@ public class FirewallSpell : Spell
             int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
             enemy.Fighter.TakeDamage(totalDamage);
         }
+    }
+
+    private void OnCast(Cell cell, UnitStats stats)
+    {
+        _cell = cell;
+        _stats = stats;
+    }
+
+    private void OnFightStarted()
+    {
+        Affect(_cell, _stats, AffectDelay);
     }
 
     private void OnDispelled()

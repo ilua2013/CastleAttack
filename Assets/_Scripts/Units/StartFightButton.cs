@@ -1,41 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartFightButton : MonoBehaviour
+public class StartFightButton : MonoBehaviour, IPhaseHandler
 {
     [SerializeField] private Button _button;
     [SerializeField] private Image _imageButton;
-    [SerializeField] private BattleSystem _fightSystem;
+    [SerializeField] private Phase[] _phases;
 
     public Button Button => _button;
+    public Phase[] Phases => _phases;
 
-    private void OnValidate()
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        _fightSystem = FindObjectOfType<BattleSystem>();
-    }
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-    private void OnEnable()
-    {
-        _fightSystem.StepFinished += EnableButton;
-        _fightSystem.StepStarted += DisableButton;
-    }
-    private void OnDisable()
-    {
-        _fightSystem.StepFinished -= EnableButton;
-        _fightSystem.StepStarted -= DisableButton;
-    }
+        yield return new WaitForSeconds(phase.Delay);
 
-    private void EnableButton()
-    {
-        _button.enabled = true;
-        _imageButton.color = Color.yellow;
-    }
-
-    private void DisableButton()
-    {
-        _button.enabled = false;
-        _imageButton.color = Color.gray;
+        _button.enabled = phase.IsActive;
+        _imageButton.color = phase.IsActive ? Color.yellow : Color.gray;
     }
 }

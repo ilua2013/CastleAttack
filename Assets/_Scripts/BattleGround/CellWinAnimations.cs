@@ -7,10 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(CellSpawner))]
 public class CellWinAnimations : MonoBehaviour
 {
-    [SerializeField] private float _delay = 0.5f;
+    [SerializeField] private float _delayToStart = 0.5f;
     [SerializeField] private float _delayStepChanger = 0;
 
-    private float _delayChangerSum = 0;
     private CellSpawner _cellSpawner;
     private List<Cell> _cells = new List<Cell>();
 
@@ -22,23 +21,24 @@ public class CellWinAnimations : MonoBehaviour
 
     public void Play(Action onEnd = null)
     {
-        StartCoroutine(Recolor(_delay, onEnd));
+        StartCoroutine(Recolor(onEnd));
     }
 
-    private IEnumerator Recolor(float time, Action onEnd = null)
+    private IEnumerator Recolor(Action onEnd = null)
     {
-        yield return new WaitForSeconds(_delay * 3);
+        yield return new WaitForSeconds(_delayToStart);
+
+        float delayChangerSum = 0;
 
         for (int i = 0; i < _cellSpawner.Rows; i++)
         {
-            yield return new WaitForSeconds(time + _delayChangerSum);
-            _delayChangerSum += _delayStepChanger;
+            yield return new WaitForSeconds(delayChangerSum);
+            delayChangerSum += _delayStepChanger;
 
             foreach (CellView cell in GetRow(i))
                 cell.RecolorToWin();
         }
 
-        _delayChangerSum = 0;
         yield return new WaitForSeconds(0);
         onEnd?.Invoke();
     }
