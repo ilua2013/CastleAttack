@@ -31,6 +31,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action StepChanged;
     public event Action LevelUppedTutorial;
     public event Action<bool> UnitSteped;
+    public event Action StartedWalking;
 
     private void OnValidate()
     {
@@ -77,6 +78,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
         Inited?.Invoke();
         Initialized = true;
+    }
+
+    public void UnitsStartedWalking()
+    {
+        StartedWalking?.Invoke();
     }
 
     public void DoStep()

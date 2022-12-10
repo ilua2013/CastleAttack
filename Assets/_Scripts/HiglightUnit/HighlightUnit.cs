@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HighlightUnit : MonoBehaviour
 {
-    [SerializeField] private Image _arrowHighlightUnit;
+    [SerializeField] private GameObject _arrowHighlightUnit;
     private IUnit _unit;
 
     private void Awake()
