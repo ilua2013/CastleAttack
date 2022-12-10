@@ -224,11 +224,18 @@ public class BattleSystem : MonoBehaviour
         {
             _unitEnemy[i].DoStep();
 
+            if (_unitEnemy[i].Fighter.FighterType == FighterType.Cavalery)
+            {
+                _unitEnemy[i].CavaleryStep();               
+                _unitEnemy[i].DoStep();
+            }
+
             yield return new WaitForSeconds(0.6f);
 
             while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
                 yield return null;
-        }
+        }     
+
         _doStepEnemy = false;
     }
 

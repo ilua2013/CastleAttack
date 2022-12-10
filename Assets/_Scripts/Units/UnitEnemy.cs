@@ -51,7 +51,10 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     private void Awake()
     {
+        //if (Fighter.FighterType == FighterType.Cavalery)
+        //    MaxStep = 2;
         CurrentStep = MaxStep;
+       
     }
 
     private void Start()
@@ -85,10 +88,15 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         StartedWalking?.Invoke();
     }
 
+    public void CavaleryStep()
+    {
+        CurrentStep = MaxStep;
+    }
+
     public void DoStep()
     {
         if (CurrentStep <= 0)
-            return;
+            return;       
 
         UnitFriend enemy = TryAttack();
         _doingStep = true;
