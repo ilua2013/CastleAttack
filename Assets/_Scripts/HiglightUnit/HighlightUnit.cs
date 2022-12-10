@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HighlightUnit : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _highlightUnit;
+    [SerializeField] private Image _arrowHighlightUnit;
     private IUnit _unit;
 
     private void Awake()
     {
-        _highlightUnit.gameObject.SetActive(false);
+        _arrowHighlightUnit.gameObject.SetActive(false);
         _unit = GetComponent<IUnit>();
     }
 
@@ -26,8 +27,10 @@ public class HighlightUnit : MonoBehaviour
     {
         Debug.Log(isSteped);
         //if (isSteped == true)
-        //    //_highlightUnit.Play();        
-            _highlightUnit.gameObject.SetActive(isSteped);
+        //    //_highlightUnit.Play();
+        //    
+        if(_arrowHighlightUnit!=null)
+            _arrowHighlightUnit.gameObject.SetActive(isSteped);
         //else
         //    _highlightUnit.Stop();
     }

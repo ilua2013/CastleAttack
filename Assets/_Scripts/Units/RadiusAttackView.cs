@@ -89,7 +89,8 @@ public class RadiusAttackView : MonoBehaviour
 
     private void FinishStepGlear()
     {
-        UnSelectionCells(_cells);
+        //UnSelectionCells(_cells);
+        UnitDisable();
     }
 
     private void OnMoved()
