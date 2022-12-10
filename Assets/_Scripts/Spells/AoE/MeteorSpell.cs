@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class MeteorSpell : Spell
 {
-    [SerializeField] private int _damage;
+    [SerializeField] private ParticleSystem _vfx;
     [SerializeField] private FighterType _fighterType;
-
-    public int Damage => _damage;
 
     private void OnEnable()
     {
         Dispelled += OnDispelled;
+        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
+        WasCast -= OnCast;
     }
 
-    protected override void Affect(Cell cell, CardSave save, float delay)
+    protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
-        StartCoroutine(ApplyDamage(cell, save.UnitStats.Damage, delay));
+        StartCoroutine(ApplyDamage(cell, stats.Damage, delay));
     }
 
     private IEnumerator ApplyDamage(Cell cell, int damage, float delay)
@@ -38,8 +38,14 @@ public class MeteorSpell : Spell
         }
     }
 
+    private void OnCast(Cell cell, UnitStats stats)
+    {
+        Affect(cell, stats, AffectDelay);
+    }
+
     private void OnDispelled()
     {
-        gameObject.SetActive(false);
+        _vfx.Stop();
+        Destroy(gameObject, 1f);
     }
 }

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class HealCardView : CardView
 {
-    [SerializeField] private HealSpell _description;
-    
     private SpellCard _card;
 
     private void Awake()
@@ -39,7 +37,7 @@ public class HealCardView : CardView
 
     private void WriteText()
     {
-        Text.text = $"{_description.Recovery}";
+        Text.text = $"{_card.CardSave.UnitStats.MaxHealth}";
         AmountText.text = $"{_card.Amount}";
     }
 }

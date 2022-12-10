@@ -5,23 +5,29 @@ using UnityEngine;
 
 public class HealSpell : Spell
 {
-    [SerializeField] private int _recovery;
+    [SerializeField] private ParticleSystem _vfx;
 
-    public int Recovery => _recovery;
+    private Cell _cell;
+    private UnitStats _stats;
 
     private void OnEnable()
     {
         Dispelled += OnDispelled;
+        FightStarted += OnFightStarted;
+        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
+        FightStarted -= OnFightStarted;
+        WasCast -= OnCast;
     }
 
-    protected override void Affect(Cell cell, CardSave save, float delay)
+    protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
-        StartCoroutine(Heal(cell, _recovery, delay));
+        Tick();
+        StartCoroutine(Heal(cell, stats.MaxHealth, delay));
     }
 
     private IEnumerator Heal(Cell cell, int value, float delay)
@@ -34,8 +40,20 @@ public class HealSpell : Spell
             unit.Fighter.RecoveryHealth(value);
     }
 
+    private void OnCast(Cell cell, UnitStats stats)
+    {
+        _cell = cell;
+        _stats = stats;
+    }
+
+    private void OnFightStarted()
+    {
+        Affect(_cell, _stats, AffectDelay);
+    }
+
     private void OnDispelled()
     {
-        gameObject.SetActive(false);
+        _vfx.Stop();
+        Destroy(gameObject, 1f);
     }
 }

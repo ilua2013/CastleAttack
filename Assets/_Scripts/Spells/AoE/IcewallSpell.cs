@@ -6,20 +6,26 @@ public class IcewallSpell : Spell
 {
     [SerializeField] private FighterType _fighterType;
 
-    private List<UnitEnemy> _enemies;
+    private Cell _cell;
+    private UnitStats _stats;
 
     private void OnEnable()
     {
         Dispelled += OnDispelled;
+        FightStarted += OnFightStarted;
+        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
+        FightStarted -= OnFightStarted;
+        WasCast -= OnCast;
     }
 
-    protected override void Affect(Cell cell, CardSave save, float delay)
+    protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
+        Tick();
         StartCoroutine(Freeze(cell, delay));
     }
 
@@ -27,17 +33,27 @@ public class IcewallSpell : Spell
     {
         yield return new WaitForSeconds(delay);
 
-        _enemies = cell.GetEnemyUnits(DistanceAttacks);
+        List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
 
-        foreach (UnitEnemy enemy in _enemies)
-            enemy.Mover.SetMove(false);
+        foreach (UnitEnemy enemy in enemies)
+            enemy.SkipStep();
+    }
+
+
+    private void OnCast(Cell cell, UnitStats stats)
+    {
+        _cell = cell;
+        _stats = stats;
+        Affect(_cell, _stats, AffectDelay);
+    }
+
+    private void OnFightStarted()
+    {
+        Affect(_cell, _stats, AffectDelay);
     }
 
     private void OnDispelled()
     {
-        foreach (UnitEnemy enemy in _enemies)
-            enemy.Mover.SetMove(true);
-
         gameObject.SetActive(false);
     }
 }

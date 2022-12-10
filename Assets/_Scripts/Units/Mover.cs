@@ -18,6 +18,7 @@ public class Mover
     private float _speedAnimation = 6f;
     private bool _init;
 
+    public bool IsSkipped { get; private set; }
     public Cell CurrentCell => _currentCell;
     public IUnit Unit => _unit;
 
@@ -57,13 +58,19 @@ public class Mover
         _currentCell.StateUnitOnCell(_unit);
     }
 
-    public void SetMove(bool isCanMove)
+    public void SkipStep()
     {
-        _canMove = isCanMove;
+       IsSkipped = true;
     }
 
     public bool CanMove(Cell cell)
     {
+        if (IsSkipped)
+        {
+            IsSkipped = false;
+            return false;
+        }
+        
         if (_canMove == false || cell == null || cell.IsFree == false)
             return false;
         else

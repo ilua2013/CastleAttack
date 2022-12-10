@@ -11,7 +11,6 @@ public class WizardAnimator : MonoBehaviour
     private UnitFriend _unitFriend;
 
     private SpellSpawner[] _spellSpawners;
-    private UnitSpawner[] _unitSpawners;
 
     enum State
     {
@@ -28,16 +27,12 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend = GetComponent<UnitFriend>();
 
         _spellSpawners = FindObjectsOfType<SpellSpawner>();
-        _unitSpawners = FindObjectsOfType<UnitSpawner>();
     }
 
     private void OnEnable()
     {
         foreach (SpellSpawner spawner in _spellSpawners)
-            spawner.Cast_get += OnSpellCast;
-
-        foreach (UnitSpawner spawner in _unitSpawners)
-            spawner.SpawnedUnit_get += OnSpawn;
+            spawner.Cast += OnSpellCast;
 
         _unitFriend.Fighter.Damaged += OnDamaged;
         _unitFriend.Fighter.Died += OnDie;
@@ -47,10 +42,7 @@ public class WizardAnimator : MonoBehaviour
     private void OnDisable()
     {
         foreach (SpellSpawner spawner in _spellSpawners)
-            spawner.Cast_get -= OnSpellCast;
-
-        foreach (UnitSpawner spawner in _unitSpawners)
-            spawner.SpawnedUnit_get -= OnSpawn;
+            spawner.Cast -= OnSpellCast;
 
         _unitFriend.Fighter.Damaged -= OnDamaged;
         _unitFriend.Fighter.Died -= OnDie;
@@ -60,11 +52,6 @@ public class WizardAnimator : MonoBehaviour
     private void OnSpellCast(Vector3 place, Spell spell)
     {
         _animator.Play(State.SpellCast.ToString());
-    }
-
-    private void OnSpawn(IUnit unit)
-    {
-        _animator.Play(State.SpawnCast.ToString());
     }
 
     private void OnDamaged(int damage)

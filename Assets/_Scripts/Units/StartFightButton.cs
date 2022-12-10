@@ -1,77 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartFightButton : MonoBehaviour
+public class StartFightButton : MonoBehaviour, IPhaseHandler
 {
-    [SerializeField] private Button _buttonFight;
-    [SerializeField] private Button _buttonSkipStep;
+    [SerializeField] private Button _button;
     [SerializeField] private Image _imageButton;
-    [SerializeField] private BattleSystem _fightSystem;
-    [SerializeField] private CellSpawner _cellSpawner;
+    [SerializeField] private Phase[] _phases;
 
-    private SpellSpawner[] _speelSpawners;
-    private UnitSpawner[] _unitSpawners;
+    public Button Button => _button;
+    public Phase[] Phases => _phases;
 
-    public Button Button => _buttonFight;
-
-    private void OnValidate()
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        _fightSystem = FindObjectOfType<BattleSystem>();
-        _cellSpawner = FindObjectOfType<CellSpawner>();
-    }
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
-    private void Awake()
-    {
-        _speelSpawners = _cellSpawner.GetComponentsInChildren<SpellSpawner>();
-        _unitSpawners = _cellSpawner.GetComponentsInChildren<UnitSpawner>();
-    }
+        yield return new WaitForSeconds(phase.Delay);
 
-    private void OnEnable()
-    {
-        _fightSystem.StepFinished += EnableButton;
-        _fightSystem.BattleStarted += DisableButton;
-
-        foreach (var item in _speelSpawners)
-            item.Cast += DisableButtonSkipStep;
-
-        foreach (var item in _unitSpawners)
-            item.SpawnedUnit += DisableButtonSkipStep;
-    }
-    private void OnDisable()
-    {
-        _fightSystem.StepFinished -= EnableButton;
-        _fightSystem.BattleStarted -= DisableButton;
-
-        foreach (var item in _speelSpawners)
-            item.Cast -= DisableButtonSkipStep;
-
-        foreach (var item in _unitSpawners)
-            item.SpawnedUnit -= DisableButtonSkipStep;
-    }
-
-    private void EnableButton()
-    {
-        _buttonFight.enabled = true;
-        EnableButtonSkipStep();
-        _imageButton.color = Color.yellow;
-    }
-
-    private void DisableButton()
-    {
-        DisableButtonSkipStep();
-        _buttonFight.enabled = false;
-        _imageButton.color = Color.gray;
-    }
-
-    private void DisableButtonSkipStep()
-    {
-        _buttonSkipStep.interactable = false;
-    }
-
-    private void EnableButtonSkipStep()
-    {
-        _buttonSkipStep.interactable = true;
+        _button.enabled = phase.IsActive;
+        _imageButton.color = phase.IsActive ? Color.yellow : Color.gray;
     }
 }

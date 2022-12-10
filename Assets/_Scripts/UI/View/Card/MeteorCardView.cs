@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class MeteorCardView : CardView
 {
-    [SerializeField] private MeteorSpell _description;
-
     private SpellCard _card;
 
     private void Awake()
@@ -39,7 +37,7 @@ public class MeteorCardView : CardView
 
     private void WriteText()
     {
-        Text.text = $"{_description.Damage}";
+        Text.text = $"{_card.CardSave.UnitStats.Damage}";
         AmountText.text = $"{_card.Amount}";
     }
 }

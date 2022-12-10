@@ -20,6 +20,7 @@ public class Fighter
     private float _speedRotate = 3f;
     private int _health = 1;
 
+    public bool IsSkipped { get; private set; }
     public int Damage => _damage;
     public int Health => _health;
     public bool IsDead => _health < 1;
@@ -59,9 +60,22 @@ public class Fighter
         _startRotate = transform.forward;
     }
 
+    public void SkipStep()
+    {
+        IsSkipped = true;
+    }
+
     public bool Attack(Fighter fighter, Action onEnd = null)
     {
         bool isFatal = false;
+
+        if (IsSkipped)
+        {
+            IsSkipped = false;
+
+            onEnd?.Invoke();
+            return isFatal;
+        }
 
         if (_type == FighterType.Archer)
         {
@@ -72,13 +86,14 @@ public class Fighter
                 onEnd?.Invoke();
             });
         }
+        else if (_type == FighterType.MainWizzard)
+        {
+            fighter.TakeDamage(this);
+        }
         else
         {
             _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
         }
-
-        if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-            fighter.Attack(this);
 
         Attacked?.Invoke();
         Attacked_get?.Invoke(fighter.transform);
@@ -91,7 +106,7 @@ public class Fighter
         if (IsDead)
             return;
 
-        _health += value;
+        _health = Mathf.Clamp(_health + value, 0, MaxHealth);
         Healed?.Invoke(_health);
     }
 

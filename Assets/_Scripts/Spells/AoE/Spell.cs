@@ -11,35 +11,49 @@ public abstract class Spell : MonoBehaviour
     [SerializeField] private int _maxTicks;
 
     private BattleSystem _battleSystem;
-    private Cell _cell;
-    private CardSave _save;
     private int _ticks;
 
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
+    public float AffectDelay => _affectDelay;
+    public int MaxTicks => _maxTicks;
 
     public event Action Dispelled;
-    public event Action WasCast;
+    public event Action<Cell, UnitStats> WasCast;
+    public event Action FightStarted;
+    public event Action FightFinished;
 
     public void Cast(Cell cell, CardSave save, BattleSystem battleSystem, Action onEndCallback = null)
     {
         _battleSystem = battleSystem;
-        _cell = cell;
-        _save = save;
+
+        _battleSystem.StepStarted += OnStepStarted;
+        _battleSystem.StepFinished += OnStepFinished;
+        _battleSystem.Win += OnWin;
 
         StartCoroutine(Live());
-
-        _battleSystem.StepFinished += OnStepFinished;
-        OnStepFinished();
-
-        WasCast?.Invoke();
+        WasCast?.Invoke(cell, save.UnitStats);
     }
 
-    protected abstract void Affect(Cell cell, CardSave save, float delay);
+    public void Tick()
+    {
+        _ticks++;
+    }
+
+    protected abstract void Affect(Cell cell, UnitStats stats, float delay);
+
+    private void OnStepStarted()
+    {
+        FightStarted?.Invoke();
+    }
 
     private void OnStepFinished()
     {
-        Affect(_cell, _save, _affectDelay);
-        _ticks++;
+        FightFinished?.Invoke();
+    }
+
+    private void OnWin()
+    {
+        Dispelled?.Invoke();
     }
 
     private IEnumerator Live()
@@ -47,7 +61,10 @@ public abstract class Spell : MonoBehaviour
         yield return new WaitWhile(() => _ticks < _maxTicks);
         yield return new WaitForSeconds(_lifeTime);
 
+        _battleSystem.StepStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
+        _battleSystem.Win -= OnWin;
+
         Dispelled?.Invoke();
     }
 }

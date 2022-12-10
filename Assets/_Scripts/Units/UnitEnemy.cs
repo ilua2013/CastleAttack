@@ -134,6 +134,12 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         StepChanged?.Invoke();
     }
 
+    public void SkipStep()
+    {
+        Fighter.SkipStep();
+        Mover.SkipStep();
+    }
+
     public void UpdateStep()
     {
         CurrentStep = MaxStep;
