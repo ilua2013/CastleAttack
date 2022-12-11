@@ -49,7 +49,7 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend.Fighter.Attacked_get -= OnAttacked;
     }
 
-    private void OnSpellCast(Vector3 place, Spell spell)
+    private void OnSpellCast(/*Vector3 place, Spell spell*/)
     {
         _animator.Play(State.SpellCast.ToString());
     }

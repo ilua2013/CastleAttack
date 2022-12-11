@@ -26,7 +26,7 @@ public abstract class Spell : MonoBehaviour
     {
         _battleSystem = battleSystem;
 
-        _battleSystem.StepStarted += OnStepStarted;
+        //_battleSystem.StepStarted += OnStepStarted;
         _battleSystem.StepFinished += OnStepFinished;
         _battleSystem.Win += OnWin;
 
@@ -61,7 +61,7 @@ public abstract class Spell : MonoBehaviour
         yield return new WaitWhile(() => _ticks < _maxTicks);
         yield return new WaitForSeconds(_lifeTime);
 
-        _battleSystem.StepStarted -= OnStepStarted;
+        //_battleSystem.StepStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
         _battleSystem.Win -= OnWin;
 
