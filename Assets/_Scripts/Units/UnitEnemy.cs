@@ -7,6 +7,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
     [field: SerializeField] public float DelayToDie { get; private set; } = 2.5f;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
+    [field: SerializeField] private DistanceAttack[] _distanceAttackCatapult;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
@@ -140,6 +141,13 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private UnitFriend TryAttack()
     {
         List<UnitFriend> units = Mover.CurrentCell.GetFriendUnits(_distanceAttack);
+        if (Fighter.FighterType == FighterType.Catapult)
+        {
+            List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);          
+            List<UnitFriend> unitsCatapult = Mover.CurrentCell.GetFriendUnitsCatapult(_distanceAttackCatapult, cells);            
+            units.AddRange(unitsCatapult);
+            Debug.Log(units.Count);
+        }
 
         foreach (var item in units)
             return item;
@@ -150,6 +158,14 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public List<Cell> RadiusView()
     {
         List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);
+        if(Fighter.FighterType == FighterType.Catapult)
+        {
+            List<Cell> cellsCatapult = Mover.CurrentCell.GetCellsDistanceAttackForCatapult(_distanceAttackCatapult, cells);
+            Debug.Log(cells.Count);
+            cells.AddRange(cellsCatapult);
+            Debug.Log(cells.Count);
+        }
+           
 
         return cells;
     }

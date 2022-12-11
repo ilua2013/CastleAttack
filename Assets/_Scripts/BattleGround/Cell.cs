@@ -278,6 +278,56 @@ public class Cell : MonoBehaviour
         return friends;
     }
 
+    public List<UnitFriend> GetFriendUnitsOnLastCell(DistanceAttack[] distanceAttack)
+    {
+        List<UnitFriend> friends = new List<UnitFriend>();
+
+        for (int i = 0; i < distanceAttack.Length; i++)
+        {
+            switch (distanceAttack[i].Side)
+            {
+                case CellNeighbor.Bot:
+                    CheckStateUnitFriend(GetBotCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.Left:
+                    CheckStateUnitFriend(GetLeftCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.Top:
+                    CheckStateUnitFriend(GetTopCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.Right:
+                    CheckStateUnitFriend(GetRightCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.TopLeft:
+                    CheckStateUnitFriend(GetTopLeftCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.TopRight:
+                    CheckStateUnitFriend(GetTopRightCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.BotLeft:
+                    CheckStateUnitFriend(GetBotLeftCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.BotRight:
+                    CheckStateUnitFriend(GetBotRightCells(distanceAttack[i].Distance), friends);
+                    break;
+
+                case CellNeighbor.This:
+                    CheckStateUnitFriend(new List<Cell>() { this }, friends);
+                    break;
+            }
+        }
+
+        return friends;
+    }
+
+
     public List<Cell> GetVerticalCells(Cell cell)
     {
         List<Cell> cells = new List<Cell>();
@@ -350,7 +400,7 @@ public class Cell : MonoBehaviour
         }
 
         return cells;
-    }
+    }    
 
     private List<Cell> GetTopRightCells(int count)
     {
@@ -384,7 +434,7 @@ public class Cell : MonoBehaviour
         }
 
         return cells;
-    }
+    }   
 
     private List<Cell> GetBotRightCells(int count)
     {
@@ -453,6 +503,85 @@ public class Cell : MonoBehaviour
 
         return cells;
     }
+
+    private List<Cell> GetLeftCellsForCatapult(int count, Cell cell)
+    {
+        Cell cureentCell = cell.Left;
+        List<Cell> cells = new List<Cell>();
+
+        for (int i = 0; i < count; i++)
+        {
+            if (cureentCell == null)
+                break;
+
+            cells.Add(cureentCell);
+            cureentCell = cureentCell._left;
+        }
+
+        return cells;
+    }
+
+    private List<Cell> GetRightCellsForCatapult(int count, Cell cell)
+    {
+        Cell cureentCell = cell.Right;
+        List<Cell> cells = new List<Cell>();
+
+        for (int i = 0; i < count; i++)
+        {
+            if (cureentCell == null)
+                break;
+
+            cells.Add(cureentCell);
+            cureentCell = cureentCell._right;
+        }
+
+        return cells;
+    }
+
+    public List<Cell> GetCellsDistanceAttackForCatapult(DistanceAttack[] distanceAttacks, List<Cell> cellsed)
+    {
+        List<Cell> cells = new List<Cell>();
+
+        for (int i = 0; i < distanceAttacks.Length; i++)
+        {
+            switch (distanceAttacks[i].Side)
+            {  
+                case CellNeighbor.Left:
+                    SetCellsInCells(cells, GetLeftCellsForCatapult(distanceAttacks[i].Distance, cellsed[cellsed.Count-1] ));
+                    break;               
+
+                case CellNeighbor.Right:
+                    SetCellsInCells(cells, GetRightCellsForCatapult(distanceAttacks[i].Distance, cellsed[cellsed.Count - 1]));
+                    break;              
+            }
+        }
+        Debug.Log(cells.Count);
+        return cells;
+    }
+
+    public List<UnitFriend> GetFriendUnitsCatapult(DistanceAttack[] distanceAttack, List<Cell> cellsed)
+    {
+        List<UnitFriend> friends = new List<UnitFriend>();
+
+        for (int i = 0; i < distanceAttack.Length; i++)
+        {
+            switch (distanceAttack[i].Side)
+            {
+              
+                case CellNeighbor.Left:
+                    CheckStateUnitFriend(GetLeftCellsForCatapult(distanceAttack[i].Distance, cellsed[cellsed.Count - 1]), friends);
+                    break;             
+
+                case CellNeighbor.Right:
+                    CheckStateUnitFriend(GetRightCellsForCatapult(distanceAttack[i].Distance, cellsed[cellsed.Count - 1]), friends);
+                    break;               
+            }
+        }
+
+        return friends;
+    }
+
+
 }
 
 public enum CellIs
