@@ -127,7 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animators:
   - {fileID: 2184915534266448142}
-  - {fileID: 1709320639001709699}
 --- !u!114 &3505717388716676615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +367,10 @@ PrefabInstance:
       propertyPath: _iUnit
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2461841892454144882, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
+      propertyPath: _unitGameObject
+      value: 
+      objectReference: {fileID: 1710454381889582042}
     - target: {fileID: 2792005664787526326, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_Name
       value: HealthBar Enemy2
@@ -1399,13 +1402,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -53.14
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9549628, guid: 511c566bd068dca4bb9794da5f53052a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 511c566bd068dca4bb9794da5f53052a, type: 3}
---- !u!95 &1709320639001709699 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9549628, guid: 511c566bd068dca4bb9794da5f53052a, type: 3}
+--- !u!1 &1709320638992421015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 158504, guid: 511c566bd068dca4bb9794da5f53052a, type: 3}
   m_PrefabInstance: {fileID: 1709320638992317375}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2964805210196701506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709320638992421015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16687d700685ddf40a597578839c9fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitEnemy: {fileID: 2275570904515265033}
+  _timeDelay: 2
 --- !u!1001 &2530072284396686010
 PrefabInstance:
   m_ObjectHideFlags: 0
