@@ -14,6 +14,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private TMP_Text _textHealth;
     [SerializeField] private Slider _bar;
     [SerializeField] private Vector3 _posistionViewWizzard;
+    //[SerializeField] private GameObject _unitGameObject;
 
     private Vector3 _startPos;
 
@@ -93,8 +94,8 @@ public class HealthBar : MonoBehaviour
     }
 
     private void Destroy()
-    {
-        Destroy(gameObject);
+    {          
+        //Destroy(gameObject);
     }
 
     private void SetText() => _textHealth.text = _unit.Fighter.Health.ToString()/* + "/" + _unit.Fighter.MaxHealth*/;

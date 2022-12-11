@@ -89,12 +89,17 @@ MonoBehaviour:
   _distanceAttack:
   - Side: 3
     Distance: 2
+  _distanceAttackCatapult:
+  - Side: 0
+    Distance: 3
+  - Side: 2
+    Distance: 3
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
     _canMove: 1
     _speedRotateToWizzard: 0
   <Fighter>k__BackingField:
-    _type: 1
+    _type: 0
     _damage: 2
     _maxHealth: 3
     _arrow: {fileID: 7764464643050864766, guid: 52adde9f85fce2e4e9d765dddbb28cc0, type: 3}
@@ -553,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1862120391985308292, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.71202606
+      value: 0.91032284
       objectReference: {fileID: 0}
     - target: {fileID: 1862120391985308292, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -561,7 +566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1862120391985308292, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.702153
+      value: 0.41389897
       objectReference: {fileID: 0}
     - target: {fileID: 1862120391985308292, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -573,12 +578,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1862120391985308292, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -89.2
+      value: 48.9
       objectReference: {fileID: 0}
     - target: {fileID: 2461841892454144882, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: _iUnit
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2461841892454144882, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
+      propertyPath: _unitGameObject
+      value: 
+      objectReference: {fileID: 1710454381889582042}
     - target: {fileID: 2792005664787526326, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_Name
       value: HealthBar Enemy2
@@ -693,11 +702,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6843518719989899022, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.26
+      value: 0.354
       objectReference: {fileID: 0}
     - target: {fileID: 6843518719989899022, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.19
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 6843518719989899022, guid: 111ee21fb0a77c24a9cf5f9270dbd05a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
