@@ -94,6 +94,7 @@ public class HealthBar : MonoBehaviour
 
     private void Destroy()
     {
+        Debug.Log(gameObject + " уничтожение в хелбаре");
         Destroy(gameObject);
     }
 
