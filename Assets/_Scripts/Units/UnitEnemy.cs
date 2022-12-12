@@ -5,13 +5,13 @@ using System;
 
 public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
+    [field: SerializeField] public int MaxStep { get; private set; } = 1;
     [field: SerializeField] public float DelayToDie { get; private set; } = 2.5f;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field: SerializeField] private DistanceAttack[] _distanceAttackCatapult;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
-    public int MaxStep { get; private set; } = 1;
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
