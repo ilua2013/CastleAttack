@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ZippProjectile : MonoBehaviour
 {
-    private const float DistanceDelta = 0.01f;
+    private const float DistanceDelta = 0.1f;
 
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _height = 2f;

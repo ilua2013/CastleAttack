@@ -91,12 +91,14 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         CurrentStep = MaxStep;
     }   
 
-    public void DoStep()
+    public void DoStep(IUnit enemy = null)
     {
         if (CurrentStep <= 0)
             return;       
 
-        UnitFriend enemy = TryAttack();
+        if (enemy == null)
+            enemy = TryAttack();
+
         _doingStep = true;
         UnitSteped?.Invoke(_doingStep);
 
@@ -152,7 +154,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);          
             List<UnitFriend> unitsCatapult = Mover.CurrentCell.GetFriendUnitsCatapult(_distanceAttackCatapult, cells);            
             units.AddRange(unitsCatapult);
-            Debug.Log(units.Count);
         }
 
         foreach (var item in units)
@@ -167,9 +168,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         if(Fighter.FighterType == FighterType.Catapult)
         {
             List<Cell> cellsCatapult = Mover.CurrentCell.GetCellsDistanceAttackForCatapult(_distanceAttackCatapult, cells);
-            Debug.Log(cells.Count);
             cells.AddRange(cellsCatapult);
-            Debug.Log(cells.Count);
         }
            
 

@@ -11,9 +11,15 @@ public class ForceObject : MonoBehaviour
     private Rigidbody _rigidbody;
     private Collider _collider;
 
-    private void Awake()
+    public Rigidbody Rigidbody => _rigidbody;
+
+    private void OnValidate()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Awake()
+    {
         _collider = GetComponent<Collider>();
     }
 

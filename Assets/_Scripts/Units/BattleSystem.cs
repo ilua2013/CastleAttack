@@ -239,13 +239,6 @@ public class BattleSystem : MonoBehaviour
         _doStepEnemy = true;
         for (int i = _unitEnemy.Count - 1; i > -1; i--)
         {
-            foreach (UnitEnemy enemy in _unitEnemy)
-                if (enemy.Mover.CurrentCell.Number == 0)
-                {
-                    _wizzard.DoStep();
-                    yield return new WaitForSeconds(0.6f);
-                }
-
             _unitEnemy[i].DoStep();
 
 
@@ -259,6 +252,15 @@ public class BattleSystem : MonoBehaviour
 
             while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
                 yield return null;
+
+            if (_wizzard.Fighter.IsDamaged)
+            {
+                _wizzard.Fighter.IsDamaged = false;
+                _wizzard.DoStep(_unitEnemy[i]);
+
+                while (_wizzard.DoingStep == true)
+                    yield return null;
+            }
         }     
 
         _doStepEnemy = false;

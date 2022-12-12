@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZippSpell : Spell
@@ -55,6 +56,14 @@ public class ZippSpell : Spell
 
         if (enemies.Count <= 0)
             return;
+
+        UnitEnemy first = cell.GetEnemyUnits(DistanceAttacks).FirstOrDefault();
+
+        if (first != null)
+        {
+            enemies.Remove(first);
+            enemies.Insert(0, first);
+        }
 
         ZippProjectile projectile = Instantiate(_projectile, _startPoint.position, Quaternion.identity);
         StartCoroutine(FlyProjectile(enemies, projectile));

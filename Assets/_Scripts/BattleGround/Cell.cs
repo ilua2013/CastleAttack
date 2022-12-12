@@ -555,7 +555,6 @@ public class Cell : MonoBehaviour
                     break;              
             }
         }
-        Debug.Log(cells.Count);
         return cells;
     }
 
