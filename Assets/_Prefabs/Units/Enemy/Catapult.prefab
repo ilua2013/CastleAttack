@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b67684d2d3b4d4ab33a01f87fdaa2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MaxStep>k__BackingField: 1
   <DelayToDie>k__BackingField: 2.5
   _distanceAttack:
   - Side: 3
@@ -176,7 +177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowHighlightUnit: {fileID: 5279833586221278022}
   _animator: {fileID: 5405989502051668328}
-  _delay: 0.3
+  _delayOpen: 0
+  _delayDisable: 0.4
 --- !u!1 &1710454382197722558
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7679978981465304687, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.8799999
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7679978981465304687, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
       propertyPath: m_LocalPosition.z
