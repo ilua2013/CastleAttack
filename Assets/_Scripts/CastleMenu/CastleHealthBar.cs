@@ -27,12 +27,14 @@ public class CastleHealthBar : MonoBehaviour
     private void OnEnable()
     {
         _castle.Damaged += UpdateViewBar;
+        _castle.Died += Disable;
         _slider.value = _castle.CurrenHealth / _castle.MaxHealth;
     }
 
     private void OnDisable()
     {
         _castle.Damaged -= UpdateViewBar;
+        _castle.Died -= Disable;
     }
 
     private void UpdateViewBar()
@@ -57,5 +59,10 @@ public class CastleHealthBar : MonoBehaviour
         }
 
         _animationSlowChangeValue = null;
+    }
+
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }
