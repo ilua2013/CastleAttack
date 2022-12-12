@@ -3295,6 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7d033fc5ae39c419de737e573e1e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _delayFirstStep: 1.5
   _wizzard: {fileID: 732907202}
   _buttonStartFight: {fileID: 1353735471}
   _buttonSkipStep: {fileID: 998682073}
@@ -15847,8 +15848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleSystem: {fileID: 187189581}
-  _waveCount: 3
-  _countSpawnOneWave: 1
+  _waves: []
   _cellsEnemySpawner:
   - {fileID: 556181573}
   - {fileID: 556181575}
@@ -15858,11 +15858,6 @@ MonoBehaviour:
   - {fileID: 556181574}
   - {fileID: 556181576}
   - {fileID: 556181571}
-  _enemyUnitsPrefab:
-  - {fileID: 2275570904515265033, guid: 20b536af19e9f434084bec7d50c2b4c4, type: 3}
-  - {fileID: 2275570904515265033, guid: f803753088f3c774d9f68296096edbc8, type: 3}
-  - {fileID: 2275570904515265033, guid: 8a7be46dfd13aaf4ba4823ef0613c005, type: 3}
-  - {fileID: 2275570904515265033, guid: b2ce1dc4192bcf54cb22a7dfdcb6a536, type: 3}
   _enemysStart:
   - {fileID: 1017074008}
   - {fileID: 686789159}
@@ -35923,6 +35918,7 @@ MonoBehaviour:
   _distanceAttack:
   - Side: 3
     Distance: 1
+  _distanceAttackCatapult: []
   <Mover>k__BackingField:
     _startCell: {fileID: 556181570}
     _canMove: 1
