@@ -355,7 +355,7 @@ public class BattleSystem : MonoBehaviour
             if (_unitEnemy.Count == 0 && _enemySpawner.HaveWave == false)
             {
                 Win?.Invoke();
-                PlayerPrefs.SetInt("CastleAttack", 1);
+                SaveCastle.AttackCastle = true;
             }
         }
     }

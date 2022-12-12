@@ -22169,7 +22169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleSystem: {fileID: 187189581}
-  _waves: []
+  _waves:
+  - UnitEnemies:
+    - {fileID: 2275570904515265033, guid: edb5ab3b090079149a97a5f38bffed46, type: 3}
   _cellsEnemySpawner:
   - {fileID: 1473135994}
   - {fileID: 746158013}
@@ -31540,7 +31542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

@@ -6,11 +6,10 @@ using System;
 public class Castle : MonoBehaviour
 {
     public bool test;
-    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private CastleType _type;
+    [SerializeField] private Transform _viewMesh;
     [SerializeField] private Animator _animator;
     [SerializeField] private int _maxHealth;
-    [SerializeField] private int _takeDamage;
-    [SerializeField] private float _delayDamage;
     [SerializeField] private float _delayDie;
     [Header("Particle")]
     [SerializeField] private ParticleSystem _fire;
@@ -20,25 +19,19 @@ public class Castle : MonoBehaviour
     private int _currentHealth;
 
     public int MaxHealth => _maxHealth;
-    public int CurrenHealth => _currentHealth;
+    public int CurrentHealth => _currentHealth;
+    public CastleType CastleType => _type;
 
     public event Action Damaged;
+    public event Action HealthSeted;
     public event Action Died;
-
-    private void OnValidate()
-    {
-        _meshRenderer = GetComponent<MeshRenderer>();
-    }
 
     private void Awake()
     {
-        if (PlayerPrefs.GetInt("CastleAttack", 0) == 1)
-        {
-            StartCoroutine(TakeDamage(_delayDamage));
-            PlayerPrefs.SetInt("CastleAttack", 0);
-        }
         _king.gameObject.SetActive(false);
         _currentHealth = _maxHealth;
+
+        TryEnableParticle();
     }
 
     private void Update()
@@ -46,31 +39,53 @@ public class Castle : MonoBehaviour
         if (test)
         {
             test = false;
-            StartCoroutine(TakeDamage(_delayDamage));
+            StartCoroutine(TakeDamage(10,1));
         }
     }
 
-    private IEnumerator TakeDamage(float delay)
+    public void SetHealth(int health)
+    {
+        _currentHealth = health;
+        HealthSeted?.Invoke();
+    }
+
+    public IEnumerator TakeDamage(int damage, float delay, Action onDie = null)
     {
         yield return new WaitForSeconds(delay);
 
         _animator.SetTrigger("Hit");
-        _currentHealth -= _takeDamage;
+        _currentHealth -= damage;
 
+        TryEnableParticle();
+
+        SaveCastle.Health = _currentHealth;
         Damaged?.Invoke();
 
         if (_currentHealth < 1)
         {
             _fire.Play();
+
             yield return new WaitForSeconds(_delayDie);
 
             _smoke.Play();
             _fire.Stop();
+
             yield return new WaitForSeconds(0.25f);
 
             Died?.Invoke();
+            onDie?.Invoke();
+
             EnableKing();
-            _meshRenderer.enabled = false;
+
+            _viewMesh.gameObject.SetActive(false);
+        }
+    }
+
+    private void TryEnableParticle()
+    {
+        if(_currentHealth <= _maxHealth / 2)
+        {
+            _fire.Play();
         }
     }
 
