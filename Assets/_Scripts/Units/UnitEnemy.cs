@@ -31,7 +31,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public event Action FinishedStep;
     public event Action StepChanged;
     public event Action LevelUppedTutorial;
-    public event Action<bool> UnitSteped;
+    public event Action<bool> UnitSteped;   
     public event Action StartedWalking;
 
     private void OnValidate()
@@ -89,7 +89,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public void CavaleryStep()
     {
         CurrentStep = MaxStep;
-    }
+    }   
 
     public void DoStep()
     {
@@ -193,7 +193,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         yield return new WaitForSeconds(time);
         _doingStep = false;
-        UnitSteped?.Invoke(_doingStep);
+        UnitSteped?.Invoke(_doingStep);       
         action?.Invoke();
     }
 

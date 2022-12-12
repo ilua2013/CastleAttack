@@ -40,7 +40,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action RotatedToBattle;
     public event Action<UnitEnemy> EnemyKilled;
     public event Action<UnitFriend> LevelUpped; 
-    public event Action<bool> UnitSteped;
+    public event Action<bool> UnitSteped;    
     public event Action StartedWalking;
 
     private void OnValidate()
@@ -154,7 +154,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         Fighter.Die();        
         gameObject.SetActive(false);
         onEnd?.Invoke();
-    }
+    }   
 
     public void DoStep()
     {
