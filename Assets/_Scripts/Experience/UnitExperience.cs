@@ -36,7 +36,7 @@ public class UnitExperience : MonoBehaviour
         _unit.EnemyKilled -= OnEnemyKilled;
     }
 
-    private void OnEnemyKilled(UnitEnemy enemy)
+    private void OnEnemyKilled(IUnit enemy)
     {
         if (_level >= 3)
             return;
