@@ -7,11 +7,32 @@ using UnityEngine.UI;
 public class StartFightButton : MonoBehaviour, IPhaseHandler
 {
     [SerializeField] private Button _button;
-    [SerializeField] private Image _imageButton;
+    [SerializeField] private Button _buttonSkip;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardsHand _carsHand;
     [SerializeField] private Phase[] _phases;
 
     public Button Button => _button;
+    public Button ButtonSkip => _buttonSkip;
     public Phase[] Phases => _phases;
+
+    private void OnValidate()
+    {
+        _battleSystem = FindObjectOfType<BattleSystem>();
+        _carsHand = FindObjectOfType<CardsHand>();
+    }
+
+    private void OnEnable()
+    {
+        _battleSystem.StepFinished += EnableButtonSkip;
+        _carsHand.CardDrop += DisableButtonSkip;
+    }
+
+    private void OnDisable()
+    {
+        _battleSystem.StepFinished -= EnableButtonSkip;
+        _carsHand.CardDrop += DisableButtonSkip;
+    }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
@@ -19,7 +40,17 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
 
         yield return new WaitForSeconds(phase.Delay);
 
-        _button.enabled = phase.IsActive;
-        _imageButton.color = phase.IsActive ? Color.yellow : Color.gray;
+        _button.interactable = phase.IsActive;
+        _buttonSkip.interactable = phase.IsActive;
+    }
+
+    private void EnableButtonSkip()
+    {
+        _buttonSkip.interactable = true;
+    }
+
+    private void DisableButtonSkip()
+    {
+        _buttonSkip.interactable = false;
     }
 }

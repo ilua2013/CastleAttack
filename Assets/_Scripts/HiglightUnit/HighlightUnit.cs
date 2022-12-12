@@ -25,7 +25,6 @@ public class HighlightUnit : MonoBehaviour
 
     private void SwitchHiglighting(bool isSteped)
     {
-        Debug.Log(isSteped);
         //if (isSteped == true)
         //    //_highlightUnit.Play();
         //    

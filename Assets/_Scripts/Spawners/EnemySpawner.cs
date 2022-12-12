@@ -7,21 +7,25 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private BattleSystem _battleSystem;
-    [SerializeField] private int _waveCount;
-    [SerializeField] private int _countSpawnOneWave;
+    [SerializeField] private List<Wave> _waves;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
-    [SerializeField] private List<UnitEnemy> _enemyUnitsPrefab;
     [Header("StartUnit")]
     [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[] { };
 
     private int _currentWave = 0;
 
-    public int WaveCount => _waveCount;
+    public int WaveCount => _enemysStart.Length;
     public int CurrentWave => _currentWave;
-    public bool HaveWave => _waveCount > _currentWave;
+    public bool HaveWave => _waves.Count > _currentWave;
 
     public event Action WaveCountChanged;
     public event Action<UnitEnemy> Spawned_get;
+
+    [Serializable]
+    private class Wave
+    {
+        public UnitEnemy[] UnitEnemies = new UnitEnemy[] { };
+    }
 
     private void OnValidate()
     {
@@ -80,21 +84,26 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (_currentWave >= _waveCount)
+        if (_currentWave >= _waves.Count)
             return;
 
-        if (_battleSystem.UnitsFriend.Count == 0)
-            RandomSpawn();
-        else
+        for (int i = 0; i < _waves[_currentWave].UnitEnemies.Length; i++)
         {
-            switch (Random.Range(0, 2))
+            UnitEnemy spawn = _waves[_currentWave].UnitEnemies[i];
+
+            if (_battleSystem.UnitsFriend.Count == 0)
+                RandomSpawn(spawn);
+            else
             {
-                case 0:
-                    RandomSpawn();
-                    break;
-                case 1:
-                    SpawnOnUnitFriend();
-                    break;
+                switch (Random.Range(0, 2))
+                {
+                    case 0:
+                        RandomSpawn(spawn);
+                        break;
+                    case 1:
+                        SpawnOnUnitFriend(spawn);
+                        break;
+                }
             }
         }
 
@@ -103,7 +112,7 @@ public class EnemySpawner : MonoBehaviour
         WaveCountChanged?.Invoke();
     }
 
-    private void SpawnOnUnitFriend()
+    private void SpawnOnUnitFriend(UnitEnemy unitEnemy)
     {
         List<UnitFriend> unitFriends = _battleSystem.UnitsFriend;
         Cell cell = unitFriends[Random.Range(0, unitFriends.Count)].Mover.CurrentCell;
@@ -112,7 +121,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (cell.Top.IsFree && cell.Top.TryGetComponent(out UnitSpawner unitSpawner) && unitSpawner.SpawnerType == SpawnerType.Enemy)
             {
-                Spawn(unitSpawner, _enemyUnitsPrefab[Random.Range(0, _enemyUnitsPrefab.Count)]);
+                Spawn(unitSpawner, unitEnemy);
                 break;
             }
             else
@@ -120,25 +129,21 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void RandomSpawn()
+    private void RandomSpawn(UnitEnemy unitEnemy)
     {
-        for (int i = 0; i < _countSpawnOneWave; i++)
+        UnitSpawner spawner = null;
+        int indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
+
+        for (int a = 0; a < _cellsEnemySpawner.Count; a++)
         {
-            UnitSpawner spawner = null;
-            int indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
-            int indexUnit = Random.Range(0, _enemyUnitsPrefab.Count);
+            if (_cellsEnemySpawner[indexSpawner].TryGetComponent(out Cell cell) && cell.IsFree == true)
+                spawner = _cellsEnemySpawner[indexSpawner];
 
-            for (int a = 0; a < _cellsEnemySpawner.Count; a++)
-            {
-                if (_cellsEnemySpawner[indexSpawner].TryGetComponent(out Cell cell) && cell.IsFree == true)
-                    spawner = _cellsEnemySpawner[indexSpawner];
-
-                indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
-            }
-
-            if (spawner != null)
-                Spawn(spawner, _enemyUnitsPrefab[indexUnit]);
+            indexSpawner = Random.Range(0, _cellsEnemySpawner.Count);
         }
+
+        if (spawner != null)
+            Spawn(spawner, unitEnemy);
     }
 
     private void Spawn(UnitSpawner enemySpawner, UnitEnemy unitStep)
