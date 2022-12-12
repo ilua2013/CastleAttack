@@ -66,7 +66,7 @@ public class Castle : MonoBehaviour
 
             _smoke.Play();
             _fire.Stop();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.25f);
 
             Died?.Invoke();
             EnableKing();
