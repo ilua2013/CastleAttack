@@ -213,11 +213,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d5b7212a8d4714587d56463b07bca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonFight: {fileID: 1226539308701719559}
-  _buttonSkipStep: {fileID: 9008749091314521306}
+  _button: {fileID: 1226539308701719559}
   _imageButton: {fileID: 1226539308701719552}
-  _fightSystem: {fileID: 0}
-  _cellSpawner: {fileID: 0}
+  _phases:
+  - _phaseType: 0
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 1
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 2
+    _isActive: 1
+    _delayTime: 0
+  - _phaseType: 3
+    _isActive: 0
+    _delayTime: 0
+  - _phaseType: 4
+    _isActive: 0
+    _delayTime: 0
 --- !u!1 &1226539308712675676
 GameObject:
   m_ObjectHideFlags: 0

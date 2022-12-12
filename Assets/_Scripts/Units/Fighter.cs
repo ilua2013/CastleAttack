@@ -88,12 +88,27 @@ public class Fighter
         }
         else if (_type == FighterType.MainWizzard)
         {
-            fighter.TakeDamage(this);
+            Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
+
+            _unit.RotateTo(fighter.transform, () =>
+            {
+                isFatal = fighter.TakeDamage(this);
+
+                arrow.FlyTo(fighter.transform.position, () =>
+                {
+                    isFatal = fighter.TakeDamage(this);
+                    onEnd?.Invoke();
+                });
+            }, 
+            onEnd);
         }
         else
         {
             _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
         }
+
+        //if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
+        //    fighter.Attack(this);
 
         Attacked?.Invoke();
         Attacked_get?.Invoke(fighter.transform);

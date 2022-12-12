@@ -222,13 +222,21 @@ public class BattleSystem : MonoBehaviour
         _doStepEnemy = true;
         for (int i = _unitEnemy.Count - 1; i > -1; i--)
         {
+            foreach (UnitEnemy enemy in _unitEnemy)
+                if (enemy.Mover.CurrentCell.Number == 0)
+                {
+                    _wizzard.DoStep();
+                    yield return new WaitForSeconds(0.6f);
+                }
+
             _unitEnemy[i].DoStep();
 
-            if (_unitEnemy[i].Fighter.FighterType == FighterType.Cavalery)
-            {
-                _unitEnemy[i].CavaleryStep();               
-                _unitEnemy[i].DoStep();
-            }
+
+            //if (_unitEnemy[i].Fighter.FighterType == FighterType.Cavalery)
+            //{
+            //    _unitEnemy[i].CavaleryStep();               
+            //    //_unitEnemy[i].DoStep();
+            //}
 
             yield return new WaitForSeconds(0.6f);
 
