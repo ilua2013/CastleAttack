@@ -78,7 +78,7 @@ public class Fighter
             return isFatal;
         }
 
-        if (_type == FighterType.Archer)
+        if (_type == FighterType.Archer || _type == FighterType.Catapult)
         {
             Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
             arrow.FlyTo(fighter.transform.position, () =>
