@@ -25,7 +25,7 @@ public class SoundEffectSpell : MonoBehaviour
         _spell.WasCast -= OnCast;
     }
 
-    private void OnCast()
+    private void OnCast(Cell cell, UnitStats stats)
     {
         StartCoroutine(PlayWithDelay(0.2f, () =>
         _settings.Play(SoundEffectType.Spell)));

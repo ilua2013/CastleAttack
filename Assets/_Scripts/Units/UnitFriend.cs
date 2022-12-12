@@ -41,6 +41,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action<UnitEnemy> EnemyKilled;
     public event Action<UnitFriend> LevelUpped; 
     public event Action<bool> UnitSteped;
+    public event Action StartedWalking;
 
     private void OnValidate()
     {
@@ -89,6 +90,11 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public void LevelUp(UnitFriend unit)
     {
         LevelUpped?.Invoke(unit);
+    }
+
+    public void UnitsStartedWalking()
+    {
+        StartedWalking?.Invoke();
     }
 
     public void ReturnToHand()

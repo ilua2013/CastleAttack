@@ -16,4 +16,6 @@ public enum CardName
     Fireline,
     Icewall,
     Fireball,
+    Zipp3,
+    Zipp5,
 }

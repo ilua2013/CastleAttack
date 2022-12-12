@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
+    [SerializeField] private float _delayFirstStep = 1.5f;
     [SerializeField] private UnitFriend _wizzard;
     [SerializeField] private Button _buttonStartFight;
     [SerializeField] private Button _buttonSkipStep;
@@ -43,6 +44,9 @@ public class BattleSystem : MonoBehaviour
         if (_buttonStartFight == null)
             _buttonStartFight = FindObjectOfType<StartFightButton>().Button;
 
+        if(_buttonSkipStep == null)
+            _buttonSkipStep = FindObjectOfType<StartFightButton>().ButtonSkip;
+
         foreach (var item in FindObjectsOfType<UnitFriend>())
         {
             if (item.Fighter.FighterType == FighterType.MainWizzard)
@@ -53,10 +57,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SkipStep(_delayFirstStep);
+    }
+
     private void OnEnable()
     {
         _buttonStartFight.onClick.AddListener(StartBattle);
-        _buttonSkipStep.onClick.AddListener(SkipStep);
+        _buttonSkipStep.onClick.AddListener(StartSkipStep);
         _cardsHand.Spawned += AddUnit;
         _enemySpawner.Spawned_get += AddUnit;
         _wizzard.Fighter.Died += InvokeLose;
@@ -65,7 +74,7 @@ public class BattleSystem : MonoBehaviour
     private void OnDisable()
     {
         _buttonStartFight.onClick.RemoveListener(StartBattle);
-        _buttonSkipStep.onClick.RemoveListener(SkipStep);
+        _buttonSkipStep.onClick.RemoveListener(StartSkipStep);
         _cardsHand.Spawned -= AddUnit;
         _enemySpawner.Spawned_get -= AddUnit;
         _wizzard.Fighter.Died -= InvokeLose;
@@ -120,13 +129,15 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(Battle());
     }
 
-    private void SkipStep()
+    private void StartSkipStep() => SkipStep();
+
+    private void SkipStep(float delay = 0, bool invokeFinishStep = true)
     {
         CalculateFirstStep();
         SkipedStep?.Invoke();
         BattleStarted?.Invoke();
         _doStep = true;
-        StartCoroutine(BattleEnemyOnly());
+        StartCoroutine(BattleEnemyOnly(delay, invokeFinishStep));
     }
 
     private IEnumerator Battle()
@@ -172,13 +183,18 @@ public class BattleSystem : MonoBehaviour
             item.UpdateStep();
     }
 
-    private IEnumerator BattleEnemyOnly()
+    private IEnumerator BattleEnemyOnly(float delay = 0, bool invokeFinishStep = true)
     {
+        yield return new WaitForSeconds(delay);
+
         while (CheckHaveStep(true,false) && _doStep == true)
         {
             _enemyFinishStep = false;
 
             StartCoroutine(DoStepEnemy());
+
+            while (_doStepEnemy)
+                yield return null;
 
             while (_enemyFinishStep == false)
             {
@@ -187,7 +203,8 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
-        StepFinished?.Invoke();
+        if (invokeFinishStep)
+            StepFinished?.Invoke();
 
         foreach (var item in _unitEnemy)
             item.UpdateStep();
@@ -196,6 +213,13 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator DoStepFriend()
     {
         _doStepFriend = true;
+
+        foreach (var unitFriend in _unitFriend)        
+            unitFriend.UnitsStartedWalking();
+        
+        foreach (var unitEnemy in _unitEnemy)        
+            unitEnemy.UnitsStartedWalking();
+        
 
         for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
         {
@@ -215,13 +239,28 @@ public class BattleSystem : MonoBehaviour
         _doStepEnemy = true;
         for (int i = _unitEnemy.Count - 1; i > -1; i--)
         {
+            foreach (UnitEnemy enemy in _unitEnemy)
+                if (enemy.Mover.CurrentCell.Number == 0)
+                {
+                    _wizzard.DoStep();
+                    yield return new WaitForSeconds(0.6f);
+                }
+
             _unitEnemy[i].DoStep();
+
+
+            //if (_unitEnemy[i].Fighter.FighterType == FighterType.Cavalery)
+            //{
+            //    _unitEnemy[i].CavaleryStep();               
+            //    //_unitEnemy[i].DoStep();
+            //}
 
             yield return new WaitForSeconds(0.6f);
 
             while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
                 yield return null;
-        }
+        }     
+
         _doStepEnemy = false;
     }
 

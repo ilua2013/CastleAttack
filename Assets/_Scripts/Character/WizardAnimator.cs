@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class WizardAnimator : MonoBehaviour
 {
-    [SerializeField] private Arrow _arrow;
-    [SerializeField] private Transform _stick;
-
     private Animator _animator;
     private UnitFriend _unitFriend;
 
     private SpellSpawner[] _spellSpawners;
-    private UnitSpawner[] _unitSpawners;
 
     enum State
     {
@@ -28,16 +24,12 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend = GetComponent<UnitFriend>();
 
         _spellSpawners = FindObjectsOfType<SpellSpawner>();
-        _unitSpawners = FindObjectsOfType<UnitSpawner>();
     }
 
     private void OnEnable()
     {
         foreach (SpellSpawner spawner in _spellSpawners)
             spawner.Cast_get += OnSpellCast;
-
-        foreach (UnitSpawner spawner in _unitSpawners)
-            spawner.SpawnedUnit_get += OnSpawn;
 
         _unitFriend.Fighter.Damaged += OnDamaged;
         _unitFriend.Fighter.Died += OnDie;
@@ -49,9 +41,6 @@ public class WizardAnimator : MonoBehaviour
         foreach (SpellSpawner spawner in _spellSpawners)
             spawner.Cast_get -= OnSpellCast;
 
-        foreach (UnitSpawner spawner in _unitSpawners)
-            spawner.SpawnedUnit_get -= OnSpawn;
-
         _unitFriend.Fighter.Damaged -= OnDamaged;
         _unitFriend.Fighter.Died -= OnDie;
         _unitFriend.Fighter.Attacked_get -= OnAttacked;
@@ -62,11 +51,6 @@ public class WizardAnimator : MonoBehaviour
         _animator.Play(State.SpellCast.ToString());
     }
 
-    private void OnSpawn(IUnit unit)
-    {
-        _animator.Play(State.SpawnCast.ToString());
-    }
-
     private void OnDamaged(int damage)
     {
         _animator.Play(State.Damage.ToString());
@@ -74,9 +58,6 @@ public class WizardAnimator : MonoBehaviour
 
     private void OnAttacked(Transform target)
     {
-        Arrow projectile = Instantiate(_arrow, _stick.position, Quaternion.identity);
-        projectile.FlyTo(target.position);
-
         _animator.Play(State.Attack.ToString());
     }
 

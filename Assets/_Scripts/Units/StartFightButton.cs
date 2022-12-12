@@ -1,77 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartFightButton : MonoBehaviour
+public class StartFightButton : MonoBehaviour, IPhaseHandler
 {
-    [SerializeField] private Button _buttonFight;
-    [SerializeField] private Button _buttonSkipStep;
-    [SerializeField] private Image _imageButton;
-    [SerializeField] private BattleSystem _fightSystem;
-    [SerializeField] private CellSpawner _cellSpawner;
+    [SerializeField] private Button _button;
+    [SerializeField] private Button _buttonSkip;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardsHand _carsHand;
+    [SerializeField] private Phase[] _phases;
 
-    private SpellSpawner[] _speelSpawners;
-    private UnitSpawner[] _unitSpawners;
-
-    public Button Button => _buttonFight;
+    public Button Button => _button;
+    public Button ButtonSkip => _buttonSkip;
+    public Phase[] Phases => _phases;
 
     private void OnValidate()
     {
-        _fightSystem = FindObjectOfType<BattleSystem>();
-        _cellSpawner = FindObjectOfType<CellSpawner>();
-    }
-
-    private void Awake()
-    {
-        _speelSpawners = _cellSpawner.GetComponentsInChildren<SpellSpawner>();
-        _unitSpawners = _cellSpawner.GetComponentsInChildren<UnitSpawner>();
+        _battleSystem = FindObjectOfType<BattleSystem>();
+        _carsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
     {
-        _fightSystem.StepFinished += EnableButton;
-        _fightSystem.BattleStarted += DisableButton;
-
-        foreach (var item in _speelSpawners)
-            item.Cast += DisableButtonSkipStep;
-
-        foreach (var item in _unitSpawners)
-            item.SpawnedUnit += DisableButtonSkipStep;
+        _battleSystem.StepFinished += EnableButtonSkip;
+        _carsHand.CardDrop += DisableButtonSkip;
     }
+
     private void OnDisable()
     {
-        _fightSystem.StepFinished -= EnableButton;
-        _fightSystem.BattleStarted -= DisableButton;
-
-        foreach (var item in _speelSpawners)
-            item.Cast -= DisableButtonSkipStep;
-
-        foreach (var item in _unitSpawners)
-            item.SpawnedUnit -= DisableButtonSkipStep;
+        _battleSystem.StepFinished -= EnableButtonSkip;
+        _carsHand.CardDrop += DisableButtonSkip;
     }
 
-    private void EnableButton()
+    public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        _buttonFight.enabled = true;
-        EnableButtonSkipStep();
-        _imageButton.color = Color.yellow;
+        Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
+
+        yield return new WaitForSeconds(phase.Delay);
+
+        _button.interactable = phase.IsActive;
+        _buttonSkip.interactable = phase.IsActive;
     }
 
-    private void DisableButton()
+    private void EnableButtonSkip()
     {
-        DisableButtonSkipStep();
-        _buttonFight.enabled = false;
-        _imageButton.color = Color.gray;
+        _buttonSkip.interactable = true;
     }
 
-    private void DisableButtonSkipStep()
+    private void DisableButtonSkip()
     {
-        _buttonSkipStep.interactable = false;
-    }
-
-    private void EnableButtonSkipStep()
-    {
-        _buttonSkipStep.interactable = true;
+        _buttonSkip.interactable = false;
     }
 }

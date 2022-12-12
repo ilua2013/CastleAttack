@@ -10,6 +10,7 @@ public interface IUnit
     public event Action FinishedStep;
     public event Action StepChanged;
     public event Action<bool> UnitSteped;
+    public event Action StartedWalking;
     int MaxStep { get; }
     int CurrentStep { get; }
     bool Initialized { get; }
