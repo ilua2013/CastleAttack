@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int _currentWave = 0;
 
-    public int WaveCount => _enemysStart.Length;
+    public int WaveCount => _waves.Count;
     public int CurrentWave => _currentWave;
     public bool HaveWave => _waves.Count > _currentWave;
 
