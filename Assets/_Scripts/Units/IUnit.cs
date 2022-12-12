@@ -17,7 +17,7 @@ public interface IUnit
    
     public event Action Inited;
     void Init(UnitCard card, Cell cell);
-    void DoStep();
+    void DoStep(IUnit enemy = null);
     void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null);
     void AnimationSizeUp();
     void StartMove(Cell cell, Action onEnd = null);

@@ -25,7 +25,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public bool DoingStep => _doingStep;
     public DistanceAttack[] DistanceAttack => _distanceAttack;
-
     public Phase[] Phases => throw new NotImplementedException();
 
     public event Action Returned;
@@ -38,7 +37,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action StepChanged;
     public event Action RotatedToWizzard;
     public event Action RotatedToBattle;
-    public event Action<UnitEnemy> EnemyKilled;
+    public event Action<IUnit> EnemyKilled;
     public event Action<UnitFriend> LevelUpped; 
     public event Action<bool> UnitSteped;
     public event Action StartedWalking;
@@ -156,12 +155,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         onEnd?.Invoke();
     }
 
-    public void DoStep()
+    public void DoStep(IUnit enemy = null)
     {
         if (CurrentStep <= 0)
             return;
 
-        UnitEnemy enemy = TryAttack();
+        if (enemy == null)
+            enemy = TryAttack();
+
         _doingStep = true;
         UnitSteped?.Invoke(_doingStep);
 

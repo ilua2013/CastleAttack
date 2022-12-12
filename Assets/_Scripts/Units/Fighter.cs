@@ -20,6 +20,7 @@ public class Fighter
     private float _speedRotate = 3f;
     private int _health = 1;
 
+    public bool IsDamaged { get; set; }
     public bool IsSkipped { get; private set; }
     public int Damage => _damage;
     public int Health => _health;
@@ -85,33 +86,33 @@ public class Fighter
                 isFatal = fighter.TakeDamage(this);
                 onEnd?.Invoke();
             });
+
+            Attacked?.Invoke();
+            Attacked_get?.Invoke(fighter.transform);
         }
         else if (_type == FighterType.MainWizzard)
         {
-            Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
-
             _unit.RotateTo(fighter.transform, () =>
             {
-                isFatal = fighter.TakeDamage(this);
+                Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
 
                 arrow.FlyTo(fighter.transform.position, () =>
                 {
                     isFatal = fighter.TakeDamage(this);
-                    onEnd?.Invoke();
                 });
+
+                Attacked?.Invoke();
+                Attacked_get?.Invoke(fighter.transform);
             }, 
             onEnd);
         }
         else
         {
             _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
+
+            Attacked?.Invoke();
+            Attacked_get?.Invoke(fighter.transform);
         }
-
-        //if (fighter.FighterType == FighterType.MainWizzard) // получаем обратный урон если бьем по боссу
-        //    fighter.Attack(this);
-
-        Attacked?.Invoke();
-        Attacked_get?.Invoke(fighter.transform);
 
         return isFatal;
     }
@@ -133,6 +134,8 @@ public class Fighter
 
     public bool TakeDamage(Fighter fighter)
     {
+        IsDamaged = true;
+
         if (TakeDamage(fighter.Damage))
         {
             Died_getKiller?.Invoke(fighter.transform);
