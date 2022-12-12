@@ -16,6 +16,7 @@ public abstract class Spell : MonoBehaviour
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
     public float AffectDelay => _affectDelay;
     public int MaxTicks => _maxTicks;
+    public BattleSystem BattleSystem => _battleSystem;
 
     public event Action Dispelled;
     public event Action<Cell, UnitStats> WasCast;
@@ -26,7 +27,7 @@ public abstract class Spell : MonoBehaviour
     {
         _battleSystem = battleSystem;
 
-        _battleSystem.StepStarted += OnStepStarted;
+        _battleSystem.BattleStarted += OnStepStarted;
         _battleSystem.StepFinished += OnStepFinished;
         _battleSystem.Win += OnWin;
 
@@ -61,7 +62,7 @@ public abstract class Spell : MonoBehaviour
         yield return new WaitWhile(() => _ticks < _maxTicks);
         yield return new WaitForSeconds(_lifeTime);
 
-        _battleSystem.StepStarted -= OnStepStarted;
+        _battleSystem.BattleStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
         _battleSystem.Win -= OnWin;
 

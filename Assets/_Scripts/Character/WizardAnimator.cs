@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class WizardAnimator : MonoBehaviour
 {
-    [SerializeField] private Arrow _arrow;
-    [SerializeField] private Transform _stick;
-
     private Animator _animator;
     private UnitFriend _unitFriend;
 
@@ -32,7 +29,7 @@ public class WizardAnimator : MonoBehaviour
     private void OnEnable()
     {
         foreach (SpellSpawner spawner in _spellSpawners)
-            spawner.Cast += OnSpellCast;
+            spawner.Cast_get += OnSpellCast;
 
         _unitFriend.Fighter.Damaged += OnDamaged;
         _unitFriend.Fighter.Died += OnDie;
@@ -42,7 +39,7 @@ public class WizardAnimator : MonoBehaviour
     private void OnDisable()
     {
         foreach (SpellSpawner spawner in _spellSpawners)
-            spawner.Cast -= OnSpellCast;
+            spawner.Cast_get -= OnSpellCast;
 
         _unitFriend.Fighter.Damaged -= OnDamaged;
         _unitFriend.Fighter.Died -= OnDie;
@@ -61,9 +58,6 @@ public class WizardAnimator : MonoBehaviour
 
     private void OnAttacked(Transform target)
     {
-        Arrow projectile = Instantiate(_arrow, _stick.position, Quaternion.identity);
-        projectile.FlyTo(target.position);
-
         _animator.Play(State.Attack.ToString());
     }
 

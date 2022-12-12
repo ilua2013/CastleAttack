@@ -1470,6 +1470,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeckBuilder
       objectReference: {fileID: 0}
+    - target: {fileID: 3803725951201185590, guid: 7b76c87259854a341908504530351c45, type: 3}
+      propertyPath: _commonDeck
+      value: 
+      objectReference: {fileID: 3803725952458974044}
+    - target: {fileID: 3803725951201185590, guid: 7b76c87259854a341908504530351c45, type: 3}
+      propertyPath: _deckPrefabs.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3803725951201185590, guid: 7b76c87259854a341908504530351c45, type: 3}
+      propertyPath: _deckPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 8542647222095152066, guid: 2ba5fb83798a8594bb532d71e82a665e, type: 3}
     - target: {fileID: 3803725951201185591, guid: 7b76c87259854a341908504530351c45, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1516,6 +1528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 987885807310883741, guid: 7b76c87259854a341908504530351c45, type: 3}
+    - {fileID: 2912081127690966148, guid: 7b76c87259854a341908504530351c45, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7b76c87259854a341908504530351c45, type: 3}
 --- !u!114 &3803725952458974042 stripped
 MonoBehaviour:
@@ -1526,6 +1539,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e708e33ffdd76044abead968f5a19d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3803725952458974043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2983113014892292466, guid: 7b76c87259854a341908504530351c45, type: 3}
+  m_PrefabInstance: {fileID: 3803725952458974041}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3803725952458974044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803725952458974043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd9225fc13651d44923e058290f085c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6315410113055791196
@@ -2006,9 +2036,17 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9198746201418439408, guid: 1f87f3fa8468c9145abb90b9d1a25fef, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9198746201665748912, guid: 1f87f3fa8468c9145abb90b9d1a25fef, type: 3}
       propertyPath: _wallet
       value: 
       objectReference: {fileID: 3803725952458974042}
+    - target: {fileID: 9198746201870374765, guid: 1f87f3fa8468c9145abb90b9d1a25fef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f87f3fa8468c9145abb90b9d1a25fef, type: 3}
