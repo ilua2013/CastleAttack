@@ -8,6 +8,8 @@ public class UILookCamera : MonoBehaviour
 
     private void OnValidate()
     {
+        if (Camera.main == null)
+            return;
         _camera = Camera.main;
         Vector3 targetLook = _camera.transform.position - transform.position;
         targetLook.x = 0;

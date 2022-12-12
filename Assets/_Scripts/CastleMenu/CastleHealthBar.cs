@@ -18,15 +18,16 @@ public class CastleHealthBar : MonoBehaviour
         _castle = GetComponentInParent<Castle>();
     }
 
-    private void Awake()
+    private void Start()
     {
         _text.text = _castle.CurrenHealth.ToString();
+        _slider.value = _castle.CurrenHealth / _castle.MaxHealth;
     }
 
     private void OnEnable()
     {
         _castle.Damaged += UpdateViewBar;
-        _slider.value = _castle.CurrenHealth;
+        _slider.value = _castle.CurrenHealth / _castle.MaxHealth;
     }
 
     private void OnDisable()
@@ -36,14 +37,12 @@ public class CastleHealthBar : MonoBehaviour
 
     private void UpdateViewBar()
     {
-        _slider.maxValue = _castle.MaxHealth;
-
         if (_animationSlowChangeValue == null)
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth));
+            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth / _castle.MaxHealth));
         else
         {
             StopCoroutine(_animationSlowChangeValue);
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth));
+            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth / _castle.MaxHealth));
         }
 
         _text.text = _castle.CurrenHealth.ToString();
