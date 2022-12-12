@@ -15,8 +15,6 @@ public class ZippProjectile : MonoBehaviour
 
     public void FlyTo(Vector3 target, Action onEnd = null)
     {
-        Debug.Log("Fly to target");
-
         StartCoroutine(Fly(target, onEnd));
     }
 

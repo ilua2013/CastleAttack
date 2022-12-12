@@ -44,15 +44,15 @@ public class IcewallSpell : Spell
     {
         _cell = cell;
         _stats = stats;
-        Affect(_cell, _stats, AffectDelay);
     }
 
     private void OnFightStarted()
     {
+        Debug.Log("Casty");
         Affect(_cell, _stats, AffectDelay);
     }
 
-    private void OnDispelled()
+    private void OnDispelled(Spell spell)
     {
         gameObject.SetActive(false);
     }

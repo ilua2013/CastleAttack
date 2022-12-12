@@ -9,19 +9,26 @@ public abstract class Spell : MonoBehaviour
     [SerializeField] private float _affectDelay;
     [SerializeField] private float _lifeTime;
     [SerializeField] private int _maxTicks;
+    [SerializeField] private bool _validWhenApplied;
 
     private BattleSystem _battleSystem;
     private int _ticks;
 
+    public bool ValidWhenApplied => _validWhenApplied;
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
     public float AffectDelay => _affectDelay;
     public int MaxTicks => _maxTicks;
     public BattleSystem BattleSystem => _battleSystem;
 
-    public event Action Dispelled;
+    public event Action<Spell> Dispelled;
     public event Action<Cell, UnitStats> WasCast;
     public event Action FightStarted;
     public event Action FightFinished;
+
+    protected void Awake()
+    {
+        _ticks = _maxTicks;
+    }
 
     public void Cast(Cell cell, CardSave save, BattleSystem battleSystem, Action onEndCallback = null)
     {
@@ -37,7 +44,7 @@ public abstract class Spell : MonoBehaviour
 
     public void Tick()
     {
-        _ticks++;
+        _ticks--;
     }
 
     protected abstract void Affect(Cell cell, UnitStats stats, float delay);
@@ -54,18 +61,18 @@ public abstract class Spell : MonoBehaviour
 
     private void OnWin()
     {
-        Dispelled?.Invoke();
+        Dispelled?.Invoke(this);
     }
 
     private IEnumerator Live()
     {
-        yield return new WaitWhile(() => _ticks < _maxTicks);
+        yield return new WaitUntil(() => _ticks <= 1);
         yield return new WaitForSeconds(_lifeTime);
 
         _battleSystem.BattleStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
         _battleSystem.Win -= OnWin;
 
-        Dispelled?.Invoke();
+        Dispelled?.Invoke(this);
     }
 }

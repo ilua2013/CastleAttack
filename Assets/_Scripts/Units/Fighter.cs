@@ -92,17 +92,17 @@ public class Fighter
         }
         else if (_type == FighterType.MainWizzard)
         {
-            _unit.RotateTo(fighter.transform, () =>
+            _unit.LocalRotateTo(fighter.transform, () =>
             {
+                Attacked?.Invoke();
+                Attacked_get?.Invoke(fighter.transform);
+
                 Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
 
                 arrow.FlyTo(fighter.transform.position, () =>
                 {
                     isFatal = fighter.TakeDamage(this);
-                });
-
-                Attacked?.Invoke();
-                Attacked_get?.Invoke(fighter.transform);
+                }, 0.1f);
             }, 
             onEnd);
         }
@@ -171,7 +171,6 @@ public class Fighter
 
     public IEnumerator RotateTo(Transform lookAt, Action onFinish = null, Action onRotatedAttack = null)
     {
-        Debug.Log("ROTATE TO " + lookAt.name.ToString());
         Vector3 target = lookAt.position - transform.position;
         Vector3 defaultRotate;
         target.y = 0;
@@ -184,28 +183,55 @@ public class Fighter
         while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
         {
             transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
-            Debug.Log("xxx");
             yield return null;
         }
 
         RotatedToAttack?.Invoke();
-        Debug.Log("a1");
         yield return new WaitForSeconds(_timeToMakeDamage);
-        Debug.Log("a2");
 
         onRotatedAttack?.Invoke();
         
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
-        Debug.Log("a3");
 
         while (transform.eulerAngles != defaultRotate)
         {
             transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
-            Debug.Log("zzz ");
             yield return null;
         }
 
-        Debug.Log("a4");
+        onFinish?.Invoke();
+    }
+
+    public IEnumerator LocalRotateTo(Transform lookAt, Action onFinish = null, Action onRotatedAttack = null)
+    {
+        Vector3 target = lookAt.position - transform.position;
+        Vector3 defaultRotate;
+        target.y = 0;
+
+        if (_unit is UnitFriend unitFriend)
+            defaultRotate = Vector3.zero;
+        else
+            defaultRotate = new Vector3(0, 180, 0);
+
+        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+        {
+            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+            yield return null;
+        }
+
+        RotatedToAttack?.Invoke();
+        yield return new WaitForSeconds(_timeToMakeDamage);
+
+        onRotatedAttack?.Invoke();
+
+        yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
+
+        while (transform.localEulerAngles != defaultRotate)
+        {
+            transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(transform.localEulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
+            yield return null;
+        }
+
         onFinish?.Invoke();
     }
 }

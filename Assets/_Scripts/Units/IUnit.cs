@@ -19,6 +19,7 @@ public interface IUnit
     void Init(UnitCard card, Cell cell);
     void DoStep(IUnit enemy = null);
     void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null);
+    void LocalRotateTo(Transform transform, Action onRotated = null, Action onEnd = null);
     void AnimationSizeUp();
     void StartMove(Cell cell, Action onEnd = null);
     IEnumerator FinishStep(Action action, float time);

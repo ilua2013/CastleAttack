@@ -217,4 +217,17 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void Disable() => gameObject.SetActive(false);
     public void StartMove(Cell cell, Action onEnd = null) => StartCoroutine(Mover.MoveTo(cell, onEnd));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
+
+    public void LocalRotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
+    {
+        if (_coroutineRotateTo == null)
+        {
+            _coroutineRotateTo = StartCoroutine(Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
+        }
+        else
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = StartCoroutine(Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
+        }
+    }
 }

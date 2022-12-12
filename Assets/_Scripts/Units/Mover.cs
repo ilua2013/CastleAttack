@@ -157,7 +157,6 @@ public class Mover
 
         while (transform.eulerAngles != targetEuler)
         {
-            Debug.Log("RotateToMover in While");
             ellapsedTime = ellapsedTime > time ? time : ellapsedTime + Time.deltaTime;
             timeMax += Time.deltaTime;
             percent = ellapsedTime / time;
@@ -170,7 +169,6 @@ public class Mover
             //transform.forward = Vector3.RotateTowards(transform.forward, target, 15 * Time.deltaTime, 15 * Time.deltaTime);
             yield return null;
         }
-        Debug.Log(timeMax + " Time");
         onRotated?.Invoke();
     }
 }

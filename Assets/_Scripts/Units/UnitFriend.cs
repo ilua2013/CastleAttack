@@ -255,7 +255,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
     {
-        print("RotateFighter");
         if (_coroutineRotateTo != null)
         {
             StopCoroutine(_coroutineRotateTo);
@@ -263,6 +262,18 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         }
 
         _coroutineRotateTo = Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
+        StartCoroutine(_coroutineRotateTo);
+    }
+
+    public void LocalRotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
+    {
+        if (_coroutineRotateTo != null)
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = null;
+        }
+
+        _coroutineRotateTo = Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
         StartCoroutine(_coroutineRotateTo);
     }
 

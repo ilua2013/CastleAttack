@@ -20,13 +20,15 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void FlyTo(Vector3 target, Action onEnd = null)
+    public void FlyTo(Vector3 target, Action onEnd = null, float delay = 0)
     {
-        StartCoroutine(Fly(target, onEnd));
+        StartCoroutine(Fly(target, delay, onEnd));
     }
 
-    private IEnumerator Fly(Vector3 target, Action onEnd = null)
+    private IEnumerator Fly(Vector3 target, float delay = 0, Action onEnd = null)
     {
+        yield return new WaitForSeconds(delay);
+
         Vector3 targetPos = target - transform.position;
         Vector3 startPos = transform.position;
         Vector3 deltaPos;

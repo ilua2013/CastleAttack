@@ -9,12 +9,12 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
     private BattleSystem _battleSystem;
 
     public UnitFriend Spawned { get; private set; }
-
     public Vector3 SpawnPoint => transform.position;
 
     public Cell Cell => _cell;
 
     public event Action Cast;
+    public event Action<Spell> Dispelled;
     public event Action<Vector3, Spell> Cast_get;
 
     private void Awake()
@@ -29,10 +29,12 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
         {
             Spell spell = Instantiate(spellCard.SpellPrefab, transform.position, Quaternion.identity);
 
-
             spell.Cast(_cell, card.CardSave, _battleSystem);
+            spell.Dispelled += OnSpellDispelled;
+
             Cast_get?.Invoke(place, spell);
             Cast?.Invoke();
+
             return true;
         }
         return false;
@@ -41,5 +43,11 @@ public class SpellSpawner : MonoBehaviour, ICardApplicable
     public bool CanApply(Card card)
     {
         return card is SpellCard;
+    }
+
+    private void OnSpellDispelled(Spell spell)
+    {
+        spell.Dispelled -= OnSpellDispelled;
+        Dispelled?.Invoke(spell);
     }
 }

@@ -240,6 +240,9 @@ public class BattleSystem : MonoBehaviour
         _doStepEnemy = true;
         for (int i = _unitEnemy.Count - 1; i > -1; i--)
         {
+            if (i > _unitEnemy.Count - 1)
+                continue;
+
             _unitEnemy[i].DoStep();
 
             if(i > 0)
