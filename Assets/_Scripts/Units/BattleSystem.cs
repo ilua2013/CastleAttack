@@ -223,6 +223,8 @@ public class BattleSystem : MonoBehaviour
 
         for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
         {
+            yield return new WaitForSeconds(0.2f);
+
             _unitFriend[i].DoStep();
 
             yield return new WaitForSeconds(0.6f);

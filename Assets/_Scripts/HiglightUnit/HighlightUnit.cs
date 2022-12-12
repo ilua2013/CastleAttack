@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class HighlightUnit : MonoBehaviour
 {
     [SerializeField] private GameObject _arrowHighlightUnit;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private float _delay;
+
     private IUnit _unit;
+    private bool _isSteped;
 
     private void Awake()
     {
@@ -24,13 +28,26 @@ public class HighlightUnit : MonoBehaviour
     }
 
     private void SwitchHiglighting(bool isSteped)
-    {
-        //if (isSteped == true)
-        //    //_highlightUnit.Play();
-        //    
-        if(_arrowHighlightUnit!=null)
-            _arrowHighlightUnit.gameObject.SetActive(isSteped);
-        //else
-        //    _highlightUnit.Stop();
+    {     
+       
+        if(isSteped == false)
+        {
+            _animator.SetBool("isDecrease", true);
+            StartCoroutine(delayArrow());
+        }
+        else
+        {
+            if (_arrowHighlightUnit != null)
+                _arrowHighlightUnit.gameObject.SetActive(true);
+        }      
+      
     }
+
+    private IEnumerator delayArrow()
+    {
+
+        yield return new WaitForSeconds(_delay);
+        if (_arrowHighlightUnit != null)
+            _arrowHighlightUnit.gameObject.SetActive(false);
+    } 
 }
