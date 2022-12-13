@@ -75,6 +75,9 @@ public class ZippSpell : Spell
 
         for (int i = 0; i < targets.Count; i++)
         {
+            if (targets[i] == null || targets[i].Fighter.IsDead)
+                continue;
+
             projectile.ResetState();
             projectile.FlyTo(targets[i].transform.position + Vector3.up);
 

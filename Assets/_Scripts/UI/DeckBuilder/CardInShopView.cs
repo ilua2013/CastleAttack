@@ -48,6 +48,7 @@ public class CardInShopView : MonoBehaviour
     {
         _card = card;
         _card.gameObject.SetActive(_card.CardSave.IsAvailable);
+        _buyButton.gameObject.SetActive(_card.CardSave.IsAvailable);
         _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
