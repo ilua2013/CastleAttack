@@ -22,7 +22,8 @@ public class MainMenuLoader : MonoBehaviour
 
     private void OnInitialized()
     {
-        int index = TutorialIndex;
+        //int index = TutorialIndex;
+        int index = MenuIndex;
 
         if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
