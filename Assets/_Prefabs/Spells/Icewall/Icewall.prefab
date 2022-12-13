@@ -65,7 +65,7 @@ MonoBehaviour:
     Distance: 0
   - Side: 8
     Distance: 1
-  _affectDelay: 1
+  _affectDelay: 0.2
   _lifeTime: 2
   _maxTicks: 3
   _validWhenApplied: 0
@@ -198,6 +198,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6685844634432967701, guid: 0ff42ec8196243748b716e1fd244b1d8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 71d3811e4bd03b649a0bae64e519241e, type: 3}
+    - target: {fileID: 6685844634432967701, guid: 0ff42ec8196243748b716e1fd244b1d8, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685844634432967701, guid: 0ff42ec8196243748b716e1fd244b1d8, type: 3}
+      propertyPath: m_MeshDistribution
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685844634432967701, guid: 0ff42ec8196243748b716e1fd244b1d8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c5ab8928bfd4aad49a3714c38511517e, type: 2}
     - target: {fileID: 8825313279842406223, guid: 0ff42ec8196243748b716e1fd244b1d8, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 1.5

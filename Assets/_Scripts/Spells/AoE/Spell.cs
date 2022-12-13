@@ -13,29 +13,39 @@ public abstract class Spell : MonoBehaviour
 
     private BattleSystem _battleSystem;
     private int _ticks;
+    private Cell _cell;
+    private CardSave _save;
 
+    public bool DoingStep { get; private set; }
     public bool ValidWhenApplied => _validWhenApplied;
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
     public float AffectDelay => _affectDelay;
     public int MaxTicks => _maxTicks;
     public BattleSystem BattleSystem => _battleSystem;
 
+    public Cell Cell => _cell;
+    public CardSave CardSave => _save;
+
     public event Action<Spell> Dispelled;
     public event Action<Cell, UnitStats> WasCast;
-    public event Action FightStarted;
-    public event Action FightFinished;
 
     protected void Awake()
     {
         _ticks = _maxTicks;
     }
 
+    public void DoStep()
+    {
+        DoingStep = true;
+        Affect(_cell, _save.UnitStats, AffectDelay);
+    }
+
     public void Cast(Cell cell, CardSave save, BattleSystem battleSystem, Action onEndCallback = null)
     {
-        _battleSystem = battleSystem;
+        _cell = cell;
+        _save = save;
 
-        _battleSystem.BattleStarted += OnStepStarted;
-        _battleSystem.StepFinished += OnStepFinished;
+        _battleSystem = battleSystem;
         _battleSystem.Win += OnWin;
 
         StartCoroutine(Live());
@@ -45,19 +55,10 @@ public abstract class Spell : MonoBehaviour
     public void Tick()
     {
         _ticks--;
+        DoingStep = false;
     }
 
     protected abstract void Affect(Cell cell, UnitStats stats, float delay);
-
-    private void OnStepStarted()
-    {
-        FightStarted?.Invoke();
-    }
-
-    private void OnStepFinished()
-    {
-        FightFinished?.Invoke();
-    }
 
     private void OnWin()
     {
@@ -66,11 +67,9 @@ public abstract class Spell : MonoBehaviour
 
     private IEnumerator Live()
     {
-        yield return new WaitUntil(() => _ticks <= 1);
+        yield return new WaitUntil(() => _ticks <= 0);
         yield return new WaitForSeconds(_lifeTime);
 
-        _battleSystem.BattleStarted -= OnStepStarted;
-        _battleSystem.StepFinished -= OnStepFinished;
         _battleSystem.Win -= OnWin;
 
         Dispelled?.Invoke(this);
