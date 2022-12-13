@@ -243,6 +243,9 @@ public class BattleSystem : MonoBehaviour
 
         for (int i = _spells.Count - 1; i > -1; i--) // определяет верный порядок действий
         {
+            if (i > _spells.Count - 1)
+                continue;
+
             _spells[i].DoStep();
 
             while (_spells.Count > i && _spells[i].DoingStep == true)

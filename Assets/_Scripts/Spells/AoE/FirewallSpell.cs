@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class FirewallSpell : Spell
 {
+    private const string DispelleState = "Dispelle";
+
     [SerializeField] private FighterType _fighterType;
+    [SerializeField] private Animator _animator;
 
     private void OnEnable()
     {
@@ -38,6 +41,7 @@ public class FirewallSpell : Spell
 
     private void OnDispelled(Spell spell)
     {
-        gameObject.SetActive(false);
+        _animator.Play(DispelleState);
+        Destroy(gameObject, 1f);
     }
 }
