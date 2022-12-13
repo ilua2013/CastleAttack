@@ -6,26 +6,18 @@ public class FirewallSpell : Spell
 {
     [SerializeField] private FighterType _fighterType;
 
-    private Cell _cell;
-    private UnitStats _stats;
-
     private void OnEnable()
     {
         Dispelled += OnDispelled;
-        FightStarted += OnFightStarted;
-        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
-        FightStarted -= OnFightStarted;
-        WasCast -= OnCast;
     }
 
     protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
-        Tick();
         StartCoroutine(Fire(cell, stats.Damage, delay));
     }
 
@@ -40,17 +32,8 @@ public class FirewallSpell : Spell
             int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
             enemy.Fighter.TakeDamage(totalDamage);
         }
-    }
 
-    private void OnCast(Cell cell, UnitStats stats)
-    {
-        _cell = cell;
-        _stats = stats;
-    }
-
-    private void OnFightStarted()
-    {
-        Affect(_cell, _stats, AffectDelay);
+        Tick();
     }
 
     private void OnDispelled(Spell spell)

@@ -13,14 +13,18 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Button _buttonSkipStep;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private EnemySpawner _enemySpawner;
+    [SerializeField] private SpellsRecorder _spellsRecorder;
 
     private List<UnitFriend> _unitFriend = new List<UnitFriend>();
     private List<UnitEnemy> _unitEnemy = new List<UnitEnemy>();
+    private List<Spell> _spells = new List<Spell>();
     private IUnit _nextStepUnit;
     private bool _doStep = true;
     private bool _friendFinishStep;
     private bool _enemyFinishStep;
+    private bool _spellFinishStep;
     private bool _doStepFriend;
+    private bool _doStepSpell;
     private bool _doStepEnemy;
 
     public int CountEnemy => _unitEnemy.Count;
@@ -43,6 +47,9 @@ public class BattleSystem : MonoBehaviour
         if (_cardsHand == null)
             _cardsHand = FindObjectOfType<CardsHand>();
 
+        if (_spellsRecorder == null)
+            _spellsRecorder = FindObjectOfType<SpellsRecorder>();
+
         if (_buttonStartFight == null)
             _buttonStartFight = FindObjectOfType<StartFightButton>().Button;
 
@@ -64,6 +71,7 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.AddListener(StartBattle);
         _buttonSkipStep.onClick.AddListener(StartSkipStep);
         _cardsHand.Spawned += AddUnit;
+        _spellsRecorder.WasSpellCast += AddSpell;
         _enemySpawner.Spawned_get += AddUnit;
         _wizzard.Fighter.Died += InvokeLose;
     }
@@ -73,6 +81,7 @@ public class BattleSystem : MonoBehaviour
         _buttonStartFight.onClick.RemoveListener(StartBattle);
         _buttonSkipStep.onClick.RemoveListener(StartSkipStep);
         _cardsHand.Spawned -= AddUnit;
+        _spellsRecorder.WasSpellCast -= AddSpell;
         _enemySpawner.Spawned_get -= AddUnit;
         _wizzard.Fighter.Died -= InvokeLose;
 
@@ -94,6 +103,15 @@ public class BattleSystem : MonoBehaviour
     public void StopDoStep()
     {
         _doStep = false;
+    }
+
+    private void AddSpell(Spell spell)
+    {
+        if (spell != null && _spells.Contains(spell) == false)
+        {
+            _spells.Add(spell);
+            spell.Dispelled += RemoveSpell;
+        }
     }
 
     private void AddUnit(UnitFriend unitFriend)
@@ -143,8 +161,22 @@ public class BattleSystem : MonoBehaviour
         {
             _friendFinishStep = false;
             _enemyFinishStep = false;
+            _spellFinishStep = false;
 
             yield return new WaitForSeconds(0.5f);
+
+            StartCoroutine(DoStepSpell());
+
+            while (_doStepSpell)
+                yield return null;
+
+            while (_spellFinishStep == false)
+            {
+                yield return null;
+                CheckFinishStepSpells();
+            }
+
+            yield return new WaitForSeconds(0.4f);
 
             StartCoroutine(DoStepFriend());
 
@@ -203,6 +235,21 @@ public class BattleSystem : MonoBehaviour
 
         foreach (var item in _unitEnemy)
             item.UpdateStep();
+    }
+
+    private IEnumerator DoStepSpell()
+    {
+        _doStepSpell = true;
+
+        for (int i = _spells.Count - 1; i > -1; i--) // определяет верный порядок действий
+        {
+            _spells[i].DoStep();
+
+            while (_spells.Count > i && _spells[i].DoingStep == true)
+                yield return null;
+        }
+
+        _doStepSpell = false;
     }
 
     private IEnumerator DoStepFriend()
@@ -285,6 +332,17 @@ public class BattleSystem : MonoBehaviour
         return false;
     }
 
+    private void CheckFinishStepSpells()
+    {
+        foreach (var item in _spells)
+        {
+            if (item.DoingStep == true)
+                return;
+        }
+
+        _spellFinishStep = true;
+    }
+
     private void CheckFinishStepFriend()
     {
         foreach (var item in _unitFriend)
@@ -340,6 +398,12 @@ public class BattleSystem : MonoBehaviour
         }
 
         _unitEnemy = unitsEnemy;
+    }
+
+    private void RemoveSpell(Spell spell)
+    {
+        spell.Dispelled -= RemoveSpell;
+        _spells.Remove(spell);
     }
 
     private void RemoveUnit(Fighter fighter)
