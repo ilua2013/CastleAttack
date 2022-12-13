@@ -18,6 +18,7 @@ public class CastleChanger : MonoBehaviour
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         if (SaveCastle.TypeCastle == -1)
         {
             SaveCastle.TypeCastle = (int)CastleType.Var1;

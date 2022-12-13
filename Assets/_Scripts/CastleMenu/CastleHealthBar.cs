@@ -27,7 +27,7 @@ public class CastleHealthBar : MonoBehaviour
     private void Start()
     {
         _text.text = _castle.CurrentHealth.ToString();
-        _slider.value = _castle.CurrentHealth / _castle.MaxHealth;
+        _slider.value = (float)_castle.CurrentHealth / _castle.MaxHealth;
     }
 
     private void OnEnable()
@@ -35,7 +35,7 @@ public class CastleHealthBar : MonoBehaviour
         _castle.Damaged += UpdateViewBar;
         _castle.Died += Disable;
         _castle.HealthSeted += UpdateView;
-        _slider.value = _castle.CurrentHealth / _castle.MaxHealth;
+        _slider.value = (float)_castle.CurrentHealth / _castle.MaxHealth;
     }
 
     private void OnDisable()
