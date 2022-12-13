@@ -32,25 +32,25 @@ public class NextLevelButton : MonoBehaviour
     {
         int levelIndex = FirstLevelIndex;
 
-        if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
-        {
-            if (Saves.GetBool(SaveController.Params.IsTutorialCompleted) == false)
-            {
-#if !UNITY_EDITOR
-                YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
-#endif
-                SceneManager.LoadScene(TutorialIndex);
-                return;
-            }
-        }
-        else
-        {
-            SceneManager.LoadScene(TutorialIndex);
-#if !UNITY_EDITOR
-            YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
-#endif
-            return;
-        }
+//        if (Saves.HasKey(SaveController.Params.IsTutorialCompleted)) // –¿«¡ÀŒ »–Œ¬¿“‹  Œ√ƒ¿ “”“Œ–»¿À ¡”ƒ≈“ √Œ“Œ¬
+//        {
+//            if (Saves.GetBool(SaveController.Params.IsTutorialCompleted) == false)
+//            {
+//#if !UNITY_EDITOR
+//                YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
+//#endif
+//                SceneManager.LoadScene(TutorialIndex);
+//                return;
+//            }
+//        }
+//        else
+//        {
+//            SceneManager.LoadScene(TutorialIndex);
+//#if !UNITY_EDITOR
+//            YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", "Tutorial" } });
+//#endif
+//            return;
+//        }
 
         if (Saves.HasKey(SaveController.Params.Level))
             levelIndex = Saves.GetInt(SaveController.Params.Level) + 1;
@@ -62,7 +62,7 @@ public class NextLevelButton : MonoBehaviour
         YandexSDK.Instance.ShowInterstitial();
         YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", $"{levelIndex - 2}" } });
 #endif
-
+        print(levelIndex);
         SceneManager.LoadScene(levelIndex);
     }
 }
