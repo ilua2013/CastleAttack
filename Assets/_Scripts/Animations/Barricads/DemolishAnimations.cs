@@ -14,6 +14,9 @@ public class DemolishAnimations : MonoBehaviour
     private void Awake()
     {
         _forceObjects = GetComponentsInChildren<ForceObject>().ToList();
+
+        foreach (var obj in _forceObjects)
+            obj.Rigidbody.isKinematic = true;
     }
 
     public void Play(Action onEnd = null)
@@ -28,7 +31,8 @@ public class DemolishAnimations : MonoBehaviour
 
         foreach (var obj in _forceObjects)
         {
-            obj.Force(UnityEngine.Random.Range(100f, 120f), Vector3.up * 5 + UnityEngine.Random.insideUnitSphere);
+            obj.Rigidbody.isKinematic = false;
+            obj.Force(UnityEngine.Random.Range(100f, 120f), Vector3.up * 7 + UnityEngine.Random.insideUnitSphere);
         }
 
         yield return new WaitForSeconds(_duration);

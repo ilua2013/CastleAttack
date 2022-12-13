@@ -18,34 +18,50 @@ public class CastleHealthBar : MonoBehaviour
         _castle = GetComponentInParent<Castle>();
     }
 
+    private void Awake()
+    {
+        if (_castle == null)
+            _castle = GetComponentInParent<Castle>();
+    }
+
     private void Start()
     {
-        _text.text = _castle.CurrenHealth.ToString();
-        _slider.value = _castle.CurrenHealth / _castle.MaxHealth;
+        _text.text = _castle.CurrentHealth.ToString();
+        _slider.value = (float)_castle.CurrentHealth / _castle.MaxHealth;
     }
 
     private void OnEnable()
     {
         _castle.Damaged += UpdateViewBar;
-        _slider.value = _castle.CurrenHealth / _castle.MaxHealth;
+        _castle.Died += Disable;
+        _castle.HealthSeted += UpdateView;
+        _slider.value = (float)_castle.CurrentHealth / _castle.MaxHealth;
     }
 
     private void OnDisable()
     {
         _castle.Damaged -= UpdateViewBar;
+        _castle.Died -= Disable;
+        _castle.HealthSeted -= UpdateView;
+    }
+
+    private void UpdateView()
+    {
+        _text.text = _castle.CurrentHealth.ToString();
+        _slider.value = _castle.CurrentHealth / _castle.MaxHealth;
     }
 
     private void UpdateViewBar()
     {
         if (_animationSlowChangeValue == null)
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth / _castle.MaxHealth));
+            StartCoroutine(AnimationSlowChangeValue(_castle.CurrentHealth / _castle.MaxHealth));
         else
         {
             StopCoroutine(_animationSlowChangeValue);
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrenHealth / _castle.MaxHealth));
+            StartCoroutine(AnimationSlowChangeValue(_castle.CurrentHealth / _castle.MaxHealth));
         }
 
-        _text.text = _castle.CurrenHealth.ToString();
+        _text.text = _castle.CurrentHealth.ToString();
     }
 
     private IEnumerator AnimationSlowChangeValue(float to)
@@ -57,5 +73,10 @@ public class CastleHealthBar : MonoBehaviour
         }
 
         _animationSlowChangeValue = null;
+    }
+
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }

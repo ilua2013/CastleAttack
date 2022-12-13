@@ -12,6 +12,8 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     [SerializeField] private CardsHand _carsHand;
     [SerializeField] private Phase[] _phases;
 
+    private SpellsRecorder _spellsRecorder;
+
     public Button Button => _button;
     public Button ButtonSkip => _buttonSkip;
     public Phase[] Phases => _phases;
@@ -20,18 +22,28 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
         _carsHand = FindObjectOfType<CardsHand>();
+        _spellsRecorder = FindObjectOfType<SpellsRecorder>();
     }
 
     private void OnEnable()
     {
         _battleSystem.StepFinished += EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
+        //_spellsRecorder.WasSpellCast += OnSpellCast;
+        //_spellsRecorder.WasSpellDispelled += OnSpellDispelled;
     }
 
     private void OnDisable()
     {
         _battleSystem.StepFinished -= EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
+        //_spellsRecorder.WasSpellCast -= OnSpellCast;
+        //_spellsRecorder.WasSpellDispelled -= OnSpellDispelled;
+    }
+
+    public void Activate(bool isActive)
+    {
+        _button.interactable = isActive;
     }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
@@ -52,5 +64,16 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     private void DisableButtonSkip()
     {
         _buttonSkip.interactable = false;
+    }
+
+    private void OnSpellCast()
+    {
+        _button.interactable = false;
+    }
+
+    private void OnSpellDispelled()
+    {
+        if (_spellsRecorder.ActiveSpells <= 0)
+            _button.interactable = true;
     }
 }

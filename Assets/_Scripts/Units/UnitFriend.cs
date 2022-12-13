@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 {
+    [field: SerializeField] public int MaxStep { get; private set; } = 1; 
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field:SerializeField] public Mover Mover { get; private set; }
     [field:SerializeField] public Fighter Fighter { get; private set; }
@@ -13,7 +14,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     [SerializeField] private PhaseSwitcher _phaseSwitcher;
     [SerializeField] private Phase[] _phases;
 
-    public int MaxStep { get; private set; } = 1; 
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
@@ -25,7 +25,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public bool DoingStep => _doingStep;
     public DistanceAttack[] DistanceAttack => _distanceAttack;
-
     public Phase[] Phases => throw new NotImplementedException();
 
     public event Action Returned;
@@ -38,7 +37,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public event Action StepChanged;
     public event Action RotatedToWizzard;
     public event Action RotatedToBattle;
-    public event Action<UnitEnemy> EnemyKilled;
+    public event Action<IUnit> EnemyKilled;
     public event Action<UnitFriend> LevelUpped; 
     public event Action<bool> UnitSteped;
     public event Action StartedWalking;
@@ -156,12 +155,14 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         onEnd?.Invoke();
     }
 
-    public void DoStep()
+    public void DoStep(IUnit enemy = null)
     {
         if (CurrentStep <= 0)
             return;
 
-        UnitEnemy enemy = TryAttack();
+        if (enemy == null)
+            enemy = TryAttack();
+
         _doingStep = true;
         UnitSteped?.Invoke(_doingStep);
 
@@ -254,7 +255,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public void RotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
     {
-        print("RotateFighter");
         if (_coroutineRotateTo != null)
         {
             StopCoroutine(_coroutineRotateTo);
@@ -262,6 +262,18 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         }
 
         _coroutineRotateTo = Fighter.RotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
+        StartCoroutine(_coroutineRotateTo);
+    }
+
+    public void LocalRotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
+    {
+        if (_coroutineRotateTo != null)
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = null;
+        }
+
+        _coroutineRotateTo = Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated);
         StartCoroutine(_coroutineRotateTo);
     }
 

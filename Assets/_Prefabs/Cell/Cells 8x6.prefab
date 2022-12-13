@@ -812,6 +812,7 @@ GameObject:
   - component: {fileID: 452483054851531499}
   - component: {fileID: 452483054851531500}
   - component: {fileID: 8014498506090630922}
+  - component: {fileID: 4575396074868234180}
   m_Layer: 0
   m_Name: Cells 8x6
   m_TagString: Untagged
@@ -893,8 +894,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122996a8b55469b4cb9a9d3594551a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delay: 0.3
+  _delayToStart: 0.5
   _delayStepChanger: 0.05
+--- !u!114 &4575396074868234180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452483054851531498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ce8625aa7eea34b86bb095b493b285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &453401009541371382
 GameObject:
   m_ObjectHideFlags: 0
@@ -14814,9 +14827,6 @@ GameObject:
   - component: {fileID: 5887838323432919198}
   - component: {fileID: 6090994479147040393}
   - component: {fileID: 7874749399464502668}
-  - component: {fileID: 2511801153641308147}
-  - component: {fileID: 9007808301978768069}
-  - component: {fileID: 2578365314784868698}
   m_Layer: 0
   m_Name: CellCircleFriend(Clone) Wizzard
   m_TagString: Untagged
@@ -14947,54 +14957,6 @@ MonoBehaviour:
   _left: {fileID: 0}
   _right: {fileID: 0}
   _this: {fileID: 7874749399464502668}
---- !u!114 &2511801153641308147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6582186404043290752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab12436793c9fac4cb605ef94ba1c6fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9007808301978768069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6582186404043290752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bf30eb6b328e55418ed713bda436f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _highlightFriend: {fileID: 4346439704263724756}
-  _highlightEnemy: {fileID: 2320909883085623538}
-  _highLightMiddle: {fileID: 1512196481238776083}
-  _highlightHalf: {fileID: 4392703104515160656}
-  _highlightBlue: {fileID: 4344442992906309192}
---- !u!114 &2578365314784868698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6582186404043290752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77ec7b39b67fcc84b8e88e3597ec42df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 0
-  _sounds:
-    _soundEffects:
-    - SoundEffectType: 6
-      AudioClips:
-      - {fileID: 8300000, guid: b554b9c2902acfe4e98c414a68800bd2, type: 3}
-  _spawnPoint: {fileID: 8072581688240004237}
 --- !u!1 &6652966994411053087
 GameObject:
   m_ObjectHideFlags: 0

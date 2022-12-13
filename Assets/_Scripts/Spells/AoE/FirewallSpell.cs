@@ -53,7 +53,7 @@ public class FirewallSpell : Spell
         Affect(_cell, _stats, AffectDelay);
     }
 
-    private void OnDispelled()
+    private void OnDispelled(Spell spell)
     {
         gameObject.SetActive(false);
     }

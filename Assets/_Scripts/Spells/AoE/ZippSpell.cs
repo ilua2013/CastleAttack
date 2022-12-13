@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZippSpell : Spell
 {
     [SerializeField] private ZippProjectile _projectile;
-    [SerializeField] private int _bounces;
     [SerializeField] private FighterType _fighterType;
 
     private Transform _startPoint;
@@ -14,6 +14,7 @@ public class ZippSpell : Spell
 
     private void Awake()
     {
+        base.Awake();
         _startPoint = FindObjectOfType<StaffPoint>().transform;
     }
 
@@ -47,7 +48,7 @@ public class ZippSpell : Spell
 
         foreach (UnitEnemy enemy in BattleSystem.UnitsEnemy)
         {
-            if (enemies.Count >= _bounces)
+            if (enemies.Count >= MaxTicks)
                 break;
 
             enemies.Add(enemy);
@@ -55,6 +56,14 @@ public class ZippSpell : Spell
 
         if (enemies.Count <= 0)
             return;
+
+        UnitEnemy first = cell.GetEnemyUnits(DistanceAttacks).FirstOrDefault();
+
+        if (first != null)
+        {
+            enemies.Remove(first);
+            enemies.Insert(0, first);
+        }
 
         ZippProjectile projectile = Instantiate(_projectile, _startPoint.position, Quaternion.identity);
         StartCoroutine(FlyProjectile(enemies, projectile));
@@ -66,6 +75,9 @@ public class ZippSpell : Spell
 
         for (int i = 0; i < targets.Count; i++)
         {
+            if (targets[i] == null || targets[i].Fighter.IsDead)
+                continue;
+
             projectile.ResetState();
             projectile.FlyTo(targets[i].transform.position + Vector3.up);
 
@@ -73,19 +85,20 @@ public class ZippSpell : Spell
 
             ApplyDamage(targets[i], _damage);
 
-            if (currentBounce >= _bounces - 1)
+            if (currentBounce >= MaxTicks - 1)
                 break;
 
-            if (i >= targets.Count - 1 && i < _bounces && i > 0)
+            if (i >= targets.Count - 1 && i < MaxTicks && i > 0)
                 i -= 2;
 
             currentBounce++;
+            Tick();
         }
 
         Destroy(projectile.gameObject, 0.3f);
     }
 
-    private void OnDispelled()
+    private void OnDispelled(Spell spell)
     {
         Destroy(gameObject, 1f);
     }

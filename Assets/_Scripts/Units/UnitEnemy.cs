@@ -5,13 +5,13 @@ using System;
 
 public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
+    [field: SerializeField] public int MaxStep { get; private set; } = 1;
     [field: SerializeField] public float DelayToDie { get; private set; } = 2.5f;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;
     [field: SerializeField] private DistanceAttack[] _distanceAttackCatapult;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
 
-    public int MaxStep { get; private set; } = 1;
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
@@ -91,12 +91,14 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         CurrentStep = MaxStep;
     }
 
-    public void DoStep()
+    public void DoStep(IUnit enemy = null)
     {
         if (CurrentStep <= 0)
             return;       
 
-        UnitFriend enemy = TryAttack();
+        if (enemy == null)
+            enemy = TryAttack();
+
         _doingStep = true;
         UnitSteped?.Invoke(_doingStep);
 
@@ -152,7 +154,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);          
             List<UnitFriend> unitsCatapult = Mover.CurrentCell.GetFriendUnitsCatapult(_distanceAttackCatapult, cells);            
             units.AddRange(unitsCatapult);
-            Debug.Log(units.Count);
         }
 
         foreach (var item in units)
@@ -167,9 +168,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         if(Fighter.FighterType == FighterType.Catapult)
         {
             List<Cell> cellsCatapult = Mover.CurrentCell.GetCellsDistanceAttackForCatapult(_distanceAttackCatapult, cells);
-            Debug.Log(cells.Count);
             cells.AddRange(cellsCatapult);
-            Debug.Log(cells.Count);
         }
            
 
@@ -218,4 +217,17 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void Disable() => gameObject.SetActive(false);
     public void StartMove(Cell cell, Action onEnd = null) => StartCoroutine(Mover.MoveTo(cell, onEnd));
     public void AnimationSizeUp() => StartCoroutine(Mover.AnimationSizeUp());
+
+    public void LocalRotateTo(Transform transform, Action onRotated = null, Action onEnd = null)
+    {
+        if (_coroutineRotateTo == null)
+        {
+            _coroutineRotateTo = StartCoroutine(Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
+        }
+        else
+        {
+            StopCoroutine(_coroutineRotateTo);
+            _coroutineRotateTo = StartCoroutine(Fighter.LocalRotateTo(transform, () => { _coroutineRotateTo = null; onEnd?.Invoke(); }, onRotated));
+        }
+    }
 }

@@ -26,6 +26,12 @@ public class PhaseSwitcher : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Switch(PhaseType.SelectionCard);
+        CurrentPhase = PhaseType.SelectionCard;
+    }
+
     private void OnEnable()
     {
         _battleSystem.BattleStarted += OnStepStarted;

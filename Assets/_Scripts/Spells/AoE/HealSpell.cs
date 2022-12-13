@@ -51,7 +51,7 @@ public class HealSpell : Spell
         Affect(_cell, _stats, AffectDelay);
     }
 
-    private void OnDispelled()
+    private void OnDispelled(Spell spell)
     {
         _vfx.Stop();
         Destroy(gameObject, 1f);
