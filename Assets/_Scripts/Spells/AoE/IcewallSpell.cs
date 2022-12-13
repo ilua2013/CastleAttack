@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class IcewallSpell : Spell
 {
+    private const string DispelleState = "Dispelle";
+
     [SerializeField] private FighterType _fighterType;
+    [SerializeField] private Animator _animator;
 
     private void OnEnable()
     {
@@ -35,6 +38,7 @@ public class IcewallSpell : Spell
 
     private void OnDispelled(Spell spell)
     {
-        gameObject.SetActive(false);
+        _animator.Play(DispelleState);
+        Destroy(gameObject, 1f);
     }
 }
