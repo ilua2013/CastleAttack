@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpellsRecorder : MonoBehaviour
 {
-    private SpellSpawner[] _spellSpawners; 
+    private SpellSpawner[] _spellSpawners;
 
     public int ActiveSpells { get; private set; }
 
