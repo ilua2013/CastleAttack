@@ -63,6 +63,8 @@ public class Castle : MonoBehaviour
 
         if (_currentHealth < 1)
         {
+            SaveCastle.CountDead++;
+
             _fire.Play();
 
             yield return new WaitForSeconds(_delayDie);

@@ -21,4 +21,10 @@ public static class SaveCastle
         get => PlayerPrefs.GetInt("AttackCastle", 0) == 1;
         set => PlayerPrefs.SetInt("AttackCastle", value ? 1 : 0);
     }
+
+    public static int CountDead
+    {
+        get => PlayerPrefs.GetInt("CastleDead", 0);
+        set => PlayerPrefs.SetInt("CastleDead", value);
+    }
 }
