@@ -72,6 +72,7 @@ public class CardInDeckView : MonoBehaviour
     {
         _card = card;
         _card.gameObject.SetActive(_card.CardSave.IsAvailable);
+        _amountBar.gameObject.SetActive(_card.CardSave.IsAvailable);
         _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
@@ -92,6 +93,7 @@ public class CardInDeckView : MonoBehaviour
 
         if (Card != null && Card.CardSave.Deck == DeckType.Combat)
             _background.gameObject.SetActive(true);
+
     }
 
     private void SetHierarchy(Transform card)

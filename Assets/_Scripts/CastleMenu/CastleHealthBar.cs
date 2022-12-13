@@ -54,11 +54,11 @@ public class CastleHealthBar : MonoBehaviour
     private void UpdateViewBar()
     {
         if (_animationSlowChangeValue == null)
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrentHealth / _castle.MaxHealth));
+            StartCoroutine(AnimationSlowChangeValue((float)_castle.CurrentHealth / _castle.MaxHealth));
         else
         {
             StopCoroutine(_animationSlowChangeValue);
-            StartCoroutine(AnimationSlowChangeValue(_castle.CurrentHealth / _castle.MaxHealth));
+            StartCoroutine(AnimationSlowChangeValue((float)_castle.CurrentHealth / _castle.MaxHealth));
         }
 
         _text.text = _castle.CurrentHealth.ToString();
