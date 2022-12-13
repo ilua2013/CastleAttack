@@ -9,6 +9,7 @@ public class CastleHealthBar : MonoBehaviour
     [SerializeField] private Slider _slider;
     [SerializeField] private Castle _castle;
     [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text _textCountDead;
     [SerializeField] private float _speedChangeValue;
 
     private Coroutine _animationSlowChangeValue;
@@ -28,6 +29,7 @@ public class CastleHealthBar : MonoBehaviour
     {
         _text.text = _castle.CurrentHealth.ToString();
         _slider.value = (float)_castle.CurrentHealth / _castle.MaxHealth;
+        _textCountDead.text = SaveCastle.CountDead.ToString();
     }
 
     private void OnEnable()
