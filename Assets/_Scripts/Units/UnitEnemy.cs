@@ -15,6 +15,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
     public bool Initialized { get; private set; }
+    public bool IsSkipped { get; private set; }
 
     private Coroutine _coroutineRotateTo;
     private bool _isTutorialUnitStop = true;
@@ -93,6 +94,13 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     public void DoStep(IUnit enemy = null)
     {
+        if (IsSkipped)
+        {
+            IsSkipped = false;
+            CurrentStep = 0;
+            return;
+        }
+
         if (CurrentStep <= 0)
             return;       
 
@@ -136,8 +144,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
     public void SkipStep()
     {
-        Fighter.SkipStep();
-        Mover.SkipStep();
+        IsSkipped = true;
     }
 
     public void UpdateStep()
