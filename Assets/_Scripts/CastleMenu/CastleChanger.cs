@@ -73,6 +73,7 @@ public class CastleChanger : MonoBehaviour
             if ((int)item.CastleType == SaveCastle.TypeCastle)
             {
                 var castle = Instantiate(item, parent.position, Quaternion.identity, parent);
+                castle.transform.localRotation =Quaternion.Euler( Vector3.zero);
 
                 SaveCastle.Health = castle.MaxHealth;
 

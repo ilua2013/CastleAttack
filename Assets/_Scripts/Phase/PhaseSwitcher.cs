@@ -6,6 +6,7 @@ public class PhaseSwitcher : MonoBehaviour
 {
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardsSelection _cardSelection;
+    [SerializeField] private EnemySpawner _enemySpawner;
 
     private List<IPhaseHandler> _handlers = new List<IPhaseHandler>();
 
@@ -15,6 +16,7 @@ public class PhaseSwitcher : MonoBehaviour
     {
         _battleSystem = FindObjectOfType<BattleSystem>(true);
         _cardSelection = FindObjectOfType<CardsSelection>(true);
+        _enemySpawner = FindObjectOfType<EnemySpawner>(true);
     }
 
     private void Awake()
@@ -38,6 +40,7 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepFinished += OnStepFinished;
         _cardSelection.CardSelected += OnCardSelected;
         _cardSelection.Passed += OnCardSelectionPassed;
+        _enemySpawner.WaveCountChanged += OnWaveChanged;
     }
 
     private void OnDisable()
@@ -46,6 +49,7 @@ public class PhaseSwitcher : MonoBehaviour
         _battleSystem.StepFinished -= OnStepFinished;
         _cardSelection.CardSelected -= OnCardSelected;
         _cardSelection.Passed -= OnCardSelectionPassed;
+        _enemySpawner.WaveCountChanged -= OnWaveChanged;
     }
 
     public void Register(IPhaseHandler phaseHandler)
@@ -56,6 +60,12 @@ public class PhaseSwitcher : MonoBehaviour
     public void UnRegister(IPhaseHandler phaseHandler)
     {
         _handlers.Remove(phaseHandler);
+    }
+
+    private void OnWaveChanged()
+    {
+        Switch(PhaseType.SelectionCard);
+        CurrentPhase = PhaseType.SelectionCard;
     }
 
     private void OnStepStarted()

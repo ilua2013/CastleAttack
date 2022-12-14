@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class SpellsRecorder : MonoBehaviour
 {
-    private SpellSpawner[] _spellSpawners; 
+    private SpellSpawner[] _spellSpawners;
 
     public int ActiveSpells { get; private set; }
 
-    public event Action WasSpellCast;
-    public event Action WasSpellDispelled;
+    public event Action<Spell> WasSpellCast;
 
     private void Awake()
     {
@@ -37,19 +36,18 @@ public class SpellsRecorder : MonoBehaviour
 
     private void OnCast(Vector3 point, Spell spell)
     {
-        if (!spell.ValidWhenApplied)
+        if (spell.ValidWhenApplied)
             return;
 
         ActiveSpells++;
-        WasSpellCast?.Invoke();
+        WasSpellCast?.Invoke(spell);
     }
 
     private void OnDispelled(Spell spell)
     {
-        if (!spell.ValidWhenApplied)
+        if (spell.ValidWhenApplied)
             return;
 
         ActiveSpells--;
-        WasSpellDispelled?.Invoke();
     }
 }
