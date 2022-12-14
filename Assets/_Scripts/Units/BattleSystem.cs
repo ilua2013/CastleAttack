@@ -41,6 +41,7 @@ public class BattleSystem : MonoBehaviour
     public event Action TutorialStopedUnit;
     public event Action Lose;
     public event Action Win;
+    public event Action Revived;
 
     private void OnValidate()
     {
@@ -74,6 +75,8 @@ public class BattleSystem : MonoBehaviour
         _spellsRecorder.WasSpellCast += AddSpell;
         _enemySpawner.Spawned_get += AddUnit;
         _wizzard.Fighter.Died += InvokeLose;
+        _wizzard.Fighter.ReadyToDie += InvokeLose;
+        _wizzard.Fighter.Revived += InvokeRevived;
     }
 
     private void OnDisable()
@@ -84,6 +87,8 @@ public class BattleSystem : MonoBehaviour
         _spellsRecorder.WasSpellCast -= AddSpell;
         _enemySpawner.Spawned_get -= AddUnit;
         _wizzard.Fighter.Died -= InvokeLose;
+        _wizzard.Fighter.ReadyToDie -= InvokeLose;
+        _wizzard.Fighter.Revived -= InvokeRevived;
 
         foreach (var unit in _unitFriend)
             unit.Mover.ReachedHigherCell -= TutorialStopUnit;
@@ -103,6 +108,11 @@ public class BattleSystem : MonoBehaviour
     public void StopDoStep()
     {
         _doStep = false;
+    }
+
+    public void ContinueDoStep()
+    {
+        _doStep = true;
     }
 
     private void AddSpell(Spell spell)
@@ -268,6 +278,9 @@ public class BattleSystem : MonoBehaviour
 
         for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
         {
+            while (_doStep == false)
+                yield return null;
+
             _unitFriend[i].DoStep();
 
             if (i > 0)
@@ -293,6 +306,9 @@ public class BattleSystem : MonoBehaviour
             if (i > _unitEnemy.Count - 1)
                 continue;
 
+            while (_doStep == false)
+                yield return null;
+
             _unitEnemy[i].DoStep();
 
             if(i > 0)
@@ -303,7 +319,7 @@ public class BattleSystem : MonoBehaviour
             while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
                 yield return null;
 
-            if (_wizzard.Fighter.IsDamaged)
+            if (_wizzard.Fighter.IsDamaged && _doStep)
             {
                 _wizzard.Fighter.IsDamaged = false;
                 _wizzard.DoStep(_unitEnemy[i]);
@@ -430,5 +446,10 @@ public class BattleSystem : MonoBehaviour
     private void InvokeLose()
     {
         Lose?.Invoke();
+    }
+
+    private void InvokeRevived()
+    {
+        Revived?.Invoke();
     }
 }

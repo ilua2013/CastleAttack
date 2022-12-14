@@ -36,6 +36,9 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
+        _battleSystem.Win += OnFinished;
+        _battleSystem.Lose += OnFailed;
+        _battleSystem.Revived += OnRevived;
         _battleSystem.BattleStarted += OnStepStarted;
         _battleSystem.StepFinished += OnStepFinished;
         _cardSelection.CardSelected += OnCardSelected;
@@ -44,6 +47,9 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnDisable()
     {
+        _battleSystem.Win -= OnFinished;
+        _battleSystem.Lose -= OnFailed;
+        _battleSystem.Revived -= OnRevived;
         _battleSystem.BattleStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
         _cardSelection.CardSelected -= OnCardSelected;
@@ -64,6 +70,12 @@ public class PhaseSwitcher : MonoBehaviour
     {
         Switch(PhaseType.Battle);
         CurrentPhase = PhaseType.Battle;
+    }
+
+    private void OnRevived()
+    {
+        CurrentPhase = PhaseType.Battle;
+        Switch(PhaseType.Battle);
     }
 
     private void OnFailed()

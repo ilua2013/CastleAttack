@@ -9,33 +9,20 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
     [SerializeField] private Transform _panel;
     [SerializeField] private Transform _background;
     [SerializeField] private Phase[] _phases;
-    [SerializeField] private BattleSystem _battleSystem;
 
     public Phase[] Phases => _phases;
 
     public event Action Opened;
     public event Action Closed;
 
-    private void OnValidate()
-    {
-        _battleSystem = FindObjectOfType<BattleSystem>();
-    }
-
-    private void OnEnable()
-    {
-        _battleSystem.Win += OnOpen;   
-    }
-
-    private void OnDisable()
-    {
-        _battleSystem.Win -= OnOpen;
-    }
-
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
         yield return new WaitForSeconds(phase.Delay);
+
+        if (phase.IsActive)
+            OnOpen();
     }
 
     public void OpenPanel()
