@@ -36,17 +36,10 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
         yield return new WaitForSeconds(phase.Delay);
-
-        //if (phase.IsActive)
-        //{
-        //    StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
-        //    Opened?.Invoke();
-        //}
     }
 
     public void OpenPanel()
     {
-        Debug.Log("open");
         StartCoroutine(ScalePanel(Vector3.zero, Vector3.one, true));
     }
 
@@ -71,7 +64,7 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
         _background.gameObject.SetActive(isOpening);
 
         float distanceDelta = 0.001f;
-        float lerpTime = 2f;
+        float lerpTime = 3f;
 
         while (Vector3.Distance(_panel.localScale, to) > distanceDelta)
         {
