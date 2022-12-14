@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b67684d2d3b4d4ab33a01f87fdaa2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MaxStep>k__BackingField: 1
   <DelayToDie>k__BackingField: 2.5
   _distanceAttack:
   - Side: 3
@@ -330,6 +331,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6809296669945166655}
     m_Modifications:
+    - target: {fileID: 4590521106571057864, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d69087fba32888e4b93c5f90a3f7fbf2, type: 2}
+    - target: {fileID: 4590521106571057870, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d69087fba32888e4b93c5f90a3f7fbf2, type: 2}
     - target: {fileID: 4590521106575139848, guid: 4aedbb62248b97c4595c639232cc8a56, type: 3}
       propertyPath: m_Controller
       value: 
@@ -902,14 +911,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
---- !u!4 &4759860607079234044 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7679978981465304687, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
-  m_PrefabInstance: {fileID: 2925835837845378963}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5279833586221278022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7052378206464439509, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
+  m_PrefabInstance: {fileID: 2925835837845378963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4759860607079234044 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7679978981465304687, guid: 6199bbf6d738f7441aa92f2a5f2f753c, type: 3}
   m_PrefabInstance: {fileID: 2925835837845378963}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3233236676684300457

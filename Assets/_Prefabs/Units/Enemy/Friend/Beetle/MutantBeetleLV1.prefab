@@ -417,7 +417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1916894435939343688
 RectTransform:
   m_ObjectHideFlags: 0
@@ -517,6 +517,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2358420496208589950, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358420496208589950, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358420496208589950, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358420496208589950, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -556,6 +568,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2401013591540487428, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3232405440f09ff47a9298b65809c035, type: 2}
     - target: {fileID: 3258939919302606676, guid: a855dd81604356e42ba5091d4741c42c, type: 3}
       propertyPath: _unitFriend
       value: 
@@ -696,6 +712,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1710454381889582023}
     m_Modifications:
+    - target: {fileID: 6446876882265249126, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b883b523d64a47f47a8888a89300923e, type: 2}
     - target: {fileID: 7213463688758858746, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
       propertyPath: m_Name
       value: Platform Friend
@@ -747,9 +767,9 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6323735269905870859, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
---- !u!4 &1386745491539200657 stripped
+--- !u!4 &9012326379601054326 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 1315817154210562870}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8833967258070789603 stripped
@@ -757,9 +777,9 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 7555411593000627925, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 1315817154210562870}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &9012326379601054326 stripped
+--- !u!4 &1386745491539200657 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8021068910513539392, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
+  m_CorrespondingSourceObject: {fileID: 106974886052202919, guid: cd1f90fb493c5bd49a01e51680db9780, type: 3}
   m_PrefabInstance: {fileID: 1315817154210562870}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2550109459800850110
