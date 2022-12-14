@@ -21,11 +21,13 @@ public class CoinsRewarder : MonoBehaviour
     private void OnEnable()
     {
         _battleSystem.Win += OnFinished;
+        _battleSystem.Lose += OnFailed;
     }
 
     private void OnDisable()
     {
         _battleSystem.Win -= OnFinished;
+        _battleSystem.Lose -= OnFailed;
     }
 
     private void OnFinished()
@@ -33,5 +35,12 @@ public class CoinsRewarder : MonoBehaviour
         ReceivedReward = Reward + GamesStatistics.KilledEnemy * RewardPerEnemy;
 
         _coinsWallet.Add(ReceivedReward);
+    }
+
+    private void OnFailed()
+    {
+        ReceivedReward = (Reward + GamesStatistics.KilledEnemy * RewardPerEnemy) / 2;
+
+        _coinsWallet.Add(ReceivedReward / 2);
     }
 }

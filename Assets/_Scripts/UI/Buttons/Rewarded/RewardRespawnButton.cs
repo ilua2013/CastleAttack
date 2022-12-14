@@ -28,7 +28,12 @@ public class RewardRespawnButton : MonoBehaviour
 
     private void OnClick()
     {
+#if !UNITY_EDITOR
         YandexSDK.Instance.ShowVideoAd(OnRewardedCallback);
+        gameObject.SetActive(false);
+        return;
+#endif
+        OnRewardedCallback();
         gameObject.SetActive(false);
     }
 
