@@ -14,12 +14,23 @@ public class RewardStepsAnimation : MonoBehaviour
     [SerializeField] private TMP_Text _coins;
     [SerializeField] private TMP_Text _killCount;
     [SerializeField] private Sprite _starSprite;
+    [SerializeField] private WheelFortune _fortune;
 
     private CoinsRewarder _coinsRewarder;
 
     private void Awake()
     {
         _coinsRewarder = FindObjectOfType<CoinsRewarder>();
+    }
+
+    private void OnEnable()
+    {
+        _fortune.Rewarded += OnRewarded;
+    }
+
+    private void OnDisable()
+    {
+        _fortune.Rewarded -= OnRewarded;
     }
 
     public void Play(int starsCount)
@@ -74,6 +85,11 @@ public class RewardStepsAnimation : MonoBehaviour
 
         _killCount.text = FormatCost(killCount);
         onComplete?.Invoke();
+    }
+
+    private void OnRewarded(int coins)
+    {
+        _coins.text = FormatCost(coins);
     }
 
     private string FormatCost(float cost)
