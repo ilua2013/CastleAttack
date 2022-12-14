@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CardRewardPanel : MonoBehaviour
@@ -7,6 +8,7 @@ public class CardRewardPanel : MonoBehaviour
     [SerializeField] private CardRewardView _containerPrefab;
     [SerializeField] private RewardIncreaseButton _rewardIncrease;
     [SerializeField] private Transform _panel;
+    [SerializeField] private TMP_Text _text;
 
     private List<Card> _cards = new List<Card>();
     private List<CardRewardView> _views = new List<CardRewardView>();
@@ -19,6 +21,11 @@ public class CardRewardPanel : MonoBehaviour
     private void OnDisable()
     {
         _rewardIncrease.Rewarded -= OnRewardIncrease;
+    }
+
+    public void SetAward(int coins)
+    {
+        _text.text = $"+{coins}";
     }
 
     public void ShowCards(Card[] cards)
