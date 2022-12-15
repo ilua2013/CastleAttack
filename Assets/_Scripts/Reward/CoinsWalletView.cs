@@ -9,7 +9,7 @@ using System;
 public class CoinsWalletView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private float _delayAnimation;
+    [SerializeField] private float _delayAnimation = 3.7f;
 
     private Animator _animator;
     private CoinsWallet _coinsWallet;
