@@ -80,8 +80,12 @@ public class Mover
     public void Move(Cell cell, Action onEnd = null)
     {
         _currentCell.SetFree();
-        SetCurrentCell(cell);
-        _unit.StartMove(cell, onEnd);
+
+        _unit.StartMove(cell, () =>
+        {
+            SetCurrentCell(cell);
+            onEnd?.Invoke();
+        });
 
         Moved?.Invoke();
         CellChanged?.Invoke(cell);
