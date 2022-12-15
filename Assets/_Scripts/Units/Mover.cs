@@ -81,6 +81,7 @@ public class Mover
     {
         _currentCell.SetFree();
 
+        cell.StartAnimationSize();
         _unit.StartMove(cell, () =>
         {
             SetCurrentCell(cell,false);
