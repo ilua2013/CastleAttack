@@ -9,15 +9,18 @@ public class Castle : MonoBehaviour
     [SerializeField] private CastleType _type;
     [SerializeField] private Transform _viewMesh;
     [SerializeField] private Animator _animator;
+    [SerializeField] private int _reward;
     [SerializeField] private int _maxHealth;
     [SerializeField] private float _delayDie;
     [Header("Particle")]
     [SerializeField] private ParticleSystem _fire;
     [SerializeField] private ParticleSystem _smoke;
+    [SerializeField] private ParticleSystem _coins;
     [SerializeField] private GameObject _king;
 
     private int _currentHealth;
 
+    public int Reward => _reward;
     public int MaxHealth => _maxHealth;
     public int CurrentHealth => _currentHealth;
     public CastleType CastleType => _type;
@@ -80,6 +83,10 @@ public class Castle : MonoBehaviour
             EnableKing();
 
             _viewMesh.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.3f);
+
+            _coins.Play();
         }
     }
 

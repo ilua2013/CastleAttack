@@ -32,6 +32,7 @@ public class Fighter
 
     public event Action Died;
     public event Action ReadyToDie;
+    public event Action Revived;
     public event Action EffectDied;
     public event Action<Transform> Died_getKiller;
     public event Action<Transform> Attacked_get;
@@ -120,7 +121,7 @@ public class Fighter
     public void RecoveryHealth(int value)
     {
         if (IsDead)
-            return;
+            Revived?.Invoke();
 
         _health = Mathf.Clamp(_health + value, 0, MaxHealth);
         Healed?.Invoke(_health);
@@ -150,6 +151,7 @@ public class Fighter
         if (FighterType == FighterType.MainWizzard)
             if (_health <= damage)
             {
+                _health = 0;
                 ReadyToDie?.Invoke();
                 return true;
             }

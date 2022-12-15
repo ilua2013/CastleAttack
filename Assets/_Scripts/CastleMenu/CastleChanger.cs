@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CastleChanger : MonoBehaviour
 {
+    public bool test;
     [Header("Link")]
+    [SerializeField] private CoinsWallet _coinsWallet;
     [SerializeField] private Transform _parentCastle;
     [SerializeField] private Transform _parentNewCastle;
     [SerializeField] private Castle[] _castles;
@@ -15,6 +17,11 @@ public class CastleChanger : MonoBehaviour
 
     private Castle _castle;
     private Animator _animator;
+
+    private void OnValidate()
+    {
+        _coinsWallet = FindObjectOfType<CoinsWallet>();
+    }
 
     private void Awake()
     {
@@ -37,9 +44,24 @@ public class CastleChanger : MonoBehaviour
             StartCoroutine(_castle.TakeDamage(_damage, _delayDamage, () =>
             {
                 Invoke(nameof(ChangeCastle), _delayChangeCastle);
+                _coinsWallet.Add(_castle.Reward);
             }));
 
             SaveCastle.AttackCastle = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (test)
+        {
+            test = false;
+
+            StartCoroutine(_castle.TakeDamage(_damage, _delayDamage, () =>
+            {
+                Invoke(nameof(ChangeCastle), _delayChangeCastle);
+                _coinsWallet.Add(_castle.Reward);
+            }));
         }
     }
 

@@ -1,4 +1,5 @@
 using Agava.YandexMetrica;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,25 +12,29 @@ public class NextLevelButton : MonoBehaviour
     private const int TutorialIndex = 2;
     private const int FirstLevelIndex = 3;
 
-    private Button _button;
+    public Button Button { get; private set; }
+
+    public event Action NextLevelLoaded;
 
     private void Awake()
     {
-        _button = GetComponent<Button>();
+        Button = GetComponent<Button>();
     }
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(OnClick);
+        Button.onClick.AddListener(OnClick);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(OnClick);
+        Button.onClick.RemoveListener(OnClick);
     }
 
     private void OnClick()
     {
+        NextLevelLoaded?.Invoke();
+
         int levelIndex = FirstLevelIndex;
 
 //        if (Saves.HasKey(SaveController.Params.IsTutorialCompleted)) // –¿«¡ÀŒ »–Œ¬¿“‹  Œ√ƒ¿ “”“Œ–»¿À ¡”ƒ≈“ √Œ“Œ¬
@@ -62,7 +67,6 @@ public class NextLevelButton : MonoBehaviour
         YandexSDK.Instance.ShowInterstitial();
         YandexMetrica.Send("LevelComplete", new Dictionary<string, string>() { { "Level", $"{levelIndex - 2}" } });
 #endif
-        print(levelIndex);
         SceneManager.LoadScene(levelIndex);
     }
 }
