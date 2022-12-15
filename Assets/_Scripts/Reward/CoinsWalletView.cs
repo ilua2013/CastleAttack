@@ -33,6 +33,12 @@ public class CoinsWalletView : MonoBehaviour
         _coinsWallet.CoinsChanged -= OnRewarded;
     }
 
+    private void Start()
+    {
+        _current = _coinsWallet.Coins;
+        _text.text = FormatCost(_current);
+    }
+
     private void OnRewarded(int amount)
     {
         _current += amount;
@@ -53,7 +59,7 @@ public class CoinsWalletView : MonoBehaviour
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        print(time);
+
         _text.text = FormatCost(_current);
         onComplete?.Invoke();
     }

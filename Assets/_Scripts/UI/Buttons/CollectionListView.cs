@@ -13,9 +13,10 @@ public class CollectionListView : MonoBehaviour
     }
 
     private const float LerpTime = 10f;
-    private const float DistanceDelta = 0.001f;
+    private const float DistanceDelta = 0.01f;
 
-    [SerializeField] private ScrollRect _scrollRect;
+    [SerializeField] private ScrollRect _scrollRect1;
+    [SerializeField] private ScrollRect _scrollRect2;
     [SerializeField] private Button _left;
     [SerializeField] private Button _right;
     [SerializeField] private TMP_Text _pages;
@@ -47,7 +48,7 @@ public class CollectionListView : MonoBehaviour
             StopCoroutine(_coroutine);
 
         _pages.text = _initialText + " " + 2;
-        _coroutine = StartCoroutine(Slide(new Vector2(((float)Direction.Right), _scrollRect.normalizedPosition.y)));
+        _coroutine = StartCoroutine(Slide(new Vector2(((float)Direction.Right), _scrollRect1.normalizedPosition.y)));
     }
 
     private void OnLeftClick()
@@ -56,17 +57,20 @@ public class CollectionListView : MonoBehaviour
             StopCoroutine(_coroutine);
 
         _pages.text = _initialText + " " + 1;
-        _coroutine = StartCoroutine(Slide(new Vector2(((float)Direction.Left), _scrollRect.normalizedPosition.y)));
+        _coroutine = StartCoroutine(Slide(new Vector2(((float)Direction.Left), _scrollRect1.normalizedPosition.y)));
     }
 
     private IEnumerator Slide(Vector2 to)
     {
-        while (Vector3.Distance(_scrollRect.normalizedPosition, to) > DistanceDelta)
+        while (Vector3.Distance(_scrollRect1.normalizedPosition, to) > DistanceDelta)
         {
-            _scrollRect.normalizedPosition = Vector3.Lerp(_scrollRect.normalizedPosition, to, LerpTime * Time.deltaTime);
+            _scrollRect1.normalizedPosition = Vector3.Lerp(_scrollRect1.normalizedPosition, to, LerpTime * Time.deltaTime);
+            _scrollRect2.normalizedPosition = Vector3.Lerp(_scrollRect2.normalizedPosition, to, LerpTime * Time.deltaTime);
+
             yield return new WaitForEndOfFrame();
         }
 
-        _scrollRect.normalizedPosition = to;
+        _scrollRect1.normalizedPosition = to;
+        _scrollRect2.normalizedPosition = to;
     }
 }
