@@ -6,15 +6,18 @@ using System;
 public class DeckBuilder : MonoBehaviour
 {
     [SerializeField] private List<Card> _deckPrefabs;
-    [SerializeField] private CommonDeck _commonDeck;
-    [SerializeField] private CombatDeck _combatDeck;
-
+    
+    private CommonDeck _commonDeck;
+    private CombatDeck _combatDeck;
     private List<Card> _cards = new List<Card>();
 
     public List<Card> Cards => _cards;
 
     private void Awake()
     {
+        _commonDeck = GetComponentInChildren<CommonDeck>();
+        _combatDeck = GetComponentInChildren<CombatDeck>();
+
         foreach (Card prefab in _deckPrefabs)
         {
             Card card = Create(prefab);
