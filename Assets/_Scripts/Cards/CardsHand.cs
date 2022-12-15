@@ -27,6 +27,7 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     public event Action CardDrop;
     public event Action CancelDrop;
     public event Action CardsEmpty;
+    public event Action CardAdded;
 
     private void Awake()
     {
@@ -127,13 +128,18 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
         card.Activate(isActive);
 
         RegisterCard(card);
+
+        CardAdded?.Invoke();
     }
 
     public void CardComeBack(Card card)
     {
         _cards.Add(card);
+
         card.gameObject.SetActive(true);
         RegisterCard(card);
+
+        CardAdded?.Invoke();
     }
 
     private bool TryApply(Card card, Vector3 mousePosition)

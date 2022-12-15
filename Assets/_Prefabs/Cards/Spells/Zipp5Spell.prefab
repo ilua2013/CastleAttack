@@ -5400,6 +5400,7 @@ GameObject:
   - component: {fileID: 2459417973471852423}
   - component: {fileID: 3396812221475365477}
   - component: {fileID: 5543947587873870399}
+  - component: {fileID: 8355269613415112796}
   m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
@@ -5524,6 +5525,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8355269613415112796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594700811644983061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a08a42ccbfdab4480c0fe5a7b05f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _options:
+  - _text: "\u0417\u0438\u043F\u043F 5"
+    _language: 0
+  - _text: Zipp 5
+    _language: 1
+  - _text: Zipp 5
+    _language: 2
 --- !u!1 &5674752246666536031
 GameObject:
   m_ObjectHideFlags: 0
@@ -10497,6 +10517,7 @@ GameObject:
   - component: {fileID: 7411493356819034914}
   - component: {fileID: 4860602120580977698}
   - component: {fileID: 8179837118991319528}
+  - component: {fileID: 3306773660295979974}
   m_Layer: 5
   m_Name: DescriptionText
   m_TagString: Untagged
@@ -10521,8 +10542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.3039, y: -13.881493}
-  m_SizeDelta: {x: 103.2077, y: 69.8077}
+  m_AnchoredPosition: {x: 2.4029, y: -13.881493}
+  m_SizeDelta: {x: 73.5349, y: 69.8077}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4860602120580977698
 CanvasRenderer:
@@ -10552,7 +10573,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0430\u043B\u0435\u0447\u0438\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043D\u0438\u043A\u0430"
+  m_text: "\u041E\u0442\u0441\u043A\u0430\u043A\u0438\u0432\u0430\u0435\u0442 5 \u0440\u0430\u0437,
+    \u043D\u0430\u043D\u043E\u0441\u044F \u0443\u0440\u043E\u043D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0fac46e547252f4488cefcbb4f99cc6f, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0f9a8c5e6c0e74342a44b6b25c14841e, type: 2}
@@ -10579,7 +10601,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.05
+  m_fontSize: 10.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10615,12 +10637,32 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 8.545044, y: 2.2044678, z: 4.164131, w: 38.88342}
+  m_margin: {x: 2.4939384, y: 2.2044678, z: 2.5166702, w: 9.749384}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3306773660295979974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8331778662089941963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a08a42ccbfdab4480c0fe5a7b05f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _options:
+  - _text: "\u041E\u0442\u0441\u043A\u0430\u043A\u0438\u0432\u0430\u0435\u0442 5
+      \u0440\u0430\u0437, \u043D\u0430\u043D\u043E\u0441\u044F \u0443\u0440\u043E\u043D"
+    _language: 0
+  - _text: Bounces 5 times, dealing damage
+    _language: 1
+  - _text: "5 kez s\u0131\xE7rar ve hasara neden olur"
+    _language: 2
 --- !u!1 &8929997552658969064
 GameObject:
   m_ObjectHideFlags: 0
