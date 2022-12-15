@@ -21,6 +21,7 @@ public class Cell : MonoBehaviour
     private IUnit _currentUnit;
 
     public event Action StagedUnit;
+    public event Action UnitMoveToThis;
 
     public Cell Top => _top;
     public Cell TopRight => _topRight;
@@ -130,6 +131,11 @@ public class Cell : MonoBehaviour
 
         if(isInit == false)
         StagedUnit?.Invoke();
+    }
+
+    public void StartAnimationSize()
+    {
+        UnitMoveToThis?.Invoke();
     }
 
     public void SetFree()

@@ -21,12 +21,14 @@ public class CellView : MonoBehaviour
 
     private void OnEnable()
     {
-        _cell.StagedUnit += PlayAnimationSizeUp;
+        _cell.StagedUnit += PlayAnimationSizeDown;
+        _cell.UnitMoveToThis += PlayAnimationSizeUp;
     }
 
     private void OnDisable()
     {
-        _cell.StagedUnit -= PlayAnimationSizeUp;
+        _cell.StagedUnit -= PlayAnimationSizeDown;
+        _cell.UnitMoveToThis -= PlayAnimationSizeUp;
     }
 
     public void RecolorToWin()
@@ -37,6 +39,11 @@ public class CellView : MonoBehaviour
 
     private void PlayAnimationSizeUp()
     {
-        _animator.SetTrigger("Scale");
+        _animator.SetTrigger("ScaleUp");
+    }
+
+    private void PlayAnimationSizeDown()
+    {
+        _animator.SetTrigger("ScaleDown");
     }
 }
