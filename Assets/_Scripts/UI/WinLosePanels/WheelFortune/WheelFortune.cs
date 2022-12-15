@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class WheelFortune : MonoBehaviour
 {
-    [SerializeField] private int _award;
     [SerializeField] private Button _button;
     [SerializeField] private CardRewardPanel _panel;
     [SerializeField] private TMP_Text _text;
@@ -18,12 +17,14 @@ public class WheelFortune : MonoBehaviour
     private bool _isRewarded;
     private int _factor = 1;
     private CoinsWallet _wallet;
+    private CoinsRewarder _coinsRewarder;
 
     public event Action<int> Rewarded;
 
     private void Awake()
     {
         _wallet = FindObjectOfType<CoinsWallet>(true);
+        _coinsRewarder = FindObjectOfType<CoinsRewarder>(true);
     }
 
     private void Start()
@@ -55,9 +56,9 @@ public class WheelFortune : MonoBehaviour
 
     private void OnRewarded()
     {
-        _wallet.Add(_award * _factor);
-        _panel.SetAward(_award * _factor);
-        Rewarded?.Invoke(_award * _factor);
+        _wallet.Add(_coinsRewarder.ReceivedReward * _factor);
+        _panel.SetAward(_coinsRewarder.ReceivedReward * _factor);
+        Rewarded?.Invoke(_coinsRewarder.ReceivedReward * _factor);
 
         _panel.gameObject.SetActive(true);
         gameObject.SetActive(false);
