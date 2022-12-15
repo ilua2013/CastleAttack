@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Globalization;
 using System;
@@ -8,17 +9,53 @@ using System;
 public class CoinsWalletView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    
+    [SerializeField] private float _delayAnimation;
+
+    private Animator _animator;
     private CoinsWallet _coinsWallet;
+    private float _current;
+
+    private const string Reward = "Reward";
 
     private void Awake()
     {
         _coinsWallet = FindObjectOfType<CoinsWallet>();
+        _animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        _text.text = FormatCost(_coinsWallet.Coins);
+        _coinsWallet.CoinsChanged += OnRewarded;
+    }
+
+    private void OnDisable()
+    {
+        _coinsWallet.CoinsChanged -= OnRewarded;
+    }
+
+    private void OnRewarded(int amount)
+    {
+        _current += amount;
+        StartCoroutine(Adding(amount));
+    }
+
+    private IEnumerator Adding(int amount, Action onComplete = null)
+    {
+        float coins = _current - amount;
+        float time = 0;
+        yield return new WaitForSeconds(_delayAnimation);
+        _animator.SetTrigger(Reward);
+
+        while (coins != _current)
+        {
+            coins = Mathf.MoveTowards(coins, _current, 0.35f);
+            _text.text = FormatCost(coins);
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        print(time);
+        _text.text = FormatCost(_current);
+        onComplete?.Invoke();
     }
 
     private string FormatCost(float cost)
