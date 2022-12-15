@@ -11,15 +11,32 @@ public class CellView : MonoBehaviour
     [SerializeField] private Material _winColor;
 
     private Animator _animator;
+    private Cell _cell;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _cell = GetComponentInParent<Cell>();
+    }
+
+    private void OnEnable()
+    {
+        _cell.StagedUnit += PlayAnimationSizeUp;
+    }
+
+    private void OnDisable()
+    {
+        _cell.StagedUnit -= PlayAnimationSizeUp;
     }
 
     public void RecolorToWin()
     {
         _animator.Play(ScaleAnimation);
         _image.material = _winColor;
+    }
+
+    private void PlayAnimationSizeUp()
+    {
+        _animator.SetTrigger("Scale");
     }
 }

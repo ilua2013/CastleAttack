@@ -49,13 +49,13 @@ public class Mover
         _startCell = cell;
     }
 
-    public void SetCurrentCell(Cell cell)
+    public void SetCurrentCell(Cell cell, bool isInit = true)
     {
         if (_currentCell != null)
             _currentCell.SetFree();
 
         _currentCell = cell;
-        _currentCell.StateUnitOnCell(_unit);
+        _currentCell.StateUnitOnCell(_unit, isInit);
     }
 
     public void SkipStep()
@@ -83,7 +83,8 @@ public class Mover
 
         _unit.StartMove(cell, () =>
         {
-            SetCurrentCell(cell);
+            SetCurrentCell(cell,false);
+            
             onEnd?.Invoke();
         });
 

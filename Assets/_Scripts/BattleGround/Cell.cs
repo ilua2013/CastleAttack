@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Cell : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Cell : MonoBehaviour
 
     private CellView _view;
     private IUnit _currentUnit;
+
+    public event Action StagedUnit;
 
     public Cell Top => _top;
     public Cell TopRight => _topRight;
@@ -121,9 +124,12 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void StateUnitOnCell(IUnit IUnit)
+    public void StateUnitOnCell(IUnit IUnit, bool isInit = true)
     {
         _currentUnit = IUnit;
+
+        if(isInit == false)
+        StagedUnit?.Invoke();
     }
 
     public void SetFree()
