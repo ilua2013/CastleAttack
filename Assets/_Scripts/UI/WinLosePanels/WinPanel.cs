@@ -20,9 +20,14 @@ public class WinPanel : MonoBehaviour
 
     private void OnValidate()
     {
-        _demolishAnimations = FindObjectOfType<DemolishAnimations>(true);
-        _cellWinAnimations = FindObjectOfType<CellWinAnimations>(true);
-        _levelRewarder = FindObjectOfType<CardsRewarder>(true);
+        if (_demolishAnimations == null)
+            _demolishAnimations = FindObjectOfType<DemolishAnimations>(true);
+
+        if (_cellWinAnimations == null)
+            _cellWinAnimations = FindObjectOfType<CellWinAnimations>(true);
+
+        if (_levelRewarder == null)
+            _levelRewarder = FindObjectOfType<CardsRewarder>(true);
 
         foreach (var item in FindObjectsOfType<UnitFriend>())
             if (item.Fighter.FighterType == FighterType.MainWizzard)

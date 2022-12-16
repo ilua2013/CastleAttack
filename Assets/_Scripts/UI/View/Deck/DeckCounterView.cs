@@ -7,12 +7,12 @@ using UnityEngine;
 public class DeckCounterView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _countText;
+    [SerializeField] private CombatDeck _deck;
 
-    private CombatDeck _deck;
-
-    private void Awake()
+    private void OnValidate()
     {
-        _deck = FindObjectOfType<CombatDeck>();
+        if (_deck == null)
+            _deck = FindObjectOfType<CombatDeck>();
     }
 
     private void OnEnable()

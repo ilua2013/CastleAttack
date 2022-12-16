@@ -15,8 +15,11 @@ public class CardsRewarder : MonoBehaviour
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>();
-        _deckBuilder = FindObjectOfType<DeckBuilder>();
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
+
+        if (_deckBuilder == null)
+            _deckBuilder = FindObjectOfType<DeckBuilder>();
     }
 
     private void OnEnable()

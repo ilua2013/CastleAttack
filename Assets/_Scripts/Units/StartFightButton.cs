@@ -18,8 +18,11 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>();
-        _carsHand = FindObjectOfType<CardsHand>();
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
+
+        if (_carsHand == null)
+            _carsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
