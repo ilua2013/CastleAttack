@@ -26,6 +26,8 @@ public class Mover
     public event Action ReachedTutorialHigherCell;
     public event Action Moved;
     public event Action<Cell> CellChanged;
+    public event Action Rooted;
+    public event Action UnRooted;
     //public event Action Died;
 
     public void Init(IUnit unit, Transform unitTransform, Cell cell = null)
@@ -60,7 +62,18 @@ public class Mover
 
     public void SkipStep()
     {
-       IsSkipped = true;
+        IsSkipped = true;
+    }
+
+    public void Root()
+    {
+        Rooted?.Invoke();
+    }
+
+    public void UnRoot()
+    {
+        UnRooted?.Invoke();
+        IsSkipped = false;
     }
 
     public bool CanMove(Cell cell)

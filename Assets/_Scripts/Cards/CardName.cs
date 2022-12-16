@@ -18,4 +18,5 @@ public enum CardName
     Fireball,
     Zipp3,
     Zipp5,
+    Roots,
 }

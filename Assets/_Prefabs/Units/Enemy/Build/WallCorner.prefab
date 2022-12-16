@@ -14942,7 +14942,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5663295988328547441}
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.37383068, y: -0.000000013930776, z: 0.000000030268072, w: 0.92749697}
   m_LocalPosition: {x: 0, y: 0, z: -0.654}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15038,6 +15038,7 @@ MonoBehaviour:
   _iUnit: {fileID: 0}
   _textHealth: {fileID: 6741082823316615901}
   _bar: {fileID: 3559788869698931033}
+  _posistionViewWizzard: {x: 0, y: 0, z: 0}
 --- !u!1 &5723529908097355264
 GameObject:
   m_ObjectHideFlags: 0
@@ -20048,17 +20049,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b67684d2d3b4d4ab33a01f87fdaa2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DelayToDie>k__BackingField: 0.5
   <MaxStep>k__BackingField: 0
+  <DelayToDie>k__BackingField: 0.5
   _distanceAttack: []
+  _distanceAttackCatapult: []
   <Mover>k__BackingField:
     _startCell: {fileID: 0}
-    _timeMove: 0
     _canMove: 0
+    _speedRotateToWizzard: 0
   <Fighter>k__BackingField:
     _type: 3
     _damage: 0
     _maxHealth: 5
+    _arrow: {fileID: 0}
 --- !u!114 &617181686998344098
 MonoBehaviour:
   m_ObjectHideFlags: 0
