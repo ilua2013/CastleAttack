@@ -28,16 +28,12 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     {
         _battleSystem.StepFinished += EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
-        //_spellsRecorder.WasSpellCast += OnSpellCast;
-        //_spellsRecorder.WasSpellDispelled += OnSpellDispelled;
     }
 
     private void OnDisable()
     {
         _battleSystem.StepFinished -= EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
-        //_spellsRecorder.WasSpellCast -= OnSpellCast;
-        //_spellsRecorder.WasSpellDispelled -= OnSpellDispelled;
     }
 
     public void Activate(bool isActive)
@@ -63,16 +59,5 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     private void DisableButtonSkip()
     {
         _buttonSkip.interactable = false;
-    }
-
-    private void OnSpellCast()
-    {
-        _button.interactable = false;
-    }
-
-    private void OnSpellDispelled()
-    {
-        if (_spellsRecorder.ActiveSpells <= 0)
-            _button.interactable = true;
     }
 }
