@@ -39,7 +39,6 @@ public class CellWinAnimations : MonoBehaviour
                 cell.RecolorToWin();
         }
 
-        yield return new WaitForSeconds(0);
         onEnd?.Invoke();
     }
 
