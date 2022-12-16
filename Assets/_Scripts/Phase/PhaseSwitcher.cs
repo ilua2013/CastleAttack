@@ -6,7 +6,6 @@ public class PhaseSwitcher : MonoBehaviour
 {
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardsSelection _cardSelection;
-    [SerializeField] private EnemySpawner _enemySpawner;
 
     private List<IPhaseHandler> _handlers = new List<IPhaseHandler>();
 
@@ -16,11 +15,7 @@ public class PhaseSwitcher : MonoBehaviour
     {
         _battleSystem = FindObjectOfType<BattleSystem>(true);
         _cardSelection = FindObjectOfType<CardsSelection>(true);
-        _enemySpawner = FindObjectOfType<EnemySpawner>(true);
-    }
 
-    private void Awake()
-    {
         foreach (var item in FindObjectsOfType<MonoBehaviour>(true))
         {
             if (item is IPhaseHandler handler)
