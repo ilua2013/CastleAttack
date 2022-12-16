@@ -44,7 +44,7 @@ public class CastleChanger : MonoBehaviour
             StartCoroutine(_castle.TakeDamage(_damage, _delayDamage, () =>
             {
                 Invoke(nameof(ChangeCastle), _delayChangeCastle);
-                _coinsWallet.Add(_castle.Reward);
+                _coinsWallet.Add(_castle.Reward, _delayChangeCastle);
             }));
 
             SaveCastle.AttackCastle = false;
@@ -60,7 +60,7 @@ public class CastleChanger : MonoBehaviour
             StartCoroutine(_castle.TakeDamage(_damage, _delayDamage, () =>
             {
                 Invoke(nameof(ChangeCastle), _delayChangeCastle);
-                _coinsWallet.Add(_castle.Reward);
+                _coinsWallet.Add(_castle.Reward, _delayChangeCastle);
             }));
         }
     }

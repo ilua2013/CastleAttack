@@ -34,13 +34,13 @@ public class CoinsRewarder : MonoBehaviour
     {
         ReceivedReward = Reward + GamesStatistics.KilledEnemy * RewardPerEnemy;
 
-        _coinsWallet.Add(ReceivedReward);
+        _coinsWallet.Add(ReceivedReward, 0);
     }
 
     private void OnFailed()
     {
         ReceivedReward = (Reward + GamesStatistics.KilledEnemy * RewardPerEnemy) / 2;
 
-        _coinsWallet.Add(ReceivedReward / 2);
+        _coinsWallet.Add(ReceivedReward / 2, 0);
     }
 }

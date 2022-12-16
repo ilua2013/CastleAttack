@@ -7,7 +7,7 @@ public class CoinsWallet : MonoBehaviour
 {
     public int Coins { get; private set; }
 
-    public event Action<int> CoinsChanged;
+    public event Action<int, float> CoinsChanged;
 
     private void Awake()
     {
@@ -23,21 +23,25 @@ public class CoinsWallet : MonoBehaviour
             return false;
 
         Coins = estimated;
+
         Saves.SetInt(SaveController.Params.Coins, Coins);
         Saves.Save();
-        CoinsChanged?.Invoke(amount);
+
+        CoinsChanged?.Invoke(amount, 0);
 
         return true;
     }
 
-    public void Add(int amount)
+    public void Add(int amount, float delay)
     {
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount));
 
         Coins += amount;
+
         Saves.SetInt(SaveController.Params.Coins, Coins);
         Saves.Save();
-        CoinsChanged?.Invoke(amount);
+
+        CoinsChanged?.Invoke(amount, delay);
     }
 }

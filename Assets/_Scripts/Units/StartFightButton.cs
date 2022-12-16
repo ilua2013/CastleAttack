@@ -9,10 +9,9 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     [SerializeField] private Button _button;
     [SerializeField] private Button _buttonSkip;
     [SerializeField] private Phase[] _phases;
-
-    private BattleSystem _battleSystem;
-    private CardsHand _carsHand;
-    private SpellsRecorder _spellsRecorder;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardsHand _carsHand;
+    [SerializeField] private SpellsRecorder _spellsRecorder;
 
     public Button Button => _button;
     public Button ButtonSkip => _buttonSkip;

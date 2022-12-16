@@ -56,7 +56,7 @@ public class WheelFortune : MonoBehaviour
 
     private void OnRewarded()
     {
-        _wallet.Add(_coinsRewarder.ReceivedReward * _factor);
+        _wallet.Add(_coinsRewarder.ReceivedReward * _factor, 0);
         _panel.SetAward(_coinsRewarder.ReceivedReward * _factor);
         Rewarded?.Invoke(_coinsRewarder.ReceivedReward * _factor);
 
