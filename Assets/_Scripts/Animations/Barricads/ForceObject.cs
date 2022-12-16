@@ -7,8 +7,8 @@ using UnityEngine;
 public class ForceObject : MonoBehaviour
 {
     [SerializeField] private float _lifeTime;
+    [SerializeField] private Rigidbody _rigidbody;
 
-    private Rigidbody _rigidbody;
     private Collider _collider;
 
     public Rigidbody Rigidbody => _rigidbody;

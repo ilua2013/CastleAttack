@@ -4,6 +4,7 @@ using System.Collections;
 
 public interface IUnit
 {
+    DistanceAttack[] DistanceAttack { get; }
     Mover Mover { get; }
     Fighter Fighter { get; }
     UnitCard Card { get; }

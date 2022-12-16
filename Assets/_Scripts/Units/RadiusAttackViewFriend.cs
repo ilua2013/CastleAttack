@@ -35,6 +35,9 @@ public class RadiusAttackViewFriend : MonoBehaviour
 
     private void SelectionCells(List<Cell> cells)
     {
+        //if (_unitFriend.DistanceAttack[0].Distance < 2)
+        //    return;
+
         foreach (var cell in cells)
         {
             if (cell.TryGetComponent(out HighlightingCell highlighting))
