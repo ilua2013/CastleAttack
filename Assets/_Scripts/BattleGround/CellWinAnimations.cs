@@ -13,7 +13,7 @@ public class CellWinAnimations : MonoBehaviour
     private CellSpawner _cellSpawner;
     private List<Cell> _cells = new List<Cell>();
 
-    private void Awake()
+    private void Start()
     {
         _cellSpawner = GetComponent<CellSpawner>();
         _cells = GetComponentsInChildren<Cell>().ToList();
