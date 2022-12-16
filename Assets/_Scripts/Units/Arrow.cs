@@ -29,6 +29,8 @@ public class Arrow : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        transform.parent = null;
+
         Vector3 targetPos = target - transform.position;
         Vector3 startPos = transform.position;
         Vector3 deltaPos;

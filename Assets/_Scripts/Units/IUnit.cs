@@ -23,5 +23,5 @@ public interface IUnit
     void AnimationSizeUp();
     void StartMove(Cell cell, Action onEnd = null);
     IEnumerator FinishStep(Action action, float time);
-    Arrow SpawnArrow(Arrow arrow, Vector3 position);
+    Arrow SpawnArrow(Arrow arrow, Transform position);
 }
