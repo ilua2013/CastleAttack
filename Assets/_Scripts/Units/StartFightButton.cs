@@ -11,7 +11,6 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     [SerializeField] private Phase[] _phases;
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardsHand _carsHand;
-    [SerializeField] private SpellsRecorder _spellsRecorder;
 
     public Button Button => _button;
     public Button ButtonSkip => _buttonSkip;
@@ -21,7 +20,6 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
         _carsHand = FindObjectOfType<CardsHand>();
-        _spellsRecorder = FindObjectOfType<SpellsRecorder>();
     }
 
     private void OnEnable()
