@@ -13,7 +13,7 @@ public class UnitAnimator : MonoBehaviour
 
     enum State
     {
-        Attack, Move, Died, Hit
+        Attack, Move, Died, Hit, ShowRoots, HideRoots,
     }
 
     private void OnValidate()
@@ -31,6 +31,8 @@ public class UnitAnimator : MonoBehaviour
     private void OnEnable()
     {
         _mover.Moved += SetMove;
+        _mover.Rooted += SetRoot;
+        _mover.UnRooted += SetUnRoot;
         _fighter.RotatedToAttack += SetAttack;
         _fighter.Died += StartSetDie;
         _fighter.Damaged += StartSetDamage;
@@ -39,6 +41,8 @@ public class UnitAnimator : MonoBehaviour
     private void OnDisable()
     {
         _mover.Moved -= SetMove;
+        _mover.Rooted -= SetRoot;
+        _mover.UnRooted -= SetUnRoot;
         _fighter.RotatedToAttack -= SetAttack;
         _fighter.Died -= StartSetDie;
         _fighter.Damaged -= StartSetDamage;
@@ -50,7 +54,6 @@ public class UnitAnimator : MonoBehaviour
         {
             animator.SetTrigger(State.Attack.ToString());
         }
-               
     }
 
     private void StartSetDie() => Invoke(nameof(SetDie), _delayAnimationDamage);
@@ -69,6 +72,22 @@ public class UnitAnimator : MonoBehaviour
         {
             animator.SetTrigger(State.Move.ToString());
         }             
+    }
+
+    private void SetRoot()
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.ShowRoots.ToString());
+        }
+    }
+
+    private void SetUnRoot()
+    {
+        foreach (var animator in _animators)
+        {
+            animator.SetTrigger(State.HideRoots.ToString());
+        }
     }
 
     private void StartSetDamage(int damage) => Invoke(nameof(SetDamage), _delayAnimationDamage);

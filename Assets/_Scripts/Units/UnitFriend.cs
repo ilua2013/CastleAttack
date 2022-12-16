@@ -164,13 +164,13 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             enemy = TryAttack();
 
         _doingStep = true;
-        UnitSteped?.Invoke(_doingStep);
 
         if (enemy != null)
         {
             if (Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f))))
                 EnemyKilled?.Invoke(enemy);
 
+            UnitSteped?.Invoke(_doingStep);
             Attacked?.Invoke();
 
             CurrentStep--;
@@ -179,6 +179,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         {
             Mover.Move(Mover.CurrentCell.Top, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
+            UnitSteped?.Invoke(_doingStep);
             Moved?.Invoke();
             StartCoroutine(FinishStep(FinishedStep, 0.6f));
 

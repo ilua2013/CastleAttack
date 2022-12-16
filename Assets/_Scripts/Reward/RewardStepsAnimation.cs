@@ -74,8 +74,6 @@ public class RewardStepsAnimation : MonoBehaviour
 
     private IEnumerator AnimateKill(int killCount, Action onComplete = null)
     {
-        Debug.Log("AnimateKill");
-
         float count = 0;
 
         while (count < killCount)
