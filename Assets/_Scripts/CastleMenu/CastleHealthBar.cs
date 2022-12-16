@@ -16,7 +16,8 @@ public class CastleHealthBar : MonoBehaviour
 
     private void OnValidate()
     {
-        _castle = GetComponentInParent<Castle>();
+        if (_castle == null)
+            _castle = GetComponentInParent<Castle>();
     }
 
     private void Awake()

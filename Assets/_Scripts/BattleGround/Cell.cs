@@ -16,8 +16,8 @@ public class Cell : MonoBehaviour
     [SerializeField] private Cell _left;
     [SerializeField] private Cell _right;
     [SerializeField] private Cell _this;
+    [SerializeField] private CellView _view;
 
-    private CellView _view;
     private IUnit _currentUnit;
 
     public event Action StagedUnit;

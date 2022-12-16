@@ -11,10 +11,11 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
     [SerializeField] private float _showDelay;
     [SerializeField] private Phase[] _phases;
 
-    private CombatDeck _deck;
-    private CardsHand _cardsHand;
-    private CardsHandView _cardsHandView;
-    private DeckCounter _deckCounter;
+    [SerializeField] private CombatDeck _deck;
+    [SerializeField] private CardsHand _cardsHand;
+    [SerializeField] private CardsHandView _cardsHandView;
+    [SerializeField] private DeckCounter _deckCounter;
+
     private Card[] _selectedCards;
     private float _delayTime = 0; 
 
@@ -25,27 +26,27 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     public Phase[] Phases => _phases;
 
-    private void Awake()
+    private void OnValidate()
     {
-        _deck = FindObjectOfType<CombatDeck>();
-        _cardsHand = FindObjectOfType<CardsHand>();
-        _deckCounter = FindObjectOfType<DeckCounter>();
-        _cardsHandView = _cardsHand.GetComponent<CardsHandView>();
-
         if (_deck == null)
-            throw new NullReferenceException(nameof(_deck));
+            _deck = FindObjectOfType<CombatDeck>();
 
         if (_cardsHand == null)
-            throw new NullReferenceException(nameof(_cardsHand));
+            _cardsHand = FindObjectOfType<CardsHand>();
 
         if (_deckCounter == null)
-            throw new NullReferenceException(nameof(_deckCounter));
+            _deckCounter = FindObjectOfType<DeckCounter>();
 
         if (_cardsHandView == null)
-            throw new NullReferenceException(nameof(_cardsHandView));
+            _cardsHandView = FindObjectOfType<CardsHandView>();
     }
 
-   public void TutorialPhaseEnable()
+    private void Awake()
+    {
+        _cardsHandView = _cardsHand.GetComponent<CardsHandView>();
+    }
+
+    public void TutorialPhaseEnable()
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == PhaseType.SelectionCard);
         phase.TutorialSelectionCardEnable();
@@ -59,20 +60,24 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
+        Debug.Log("Switch phase in CardsSelection");
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
         yield return new WaitForSeconds(phase.Delay);       
 
-        gameObject.SetActive(phase.IsActive);
-
         if (phase.IsActive)
+        {
+            Debug.Log("DrawOutCards");
+
             DrawOutCards();
+        }
     }
 
     private void DrawOutCards()
     {
         if (!_deckCounter.CanTakeCard)
         {
+            Debug.Log("_deckCounter.CanTakeCard " + _deckCounter.CanTakeCard);
             Passed?.Invoke();
             gameObject.SetActive(false);
             return;
@@ -80,12 +85,16 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
         if (_deck.IsEmpty)
         {
+            Debug.Log("_deck.IsEmpty " + _deck.IsEmpty);
+
             Passed?.Invoke();
             gameObject.SetActive(false);
             return;
         }
 
         _selectedCards = _deck.TakeRandomCards(_count);
+
+        Debug.Log("_selectedCards " + _selectedCards);
 
         foreach (Card card in _selectedCards)
         {
@@ -106,6 +115,8 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         {
             if (_cardsHand.CanTakeCard)
             {
+                Debug.Log("_cardsHand.CanTakeCard " + _cardsHand.CanTakeCard);
+
                 _cardsHand.CardAdd(card, false);
                 _cardsHandView.CardAdd(card);
             }
@@ -119,6 +130,5 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         yield return new WaitForSeconds(0.5f);
 
         CardSelected?.Invoke();
-        gameObject.SetActive(false);
     }
 }

@@ -5,20 +5,15 @@ using System;
 
 public class DeckCounter : MonoBehaviour
 {
-    private int _count;
-    private CombatDeck _deck;
+    [SerializeField] private CombatDeck _deck;
 
     public bool CanTakeCard => !_deck.IsEmpty;
 
     public event Action<int> Decreased;
 
-    private void Awake()
+    private void OnValidate()
     {
-        _deck = FindObjectOfType<CombatDeck>();
-    }
-
-    private void Start()
-    {
-        //_count = _deck.
+        if (_deck == null)
+            _deck = FindObjectOfType<CombatDeck>();
     }
 }

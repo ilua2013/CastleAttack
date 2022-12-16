@@ -13,9 +13,15 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>(true);
-        _cardSelection = FindObjectOfType<CardsSelection>(true);
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>(true);
 
+        if (_cardSelection == null)
+            _cardSelection = FindObjectOfType<CardsSelection>(true);
+    }
+
+    private void Awake()
+    {
         foreach (var item in FindObjectsOfType<MonoBehaviour>(true))
         {
             if (item is IPhaseHandler handler)
