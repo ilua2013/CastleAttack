@@ -63,6 +63,16 @@ public class Fighter
         _startRotate = transform.forward;
     }
 
+    public void SetHealth(int health)
+    {
+        _maxHealth = health;
+    }
+
+    public void SetDamage(int damage)
+    {
+        _damage = damage;
+    }
+
     public void SkipStep()
     {
         IsSkipped = true;
