@@ -35,9 +35,9 @@ public class RewardStepsAnimation : MonoBehaviour
 
     public void Play(int starsCount)
     {
-        StartCoroutine(AnimateStars(starsCount, () => 
+        //StartCoroutine(AnimateStars(starsCount, () => 
         StartCoroutine(AnimateKill(GamesStatistics.KilledEnemy, () => 
-        StartCoroutine(AnimateCoins(_coinsRewarder.ReceivedReward))))));
+        StartCoroutine(AnimateCoins(_coinsRewarder.ReceivedReward))));
     }
 
     private IEnumerator AnimateStars(int count, Action onComplete = null)
@@ -57,6 +57,7 @@ public class RewardStepsAnimation : MonoBehaviour
 
     private IEnumerator AnimateCoins(int award, Action onComplete = null)
     {
+        Debug.Log(award);
         float coins = 0;
 
         while (coins < award)
@@ -85,6 +86,9 @@ public class RewardStepsAnimation : MonoBehaviour
 
         _killCount.text = FormatCost(killCount);
         onComplete?.Invoke();
+
+        Debug.Log("Стоп");
+
     }
 
     private void OnRewarded(int coins)

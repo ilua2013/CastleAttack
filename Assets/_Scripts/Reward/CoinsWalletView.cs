@@ -8,18 +8,22 @@ using System;
 
 public class CoinsWalletView : MonoBehaviour
 {
+    private const string Reward = "Reward";
+
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private float _delayAnimation;
+    [SerializeField] private CoinsWallet _coinsWallet;
 
     private Animator _animator;
-    private CoinsWallet _coinsWallet;
     private float _current;
 
-    private const string Reward = "Reward";
+
+    private void OnValidate()
+    {
+        _coinsWallet = FindObjectOfType<CoinsWallet>();
+    }
 
     private void Awake()
     {
-        _coinsWallet = FindObjectOfType<CoinsWallet>();
         _animator = GetComponent<Animator>();
     }
 
@@ -33,17 +37,25 @@ public class CoinsWalletView : MonoBehaviour
         _coinsWallet.CoinsChanged -= OnRewarded;
     }
 
-    private void OnRewarded(int amount)
+    private void Start()
     {
-        _current += amount;
-        StartCoroutine(Adding(amount));
+        _current = _coinsWallet.Coins;
+        _text.text = FormatCost(_current);
     }
 
-    private IEnumerator Adding(int amount, Action onComplete = null)
+    private void OnRewarded(int amount, float delay)
+    {
+        _current += amount;
+        StartCoroutine(Adding(amount, delay));
+    }
+
+    private IEnumerator Adding(int amount, float delay, Action onComplete = null)
     {
         float coins = _current - amount;
         float time = 0;
-        yield return new WaitForSeconds(_delayAnimation);
+
+        yield return new WaitForSeconds(delay);
+
         _animator.SetTrigger(Reward);
 
         while (coins != _current)
@@ -51,9 +63,10 @@ public class CoinsWalletView : MonoBehaviour
             coins = Mathf.MoveTowards(coins, _current, 0.35f);
             _text.text = FormatCost(coins);
             time += Time.deltaTime;
+
             yield return new WaitForEndOfFrame();
         }
-        print(time);
+
         _text.text = FormatCost(_current);
         onComplete?.Invoke();
     }

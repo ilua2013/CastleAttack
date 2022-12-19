@@ -16,6 +16,8 @@ public class CombatDeck : Deck
         if (count > Cards.Count)
             count = Cards.Count;
 
+        Debug.Log("TakeRandomCards : Cards.Count = " + Cards.Count);
+
         List<Card> result = new List<Card>(count);
 
         for (int i = 0; i < count; i++)

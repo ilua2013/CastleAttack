@@ -108,12 +108,12 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
             enemy = TryAttack();
 
         _doingStep = true;
-        UnitSteped?.Invoke(_doingStep);
 
         if (enemy != null)
         {
             Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
+            UnitSteped?.Invoke(_doingStep);
             Attacked?.Invoke();
 
             CurrentStep--;
@@ -122,7 +122,9 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         {
             Mover.Move(Mover.CurrentCell.Bot, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
 
+            UnitSteped?.Invoke(_doingStep);
             Moved?.Invoke();
+
             StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
             CurrentStep--;
@@ -216,9 +218,11 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         }
     }
 
-    public Arrow SpawnArrow(Arrow arrow, Vector3 position)
+    public Arrow SpawnArrow(Arrow arrow, Transform position)
     {
-        return Instantiate(arrow, position, Quaternion.identity);
+        Arrow spawned = Instantiate(arrow, position.position, Quaternion.identity);
+        spawned.transform.parent = position;
+        return spawned;
     }
 
     private void Disable() => gameObject.SetActive(false);

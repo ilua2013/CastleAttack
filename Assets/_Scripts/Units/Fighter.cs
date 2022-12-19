@@ -12,6 +12,7 @@ public class Fighter
     [SerializeField] private int _damage;
     [SerializeField] private int _maxHealth;
     [SerializeField] private Arrow _arrow;
+    [SerializeField] private Transform _spawnArrow;
 
     private IUnit _unit;
     private Vector3 _startRotate;
@@ -81,7 +82,7 @@ public class Fighter
 
         if (_type == FighterType.Archer || _type == FighterType.Catapult)
         {
-            Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
+            Arrow arrow = _unit.SpawnArrow(_arrow, transform);
             arrow.FlyTo(fighter.transform.position, () =>
             {
                 isFatal = fighter.TakeDamage(this);
@@ -93,19 +94,18 @@ public class Fighter
         }
         else if (_type == FighterType.MainWizzard)
         {
-            _unit.LocalRotateTo(fighter.transform, () =>
+
+            Attacked?.Invoke();
+            Attacked_get?.Invoke(fighter.transform);
+
+            Transform spawnArrow = _spawnArrow == null ? transform : _spawnArrow;
+            Arrow arrow = _unit.SpawnArrow(_arrow, spawnArrow);
+
+            arrow.FlyTo(fighter.transform.position, () =>
             {
-                Attacked?.Invoke();
-                Attacked_get?.Invoke(fighter.transform);
-
-                Arrow arrow = _unit.SpawnArrow(_arrow, transform.position);
-
-                arrow.FlyTo(fighter.transform.position, () =>
-                {
-                    isFatal = fighter.TakeDamage(this);
-                }, 0.1f);
-            }, 
-            onEnd);
+                isFatal = fighter.TakeDamage(this);
+                onEnd?.Invoke();
+            }, 0.6f);
         }
         else
         {

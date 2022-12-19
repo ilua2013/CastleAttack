@@ -9,10 +9,8 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     [SerializeField] private Button _button;
     [SerializeField] private Button _buttonSkip;
     [SerializeField] private Phase[] _phases;
-
-    private BattleSystem _battleSystem;
-    private CardsHand _carsHand;
-    private SpellsRecorder _spellsRecorder;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private CardsHand _carsHand;
 
     public Button Button => _button;
     public Button ButtonSkip => _buttonSkip;
@@ -20,25 +18,23 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>();
-        _carsHand = FindObjectOfType<CardsHand>();
-        _spellsRecorder = FindObjectOfType<SpellsRecorder>();
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
+
+        if (_carsHand == null)
+            _carsHand = FindObjectOfType<CardsHand>();
     }
 
     private void OnEnable()
     {
         _battleSystem.StepFinished += EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
-        //_spellsRecorder.WasSpellCast += OnSpellCast;
-        //_spellsRecorder.WasSpellDispelled += OnSpellDispelled;
     }
 
     private void OnDisable()
     {
         _battleSystem.StepFinished -= EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
-        //_spellsRecorder.WasSpellCast -= OnSpellCast;
-        //_spellsRecorder.WasSpellDispelled -= OnSpellDispelled;
     }
 
     public void Activate(bool isActive)
@@ -64,16 +60,5 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     private void DisableButtonSkip()
     {
         _buttonSkip.interactable = false;
-    }
-
-    private void OnSpellCast()
-    {
-        _button.interactable = false;
-    }
-
-    private void OnSpellDispelled()
-    {
-        if (_spellsRecorder.ActiveSpells <= 0)
-            _button.interactable = true;
     }
 }

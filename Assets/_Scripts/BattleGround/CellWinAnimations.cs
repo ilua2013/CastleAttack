@@ -13,10 +13,12 @@ public class CellWinAnimations : MonoBehaviour
     private CellSpawner _cellSpawner;
     private List<Cell> _cells = new List<Cell>();
 
-    private void Awake()
+    private void Start()
     {
         _cellSpawner = GetComponent<CellSpawner>();
         _cells = GetComponentsInChildren<Cell>().ToList();
+
+        Debug.Log("_cells " + _cells);
     }
 
     public void Play(Action onEnd = null)
@@ -30,16 +32,20 @@ public class CellWinAnimations : MonoBehaviour
 
         float delayChangerSum = 0;
 
+        Debug.Log("_cellSpawner.Rows " + _cellSpawner.Rows);
+
         for (int i = 0; i < _cellSpawner.Rows; i++)
         {
             yield return new WaitForSeconds(delayChangerSum);
             delayChangerSum += _delayStepChanger;
 
             foreach (CellView cell in GetRow(i))
+            {
+                Debug.Log("Cell " + cell);
                 cell.RecolorToWin();
+            }
         }
 
-        yield return new WaitForSeconds(0);
         onEnd?.Invoke();
     }
 

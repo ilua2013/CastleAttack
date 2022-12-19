@@ -26,6 +26,8 @@ public class Mover
     public event Action ReachedTutorialHigherCell;
     public event Action Moved;
     public event Action<Cell> CellChanged;
+    public event Action Rooted;
+    public event Action UnRooted;
     //public event Action Died;
 
     public void Init(IUnit unit, Transform unitTransform, Cell cell = null)
@@ -49,18 +51,29 @@ public class Mover
         _startCell = cell;
     }
 
-    public void SetCurrentCell(Cell cell)
+    public void SetCurrentCell(Cell cell, bool isInit = true)
     {
         if (_currentCell != null)
             _currentCell.SetFree();
 
         _currentCell = cell;
-        _currentCell.StateUnitOnCell(_unit);
+        _currentCell.StateUnitOnCell(_unit, isInit);
     }
 
     public void SkipStep()
     {
-       IsSkipped = true;
+        IsSkipped = true;
+    }
+
+    public void Root()
+    {
+        Rooted?.Invoke();
+    }
+
+    public void UnRoot()
+    {
+        UnRooted?.Invoke();
+        IsSkipped = false;
     }
 
     public bool CanMove(Cell cell)
@@ -80,8 +93,14 @@ public class Mover
     public void Move(Cell cell, Action onEnd = null)
     {
         _currentCell.SetFree();
-        SetCurrentCell(cell);
-        _unit.StartMove(cell, onEnd);
+
+        cell.StartAnimationSize();
+        _unit.StartMove(cell, () =>
+        {
+            SetCurrentCell(cell,false);
+            
+            onEnd?.Invoke();
+        });
 
         Moved?.Invoke();
         CellChanged?.Invoke(cell);

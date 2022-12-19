@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Card))]
 public class CardMovement : MonoBehaviour
 {
+    [SerializeField] private Image _raycastBG;
+
     private const float Speed = 20f;
     private const float LerpTime = 10f;
     private const float DistanceDelta = 0.1f;
@@ -30,6 +33,7 @@ public class CardMovement : MonoBehaviour
         _card.BeginDrag += OnBeginMove;
         _card.EndDrag += OnEndMove;
         _card.Drop += OnDrop;
+        _card.Activated += OnActivate;
     }
 
     private void OnDisable()
@@ -37,6 +41,7 @@ public class CardMovement : MonoBehaviour
         _card.BeginDrag -= OnBeginMove;
         _card.EndDrag -= OnEndMove;
         _card.Drop -= OnDrop;
+        _card.Activated -= OnActivate;
     }
 
     public void Init(Transform dragging)
@@ -109,5 +114,10 @@ public class CardMovement : MonoBehaviour
     private void OnEndMove(PointerEventData eventData, Card card)
     {
         _target = null;
+    }
+
+    private void OnActivate(bool isActive)
+    {
+        _raycastBG.raycastTarget = isActive;
     }
 }

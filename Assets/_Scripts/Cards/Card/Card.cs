@@ -25,10 +25,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public event Action<Card> CancelDrop;
     public event Action<int> Used;
     public event Action<CardSave> Saved;
+    public event Action<bool> Activated;
 
     public void Activate(bool isActive)
     {
         IsActive = isActive;
+        Activated?.Invoke(IsActive);
     }
 
     public void UseOne()

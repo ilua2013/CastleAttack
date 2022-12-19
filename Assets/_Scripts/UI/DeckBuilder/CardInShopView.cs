@@ -53,7 +53,7 @@ public class CardInShopView : MonoBehaviour
 
         SetHierarchy(card.transform);
         Transformation(card.transform);
-        OnCoinsChanged(0);
+        OnCoinsChanged(0, 0);
 
         card.transform.localScale = Vector3.one;
 
@@ -74,13 +74,13 @@ public class CardInShopView : MonoBehaviour
             _card.CardSave.Add(1);
             _card.Save();
 
-            OnCoinsChanged(0);
+            OnCoinsChanged(0, 0);
 
             CardBought?.Invoke(_card);
         }
     }
 
-    private void OnCoinsChanged(int amount)
+    private void OnCoinsChanged(int amount, float delay)
     {
         bool interactable = _card != null && _wallet.Coins >= _cost && _card.CardSave.Amount < _card.CardSave.AmountToImprove;
 
