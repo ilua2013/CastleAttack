@@ -16,7 +16,6 @@ public class CoinsWalletView : MonoBehaviour
     private Animator _animator;
     private float _current;
 
-
     private void OnValidate()
     {
         _coinsWallet = FindObjectOfType<CoinsWallet>();
@@ -30,17 +29,15 @@ public class CoinsWalletView : MonoBehaviour
     private void OnEnable()
     {
         _coinsWallet.CoinsChanged += OnRewarded;
+
+        _current = _coinsWallet.Coins;
+        Debug.Log(_current);
+        _text.text = FormatCost(_current);
     }
 
     private void OnDisable()
     {
         _coinsWallet.CoinsChanged -= OnRewarded;
-    }
-
-    private void Start()
-    {
-        _current = _coinsWallet.Coins;
-        _text.text = FormatCost(_current);
     }
 
     private void OnRewarded(int amount, float delay)
