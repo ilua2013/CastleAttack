@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinsRewarder : MonoBehaviour
 {
-    private const int Reward = 50;
+    private const int Reward = 100;
     private const int RewardPerEnemy = 5;
 
     [SerializeField] private BattleSystem _battleSystem;
@@ -32,14 +32,14 @@ public class CoinsRewarder : MonoBehaviour
 
     private void OnFinished()
     {
-        ReceivedReward = Reward + GamesStatistics.KilledEnemy * RewardPerEnemy;
+        ReceivedReward = Reward;
 
         _coinsWallet.Add(ReceivedReward, 0);
     }
 
     private void OnFailed()
     {
-        ReceivedReward = (Reward + GamesStatistics.KilledEnemy * RewardPerEnemy) / 2;
+        ReceivedReward = Reward / 2;
 
         _coinsWallet.Add(ReceivedReward / 2, 0);
     }

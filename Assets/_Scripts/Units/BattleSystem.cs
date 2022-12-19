@@ -186,7 +186,7 @@ public class BattleSystem : MonoBehaviour
                 CheckFinishStepSpells();
             }
 
-            //yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.2f);
 
             StartCoroutine(DoStepFriend());
 
@@ -257,6 +257,8 @@ public class BattleSystem : MonoBehaviour
                 continue;
 
             _spells[i].DoStep();
+
+            yield return new WaitForSeconds(0.6f);
 
             while (_spells.Count > i && _spells[i].DoingStep == true)
                 yield return null;
@@ -439,6 +441,8 @@ public class BattleSystem : MonoBehaviour
             {
                 Win?.Invoke();
                 SaveCastle.AttackCastle = true;
+
+                StopDoStep();
             }
         }
     }

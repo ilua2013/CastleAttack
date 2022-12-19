@@ -5,14 +5,26 @@ using System;
 
 public class CoinsWallet : MonoBehaviour
 {
+    [SerializeField] private CoinsWalletView[] _walletView;
+
     public int Coins { get; private set; }
 
     public event Action<int, float> CoinsChanged;
+
+    private void OnValidate()
+    {
+        _walletView = FindObjectsOfType<CoinsWalletView>(true);
+    }
 
     private void Awake()
     {
         if (Saves.HasKey(SaveController.Params.Coins))
             Coins = Saves.GetInt(SaveController.Params.Coins);
+    }
+
+    public bool HaveCoins(int amount)
+    {
+        return Coins >= amount;
     }
 
     public bool TrySpend(int amount)
@@ -26,6 +38,9 @@ public class CoinsWallet : MonoBehaviour
 
         Saves.SetInt(SaveController.Params.Coins, Coins);
         Saves.Save();
+
+        foreach (var item in _walletView)
+            item.OnSpent(amount);
 
         CoinsChanged?.Invoke(amount, 0);
 
@@ -41,6 +56,9 @@ public class CoinsWallet : MonoBehaviour
 
         Saves.SetInt(SaveController.Params.Coins, Coins);
         Saves.Save();
+
+        foreach (var item in _walletView)
+            item.OnRewarded(amount, delay);
 
         CoinsChanged?.Invoke(amount, delay);
     }

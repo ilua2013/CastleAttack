@@ -25,12 +25,14 @@ public class Dictionary
     [SerializeField] private List<Entry<float>> _entiesFloat = new List<Entry<float>>();
     [SerializeField] private List<Entry<string>> _entiesString = new List<Entry<string>>();
     [SerializeField] private List<Entry<CardSave>> _entiesCard = new List<Entry<CardSave>>();
+    [SerializeField] private List<Entry<Stats>> _entriesStats = new List<Entry<Stats>>();
 
     public IEnumerable<Entry<bool>> EntiesBool => _entiesBool;
     public IEnumerable<Entry<int>> EntiesInt => _entiesInt;
     public IEnumerable<Entry<float>> EntiesFloat => _entiesFloat;
     public IEnumerable<Entry<string>> EntiesString => _entiesString;
     public IEnumerable<Entry<CardSave>> EntiesCard => _entiesCard;
+    public IEnumerable<Entry<Stats>> EntriesStats => _entriesStats;
 
     public bool ContainsKey(string key)
     {
@@ -51,6 +53,10 @@ public class Dictionary
                 return true;
 
         foreach (var entry in _entiesCard)
+            if (entry.Key == key)
+                return true;
+
+        foreach (var entry in _entriesStats)
             if (entry.Key == key)
                 return true;
 
@@ -127,6 +133,20 @@ public class Dictionary
         }
     }
 
+    public void Add(string key, Stats value)
+    {
+        if (ContainsKey(key))
+        {
+            foreach (var entry in _entriesStats)
+                if (entry.Key == key)
+                    entry.Value = value;
+        }
+        else
+        {
+            _entriesStats.Add(new Entry<Stats>(key, value));
+        }
+    }
+
     public bool GetBool(string key)
     {
         foreach (var entry in _entiesBool)
@@ -166,6 +186,15 @@ public class Dictionary
     public CardSave GetCard(string key)
     {
         foreach (var entry in _entiesCard)
+            if (entry.Key == key)
+                return entry.Value;
+
+        throw new InvalidOperationException($"Key:{key} is not found");
+    }
+
+    public Stats GetWizardStats(string key)
+    {
+        foreach (var entry in _entriesStats)
             if (entry.Key == key)
                 return entry.Value;
 
@@ -238,6 +267,11 @@ public static class Saves
         _saves.Add(key, value);
     }
 
+    public static void SetWizardStats(string key, Stats value)
+    {
+        _saves.Add(key, value);
+    }
+
     public static bool GetBool(string key)
     {
         return _saves.GetBool(key);
@@ -261,5 +295,10 @@ public static class Saves
     public static CardSave GetCard(string key)
     {
         return _saves.GetCard(key);
+    }
+
+    public static Stats GetWizardStats(string key)
+    {
+        return _saves.GetWizardStats(key);
     }
 }
