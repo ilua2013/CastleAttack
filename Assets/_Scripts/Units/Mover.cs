@@ -132,14 +132,6 @@ public class Mover
             ReachedTutorialHigherCell?.Invoke();
         }
 
-        if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss)
-        {
-            if (cell.Top == null)
-            {
-                ReachedHigherCell?.Invoke();
-            }
-        }       
-
         float times = 0;
         while (time < _timeMove)
         {
@@ -147,6 +139,14 @@ public class Mover
             times += Time.deltaTime;
             transform.position = startPos + (targetPos * (time / _timeMove));
             yield return null;
+        }
+
+        if (cell.CellIs == CellIs.Higher || cell.CellIs == CellIs.Boss)
+        {
+            if (cell.Top == null)
+            {
+                ReachedHigherCell?.Invoke();
+            }
         }
 
         onEnd?.Invoke();
