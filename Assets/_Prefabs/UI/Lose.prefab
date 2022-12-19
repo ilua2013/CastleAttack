@@ -224,6 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0155d9366a67b444c988385aba85a0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonLoadScene: {fileID: 665712762844897314}
+  _sceneLoader: {fileID: 0}
 --- !u!1 &665712762866424687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,7 +1734,7 @@ GameObject:
   - component: {fileID: 2175632591183157536}
   - component: {fileID: 227136090769254855}
   - component: {fileID: 2336817140020343546}
-  - component: {fileID: 8898609790024568332}
+  - component: {fileID: 7016182778711390476}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -1843,7 +1845,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8898609790024568332
+--- !u!114 &7016182778711390476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1852,11 +1854,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7517322242982563926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7a095c0ad00b14b8899b88e8c48737, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b94fd18e47023f41b90ab48d04d29c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 0}
-  NextScene: MainMenu
+  _indexMenu: 1
+  _buttonLoadScene: {fileID: 2336817140020343546}
+  _sceneLoader: {fileID: 0}
 --- !u!1 &7633466110256400300
 GameObject:
   m_ObjectHideFlags: 0

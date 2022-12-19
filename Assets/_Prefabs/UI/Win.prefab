@@ -1124,7 +1124,6 @@ MonoBehaviour:
   - _phaseType: 0
     _isActive: 0
     _delayTime: 0
-  _battleSystem: {fileID: 0}
 --- !u!114 &3191199273679534973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,6 +1140,9 @@ MonoBehaviour:
   _cardRewardPanel: {fileID: 3712333295090345971}
   _increaseButton: {fileID: 592600018505513030}
   _stepsAnimation: {fileID: 3430446195303659521}
+  _demolishAnimations: {fileID: 0}
+  _cellWinAnimations: {fileID: 0}
+  _levelRewarder: {fileID: 0}
 --- !u!114 &3430446195303659521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,6 +1319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d23d7020de3be459162657875c3418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneLoader: {fileID: 0}
 --- !u!1 &1894572644258936232
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2483,7 @@ GameObject:
   - component: {fileID: 954388023001198247}
   - component: {fileID: 4922843941288705128}
   - component: {fileID: 946451316694402528}
-  - component: {fileID: 1114662004272922516}
+  - component: {fileID: 3246731180720025821}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -2591,7 +2594,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1114662004272922516
+--- !u!114 &3246731180720025821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2600,11 +2603,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2928065463912253712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7a095c0ad00b14b8899b88e8c48737, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b94fd18e47023f41b90ab48d04d29c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 0}
-  NextScene: MainMenu
+  _indexMenu: 1
+  _buttonLoadScene: {fileID: 946451316694402528}
+  _sceneLoader: {fileID: 0}
 --- !u!1 &3135452580071551525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,7 +3148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d765ed2bfd1a3c84e9da1bfbb6ed0b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _award: 100
   _button: {fileID: 2361732770709759143}
   _panel: {fileID: 3712333295090345971}
   _text: {fileID: 1366126907008525493}

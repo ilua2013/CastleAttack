@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class RestartScene : MonoBehaviour
+public class LoaderMenu : MonoBehaviour
 {
+    [SerializeField] private int _indexMenu = 1;
     [SerializeField] private Button _buttonLoadScene;
     [SerializeField] private SceneLoader _sceneLoader;
 
@@ -13,7 +13,7 @@ public class RestartScene : MonoBehaviour
     {
         _sceneLoader = FindObjectOfType<SceneLoader>();
 
-        if(_buttonLoadScene == null && TryGetComponent(out Button button))
+        if (_buttonLoadScene == null && TryGetComponent(out Button button))
             _buttonLoadScene = button;
     }
 
@@ -29,13 +29,6 @@ public class RestartScene : MonoBehaviour
 
     private void LoadMenu()
     {
-#if !UNITY_EDITOR
-        YandexSDK.Instance.ShowInterstitial(null, () =>
-        {
-            _sceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        });
-#else
-        _sceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
-#endif
+        _sceneLoader.LoadScene(_indexMenu);
     }
 }

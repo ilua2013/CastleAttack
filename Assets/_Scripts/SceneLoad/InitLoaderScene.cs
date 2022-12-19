@@ -1,14 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Agava.YandexGames;
 
-public class MainMenuLoader : MonoBehaviour
+public class InitLoaderScene : MonoBehaviour
 {
     private const int TutorialIndex = 2;
     private const int MenuIndex = 1;
 
-    [SerializeField] private string _sceneName;
+    [SerializeField] private SceneLoader _sceneLoader;
+
+    private void OnValidate()
+    {
+        _sceneLoader = FindObjectOfType<SceneLoader>();
+    }
 
     private void OnEnable()
     {
@@ -29,6 +36,6 @@ public class MainMenuLoader : MonoBehaviour
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
                 index = MenuIndex;
 
-        SceneManager.LoadScene(index);
+        _sceneLoader.LoadScene(index);
     }
 }
