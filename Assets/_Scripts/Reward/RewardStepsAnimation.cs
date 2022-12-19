@@ -57,7 +57,6 @@ public class RewardStepsAnimation : MonoBehaviour
 
     private IEnumerator AnimateCoins(int award, Action onComplete = null)
     {
-        Debug.Log(award);
         float coins = 0;
 
         while (coins < award)

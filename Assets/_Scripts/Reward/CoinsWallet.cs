@@ -20,10 +20,13 @@ public class CoinsWallet : MonoBehaviour
     {
         if (Saves.HasKey(SaveController.Params.Coins))
             Coins = Saves.GetInt(SaveController.Params.Coins);
+
+        Debug.Log("Awwake" + Coins);
     }
 
     public bool TrySpend(int amount)
     {
+        Debug.Log("TrySp[end");
         int estimated = Coins - amount;
 
         if (estimated < 0)
@@ -44,6 +47,8 @@ public class CoinsWallet : MonoBehaviour
 
     public void Add(int amount, float delay)
     {
+        Debug.Log("Add");
+
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount));
 
