@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class PhaseSwitcher : MonoBehaviour
     private List<IPhaseHandler> _handlers = new List<IPhaseHandler>();
 
     public PhaseType CurrentPhase { get; private set; }
+
+    public event Action<PhaseType> PhaseSwitched;
 
     private void OnValidate()
     {
@@ -119,5 +122,7 @@ public class PhaseSwitcher : MonoBehaviour
 
         foreach (IPhaseHandler handler in _handlers)
             StartCoroutine(handler.SwitchPhase(phaseType));
+
+        PhaseSwitched?.Invoke(phaseType);
     }
 }
