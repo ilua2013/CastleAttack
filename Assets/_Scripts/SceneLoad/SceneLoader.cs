@@ -7,6 +7,11 @@ using TMPro;
 
 public class SceneLoader : MonoBehaviour
 {
+    public const int OpeningIndex = 1;
+    public const int TutorialIndex = 2;
+    public const int MenuIndex = 3;
+    public const int FirstLevelIndex = 4;
+
     [SerializeField] private Image _background;
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private TextMeshProUGUI _loadingPercent;
@@ -19,12 +24,41 @@ public class SceneLoader : MonoBehaviour
         _progressSlider.gameObject.SetActive(false);
     }
 
-    public void LoadScene(int sceneIndex)
+    public void RestartLevel()
+    {
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMenu()
+    {
+        LoadScene(MenuIndex);
+    }
+
+    public void LoadNextLevel()
+    {
+        int levelIndex = OpeningIndex;
+
+        if (Saves.HasKey(SaveController.Params.IsOpeningViewed))
+            if (Saves.GetBool(SaveController.Params.IsOpeningViewed))
+                levelIndex = TutorialIndex;
+
+        if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
+            if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
+                levelIndex = FirstLevelIndex;
+
+        if (Saves.HasKey(SaveController.Params.Level))
+            if (Saves.GetInt(SaveController.Params.Level) + 1 < SceneManager.sceneCountInBuildSettings)
+                levelIndex = Saves.GetInt(SaveController.Params.Level) + 1;
+
+        LoadScene(levelIndex);
+    }
+
+    private void LoadScene(int index)
     {
         _background.enabled = true;
         _progressSlider.gameObject.SetActive(true);
 
-        StartCoroutine(AsyncLoad(sceneIndex));
+        StartCoroutine(AsyncLoad(index));
     }
 
     private IEnumerator AsyncLoad(int sceneIndex)

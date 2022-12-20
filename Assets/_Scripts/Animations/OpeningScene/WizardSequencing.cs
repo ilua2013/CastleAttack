@@ -30,7 +30,6 @@ public class WizardSequencing : MonoBehaviour
     {
         for (int i = 0; i < _sequences.Length; i++)
         {
-            Debug.Log("Do seqeunce");
             _sequences[i]?.Invoke();
 
             yield return new WaitForSeconds(_durations[i]);
