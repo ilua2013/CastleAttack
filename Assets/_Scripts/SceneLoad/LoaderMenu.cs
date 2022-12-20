@@ -29,6 +29,10 @@ public class LoaderMenu : MonoBehaviour
 
     private void LoadMenu()
     {
-        _sceneLoader.LoadScene(_indexMenu);
+#if !UNITY_EDITOR
+        YandexSDK.Instance.ShowInterstitial(null, () => _sceneLoader.LoadMenu());
+#else
+        _sceneLoader.LoadMenu();
+#endif
     }
 }
