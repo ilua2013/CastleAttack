@@ -13,6 +13,7 @@ public static class SaveController
         public const string IsSoundMuted = nameof(IsSoundMuted);
         public const string HandCapacity = nameof(HandCapacity);
         public const string IsTutorialCompleted = nameof(IsTutorialCompleted);
+        public const string IsOpeningViewed = nameof(IsOpeningViewed);
         public const string WizardStats = nameof(WizardStats);
     }
 }

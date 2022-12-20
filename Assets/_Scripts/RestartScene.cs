@@ -6,11 +6,36 @@ using UnityEngine.SceneManagement;
 
 public class RestartScene : MonoBehaviour
 {
-    public void Restart()
+    [SerializeField] private Button _buttonLoadScene;
+    [SerializeField] private SceneLoader _sceneLoader;
+
+    private void OnValidate()
+    {
+        _sceneLoader = FindObjectOfType<SceneLoader>();
+
+        if(_buttonLoadScene == null && TryGetComponent(out Button button))
+            _buttonLoadScene = button;
+    }
+
+    private void OnEnable()
+    {
+        _buttonLoadScene.onClick.AddListener(RestartLevel);
+    }
+
+    private void OnDisable()
+    {
+        _buttonLoadScene.onClick.RemoveListener(RestartLevel);
+    }
+
+    private void RestartLevel()
     {
 #if !UNITY_EDITOR
-        YandexSDK.Instance.ShowInterstitial();
+        YandexSDK.Instance.ShowInterstitial(null, () =>
+        {
+            _sceneLoader.RestartLevel();
+        });
+#else
+        _sceneLoader.RestartLevel();
 #endif
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
