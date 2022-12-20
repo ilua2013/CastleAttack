@@ -9,6 +9,7 @@ using System;
 public class CoinsWalletView : MonoBehaviour
 {
     private const string Reward = "Reward";
+    private const float LerpSpeed = 5f;
 
     [SerializeField] private TMP_Text _text;
     [SerializeField] private CoinsWallet _coinsWallet;
@@ -56,10 +57,11 @@ public class CoinsWalletView : MonoBehaviour
     private IEnumerator Spent(int amount)
     {
         float coins = _current + amount;
+        _animator.SetTrigger(Reward);
 
         while (coins != _current)
         {
-            coins = Mathf.MoveTowards(coins, _current, 0.75f);
+            coins = Mathf.MoveTowards(coins, _current, LerpSpeed * 2);
             _text.text = FormatCost(coins);
 
             yield return new WaitForEndOfFrame();
@@ -72,14 +74,13 @@ public class CoinsWalletView : MonoBehaviour
     {
         float coins = _current - amount;
         float time = 0;
+        _animator.SetTrigger(Reward);
 
         yield return new WaitForSeconds(delay);
 
-        _animator.SetTrigger(Reward);
-
         while (coins != _current)
         {
-            coins = Mathf.MoveTowards(coins, _current, 0.45f);
+            coins = Mathf.MoveTowards(coins, _current, LerpSpeed);
             _text.text = FormatCost(coins);
             time += Time.deltaTime;
 

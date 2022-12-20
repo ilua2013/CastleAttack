@@ -12,6 +12,12 @@ public class RewardCoinsButton : MonoBehaviour
 
     private Button _button;
 
+    private void OnValidate()
+    {
+        if (_wallet == null)
+            _wallet = FindObjectOfType<CoinsWallet>();
+    }
+
     private void Awake()
     {
         _button = GetComponent<Button>();
