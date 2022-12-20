@@ -1,14 +1,13 @@
-﻿///Credit ChoMPHi
-///Sourced from - http://forum.unity3d.com/threads/accordion-type-layout.271818/
+﻿using System.Collections;
 
-
-namespace UnityEngine.UI.Extensions.Tweens
+namespace UnityEngine.UI.Tweens
 {
-    internal interface ITweenValue
+	internal interface ITweenValue
 	{
 		void TweenValue(float floatPercentage);
 		bool ignoreTimeScale { get; }
 		float duration { get; }
+		TweenEasing easing { get; }
 		bool ValidTarget();
 		void Finished();
 	}
