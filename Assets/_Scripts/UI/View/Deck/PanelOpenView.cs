@@ -19,7 +19,7 @@ public class PanelOpenView : MonoBehaviour
             StopCoroutine(_coroutineScale);
 
         gameObject.SetActive(true);
-        _coroutineScale = StartCoroutine(Scale(Vector3.zero, Vector3.one));
+        _coroutineScale = StartCoroutine(Scale(Vector3.zero, Vector3.one * 0.9f));
     }
 
     public void Close()
@@ -35,7 +35,7 @@ public class PanelOpenView : MonoBehaviour
         if (gameObject.activeInHierarchy == false)
             return;
 
-        _coroutineScale = StartCoroutine(Scale(Vector3.one, Vector3.zero, () => gameObject.SetActive(false)));
+        _coroutineScale = StartCoroutine(Scale(Vector3.one * 0.9f, Vector3.zero, () => gameObject.SetActive(false)));
     }
 
     private IEnumerator Scale(Vector3 from, Vector3 to, Action onEnd = null)
