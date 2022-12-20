@@ -19,23 +19,23 @@ public class RestartScene : MonoBehaviour
 
     private void OnEnable()
     {
-        _buttonLoadScene.onClick.AddListener(LoadMenu);
+        _buttonLoadScene.onClick.AddListener(RestartLevel);
     }
 
     private void OnDisable()
     {
-        _buttonLoadScene.onClick.RemoveListener(LoadMenu);
+        _buttonLoadScene.onClick.RemoveListener(RestartLevel);
     }
 
-    private void LoadMenu()
+    private void RestartLevel()
     {
 #if !UNITY_EDITOR
         YandexSDK.Instance.ShowInterstitial(null, () =>
         {
-            _sceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _sceneLoader.RestartLevel();
         });
 #else
-        _sceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _sceneLoader.RestartLevel();
 #endif
     }
 }
