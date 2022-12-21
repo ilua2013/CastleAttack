@@ -84,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (_currentWave >= _waves.Count)
+        if (_currentWave >= _waves.Count || PossibleSpawnUnits(_waves[_currentWave].UnitEnemies.Length) == false)
             return;
 
         for (int i = 0; i < _waves[_currentWave].UnitEnemies.Length; i++)
@@ -122,11 +122,13 @@ public class EnemySpawner : MonoBehaviour
             if (cell.Top.IsFree && cell.Top.TryGetComponent(out UnitSpawner unitSpawner) && unitSpawner.SpawnerType == SpawnerType.Enemy)
             {
                 Spawn(unitSpawner, unitEnemy);
-                break;
+                return;
             }
             else
                 cell = cell.Top;
         }
+
+        RandomSpawn(unitEnemy);
     }
 
     private void RandomSpawn(UnitEnemy unitEnemy)
@@ -151,5 +153,18 @@ public class EnemySpawner : MonoBehaviour
         var spawned = enemySpawner.TryApplyEnemy(unitStep);
 
         Spawned_get?.Invoke(spawned);
+    }
+
+    private bool PossibleSpawnUnits(int countUnit)
+    {
+        int countFreeCell = 0;
+
+        foreach (var item in _cellsEnemySpawner)
+        {
+            if (item.Cell.IsFree)
+                countFreeCell++;
+        }
+
+        return countFreeCell >= countUnit ? true : false;
     }
 }
