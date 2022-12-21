@@ -54,6 +54,8 @@ public class Arrow : MonoBehaviour
             yield return null;
         }
 
+        yield return new WaitForSeconds(0.2f);
+
         onEnd?.Invoke();
 
         Destroy(gameObject, 0.2f);
