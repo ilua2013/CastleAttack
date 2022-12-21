@@ -20,7 +20,7 @@ public class UnitCardView : CardView
     private void OnEnable()
     {
         _card.Used += OnAmountChange;
-        _card.CameBack += OnCardCameBack;
+        //_card.CameBack += OnCardCameBack;
         _card.AmountChanged += OnAmountChange;
         _card.Saved += OnCardSaved;
     }
@@ -28,7 +28,7 @@ public class UnitCardView : CardView
     private void OnDisable()
     {
         _card.Used -= OnAmountChange;
-        _card.CameBack -= OnCardCameBack;
+        //_card.CameBack -= OnCardCameBack;
         _card.AmountChanged -= OnAmountChange;
         _card.Saved -= OnCardSaved;
     }

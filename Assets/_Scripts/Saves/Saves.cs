@@ -209,7 +209,6 @@ public static class Saves
 
     static Saves()
     {
-        Debug.Log("Load Saves");
         string json = "";
 
         if (PlayerPrefs.HasKey("Saving"))

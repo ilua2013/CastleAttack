@@ -24,7 +24,7 @@ public class CardReplenisher : MonoBehaviour
         foreach (UnitCard card in _unitCards)
         {
             card.StageUp += OnCardStageUp;
-            card.CameBack += OnCameBack;
+            //card.CameBack += OnCameBack;
         }
     }
 
@@ -33,7 +33,7 @@ public class CardReplenisher : MonoBehaviour
         foreach (UnitCard card in _unitCards)
         {
             card.StageUp -= OnCardStageUp;
-            card.CameBack -= OnCameBack;
+            //card.CameBack -= OnCameBack;
         }
     }
 
@@ -48,10 +48,10 @@ public class CardReplenisher : MonoBehaviour
     private void OnCardStageUp(UnitCard card, UnitFriend unit)
     {
         card.StageUp -= OnCardStageUp;
-        card.CameBack -= OnCameBack;
+        //card.CameBack -= OnCameBack;
 
         UnitCard newCard = Instantiate(card.NextStage, transform.position, Quaternion.identity, _cardsHand.transform);
-        newCard.Init(0);
+        //newCard.Init(0);
         newCard.gameObject.SetActive(false);
 
         UnitFriend newUnit = Instantiate(unit.Card.NextStage.UnitPrefab, unit.transform.position, Quaternion.identity);
@@ -60,7 +60,7 @@ public class CardReplenisher : MonoBehaviour
         unit.LevelUp(newUnit);
 
         newCard.StageUp += OnCardStageUp;
-        newCard.CameBack += OnCameBack;
+        //newCard.CameBack += OnCameBack;
 
         _cardsHandView.Register(newCard.GetComponent<CardHoverView>());
         _unitCards.Add(newCard);
@@ -103,7 +103,7 @@ public class CardReplenisher : MonoBehaviour
         newCard.gameObject.SetActive(true);
 
         newCard.StageUp += OnCardStageUp;
-        newCard.CameBack += OnCameBack;
+        //newCard.CameBack += OnCameBack;
 
         _unitCards.Add(newCard);
         _cardsHand.CardAdd(newCard, true);

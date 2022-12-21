@@ -60,41 +60,29 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        Debug.Log("Switch phase in CardsSelection");
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
         yield return new WaitForSeconds(phase.Delay);       
 
         if (phase.IsActive)
-        {
-            Debug.Log("DrawOutCards");
-
             DrawOutCards();
-        }
     }
 
     private void DrawOutCards()
     {
         if (!_deckCounter.CanTakeCard)
         {
-            Debug.Log("_deckCounter.CanTakeCard " + _deckCounter.CanTakeCard);
             Passed?.Invoke();
-            gameObject.SetActive(false);
             return;
         }
 
         if (_deck.IsEmpty)
         {
-            Debug.Log("_deck.IsEmpty " + _deck.IsEmpty);
-
             Passed?.Invoke();
-            gameObject.SetActive(false);
             return;
         }
 
         _selectedCards = _deck.TakeRandomCards(_count);
-
-        Debug.Log("_selectedCards " + _selectedCards);
 
         foreach (Card card in _selectedCards)
         {
@@ -115,8 +103,6 @@ public class CardsSelection : MonoBehaviour, IPhaseHandler
         {
             if (_cardsHand.CanTakeCard)
             {
-                Debug.Log("_cardsHand.CanTakeCard " + _cardsHand.CanTakeCard);
-
                 _cardsHand.CardAdd(card, false);
                 _cardsHandView.CardAdd(card);
             }
