@@ -98,7 +98,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public void ReturnToHand()
     {
-        StartCoroutine(DestroyWithDelay(0f, Card.ComeBack));
+        StartCoroutine(DestroyWithDelay(0f, () => Card.ComeBack()));
     }
 
     public void Init(UnitCard card, Cell currentCell)

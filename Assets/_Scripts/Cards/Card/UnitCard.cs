@@ -21,7 +21,7 @@ public class UnitCard : Card
 
     public override Projection ProjectionPrefab => _projectionPrefab;
 
-    public void Init(int amount)
+    public void Init(CombatDeck deck, int amount)
     {
         Amount = amount;
     }
@@ -33,9 +33,10 @@ public class UnitCard : Card
 
     public void ComeBack()
     {
-        if (Amount == 0)
-            CameBack?.Invoke(this);
-
+        Debug.Log("Comeback");
+        //if (Amount == 0)
+        //    CameBack?.Invoke(this);
+        CameBack?.Invoke(this);
         Merge();
     }
 

@@ -288,7 +288,6 @@ public class BattleSystem : MonoBehaviour
             if (i > 0)
             {
                 _nextStepUnit = _unitFriend[i - 1];
-                print(i + " " + _nextStepUnit);
             }
 
             yield return new WaitForSeconds(0.6f);

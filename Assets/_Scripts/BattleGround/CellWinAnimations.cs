@@ -17,8 +17,6 @@ public class CellWinAnimations : MonoBehaviour
     {
         _cellSpawner = GetComponent<CellSpawner>();
         _cells = GetComponentsInChildren<Cell>().ToList();
-
-        Debug.Log("_cells " + _cells);
     }
 
     public void Play(Action onEnd = null)

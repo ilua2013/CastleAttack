@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,15 @@ public class Deck : MonoBehaviour
     public bool IsEmpty => _cards.Count <= 0;
     public virtual DeckType DeckType { get; }
 
+    public event Action<Card> CardAdded;
+
     public void Add(Card card)
     {
         _cards.Add(card);
         card.transform.SetParent(transform);
         card.Save(DeckType);
+
+        CardAdded?.Invoke(card);
     }
 
     public void Remove(Card card)
