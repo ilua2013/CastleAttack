@@ -53,8 +53,11 @@ public class WinPanel : MonoBehaviour
     {
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
 
-        Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
-        Saves.Save();
+        if (SceneManager.GetActiveScene().buildIndex != SceneLoader.TutorialIndex)
+        {
+            Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+            Saves.Save();
+        }
 
         _increaseButton.Init(_levelRewarder.RewardCards);
 

@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(FinishPanel))]
 public class TutorialWinRecorder : MonoBehaviour
 {
-    private FinishPanel _winPanel;
+    [SerializeField] private FinishPanel _winPanel;
+
+    private void OnValidate()
+    {
+        if (_winPanel == null)
+            _winPanel = FindObjectOfType<FinishPanel>();
+    }
 
     private void Awake()
     {
-        _winPanel = GetComponent<FinishPanel>();
         Saves.SetBool(SaveController.Params.IsTutorialCompleted, false);
         Saves.Save();
     }
@@ -26,6 +30,8 @@ public class TutorialWinRecorder : MonoBehaviour
 
     private void OnWinPanelOpened()
     {
+        Debug.Log("Save tutor");
+
         Saves.SetBool(SaveController.Params.IsTutorialCompleted, true);
         Saves.Save();
     }
