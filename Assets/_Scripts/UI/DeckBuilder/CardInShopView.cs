@@ -52,8 +52,10 @@ public class CardInShopView : MonoBehaviour
     public void FillCard(Card card, bool isNew)
     {
         _card = card;
+        _card.Load();
 
         _cost = _costs.GetCost(_card.CardSave);
+        Debug.Log(_cost);
 
         _card.gameObject.SetActive(_card.CardSave.IsAvailable);
         _buyButton.gameObject.SetActive(_card.CardSave.IsAvailable);
@@ -71,7 +73,6 @@ public class CardInShopView : MonoBehaviour
             CardOpened?.Invoke(_card);
 
         CostUpdated?.Invoke(_cost);
-        Debug.Log("Can lvlup " + _card.CardSave.CanLevelUp);
         CardFull?.Invoke(_card.CardSave.CanLevelUp);
     }
 

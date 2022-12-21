@@ -16226,6 +16226,8 @@ GameObject:
   m_Component:
   - component: {fileID: 623902181}
   - component: {fileID: 623902180}
+  - component: {fileID: 623902183}
+  - component: {fileID: 623902182}
   m_Layer: 0
   m_Name: TutorialSeqeunce
   m_TagString: Untagged
@@ -16296,6 +16298,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &623902182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623902179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d78dd004601f949af54be84da9d08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &623902183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623902179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bebcb86d621fea744aa0ca0bd3761bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panel: {fileID: 0}
+  _background: {fileID: 0}
+  _phases: []
 --- !u!1 &624614859
 GameObject:
   m_ObjectHideFlags: 0
@@ -21818,6 +21847,7 @@ MonoBehaviour:
   - {fileID: 1066156502}
   _enemysStart:
   - {fileID: 617569101}
+  - {fileID: 2059807775}
 --- !u!4 &949943199
 Transform:
   m_ObjectHideFlags: 0
@@ -31601,6 +31631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
