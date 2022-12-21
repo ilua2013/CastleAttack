@@ -44,6 +44,16 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     private void OnValidate()
     {
+        if(Fighter.FighterType == FighterType.MainWizzard)
+        {
+            foreach (var item in FindObjectsOfType<Cell>())
+            {
+                if (item.CellIs == CellIs.Wizzard)
+                    Mover.SetStartCell(item);
+            }
+
+            return;
+        }
         RaycastHit raycastHit;
         Physics.Raycast(transform.position + Vector3.up, Vector3.down, out raycastHit, 50, 1, QueryTriggerInteraction.Collide);
 
@@ -53,14 +63,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             transform.position = cell.transform.position;
         }
 
-        if(Fighter.FighterType == FighterType.MainWizzard)
-        {
-            foreach (var item in FindObjectsOfType<Cell>())
-            {
-                if (item.CellIs == CellIs.Wizzard)
-                    Mover.SetStartCell(item);
-            }
-        }
     }
 
     private void Awake()
@@ -309,7 +311,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {
-        if (Fighter.FighterType != FighterType.MainWizzard)
+        if (Fighter.FighterType != FighterType.MainWizzard && Fighter.IsDead == false)
         {
             Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 

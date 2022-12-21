@@ -13,6 +13,11 @@ public class CellView : MonoBehaviour
     private Animator _animator;
     private Cell _cell;
 
+    private void OnValidate()
+    {
+        GetComponent<RectTransform>().localPosition = new Vector3(0, -0.475f, 0);
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
