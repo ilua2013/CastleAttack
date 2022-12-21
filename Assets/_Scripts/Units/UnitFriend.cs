@@ -44,6 +44,18 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
     private void OnValidate()
     {
+        if (Fighter.FighterType == FighterType.MainWizzard)
+        {
+            foreach (var item in FindObjectsOfType<Cell>())
+            {
+                if (item.CellIs == CellIs.Wizzard)
+                    Mover.SetStartCell(item);
+            }
+        }
+
+        if (Fighter.FighterType == FighterType.MainWizzard)
+            return;
+
         RaycastHit raycastHit;
         Physics.Raycast(transform.position + Vector3.up, Vector3.down, out raycastHit, 50, 1, QueryTriggerInteraction.Collide);
 
@@ -51,15 +63,6 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         {
             Mover.SetStartCell(cell);
             transform.position = cell.transform.position;
-        }
-
-        if(Fighter.FighterType == FighterType.MainWizzard)
-        {
-            foreach (var item in FindObjectsOfType<Cell>())
-            {
-                if (item.CellIs == CellIs.Wizzard)
-                    Mover.SetStartCell(item);
-            }
         }
     }
 
