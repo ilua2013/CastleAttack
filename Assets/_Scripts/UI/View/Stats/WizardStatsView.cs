@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class WizardStatsView : MonoBehaviour
 {
-    private const int DamageMax = 10;
-    private const int HealthMax = 10;
-
     private const int DamageCost = 100;
     private const int HealthCost = 100;
 
