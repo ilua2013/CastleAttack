@@ -11,6 +11,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     [field: SerializeField] private DistanceAttack[] _distanceAttackCatapult;
     [field: SerializeField] public Mover Mover { get; private set; }
     [field: SerializeField] public Fighter Fighter { get; private set; }
+    [field: SerializeField] public EnemyStats EnemyStats { get; private set; }
 
     public UnitCard Card { get; private set; }
     public int CurrentStep { get; private set; }
@@ -76,7 +77,10 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         Card = card;
         Mover.Init(this, transform, cell);
-        Fighter.Init(this, transform);
+
+        Fighter.Init(this, transform, 
+            EnemyStats.GetModifyDamage(Fighter.Damage, SaveCastle.CountDead + 1), 
+            EnemyStats.GetModifyHealth(Fighter.MaxHealth, SaveCastle.CountDead + 1));
 
         Inited?.Invoke();
         Initialized = true;
