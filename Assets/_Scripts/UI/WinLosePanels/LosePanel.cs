@@ -21,7 +21,8 @@ public class LosePanel : MonoBehaviour
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>();
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     private void Awake()

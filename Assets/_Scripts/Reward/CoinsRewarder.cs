@@ -14,8 +14,11 @@ public class CoinsRewarder : MonoBehaviour
 
     private void OnValidate()
     {
-        _coinsWallet = FindObjectOfType<CoinsWallet>();
-        _battleSystem = FindObjectOfType<BattleSystem>();
+        if (_coinsWallet == null)
+            _coinsWallet = FindObjectOfType<CoinsWallet>();
+
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     private void OnEnable()
@@ -33,6 +36,7 @@ public class CoinsRewarder : MonoBehaviour
     private void OnFinished()
     {
         ReceivedReward = _reward;
+        Debug.Log("OnFinished");
 
         _coinsWallet.Add(ReceivedReward, 0);
     }
@@ -40,7 +44,7 @@ public class CoinsRewarder : MonoBehaviour
     private void OnFailed()
     {
         ReceivedReward = _reward / 2;
-
-        _coinsWallet.Add(ReceivedReward / 2, 0);
+        Debug.Log("OnFailed " + ReceivedReward);
+        _coinsWallet.Add(ReceivedReward, 0);
     }
 }
