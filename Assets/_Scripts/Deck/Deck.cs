@@ -20,12 +20,18 @@ public class Deck : MonoBehaviour
 
     public event Action<Card> CardAdded;
 
+    protected virtual void RegisterCard(Card card)
+    {
+
+    }
+
     public void Add(Card card)
     {
         _cards.Add(card);
         card.transform.SetParent(transform);
         card.Save(DeckType);
 
+        RegisterCard(card);
         CardAdded?.Invoke(card);
     }
 
