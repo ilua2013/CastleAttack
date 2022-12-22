@@ -55,7 +55,6 @@ public class CardInShopView : MonoBehaviour
         _card.Load();
 
         _cost = _costs.GetCost(_card.CardSave);
-        Debug.Log(_cost);
 
         _card.gameObject.SetActive(_card.CardSave.IsAvailable);
         _buyButton.gameObject.SetActive(_card.CardSave.IsAvailable);

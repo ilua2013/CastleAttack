@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PanelOpenView : MonoBehaviour
 {
+    [SerializeField] private float _scale;
+
     private Coroutine _coroutineScale;
     private bool _isOpened;
 
@@ -19,7 +21,7 @@ public class PanelOpenView : MonoBehaviour
             StopCoroutine(_coroutineScale);
 
         gameObject.SetActive(true);
-        _coroutineScale = StartCoroutine(Scale(Vector3.zero, Vector3.one * 0.9f));
+        _coroutineScale = StartCoroutine(Scale(Vector3.zero, Vector3.one * _scale));
     }
 
     public void Close()
@@ -35,7 +37,7 @@ public class PanelOpenView : MonoBehaviour
         if (gameObject.activeInHierarchy == false)
             return;
 
-        _coroutineScale = StartCoroutine(Scale(Vector3.one * 0.9f, Vector3.zero, () => gameObject.SetActive(false)));
+        _coroutineScale = StartCoroutine(Scale(Vector3.one * _scale, Vector3.zero, () => gameObject.SetActive(false)));
     }
 
     private IEnumerator Scale(Vector3 from, Vector3 to, Action onEnd = null)

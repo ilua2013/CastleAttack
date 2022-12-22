@@ -7,16 +7,15 @@ using UnityEngine.UI;
 
 public class CardInDeckView : MonoBehaviour
 {
-    [SerializeField] private Image _background;
     [SerializeField] private Slider _amountBar;
     [SerializeField] private TMP_Text _amountText;
+
     [SerializeField] private bool _isMoveable;
     [SerializeField] private CardName _cardName;
 
     private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
 
     private Shop _shop;
-    private DeckBuilder _deck;
     private Card _card;
 
     public Card Card => _card;
@@ -25,7 +24,6 @@ public class CardInDeckView : MonoBehaviour
     private void Awake()
     {
         _shop = FindObjectOfType<Shop>();
-        _deck = FindObjectOfType<DeckBuilder>();
     }
 
     private void OnEnable()
@@ -61,9 +59,6 @@ public class CardInDeckView : MonoBehaviour
     {
         _card = null;
 
-        if (Card != null && Card.CardSave.Deck == DeckType.Common)
-            _background.gameObject.SetActive(false);
-
         _amountText.text = "0 / 3";
         _amountBar.value = 0;
     }
@@ -90,18 +85,12 @@ public class CardInDeckView : MonoBehaviour
 
         _amountBar.value = cardSave.Amount;
         _amountText.text = $"{cardSave.Amount} / {cardSave.AmountToImprove}";
-
-        if (Card != null && Card.CardSave.Deck == DeckType.Combat)
-            _background.gameObject.SetActive(true);
-
     }
 
     private void SetHierarchy(Transform card)
     {
         card.SetParent(transform);
         card.SetAsFirstSibling();
-
-        _background.transform.SetAsFirstSibling();
     }
 
     private void Transformation(Transform card, bool smooth)
