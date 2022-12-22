@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class WizardAnimator : MonoBehaviour
 {
-    private Animator _animator;
-    private UnitFriend _unitFriend;
+    [SerializeField] private SpellsRecorder _spellsRecorder;
+    [SerializeField] private CardsSelection _cardSelection;
+    [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private Animator _animator;
 
-    private SpellSpawner[] _spellSpawners;
+    private UnitFriend _unitFriend;
 
     enum State
     {
@@ -16,34 +18,52 @@ public class WizardAnimator : MonoBehaviour
         Damage,
         Death,
         Attack,
+        Battle,
+        Win,
+        CardsTake,
+    }
+
+    private void OnValidate()
+    {
+        if (_spellsRecorder == null)
+            _spellsRecorder = FindObjectOfType<SpellsRecorder>();
+
+        if (_cardSelection == null)
+            _cardSelection = FindObjectOfType<CardsSelection>();
+
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
         _unitFriend = GetComponent<UnitFriend>();
-
-        _spellSpawners = FindObjectsOfType<SpellSpawner>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        foreach (SpellSpawner spawner in _spellSpawners)
+        foreach (SpellSpawner spawner in _spellsRecorder.SpellSpawners)
             spawner.Cast_get += OnSpellCast;
 
         _unitFriend.Fighter.Damaged += OnDamaged;
         _unitFriend.Fighter.Died += OnDie;
         _unitFriend.Fighter.Attacked_get += OnAttacked;
+        _cardSelection.CardSelected += OnCardSelected;
+        _battleSystem.BattleStarted += OnBattleStarted;
+        _battleSystem.Win += OnWin;
     }
 
     private void OnDisable()
     {
-        foreach (SpellSpawner spawner in _spellSpawners)
+        foreach (SpellSpawner spawner in _spellsRecorder.SpellSpawners)
             spawner.Cast_get -= OnSpellCast;
 
         _unitFriend.Fighter.Damaged -= OnDamaged;
         _unitFriend.Fighter.Died -= OnDie;
         _unitFriend.Fighter.Attacked_get -= OnAttacked;
+        _cardSelection.CardSelected -= OnCardSelected;
+        _battleSystem.BattleStarted -= OnBattleStarted;
+        _battleSystem.Win -= OnWin;
     }
 
     private void OnSpellCast(Vector3 place, Spell spell)
@@ -64,5 +84,21 @@ public class WizardAnimator : MonoBehaviour
     private void OnDie()
     {
         _animator.Play(State.Death.ToString());
+    }
+
+    private void OnCardSelected()
+    {
+        Debug.Log("Card selected anim");
+        _animator.Play(State.CardsTake.ToString());
+    }
+
+    private void OnBattleStarted()
+    {
+        _animator.Play(State.Battle.ToString());
+    }
+
+    private void OnWin()
+    {
+        _animator.Play(State.Win.ToString());
     }
 }

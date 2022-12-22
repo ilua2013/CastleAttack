@@ -8,6 +8,7 @@ public class SpellsRecorder : MonoBehaviour
     private SpellSpawner[] _spellSpawners;
 
     public int ActiveSpells { get; private set; }
+    public SpellSpawner[] SpellSpawners => _spellSpawners;
 
     public event Action<Spell> WasSpellCast;
 
