@@ -113,7 +113,7 @@ public class CardInDeckView : MonoBehaviour
     {
         if (card.Name == _cardName)
         {
-            Debug.Log(_card);
+            _card = card;
             _card.Save(card.CardSave);
 
             FillCard(_card, false);

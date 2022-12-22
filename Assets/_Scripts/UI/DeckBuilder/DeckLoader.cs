@@ -16,7 +16,7 @@ public class DeckLoader : MonoBehaviour
         _views = GetComponentsInChildren<CardInDeckView>().ToList();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         _cards = new List<Card>(_deck.Cards);
 
