@@ -41,6 +41,6 @@ public class EnemySpawnerUI : MonoBehaviour
 
     private string GetWaveCount()
     {
-        return $"{_initialText} " + _enemySpawner.CurrentWave + 1 + "/" + _enemySpawner.WaveCount + 1;
+        return $"{_initialText} {_enemySpawner.CurrentWave + 1}/{_enemySpawner.WaveCount + 1}";
     }
 }

@@ -16,7 +16,7 @@ public class OpeningSceneLoader : MonoBehaviour
         Saves.Save();
 
 #if !UNITY_EDITOR
-        YandexSDK.Instance.ShowInterstitial(null, () => _sceneLoader.LoadNextLevel());
+        _sceneLoader.LoadNextLevel();
 #else
         _sceneLoader.LoadNextLevel();
 #endif
