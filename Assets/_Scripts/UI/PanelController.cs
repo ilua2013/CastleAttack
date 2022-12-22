@@ -16,6 +16,7 @@ public class PanelController : MonoBehaviour
 
     private void OnEnable()
     {
+        Open();
         _openButton.onClick.AddListener(Open);
 
         _closeButtonVertical.onClick.AddListener(VerticalClose);
