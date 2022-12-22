@@ -97,7 +97,7 @@ public class Fighter
             {
                 isFatal = fighter.TakeDamage(this);
                 onEnd?.Invoke();
-            });
+            }, 0.5f);
 
             Attacked?.Invoke();
             Attacked_get?.Invoke(fighter.transform);
