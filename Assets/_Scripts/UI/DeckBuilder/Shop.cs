@@ -21,9 +21,6 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_cards.Count > 0)
-            FillCards(false);
-
         foreach (CardInShopView view in _views)
         {
             view.CardBought += OnCardBought;
