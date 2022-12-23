@@ -22,7 +22,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public event Action<CardHoverView, int> Used;
 
     public Vector3 StartPosition { get; private set; }
-    public Vector3 StartScaling { get; private set; } = new Vector3(1.5f, 1.5f, 1.5f);
+    public Vector3 StartScaling { get; private set; } = new Vector3(2f, 2f, 2f);
     public int StartIndex { get; private set; }
     public bool CanHover { get; private set; } = true;
     public Card Card => _card;
