@@ -40,7 +40,7 @@ public class Shop : MonoBehaviour
     private void Start()
     {
         foreach (Card card in _deck.Cards)
-            _cards.Add(Instantiate(card));
+            _cards.Add(card);
 
         FillCards(false);
     }

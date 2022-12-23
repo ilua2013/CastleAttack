@@ -19,4 +19,5 @@ public enum CardName
     Zipp3,
     Zipp5,
     Roots,
+    Hand,
 }
