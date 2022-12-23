@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FloorDesert 2
+  m_Name: baseForest 2
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ValidKeywords:
-  - _CELPRIMARYMODE_SINGLE
   - _TEXTUREBLENDINGMODE_MULTIPLY
   - _UNITYSHADOWMODE_MULTIPLY
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _CELPRIMARYMODE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -51,13 +51,9 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ExtraTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 35fb00f3e5a1d784aac0fda914637717, type: 3}
+        m_Scale: {x: 3, y: 6}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -71,20 +67,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SubsurfaceTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _BillboardKwToggle: 0
-    - _BillboardShadowFade: 0.5
     - _Blend: 0
     - _BumpScale: 1
     - _CelExtraEnabled: 0
     - _CelNumSteps: 3
-    - _CelPrimaryMode: 1
+    - _CelPrimaryMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -104,42 +94,36 @@ Material:
     - _GradientCenterY: 0
     - _GradientEnabled: 0
     - _GradientSize: 10
-    - _HueVariationKwToggle: 0
-    - _LightContribution: 1
+    - _LightContribution: 0
     - _LightmapDirectionPitch: 0
     - _LightmapDirectionYaw: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NormalMapKwToggle: 0
     - _OcclusionStrength: 1
     - _OverrideLightmapDir: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _RimEnabled: 0
-    - _SelfShadingSize: 0.772
+    - _SelfShadingSize: 0.345
     - _SelfShadingSizeExtra: 0.6
-    - _ShadowEdgeSize: 0.176
+    - _ShadowEdgeSize: 0
     - _ShadowEdgeSizeExtra: 0.05
     - _SmoothnessTextureChannel: 0
     - _SpecularEnabled: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _SubsurfaceIndirect: 0.25
-    - _SubsurfaceKwToggle: 0
     - _Surface: 0
     - _TextureBlendingMode: 0
     - _TextureImpact: 1
-    - _TwoSided: 2
     - _UVSec: 0
     - _UnityShadowMode: 1
-    - _UnityShadowPower: 0.503
-    - _UnityShadowSharpness: 3.15
+    - _UnityShadowPower: 0.737
+    - _UnityShadowSharpness: 1
     - _VertexColorsEnabled: 0
-    - _WindQuality: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.3962264, g: 0.36809507, b: 0.31174794, a: 1}
-    - _ColorDim: {r: 0.20000002, g: 0.20000002, b: 0.20000002, a: 1}
+    - _Color: {r: 0.25856, g: 0.27008, b: 0.32, a: 1}
+    - _ColorDim: {r: 0.9254901, g: 0.78823507, b: 0.40784332, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
@@ -147,8 +131,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatRimColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
-    - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UnityShadowColor: {r: 0.58599997, g: 0.4153596, b: 0.34280998, a: 1}
+    - _UnityShadowColor: {r: 0.25786802, g: 0.49400002, b: 0.33657873, a: 1}
   m_BuildTextureStacks: []
