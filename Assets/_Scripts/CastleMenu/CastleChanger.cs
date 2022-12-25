@@ -22,6 +22,7 @@ public class CastleChanger : MonoBehaviour
     private void OnValidate()
     {
         _coinsWallet = FindObjectOfType<CoinsWallet>();
+        _animatorViewUpUnit.gameObject.SetActive(false);
     }
 
     private void Awake()
