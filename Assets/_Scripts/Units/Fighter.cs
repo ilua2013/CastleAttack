@@ -16,10 +16,12 @@ public class Fighter
 
     private IUnit _unit;
     private Vector3 _startRotate;
-    private float _timeToDefaultRotate = 1f;
-    private float _timeToMakeDamage = 0.35f;
-    private float _speedRotate = 3f;
     private int _health = 1;
+
+    private const float _timeToDefaultRotate = 1f;
+    private const float _timeToMakeDamage = 0.32f;
+    private const float _delayFinishAttack = 0.7f;
+    private const float _speedRotate = 3f;
 
     public bool IsDamaged { get; set; }
     public bool IsSkipped { get; private set; }
@@ -95,8 +97,10 @@ public class Fighter
             Arrow arrow = _unit.SpawnArrow(_arrow, transform);
             arrow.FlyTo(fighter.transform.position, () =>
             {
-                isFatal = fighter.TakeDamage(this);
                 onEnd?.Invoke();
+            }, () =>
+            {
+                isFatal = fighter.TakeDamage(this);
             }, 0.5f);
 
             Attacked?.Invoke();
@@ -113,8 +117,10 @@ public class Fighter
 
             arrow.FlyTo(fighter.transform.position, () =>
             {
-                isFatal = fighter.TakeDamage(this);
                 onEnd?.Invoke();
+            },() =>
+            {
+                isFatal = fighter.TakeDamage(this);
             }, 0.6f);
         }
         else
@@ -141,6 +147,7 @@ public class Fighter
     {
         Died_get?.Invoke(this);
         Died?.Invoke();
+        EffectDied?.Invoke();
     }
 
     public bool TakeDamage(Fighter fighter)
@@ -173,7 +180,6 @@ public class Fighter
         if (_health <= 0)
         {
             Die();
-            EffectDied?.Invoke();
 
             return true;
         }
@@ -203,6 +209,13 @@ public class Fighter
 
         onRotatedAttack?.Invoke();
         
+        if(transform.eulerAngles == defaultRotate)
+        {
+            yield return new WaitForSeconds(_delayFinishAttack);
+            onFinish?.Invoke();
+            yield break;
+        }
+
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
 
         while (transform.eulerAngles != defaultRotate)

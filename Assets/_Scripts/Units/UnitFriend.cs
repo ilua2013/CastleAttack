@@ -112,7 +112,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         if (Fighter.FighterType != FighterType.MainWizzard)
         {
-            transform.forward = new Vector3(0,0,-1);
+            //transform.forward = new Vector3(0,0,-1);
             RotatedToWizzard?.Invoke();
         }
 
@@ -169,7 +169,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
 
         if (enemy != null)
         {
-            if (Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f))))
+            if (Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0f))))
                 EnemyKilled?.Invoke(enemy);
 
             UnitSteped?.Invoke(_doingStep);
@@ -179,11 +179,10 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         }
         else if (Mover.CanMove(Mover.CurrentCell.Top))
         {
-            Mover.Move(Mover.CurrentCell.Top, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
+            Mover.Move(Mover.CurrentCell.Top, () => StartCoroutine(FinishStep(FinishedStep, 0f)));
 
             UnitSteped?.Invoke(_doingStep);
             Moved?.Invoke();
-            StartCoroutine(FinishStep(FinishedStep, 0.6f));
 
             CurrentStep--;
         }
@@ -240,7 +239,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     private void OnDie()
     {
         Mover.Die();
-
+        print("Dies friend");
         if (Fighter.FighterType == FighterType.MainWizzard)
         {
             GamesStatistics.RegisterFriendKill();
@@ -316,7 +315,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
             Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
             yield return new WaitForSeconds(phase.Delay);
-
+            yield break;
             if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
             {
                 if (_coroutineRotateTo != null)

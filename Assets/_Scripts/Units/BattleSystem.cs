@@ -173,7 +173,7 @@ public class BattleSystem : MonoBehaviour
             _enemyFinishStep = false;
             _spellFinishStep = false;
 
-            yield return new WaitForSeconds(0.2f);
+            //yield return new WaitForSeconds(0.2f);
 
             StartCoroutine(DoStepSpell());
 
@@ -186,7 +186,7 @@ public class BattleSystem : MonoBehaviour
                 CheckFinishStepSpells();
             }
 
-            yield return new WaitForSeconds(0.2f);
+            //yield return new WaitForSeconds(0.2f);
 
             StartCoroutine(DoStepFriend());
 
@@ -199,7 +199,7 @@ public class BattleSystem : MonoBehaviour
                 CheckFinishStepFriend();
             }
 
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
 
             StartCoroutine(DoStepEnemy());
 
@@ -290,10 +290,12 @@ public class BattleSystem : MonoBehaviour
                 _nextStepUnit = _unitFriend[i - 1];
             }
 
-            yield return new WaitForSeconds(0.1f);
 
             while (_unitFriend.Count > i && _unitFriend[i].DoingStep == true)
+            {
+                print("Doing step " + _unitFriend[i].gameObject.name);
                 yield return null;
+            }
         }
 
         _doStepFriend = false;
@@ -314,8 +316,6 @@ public class BattleSystem : MonoBehaviour
 
             if(i > 0)
                 _nextStepUnit = _unitEnemy[i - 1];
-
-            yield return new WaitForSeconds(0.6f);
 
             while (_unitEnemy.Count > i && _unitEnemy[i].DoingStep == true)
                 yield return null;

@@ -115,7 +115,7 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 
         if (enemy != null)
         {
-            Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
+            Fighter.Attack(enemy.Fighter, () => StartCoroutine(FinishStep(FinishedStep, 0f)));
 
             UnitSteped?.Invoke(_doingStep);
             Attacked?.Invoke();
@@ -124,12 +124,10 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
         }
         else if (Mover.CanMove(Mover.CurrentCell.Bot))
         {
-            Mover.Move(Mover.CurrentCell.Bot, () => StartCoroutine(FinishStep(FinishedStep, 0.2f)));
+            Mover.Move(Mover.CurrentCell.Bot, () => StartCoroutine(FinishStep(FinishedStep, 0f)));
 
             UnitSteped?.Invoke(_doingStep);
             Moved?.Invoke();
-
-            StartCoroutine(FinishStep(FinishedStep, 0.7f));
 
             CurrentStep--;
         }
@@ -191,8 +189,9 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
+        print("Dies enemy");
 
-        if(Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
+        if (Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
         {
             GamesStatistics.RegisterEnemyKill();
             LevelUppedTutorial?.Invoke();

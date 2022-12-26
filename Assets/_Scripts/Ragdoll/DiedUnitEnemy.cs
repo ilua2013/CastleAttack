@@ -4,7 +4,8 @@ using UnityEngine;
 public class DiedUnitEnemy : MonoBehaviour
 {
     [SerializeField] private UnitEnemy _unitEnemy;
-    [SerializeField] private float _timeDelay;
+
+    private float _timeDelay = 0.55f;
 
     private void OnEnable()
     {
