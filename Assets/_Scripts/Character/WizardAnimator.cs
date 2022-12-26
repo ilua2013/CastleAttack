@@ -50,7 +50,6 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend.Fighter.Attacked_get += OnAttacked;
         _cardSelection.CardSelected += OnCardSelected;
         _battleSystem.BattleStarted += OnBattleStarted;
-        _battleSystem.Win += OnWin;
     }
 
     private void OnDisable()
@@ -63,7 +62,6 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend.Fighter.Attacked_get -= OnAttacked;
         _cardSelection.CardSelected -= OnCardSelected;
         _battleSystem.BattleStarted -= OnBattleStarted;
-        _battleSystem.Win -= OnWin;
     }
 
     private void OnSpellCast(Vector3 place, Spell spell)
