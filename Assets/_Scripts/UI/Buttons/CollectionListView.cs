@@ -67,7 +67,7 @@ public class CollectionListView : MonoBehaviour
             _scrollRect1.normalizedPosition = Vector3.Lerp(_scrollRect1.normalizedPosition, to, LerpTime * Time.deltaTime);
             _scrollRect2.normalizedPosition = Vector3.Lerp(_scrollRect2.normalizedPosition, to, LerpTime * Time.deltaTime);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _scrollRect1.normalizedPosition = to;

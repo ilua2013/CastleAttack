@@ -100,7 +100,7 @@ public class CardMovement : MonoBehaviour
         while (Vector3.Distance(transform.localScale, to) > DistanceDelta)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, to, LerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         transform.localScale = to;

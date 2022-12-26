@@ -56,7 +56,7 @@ public class WizardProfile : MonoBehaviour
         while (Vector3.Distance(_panel.localScale, to) > distanceDelta)
         {
             _panel.localScale = Vector3.MoveTowards(_panel.localScale, to, lerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         if (!active)

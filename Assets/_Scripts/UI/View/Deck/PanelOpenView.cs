@@ -50,7 +50,7 @@ public class PanelOpenView : MonoBehaviour
         while (Vector3.Distance(transform.localScale, to) > distanceDelta)
         {
             transform.localScale = Vector3.MoveTowards(transform.localScale, to, lerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         transform.localScale = to;

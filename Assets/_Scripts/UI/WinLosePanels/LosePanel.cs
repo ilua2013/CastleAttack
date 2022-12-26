@@ -56,7 +56,7 @@ public class LosePanel : MonoBehaviour
             coins = Mathf.MoveTowards(coins, award, 1f);
             _coins.text = FormatCost(coins);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _coins.text = FormatCost(award);
