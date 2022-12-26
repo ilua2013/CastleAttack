@@ -13,7 +13,7 @@ public class CardInDeckView : MonoBehaviour
     [SerializeField] private bool _isMoveable;
     [SerializeField] private CardName _cardName;
 
-    private readonly Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
+    private readonly Vector3 _initialScale = new Vector3(2f, 2f, 2f);
 
     private Shop _shop;
     private Card _card;

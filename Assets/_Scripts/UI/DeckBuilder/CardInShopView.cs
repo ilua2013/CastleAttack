@@ -7,9 +7,10 @@ using UnityEngine.UI;
 
 public class CardInShopView : MonoBehaviour
 {
-    private readonly Vector3 _initialScale = new Vector3(1f, 1f, 1f);
+    private readonly Vector3 _initialScale = new Vector3(2f, 2f, 2f);
 
     [SerializeField] private Button _buyButton;
+    [SerializeField] private Transform _amountBar;
     [SerializeField] private GameObject _openCardButton;
     [SerializeField] private Image _buyButtonImage;
     [SerializeField] private Color _inactiveColor;
@@ -120,6 +121,7 @@ public class CardInShopView : MonoBehaviour
         card.SetParent(transform);
         card.SetAsLastSibling();
         _buyButton.transform.SetAsLastSibling();
+        _amountBar.SetAsLastSibling();
     }
 
     private void Transformation(Transform card)
