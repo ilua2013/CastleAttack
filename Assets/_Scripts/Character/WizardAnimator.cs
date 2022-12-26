@@ -15,7 +15,7 @@ public class WizardAnimator : MonoBehaviour
     {
         SpawnCast,
         SpellCast,
-        Damage,
+        Hit,
         Death,
         Attack,
         Battle,
@@ -71,7 +71,7 @@ public class WizardAnimator : MonoBehaviour
 
     private void OnDamaged(int damage)
     {
-        _animator.Play(State.Damage.ToString());
+        _animator.Play(State.Hit.ToString());
     }
 
     private void OnAttacked(Transform target)

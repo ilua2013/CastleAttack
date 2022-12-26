@@ -108,20 +108,21 @@ public class Fighter
         }
         else if (_type == FighterType.MainWizzard)
         {
-
             Attacked?.Invoke();
             Attacked_get?.Invoke(fighter.transform);
 
-            Transform spawnArrow = _spawnArrow == null ? transform : _spawnArrow;
-            Arrow arrow = _unit.SpawnArrow(_arrow, spawnArrow);
+            _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
 
-            arrow.FlyTo(fighter.transform.position, () =>
-            {
-                onEnd?.Invoke();
-            },() =>
-            {
-                isFatal = fighter.TakeDamage(this);
-            }, 0.6f);
+            //Transform spawnArrow = _spawnArrow == null ? transform : _spawnArrow;
+            //Arrow arrow = _unit.SpawnArrow(_arrow, spawnArrow);
+
+            //arrow.FlyTo(fighter.transform.position, () =>
+            //{
+            //    onEnd?.Invoke();
+            //},() =>
+            //{
+            //    isFatal = fighter.TakeDamage(this);
+            //}, 0.6f);
         }
         else
         {
@@ -198,10 +199,13 @@ public class Fighter
         else
             defaultRotate = new Vector3(0, 180, 0);
 
-        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+        if (FighterType != FighterType.MainWizzard)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
-            yield return null;
+            while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+            {
+                transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+                yield return null;
+            }
         }
 
         RotatedToAttack?.Invoke();
@@ -218,10 +222,13 @@ public class Fighter
 
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
 
-        while (transform.eulerAngles != defaultRotate)
+        if (FighterType != FighterType.MainWizzard)
         {
-            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
-            yield return null;
+            while (transform.eulerAngles != defaultRotate)
+            {
+                transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
+                yield return null;
+            }
         }
 
         onFinish?.Invoke();
