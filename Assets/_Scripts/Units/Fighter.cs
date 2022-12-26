@@ -20,7 +20,7 @@ public class Fighter
 
     private const float _timeToDefaultRotate = 1f;
     private const float _timeToMakeDamage = 0.32f;
-    private const float _delayFinishAttack = 0.7f;
+    private const float _delayFinishAttack = 0.75f;
     private const float _speedRotate = 3f;
 
     public bool IsDamaged { get; set; }

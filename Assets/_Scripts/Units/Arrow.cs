@@ -56,7 +56,7 @@ public class Arrow : MonoBehaviour
 
         onFlyed?.Invoke();
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.75f);
 
         onEnd?.Invoke();
 

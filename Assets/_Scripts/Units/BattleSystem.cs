@@ -173,7 +173,7 @@ public class BattleSystem : MonoBehaviour
             _enemyFinishStep = false;
             _spellFinishStep = false;
 
-            //yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.15f);
 
             StartCoroutine(DoStepSpell());
 
@@ -227,6 +227,8 @@ public class BattleSystem : MonoBehaviour
         while (CheckHaveStep(true,false) && _doStep == true)
         {
             _enemyFinishStep = false;
+
+            yield return new WaitForSeconds(0.15f);
 
             StartCoroutine(DoStepEnemy());
 
