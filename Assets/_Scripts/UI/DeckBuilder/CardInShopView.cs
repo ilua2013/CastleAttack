@@ -31,6 +31,7 @@ public class CardInShopView : MonoBehaviour
     public event Action<Card> CardOpened;
     public event Action<int> CostUpdated;
     public event Action<bool> CardFull;
+    public event Action<Card> Inited;
 
     private void Awake()
     {
@@ -57,9 +58,10 @@ public class CardInShopView : MonoBehaviour
 
         _cost = _costs.GetCost(_card.CardSave);
 
-        _card.gameObject.SetActive(_card.CardSave.IsAvailable);
+        _card.gameObject.SetActive(true);
         _buyButton.gameObject.SetActive(_card.CardSave.IsAvailable);
         _openCardButton.gameObject.SetActive(!_card.CardSave.IsAvailable);
+        _openCardButton.transform.SetAsLastSibling();
 
         _card.Activate(_isMoveable);
 
@@ -74,6 +76,7 @@ public class CardInShopView : MonoBehaviour
 
         CostUpdated?.Invoke(_cost);
         CardFull?.Invoke(_card.CardSave.CanLevelUp);
+        Inited?.Invoke(_card);
     }
 
     private void OnBuyClick()
@@ -119,9 +122,9 @@ public class CardInShopView : MonoBehaviour
     private void SetHierarchy(Transform card)
     {
         card.SetParent(transform);
-        card.SetAsLastSibling();
-        _buyButton.transform.SetAsLastSibling();
-        _amountBar.SetAsLastSibling();
+        //card.SetAsLastSibling();
+        //_buyButton.transform.SetAsLastSibling();
+        //_amountBar.SetAsLastSibling();
     }
 
     private void Transformation(Transform card)

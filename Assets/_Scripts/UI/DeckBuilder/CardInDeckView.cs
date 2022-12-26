@@ -66,7 +66,7 @@ public class CardInDeckView : MonoBehaviour
     public void FillCard(Card card, bool smooth)
     {
         _card = card;
-        _card.gameObject.SetActive(_card.CardSave.IsAvailable);
+        _card.gameObject.SetActive(true);
         _amountBar.gameObject.SetActive(_card.CardSave.IsAvailable);
         _card.Activate(_isMoveable);
 
@@ -90,7 +90,7 @@ public class CardInDeckView : MonoBehaviour
     private void SetHierarchy(Transform card)
     {
         card.SetParent(transform);
-        card.SetAsFirstSibling();
+        //card.SetAsFirstSibling();
     }
 
     private void Transformation(Transform card, bool smooth)
