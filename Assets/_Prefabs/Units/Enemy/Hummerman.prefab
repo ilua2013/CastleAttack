@@ -185,15 +185,9 @@ MonoBehaviour:
     _spawnArrow: {fileID: 0}
   <EnemyStats>k__BackingField:
     _stats:
-    - _castle: 3
+      _castle: 4
       _extraDamage: 1
       _extraHealth: 1
-    - _castle: 4
-      _extraDamage: 2
-      _extraHealth: 2
-    - _castle: 5
-      _extraDamage: 3
-      _extraHealth: 3
 --- !u!114 &3020661552546579867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2275,6 +2269,22 @@ PrefabInstance:
     - target: {fileID: 19961850, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19961850, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19961850, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19961850, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
+      propertyPath: m_VertexStreams.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19961850, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
+      propertyPath: m_VertexStreams.Array.data[2]
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 19983730, guid: d16221e794fe16e4e8994a7f8c770561, type: 3}
       propertyPath: m_Materials.Array.size

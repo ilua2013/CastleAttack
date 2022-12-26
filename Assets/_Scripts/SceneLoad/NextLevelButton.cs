@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class NextLevelButton : MonoBehaviour
 {
     [SerializeField] private SceneLoader _sceneLoader;
+    [SerializeField] private bool _showAD = true;
 
     public Button Button { get; private set; }
 
@@ -38,9 +39,11 @@ public class NextLevelButton : MonoBehaviour
     private void OnClick()
     {
         NextLevelLoaded?.Invoke();
-
 #if !UNITY_EDITOR
-        YandexSDK.Instance.ShowInterstitial(null, () => _sceneLoader.LoadNextLevel());
+        if (_showAD)
+            YandexSDK.Instance.ShowInterstitial(null, () => _sceneLoader.LoadNextLevel());
+        else
+            _sceneLoader.LoadNextLevel();
 #else
         _sceneLoader.LoadNextLevel();
 #endif

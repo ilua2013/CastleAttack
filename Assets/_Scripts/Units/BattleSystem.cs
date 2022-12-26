@@ -290,7 +290,7 @@ public class BattleSystem : MonoBehaviour
                 _nextStepUnit = _unitFriend[i - 1];
             }
 
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.1f);
 
             while (_unitFriend.Count > i && _unitFriend[i].DoingStep == true)
                 yield return null;

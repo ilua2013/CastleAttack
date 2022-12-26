@@ -15,17 +15,20 @@ public class CastleChanger : MonoBehaviour
     [SerializeField] private float _delayDamage = 1.5f;
     [SerializeField] private float _delayChangeCastle = 5f;
 
+    [SerializeField] private Animator _animatorViewUpUnit;
     private Castle _castle;
     private Animator _animator;
 
     private void OnValidate()
     {
         _coinsWallet = FindObjectOfType<CoinsWallet>();
+        _animatorViewUpUnit.gameObject.SetActive(false);
     }
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _animatorViewUpUnit.gameObject.SetActive(false);
 
         if (SaveCastle.TypeCastle == -1)
         {
@@ -71,6 +74,12 @@ public class CastleChanger : MonoBehaviour
         SaveCastle.TypeCastle = (CastleType)SaveCastle.TypeCastle == CastleType.Var5 ? 0 : SaveCastle.TypeCastle + 1;
 
         SpawnNewCastle(_parentNewCastle);
+
+        if (SaveCastle.TypeCastle == 4)
+        {
+            _animatorViewUpUnit.gameObject.SetActive(true);
+            _animatorViewUpUnit.SetTrigger("Show");
+        }
 
         _animator.SetTrigger("ChangeCastle");
     }

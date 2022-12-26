@@ -63,6 +63,9 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator AsyncLoad(int sceneIndex)
     {
+        if (_load != null)
+            yield break; 
+
         _load = SceneManager.LoadSceneAsync(sceneIndex);
 
         _load.allowSceneActivation = false;
@@ -75,5 +78,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         _load.allowSceneActivation = true;
+
+        _load = null;
     }
 }

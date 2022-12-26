@@ -59,6 +59,9 @@ public class Castle : MonoBehaviour
         _animator.SetTrigger("Hit");
         _currentHealth -= damage;
 
+        if (_currentHealth < 0)
+            _currentHealth = 0;
+
         TryEnableParticle();
 
         SaveCastle.Health = _currentHealth;

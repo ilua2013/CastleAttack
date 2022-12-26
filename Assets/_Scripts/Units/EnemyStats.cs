@@ -7,22 +7,20 @@ using System.Linq;
 [Serializable]
 public class EnemyStats
 {
-    [SerializeField] private List<ModifyStats> _stats;
+    [SerializeField] private ModifyStats _stats;
 
     public int GetModifyDamage(int baseDamage, int castle)
     {
-        foreach (ModifyStats damage in _stats)
-            if (damage.Castle == castle)
-                return damage.ExtraDamage + baseDamage;
+        if (_stats.Castle <= castle)
+            return _stats.ExtraDamage + baseDamage;
 
         return baseDamage;
     }
 
     public int GetModifyHealth(int baseHealth, int castle)
     {
-        foreach (ModifyStats damage in _stats)
-            if (damage.Castle == castle)
-                return damage.ExtraHealth + baseHealth;
+        if (_stats.Castle <= castle)
+            return _stats.ExtraHealth + baseHealth;
 
         return baseHealth;
     }
