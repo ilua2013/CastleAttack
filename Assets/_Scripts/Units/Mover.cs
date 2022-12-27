@@ -8,8 +8,6 @@ public class Mover
 {
     [SerializeField] private Cell _startCell;
     [SerializeField] private bool _canMove = true;
-    [Header("Rotate Params")]
-    [SerializeField] private float _speedRotateToWizzard;
 
     private IUnit _unit;
     private Cell _currentCell;
