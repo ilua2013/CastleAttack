@@ -10,7 +10,7 @@ public class CardCost
 
     public int GetCost(CardSave save)
     {
-        if (_costs.Length > save.Amount - 1)
+        if (_costs.Length > save.Amount - 1 && save.Amount - 1 >= 0)
             return _costs[save.Amount - 1];
         else
             return _costs.Length;

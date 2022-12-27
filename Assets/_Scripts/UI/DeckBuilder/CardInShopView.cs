@@ -145,6 +145,6 @@ public class CardInShopView : MonoBehaviour
 
     private bool IsNotUnit()
     {
-        return CardName != CardName.Hand && CardName != CardName.Ork;
+        return CardName != CardName.Hand && CardName != CardName.Ork && CardName != CardName.Snake && CardName != CardName.Bat;
     }
 }
