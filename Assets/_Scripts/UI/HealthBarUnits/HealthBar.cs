@@ -89,7 +89,7 @@ public class HealthBar : MonoBehaviour
         while (MathF.Abs(_bar.value - to) > LerpError)
         {
             _bar.value = Mathf.MoveTowards(_bar.value, to, time * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
     }
 

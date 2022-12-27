@@ -64,7 +64,7 @@ public class CoinsWalletView : MonoBehaviour
             coins = Mathf.MoveTowards(coins, _current, LerpSpeed * 2);
             _text.text = FormatCost(coins);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _text.text = FormatCost(_current);
@@ -84,7 +84,7 @@ public class CoinsWalletView : MonoBehaviour
             _text.text = FormatCost(coins);
             time += Time.deltaTime;
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _text.text = FormatCost(_current);

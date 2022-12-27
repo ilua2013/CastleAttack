@@ -15,7 +15,7 @@ public class WizardAnimator : MonoBehaviour
     {
         SpawnCast,
         SpellCast,
-        Damage,
+        Hit,
         Death,
         Attack,
         Battle,
@@ -50,7 +50,6 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend.Fighter.Attacked_get += OnAttacked;
         _cardSelection.CardSelected += OnCardSelected;
         _battleSystem.BattleStarted += OnBattleStarted;
-        _battleSystem.Win += OnWin;
     }
 
     private void OnDisable()
@@ -63,7 +62,6 @@ public class WizardAnimator : MonoBehaviour
         _unitFriend.Fighter.Attacked_get -= OnAttacked;
         _cardSelection.CardSelected -= OnCardSelected;
         _battleSystem.BattleStarted -= OnBattleStarted;
-        _battleSystem.Win -= OnWin;
     }
 
     private void OnSpellCast(Vector3 place, Spell spell)
@@ -73,7 +71,7 @@ public class WizardAnimator : MonoBehaviour
 
     private void OnDamaged(int damage)
     {
-        _animator.Play(State.Damage.ToString());
+        _animator.Play(State.Hit.ToString());
     }
 
     private void OnAttacked(Transform target)

@@ -21,7 +21,8 @@ public class LosePanel : MonoBehaviour
 
     private void OnValidate()
     {
-        _battleSystem = FindObjectOfType<BattleSystem>();
+        if (_battleSystem == null)
+            _battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     private void Awake()
@@ -55,7 +56,7 @@ public class LosePanel : MonoBehaviour
             coins = Mathf.MoveTowards(coins, award, 1f);
             _coins.text = FormatCost(coins);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _coins.text = FormatCost(award);

@@ -164,7 +164,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         while (Vector3.Distance(transform.position, to) > DistanceDelta)
         {
             transform.position = Vector3.MoveTowards(transform.position, to, time * 200 * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         transform.position = to;
@@ -177,7 +177,7 @@ public class CardHoverView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         while (Vector3.Distance(transform.localScale, to) > DistanceDelta)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, to, LerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         transform.localScale = to;

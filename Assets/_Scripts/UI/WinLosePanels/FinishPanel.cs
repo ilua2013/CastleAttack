@@ -56,7 +56,7 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
         while (Vector3.Distance(_panel.localScale, to) > distanceDelta)
         {
             _panel.localScale = Vector3.Lerp(_panel.localScale, to, lerpTime * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _panel.localScale = to;

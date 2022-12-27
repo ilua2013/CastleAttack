@@ -8,6 +8,7 @@ public class FirewallSpell : Spell
 
     [SerializeField] private FighterType _fighterType;
     [SerializeField] private Animator _animator;
+    [SerializeField] private float _delayDamage = 0.2f;
 
     private void OnEnable()
     {
@@ -34,6 +35,8 @@ public class FirewallSpell : Spell
         {
             int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
             enemy.Fighter.TakeDamage(totalDamage);
+
+            yield return new WaitForSeconds(_delayDamage);
         }
 
         Tick();

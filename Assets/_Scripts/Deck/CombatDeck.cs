@@ -13,18 +13,13 @@ public class CombatDeck : Deck
     public event Action CardTaken;
     public event Action CardReturned;
 
-    private void OnEnable()
-    {
-        CardAdded += OnCardAdd;
-    }
-
     private void OnDisable()
     {
         foreach (UnitCard card in _unitCards)
             card.CameBack -= ReturnCard;
     }
 
-    private void OnCardAdd(Card card)
+    protected override void RegisterCard(Card card)
     {
         if (card is UnitCard unitCard)
         {

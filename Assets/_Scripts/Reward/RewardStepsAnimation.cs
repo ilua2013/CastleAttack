@@ -64,7 +64,7 @@ public class RewardStepsAnimation : MonoBehaviour
             coins = Mathf.MoveTowards(coins, award, 1f);
             _coins.text = FormatCost(coins);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _coins.text = FormatCost(award);
@@ -80,7 +80,7 @@ public class RewardStepsAnimation : MonoBehaviour
             count = Mathf.MoveTowards(count, killCount, 1f);
             _killCount.text = FormatCost(count);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
         _killCount.text = FormatCost(killCount);

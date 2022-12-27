@@ -20,12 +20,12 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void FlyTo(Vector3 target, Action onEnd = null, float delay = 0)
+    public void FlyTo(Vector3 target, Action onEnd = null, Action onFlyed = null, float delay = 0)
     {
-        StartCoroutine(Fly(target, delay, onEnd));
+        StartCoroutine(Fly(target, delay, onEnd, onFlyed));
     }
 
-    private IEnumerator Fly(Vector3 target, float delay = 0, Action onEnd = null)
+    private IEnumerator Fly(Vector3 target, float delay = 0, Action onEnd = null, Action onFlyed = null)
     {
         yield return new WaitForSeconds(delay);
 
@@ -54,7 +54,9 @@ public class Arrow : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.2f);
+        onFlyed?.Invoke();
+
+        yield return new WaitForSeconds(0.75f);
 
         onEnd?.Invoke();
 

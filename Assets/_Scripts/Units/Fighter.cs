@@ -16,10 +16,12 @@ public class Fighter
 
     private IUnit _unit;
     private Vector3 _startRotate;
-    private float _timeToDefaultRotate = 1f;
-    private float _timeToMakeDamage = 0.35f;
-    private float _speedRotate = 3f;
     private int _health = 1;
+
+    private const float _timeToDefaultRotate = 1f;
+    private const float _timeToMakeDamage = 0.32f;
+    private const float _delayFinishAttack = 0.75f;
+    private const float _speedRotate = 3f;
 
     public bool IsDamaged { get; set; }
     public bool IsSkipped { get; private set; }
@@ -95,27 +97,32 @@ public class Fighter
             Arrow arrow = _unit.SpawnArrow(_arrow, transform);
             arrow.FlyTo(fighter.transform.position, () =>
             {
-                isFatal = fighter.TakeDamage(this);
                 onEnd?.Invoke();
-            });
+            }, () =>
+            {
+                isFatal = fighter.TakeDamage(this);
+            }, 0.15f);
 
             Attacked?.Invoke();
             Attacked_get?.Invoke(fighter.transform);
         }
         else if (_type == FighterType.MainWizzard)
         {
-
             Attacked?.Invoke();
             Attacked_get?.Invoke(fighter.transform);
 
-            Transform spawnArrow = _spawnArrow == null ? transform : _spawnArrow;
-            Arrow arrow = _unit.SpawnArrow(_arrow, spawnArrow);
+            _unit.RotateTo(fighter.transform, () => isFatal = fighter.TakeDamage(this), onEnd);
 
-            arrow.FlyTo(fighter.transform.position, () =>
-            {
-                isFatal = fighter.TakeDamage(this);
-                onEnd?.Invoke();
-            }, 0.6f);
+            //Transform spawnArrow = _spawnArrow == null ? transform : _spawnArrow;
+            //Arrow arrow = _unit.SpawnArrow(_arrow, spawnArrow);
+
+            //arrow.FlyTo(fighter.transform.position, () =>
+            //{
+            //    onEnd?.Invoke();
+            //},() =>
+            //{
+            //    isFatal = fighter.TakeDamage(this);
+            //}, 0.6f);
         }
         else
         {
@@ -141,6 +148,7 @@ public class Fighter
     {
         Died_get?.Invoke(this);
         Died?.Invoke();
+        EffectDied?.Invoke();
     }
 
     public bool TakeDamage(Fighter fighter)
@@ -173,7 +181,6 @@ public class Fighter
         if (_health <= 0)
         {
             Die();
-            EffectDied?.Invoke();
 
             return true;
         }
@@ -192,10 +199,13 @@ public class Fighter
         else
             defaultRotate = new Vector3(0, 180, 0);
 
-        while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+        if (FighterType != FighterType.MainWizzard)
         {
-            transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
-            yield return null;
+            while (Vector3.Distance(transform.forward, target.normalized) > 0.1f)
+            {
+                transform.forward = Vector3.MoveTowards(transform.forward, target, _speedRotate * Time.deltaTime);
+                yield return null;
+            }
         }
 
         RotatedToAttack?.Invoke();
@@ -203,12 +213,22 @@ public class Fighter
 
         onRotatedAttack?.Invoke();
         
+        if(transform.eulerAngles == defaultRotate)
+        {
+            yield return new WaitForSeconds(_delayFinishAttack);
+            onFinish?.Invoke();
+            yield break;
+        }
+
         yield return new WaitForSeconds(_timeToDefaultRotate - _timeToMakeDamage);
 
-        while (transform.eulerAngles != defaultRotate)
+        if (FighterType != FighterType.MainWizzard)
         {
-            transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
-            yield return null;
+            while (transform.eulerAngles != defaultRotate)
+            {
+                transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(transform.eulerAngles), Quaternion.Euler(defaultRotate), 600 * Time.deltaTime);
+                yield return null;
+            }
         }
 
         onFinish?.Invoke();
