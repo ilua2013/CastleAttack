@@ -7,7 +7,6 @@ using TMPro;
 
 public class SceneLoader : MonoBehaviour
 {
-    //public const int OpeningIndex = -1;
     public const int TutorialIndex = 1;
     public const int MenuIndex = 2;
     public const int FirstLevelIndex = 3;
@@ -53,7 +52,7 @@ public class SceneLoader : MonoBehaviour
         LoadScene(levelIndex);
     }
 
-    private void LoadScene(int index)
+    public void LoadScene(int index)
     {
         _background.enabled = true;
         _progressSlider.gameObject.SetActive(true);
