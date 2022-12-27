@@ -34,6 +34,15 @@ public class DeckBuilder : MonoBehaviour
         }
     }
 
+    public Card GetCard(CardName name)
+    {
+        foreach (Card card in _commonDeck.Cards)
+            if (card.Name == name)
+                return card;
+
+        throw new InvalidOperationException("No such card exists");
+    }
+
     private Card Create(Card prefab)
     {
         Card card = Instantiate(prefab);

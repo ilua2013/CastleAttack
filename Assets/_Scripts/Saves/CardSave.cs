@@ -48,6 +48,9 @@ public class CardSave
         if (amount < 0)
             throw new ArgumentException(nameof(amount));
 
+        if (_amount + amount > AmountToImprove)
+            return;
+
         _rewardAmount = amount;
         _amount += amount;
     }
