@@ -370,6 +370,7 @@ namespace UnityEngine.UI.Extensions
                 {
                     pSystem.Simulate(Time.unscaledDeltaTime, false, false, true);
                     SetAllDirty();
+
                     if ((currentMaterial != null && currentTexture != currentMaterial.mainTexture) ||
                         (material != null && currentMaterial != null && material.shader != currentMaterial.shader))
                     {

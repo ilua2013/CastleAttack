@@ -7,10 +7,10 @@ using TMPro;
 
 public class SceneLoader : MonoBehaviour
 {
-    public const int OpeningIndex = 1;
-    public const int TutorialIndex = 2;
-    public const int MenuIndex = 3;
-    public const int FirstLevelIndex = 4;
+    //public const int OpeningIndex = -1;
+    public const int TutorialIndex = 1;
+    public const int MenuIndex = 2;
+    public const int FirstLevelIndex = 3;
 
     [SerializeField] private Image _background;
     [SerializeField] private Slider _progressSlider;
@@ -36,11 +36,11 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        int levelIndex = OpeningIndex;
+        int levelIndex = TutorialIndex;
 
-        if (Saves.HasKey(SaveController.Params.IsOpeningViewed))
-            if (Saves.GetBool(SaveController.Params.IsOpeningViewed))
-                levelIndex = TutorialIndex;
+        //if (Saves.HasKey(SaveController.Params.IsOpeningViewed))
+        //    if (Saves.GetBool(SaveController.Params.IsOpeningViewed))
+        //        levelIndex = TutorialIndex;
 
         if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
