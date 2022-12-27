@@ -4,10 +4,19 @@ using System.Linq;
 using UnityEngine;
 using System;
 
+[Serializable]
+public class CardReward
+{
+    [field: SerializeField] public CardName CardName { get; private set; }
+    [field: SerializeField] public int Amount { get; private set; }
+}
+
 public class CardsRewarder : MonoBehaviour
 {
+    [SerializeField] private CardReward[] _rewards;
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private DeckBuilder _deckBuilder;
+    [SerializeField] private CardRewardPanel _cardRewardPanel;
 
     private Card[] _rewardCards;
 
@@ -20,51 +29,39 @@ public class CardsRewarder : MonoBehaviour
 
         if (_deckBuilder == null)
             _deckBuilder = FindObjectOfType<DeckBuilder>();
+
+        if (_cardRewardPanel == null)
+            _cardRewardPanel = FindObjectOfType<CardRewardPanel>(true);
     }
 
     private void OnEnable()
     {
-        //_battleSystem.Win += OnFinished;
+        _battleSystem.Win += OnFinished;
     }
 
     private void OnDisable()
     {
-        //_battleSystem.Win -= OnFinished;
+        _battleSystem.Win -= OnFinished;
     }
 
     private void OnFinished()
     {
-        _rewardCards = GetRandomCards();
+        List<Card> cards = new List<Card>();
 
-        foreach (Card card in _rewardCards)
+        foreach (CardReward reward in _rewards)
         {
-            SetRandomAmount(card);
+            Card card = _deckBuilder.GetCard(reward.CardName);
 
-            card.Save(DeckType.Common);
-        }
-    }
+            card.CardSave.SetAvailable(true);
+            card.CardSave.SetDeck(DeckType.Combat);
+            card.CardSave.Add(reward.Amount);
+            card.Save();
 
-    private Card[] GetRandomCards()
-    {
-        int count = UnityEngine.Random.Range(1, 4);
-        Card[] cards = new Card[count];
+            Debug.Log("Вы получили карту - " + card.Name + " в кол-ве " + card.Amount + " штук");
 
-        System.Random random = new System.Random();
-        int[] index = Enumerable.Range(0, _deckBuilder.Cards.Count).OrderBy(t => random.Next()).Take(count).ToArray();
-
-        for (int i = 0; i < cards.Length; i++)
-        {
-            cards[i] = _deckBuilder.Cards[index[i]];
-            cards[i].CardSave.SetAvailable(true);
+            cards.Add(card);
         }
 
-        return cards;
-    }
-
-    private void SetRandomAmount(Card card)
-    {
-        int amount = UnityEngine.Random.Range(1, 4);
-
-        card.CardSave.Add(amount);
+        _cardRewardPanel.ShowCards(cards.ToArray());
     }
 }
