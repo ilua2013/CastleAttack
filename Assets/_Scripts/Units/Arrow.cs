@@ -5,20 +5,10 @@ using System;
 
 public class Arrow : MonoBehaviour
 {
-    public bool start;
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _height = 2f;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private Transform target;
-
-    private void Update()
-    {
-        if (start)
-        {
-            start = false;
-            FlyTo(target.position);
-        }
-    }
 
     public void FlyTo(Vector3 target, Action onEnd = null, Action onFlyed = null, float delay = 0)
     {
@@ -53,6 +43,8 @@ public class Arrow : MonoBehaviour
             transform.forward = transform.position - deltaPos;
             yield return null;
         }
+
+        transform.localScale = Vector3.zero;
 
         onFlyed?.Invoke();
 
