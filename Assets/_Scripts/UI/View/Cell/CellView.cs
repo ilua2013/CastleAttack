@@ -15,7 +15,7 @@ public class CellView : MonoBehaviour
 
     private void OnValidate()
     {
-        GetComponent<RectTransform>().localPosition = new Vector3(0, -0.475f, 0);
+        GetComponent<RectTransform>().localPosition = new Vector3(0, -2.3f, 0);
     }
 
     private void Awake()

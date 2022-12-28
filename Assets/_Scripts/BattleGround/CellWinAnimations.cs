@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CellSpawner))]
 public class CellWinAnimations : MonoBehaviour
 {
+    public bool test;
     [SerializeField] private float _delayToStart = 0.5f;
     [SerializeField] private float _delayStepChanger = 0;
 
@@ -17,6 +18,15 @@ public class CellWinAnimations : MonoBehaviour
     {
         _cellSpawner = GetComponent<CellSpawner>();
         _cells = GetComponentsInChildren<Cell>().ToList();
+    }
+
+    private void Update()
+    {
+        if (test)
+        {
+            test = false;
+            Play();
+        }
     }
 
     public void Play(Action onEnd = null)
