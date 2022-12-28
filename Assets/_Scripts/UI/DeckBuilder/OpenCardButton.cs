@@ -106,6 +106,7 @@ public class OpenCardButton : MonoBehaviour
     {
         card.gameObject.SetActive(true);
         card.CardSave.SetAvailable(true);
+        card.CardSave.Add(1);
         card.Save(card.CardSave);
     }
 
