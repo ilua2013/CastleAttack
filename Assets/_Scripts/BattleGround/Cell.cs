@@ -21,6 +21,7 @@ public class Cell : MonoBehaviour
     private IUnit _currentUnit;
 
     public event Action StagedUnit;
+    public event Action<UnitEnemy> StagedEnemyUnit;
     public event Action UnitMoveToThis;
 
     public Cell Top => _top;
@@ -131,6 +132,9 @@ public class Cell : MonoBehaviour
 
         if(isInit == false)
         StagedUnit?.Invoke();
+
+        if (IUnit is UnitEnemy enemy)
+            StagedEnemyUnit?.Invoke(enemy);
     }
 
     public void StartAnimationSize()

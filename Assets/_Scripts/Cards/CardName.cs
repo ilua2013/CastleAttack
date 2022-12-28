@@ -23,4 +23,5 @@ public enum CardName
     Snake,
     Bat,
     IceArrow,
+    Mine,
 }
