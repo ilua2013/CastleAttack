@@ -22,4 +22,5 @@ public enum CardName
     Hand,
     Snake,
     Bat,
+    IceArrow,
 }

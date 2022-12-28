@@ -7,6 +7,7 @@ public abstract class Spell : MonoBehaviour
 {
     [SerializeField] private DistanceAttack[] _distanceAttacks;
     [SerializeField] private float _affectDelay;
+    [SerializeField] private float _stepTime;
     [SerializeField] private float _lifeTime;
     [SerializeField] private int _maxTicks;
     [SerializeField] private bool _validWhenApplied;
@@ -20,6 +21,7 @@ public abstract class Spell : MonoBehaviour
     public bool ValidWhenApplied => _validWhenApplied;
     public DistanceAttack[] DistanceAttacks => _distanceAttacks;
     public float AffectDelay => _affectDelay;
+    public float StepTime => _stepTime;
     public int MaxTicks => _maxTicks;
     public BattleSystem BattleSystem => _battleSystem;
 
