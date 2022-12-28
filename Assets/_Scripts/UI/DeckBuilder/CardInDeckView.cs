@@ -67,7 +67,10 @@ public class CardInDeckView : MonoBehaviour
     {
         _card = card;
         _card.gameObject.SetActive(true);
-        _amountBar.gameObject.SetActive(_card.CardSave.IsAvailable);
+        
+        if (IsNotUnit())
+            _amountBar.gameObject.SetActive(_card.CardSave.IsAvailable);
+
         _card.Activate(_isMoveable);
 
         SetHierarchy(card.transform);
@@ -118,5 +121,10 @@ public class CardInDeckView : MonoBehaviour
 
             FillCard(_card, false);
         }
+    }
+
+    private bool IsNotUnit()
+    {
+        return CardName != CardName.Hand && CardName != CardName.Ork && CardName != CardName.Snake && CardName != CardName.Bat;
     }
 }
