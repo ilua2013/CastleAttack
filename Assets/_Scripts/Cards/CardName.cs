@@ -20,4 +20,7 @@ public enum CardName
     Zipp5,
     Roots,
     Hand,
+    Snake,
+    Bat,
+    IceArrow,
 }

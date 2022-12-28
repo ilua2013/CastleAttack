@@ -5,6 +5,7 @@ using UnityEngine;
 public class IcewallSpell : Spell
 {
     private const string DispelleState = "Dispelle";
+    private const string Growth = "Growth";
 
     [SerializeField] private FighterType _fighterType;
     [SerializeField] private Animator _animator;
@@ -26,6 +27,8 @@ public class IcewallSpell : Spell
 
     private IEnumerator Freeze(Cell cell, float delay)
     {
+        _animator.Play(Growth);
+
         yield return new WaitForSeconds(delay);
 
         List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);

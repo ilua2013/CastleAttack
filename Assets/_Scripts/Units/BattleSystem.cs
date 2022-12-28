@@ -260,7 +260,7 @@ public class BattleSystem : MonoBehaviour
 
             _spells[i].DoStep();
 
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(_spells[i].StepTime);
 
             while (_spells.Count > i && _spells[i].DoingStep == true)
                 yield return null;

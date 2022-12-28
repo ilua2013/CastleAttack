@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    private CommonDeck _deck;
+    private CommonDecks _deck;
     private List<CardInShopView> _views;
     private List<Card> _cards = new List<Card>();
 
@@ -15,7 +15,7 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        _deck = FindObjectOfType<CommonDeck>();
+        _deck = FindObjectOfType<CommonDecks>();
         _views = GetComponentsInChildren<CardInShopView>().ToList();
     }
 
