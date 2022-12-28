@@ -9,11 +9,16 @@ public class MapLevels : MonoBehaviour
     [SerializeField] private List<LevelOnMap> _levels;
     [SerializeField] private SceneLoader _sceneLoader;
     [SerializeField] private int _firstIndexLevel = 3;
+    [SerializeField] private Button _buttonClose;
+    [Header("Animations Current Level")]
+    [SerializeField] private Animator _animatorCurrentLevel;
     [Header("Panel Start Level")]
     [SerializeField] private RectTransform _panelStartLevel;
     [SerializeField] private Button _buttonPlay;
-    [SerializeField] private Button _buttonClose;
+    [SerializeField] private Button _buttonClosePanel;
     [SerializeField] private float _speedAnimation;
+    [Header("OnValidate")]
+    [SerializeField] private bool _setTransformToZero = true;
 
     private LevelOnMap _currentLevel;
 
@@ -22,6 +27,9 @@ public class MapLevels : MonoBehaviour
         _levels = GetComponentsInChildren<LevelOnMap>().ToList();
         _sceneLoader = FindObjectOfType<SceneLoader>();
         _panelStartLevel.localScale = Vector3.zero;
+
+        if (_setTransformToZero)
+            transform.localScale = Vector3.zero;
 
         int indexNumber = _firstIndexLevel;
 
@@ -36,6 +44,8 @@ public class MapLevels : MonoBehaviour
     {
         _panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
         _panelStartLevel.localScale = Vector3.zero;
+
+        transform.localScale = Vector3.zero;
     }
 
     private void Start()
@@ -49,7 +59,8 @@ public class MapLevels : MonoBehaviour
             item.Clicked += SelectLevel;
 
         _buttonPlay.onClick.AddListener(LoadLevel);
-        _buttonClose.onClick.AddListener(ClosePanelLevel);
+        _buttonClosePanel.onClick.AddListener(ClosePanelLevel);
+        _buttonClose.onClick.AddListener(CloseMap);
     }
 
     private void OnDisable()
@@ -58,7 +69,18 @@ public class MapLevels : MonoBehaviour
             item.Clicked -= SelectLevel;
 
         _buttonPlay.onClick.RemoveListener(LoadLevel);
-        _buttonClose.onClick.RemoveListener(ClosePanelLevel);
+        _buttonClosePanel.onClick.RemoveListener(ClosePanelLevel);
+        _buttonClose.onClick.RemoveListener(CloseMap);
+    }
+
+    public void OpenMap()
+    {
+        StartCoroutine(AnimationSize(transform, Vector3.one));
+    }
+
+    public void CloseMap()
+    {
+        StartCoroutine(AnimationSize(transform, Vector3.zero));
     }
 
     private void InitLevels()
@@ -66,7 +88,7 @@ public class MapLevels : MonoBehaviour
         int countCompletedLevel = 0;
 
         if (Saves.HasKey(SaveController.Params.Level))
-            countCompletedLevel = Saves.GetInt(SaveController.Params.Level);
+            countCompletedLevel = Saves.GetInt(SaveController.Params.Level) - _firstIndexLevel + 1;
 
         print(countCompletedLevel + " Count Completed Levels");
         for (int i = 0; i < countCompletedLevel; i++)
@@ -74,7 +96,10 @@ public class MapLevels : MonoBehaviour
 
         _levels[countCompletedLevel].ShowCurrentLevel();
 
-        for (int i = _levels.Count; i > countCompletedLevel; i++)
+        _animatorCurrentLevel.transform.parent = _levels[countCompletedLevel].transform;
+        _animatorCurrentLevel.transform.localPosition = new Vector3(0, 21,0);
+
+        for (int i = _levels.Count - 1; i > countCompletedLevel; i--)
             _levels[i].CloseLevel();
     }
 
@@ -82,14 +107,14 @@ public class MapLevels : MonoBehaviour
     {
         _currentLevel = levelOnMap;
 
-        StartCoroutine(AnimationSize(Vector3.one));
+        StartCoroutine(AnimationSize(_panelStartLevel,Vector3.one));
     }
 
     private void ClosePanelLevel()
     {
         _currentLevel = null;
 
-        StartCoroutine(AnimationSize(Vector3.zero));
+        StartCoroutine(AnimationSize(_panelStartLevel,Vector3.zero));
     }
 
     private void LoadLevel()
@@ -97,14 +122,15 @@ public class MapLevels : MonoBehaviour
         if (_currentLevel == null)
             Debug.LogError("CURRENT LEVEL IS NULL");
 
+        _panelStartLevel.gameObject.SetActive(false);
         _sceneLoader.LoadScene(_currentLevel.IndexScene);
     }
 
-    private IEnumerator AnimationSize(Vector3 targetScale)
+    private IEnumerator AnimationSize(Transform transform,Vector3 targetScale)
     {
-        while(_panelStartLevel.localScale != targetScale)
+        while(transform.localScale != targetScale)
         {
-            _panelStartLevel.localScale = Vector3.MoveTowards(_panelStartLevel.localScale, targetScale, _speedAnimation * Time.deltaTime);
+            transform.localScale = Vector3.MoveTowards(transform.localScale, targetScale, _speedAnimation * Time.deltaTime);
             yield return null;
         }
     }

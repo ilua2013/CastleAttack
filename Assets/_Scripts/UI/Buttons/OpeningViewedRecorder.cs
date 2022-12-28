@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class OpeningViewedRecorder : MonoBehaviour
 {
-    [SerializeField] private NextLevelButton _button;
+    [SerializeField] private OpenerMap _button;
 
     private void OnValidate()
     {
         if (_button == null)
-            _button = FindObjectOfType<NextLevelButton>();
+            _button = FindObjectOfType<OpenerMap>();
     }
 
     private void OnEnable()

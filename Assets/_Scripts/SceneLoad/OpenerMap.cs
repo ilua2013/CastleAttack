@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class NextLevelButton : MonoBehaviour
+public class OpenerMap : MonoBehaviour
 {
-    [SerializeField] private SceneLoader _sceneLoader;
+    [SerializeField] private MapLevels _map;
     [SerializeField] private bool _showAD = true;
 
     public Button Button { get; private set; }
@@ -18,7 +18,7 @@ public class NextLevelButton : MonoBehaviour
 
     private void OnValidate()
     {
-        _sceneLoader = FindObjectOfType<SceneLoader>();
+        _map = FindObjectOfType<MapLevels>();
     }
 
     private void Awake()
@@ -39,13 +39,7 @@ public class NextLevelButton : MonoBehaviour
     private void OnClick()
     {
         NextLevelLoaded?.Invoke();
-#if !UNITY_EDITOR
-        if (_showAD)
-            YandexSDK.Instance.ShowInterstitial(null, () => _sceneLoader.LoadNextLevel());
-        else
-            _sceneLoader.LoadNextLevel();
-#else
-        _sceneLoader.LoadNextLevel();
-#endif
+
+        _map.OpenMap();
     }
 }

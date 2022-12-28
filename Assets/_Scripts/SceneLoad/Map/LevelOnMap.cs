@@ -5,7 +5,8 @@ using System;
 public class LevelOnMap : MonoBehaviour
 {
     public int IndexScene;
-    [Header("Sprite")]
+    [Header("Sprite Button")]
+    [SerializeField] private Image _imageButton;
     [SerializeField] private Sprite _spriteOpenLevel;
     [SerializeField] private Sprite _spriteCloseLevel;
     [SerializeField] private Sprite _spriteCurrentLevel;
@@ -13,6 +14,8 @@ public class LevelOnMap : MonoBehaviour
     [SerializeField] private Sprite _starsYellow;
     [SerializeField] private Sprite _starsGray;
     [SerializeField] private Image[] _stars;
+    [Header("Closed")]
+    [SerializeField] private RectTransform _lock;
 
     private Button _button;
 
@@ -20,7 +23,7 @@ public class LevelOnMap : MonoBehaviour
 
     private void OnValidate()
     {
-        GetComponentInChildren<Text>(true).text = IndexScene.ToString();
+        GetComponentInChildren<Text>(true).text = (IndexScene - 2).ToString();
 
         //if (_stars.Length != 3)
         //    _stars = new Image[3];
@@ -49,17 +52,29 @@ public class LevelOnMap : MonoBehaviour
 
     public void CloseLevel()
     {
+        _lock.gameObject.SetActive(true);
+        DisableStars();
+        _button.enabled = false;
 
+        _imageButton.sprite = _spriteCloseLevel;
     }
 
     public void OpenLevel(int starsCount)
     {
+        _lock.gameObject.SetActive(false);
+        EnableStars(starsCount);
+        _button.enabled = true;
 
+        _imageButton.sprite = _spriteOpenLevel;
     }
 
     public void ShowCurrentLevel()
     {
+        _lock.gameObject.SetActive(false);
+        DisableStars();
+        _button.enabled = true;
 
+        _imageButton.sprite = _spriteCurrentLevel;
     }
 
     private void InvokeClicked()
@@ -79,8 +94,6 @@ public class LevelOnMap : MonoBehaviour
     private void DisableStars()
     {
         foreach (var item in _stars)
-        {
             item.gameObject.SetActive(false);
-        }
     }
 }
