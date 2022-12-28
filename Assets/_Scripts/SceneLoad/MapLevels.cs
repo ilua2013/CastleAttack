@@ -90,7 +90,6 @@ public class MapLevels : MonoBehaviour
         if (Saves.HasKey(SaveController.Params.Level))
             countCompletedLevel = Saves.GetInt(SaveController.Params.Level) - _firstIndexLevel + 1;
 
-        print(countCompletedLevel + " Count Completed Levels");
         for (int i = 0; i < countCompletedLevel; i++)
             _levels[i].OpenLevel(3);
 

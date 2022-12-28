@@ -110,7 +110,6 @@ public class CardInShopView : MonoBehaviour
             }
 
             OnCoinsChanged(0, 0);
-
             CardBought?.Invoke(_card);
         }
     }

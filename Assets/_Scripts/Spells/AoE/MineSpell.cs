@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class MineSpell : Spell
 {
-    private const string DispelleState = "Dispelle";
+    private const string DispelleState = "Dispelled";
     private const string Growth = "Growth";
+    private const string ExplosionSignal = "ExplosionSignal";
 
     [SerializeField] private FighterType _fighterType;
     [SerializeField] private Animator _animator;
@@ -30,11 +31,14 @@ public class MineSpell : Spell
 
     private IEnumerator Attack(UnitEnemy enemy, int damage, float delay)
     {
+        _animator.Play(ExplosionSignal);
+
         yield return new WaitForSeconds(delay);
 
         int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
         enemy.Fighter.TakeDamage(totalDamage);
 
+        _vfx.transform.SetParent(null);
         _vfx.Play();
 
         OnDispelled(this);
