@@ -2,14 +2,19 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StandForEnemiesToy
-  m_Shader: {fileID: 14002, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _WINDQUALITY_NONE
+  m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
+  m_ValidKeywords:
+  - _CELPRIMARYMODE_SINGLE
+  - _TEXTUREBLENDINGMODE_MULTIPLY
+  - _UNITYSHADOWMODE_MULTIPLY
+  m_InvalidKeywords:
+  - _WINDQUALITY_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -114,9 +119,9 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _RimEnabled: 0
-    - _SelfShadingSize: 0.825
+    - _SelfShadingSize: 0.8
     - _SelfShadingSizeExtra: 0.6
-    - _ShadowEdgeSize: 0.088
+    - _ShadowEdgeSize: 0.1
     - _ShadowEdgeSizeExtra: 0.05
     - _SmoothnessTextureChannel: 0
     - _SpecularEnabled: 0
@@ -136,8 +141,8 @@ Material:
     - _WindQuality: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.6574849, g: 0.4766667, b: 0.8666667, a: 1}
-    - _ColorDim: {r: 0.41049773, g: 0.29809955, b: 0.54, a: 1}
+    - _Color: {r: 0.23391177, g: 0.085058816, b: 0.241, a: 1}
+    - _ColorDim: {r: 0.6856262, g: 0.47815198, b: 0.696, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _ColorDimExtra: {r: 0.19607842, g: 0.88235295, b: 0.27740636, a: 1}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
