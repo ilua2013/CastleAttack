@@ -43,7 +43,7 @@ public class MapLevels : MonoBehaviour
 
     private void Awake()
     {
-        _panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
+        //_panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
         _panelStartLevel.localScale = Vector3.zero;
 
         transform.localScale = Vector3.zero;
