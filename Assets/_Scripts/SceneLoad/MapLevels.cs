@@ -10,6 +10,7 @@ public class MapLevels : MonoBehaviour
     [SerializeField] private SceneLoader _sceneLoader;
     [SerializeField] private int _firstIndexLevel = 3;
     [SerializeField] private Button _buttonClose;
+    [SerializeField] private RectTransform _content;
     [Header("Animations Current Level")]
     [SerializeField] private Animator _animatorCurrentLevel;
     [Header("Panel Start Level")]
@@ -42,7 +43,7 @@ public class MapLevels : MonoBehaviour
 
     private void Awake()
     {
-        _panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
+        //_panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
         _panelStartLevel.localScale = Vector3.zero;
 
         transform.localScale = Vector3.zero;
@@ -130,6 +131,7 @@ public class MapLevels : MonoBehaviour
         while(transform.localScale != targetScale)
         {
             transform.localScale = Vector3.MoveTowards(transform.localScale, targetScale, _speedAnimation * Time.deltaTime);
+            _content.localPosition = Vector3.zero;
             yield return null;
         }
     }
