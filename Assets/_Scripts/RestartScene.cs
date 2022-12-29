@@ -12,9 +12,6 @@ public class RestartScene : MonoBehaviour
     private void OnValidate()
     {
         _sceneLoader = FindObjectOfType<SceneLoader>();
-
-        if(_buttonLoadScene == null && TryGetComponent(out Button button))
-            _buttonLoadScene = button;
     }
 
     private void OnEnable()
