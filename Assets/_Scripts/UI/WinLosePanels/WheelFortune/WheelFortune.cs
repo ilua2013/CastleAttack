@@ -12,7 +12,7 @@ public class WheelFortune : MonoBehaviour
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Vector2 _angleClamp;
     [SerializeField] private float _speed;
-    [SerializeField] private Image _arrow;
+    [SerializeField] private Transform _arrow;
 
     private bool _isRewarded;
     private int _factor = 1;
@@ -29,7 +29,7 @@ public class WheelFortune : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Spin(_arrow.transform, _speed));
+        StartCoroutine(Spin(_arrow, _speed));
     }
 
     private void OnEnable()
@@ -68,14 +68,15 @@ public class WheelFortune : MonoBehaviour
     {
         float targetAngleX = _angleClamp.x;
         float targetAngleY = _angleClamp.y;
-        Quaternion target = Quaternion.Euler(0, 0, targetAngleX);
+        Quaternion target = Quaternion.Euler(arrow.eulerAngles.x, arrow.eulerAngles.y, targetAngleX);
 
         while (_isRewarded == false)
         {
-            if (arrow.rotation == Quaternion.Euler(0, 0, targetAngleX))
-                target = Quaternion.Euler(0, 0, targetAngleY);
-            else if (arrow.rotation == Quaternion.Euler(0, 0, targetAngleY))
-                target = Quaternion.Euler(0, 0, targetAngleX);
+            if (arrow.rotation == Quaternion.Euler(arrow.eulerAngles.x, arrow.eulerAngles.y, targetAngleX))
+                target = Quaternion.Euler(arrow.eulerAngles.x, arrow.eulerAngles.y, targetAngleY);
+
+            else if (arrow.rotation == Quaternion.Euler(arrow.eulerAngles.x, arrow.eulerAngles.y, targetAngleY))
+                target = Quaternion.Euler(arrow.eulerAngles.x, arrow.eulerAngles.y, targetAngleX);
 
             arrow.rotation = Quaternion.RotateTowards(arrow.rotation, target, speed * Time.deltaTime);
             ChangeFactor(arrow.rotation);
@@ -87,6 +88,7 @@ public class WheelFortune : MonoBehaviour
     private void ChangeFactor(Quaternion rotation)
     {
         float angle = Quaternion.Angle(rotation, Quaternion.identity);
+
         if (Mathf.Abs(angle) > 47)
             _factor = 1;
         else if (Mathf.Abs(angle) > 10 && Mathf.Abs(angle) <= 47)
