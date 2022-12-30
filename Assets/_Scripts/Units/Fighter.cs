@@ -44,6 +44,8 @@ public class Fighter
     public event Action<int> Damaged;
     public event Action<int> Healed;
     public event Action<Fighter> Died_get;
+    public event Action<float> OnHPChanged;
+    public event Action OnInit;
 
     public void Init(IUnit unit, Transform transformUnit)
     {
@@ -63,6 +65,7 @@ public class Fighter
         _damage = damage;
 
         _startRotate = transform.forward;
+        OnInit?.Invoke();
     }
 
     public void SetHealth(int health)
@@ -142,6 +145,7 @@ public class Fighter
 
         _health = Mathf.Clamp(_health + value, 0, MaxHealth);
         Healed?.Invoke(_health);
+        OnHPChanged?.Invoke(((float)_health)/MaxHealth);
     }
 
     public void Die()
@@ -174,9 +178,10 @@ public class Fighter
                 return true;
             }
 
-        _health = Math.Clamp(_health - damage, 0, _maxHealth);
+        _health = Math.Clamp(_health - damage, 0, MaxHealth);
 
         Damaged?.Invoke(damage);
+        OnHPChanged?.Invoke(((float)_health)/MaxHealth);
 
         if (_health <= 0)
         {
