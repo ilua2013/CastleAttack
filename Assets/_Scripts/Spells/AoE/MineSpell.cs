@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MineSpell : Spell
 {
@@ -26,7 +27,17 @@ public class MineSpell : Spell
 
     protected override void Affect(Cell cell, UnitStats stats, float delay)
     {
-        Tick();
+        UnitEnemy enemy = CheckEnemyOnCell(cell);
+
+        if (enemy)
+            StartCoroutine(Attack(enemy, CardSave.UnitStats.Damage, AffectDelay));
+        else
+            Tick();
+    }
+
+    private UnitEnemy CheckEnemyOnCell(Cell cell)
+    {
+        return cell.GetEnemyUnits(DistanceAttacks).FirstOrDefault();
     }
 
     private IEnumerator Attack(UnitEnemy enemy, int damage, float delay)
@@ -35,8 +46,7 @@ public class MineSpell : Spell
 
         yield return new WaitForSeconds(delay);
 
-        int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
-        enemy.Fighter.TakeDamage(totalDamage);
+        Damage(enemy, damage);
 
         _vfx.transform.SetParent(null);
         _vfx.Play();
@@ -45,6 +55,16 @@ public class MineSpell : Spell
 
         Dispelled -= OnDispelled;
         WasCast -= OnCast;
+        Cell.StagedEnemyUnit -= OnUnitStay;
+
+        yield return new WaitForSeconds(0.4f);
+        ResetTicks();
+    }
+
+    private void Damage(UnitEnemy enemy, int damage)
+    {
+        int totalDamage = (int)DamageConditions.CalculateDamage(_fighterType, enemy.Fighter.FighterType, damage);
+        enemy.Fighter.TakeDamage(totalDamage);
     }
 
     private void OnCast(Cell cell, UnitStats stats)
@@ -56,8 +76,6 @@ public class MineSpell : Spell
     private void OnUnitStay(UnitEnemy enemy)
     {
         StartCoroutine(Attack(enemy, CardSave.UnitStats.Damage, AffectDelay));
-
-        Cell.StagedEnemyUnit -= OnUnitStay;
     }
 
     private void OnDispelled(Spell spell)

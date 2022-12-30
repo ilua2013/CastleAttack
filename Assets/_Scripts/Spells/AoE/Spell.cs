@@ -54,6 +54,8 @@ public abstract class Spell : MonoBehaviour
         WasCast?.Invoke(cell, save.UnitStats);
     }
 
+    public void ResetTicks() => _ticks = 0;
+
     public void Tick()
     {
         _ticks--;
