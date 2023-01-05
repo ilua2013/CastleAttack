@@ -86,7 +86,6 @@ public class WizardAnimator : MonoBehaviour
 
     private void OnCardSelected()
     {
-        Debug.Log("Card selected anim");
         _animator.Play(State.CardsTake.ToString());
     }
 

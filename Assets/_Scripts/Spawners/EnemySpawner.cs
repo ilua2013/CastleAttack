@@ -77,7 +77,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemySpawn()
     {
-        Debug.Log("Enemy Spawn");
         if (_cellsEnemySpawner.Count == 0)
         {
             _currentWave++;

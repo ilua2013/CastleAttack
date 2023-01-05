@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,14 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private CardsHand _carsHand;
 
+    private List<KeyCode> _fightKeys = new List<KeyCode>() { KeyCode.Space, KeyCode.Return };
+
     public Button Button => _button;
     public Button ButtonSkip => _buttonSkip;
     public Phase[] Phases => _phases;
+
+    public event Action FightClicked;
+    public event Action SkipClicked;
 
     private void OnValidate()
     {
@@ -29,17 +35,34 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     {
         _battleSystem.StepFinished += EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
+        _button.onClick.AddListener(OnFightClick);
+        _buttonSkip.onClick.AddListener(OnSkipClick);
     }
 
     private void OnDisable()
     {
         _battleSystem.StepFinished -= EnableButtonSkip;
         _carsHand.CardDrop += DisableButtonSkip;
+        _button.onClick.RemoveListener(OnFightClick);
+        _buttonSkip.onClick.RemoveListener(OnSkipClick);
+    }
+
+    private void Update()
+    {
+        foreach (KeyCode key in _fightKeys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                FightClicked?.Invoke();
+                return;
+            }
+        }
     }
 
     public void Activate(bool isActive)
     {
         _button.interactable = isActive;
+        _buttonSkip.interactable = isActive;
     }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
@@ -48,8 +71,7 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
 
         yield return new WaitForSeconds(phase.Delay);
 
-        _button.interactable = phase.IsActive;
-        _buttonSkip.interactable = phase.IsActive;
+        Activate(phase.IsActive);
     }
 
     private void EnableButtonSkip()
@@ -60,5 +82,15 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     private void DisableButtonSkip()
     {
         _buttonSkip.interactable = false;
+    }
+
+    private void OnFightClick()
+    {
+        FightClicked?.Invoke();
+    }
+
+    private void OnSkipClick()
+    {
+        SkipClicked?.Invoke();
     }
 }

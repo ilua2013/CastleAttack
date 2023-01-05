@@ -9,8 +9,7 @@ public class BattleSystem : MonoBehaviour
 {
     [SerializeField] private float _delayFirstStep = 1.5f;
     [SerializeField] private UnitFriend _wizzard;
-    [SerializeField] private Button _buttonStartFight;
-    [SerializeField] private Button _buttonSkipStep;
+    [SerializeField] private StartFightButton _buttonStartFight;
     [SerializeField] private CardsHand _cardsHand;
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private SpellsRecorder _spellsRecorder;
@@ -52,10 +51,7 @@ public class BattleSystem : MonoBehaviour
             _spellsRecorder = FindObjectOfType<SpellsRecorder>();
 
         if (_buttonStartFight == null)
-            _buttonStartFight = FindObjectOfType<StartFightButton>().Button;
-
-        if(_buttonSkipStep == null)
-            _buttonSkipStep = FindObjectOfType<StartFightButton>().ButtonSkip;
+            _buttonStartFight = FindObjectOfType<StartFightButton>();
 
         foreach (var item in FindObjectsOfType<UnitFriend>())
         {
@@ -69,8 +65,8 @@ public class BattleSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        _buttonStartFight.onClick.AddListener(StartBattle);
-        _buttonSkipStep.onClick.AddListener(StartSkipStep);
+        _buttonStartFight.FightClicked += StartBattle;
+        _buttonStartFight.SkipClicked += StartSkipStep;
         _cardsHand.Spawned += AddUnit;
         _spellsRecorder.WasSpellCast += AddSpell;
         _enemySpawner.Spawned_get += AddUnit;
@@ -81,8 +77,8 @@ public class BattleSystem : MonoBehaviour
 
     private void OnDisable()
     {
-        _buttonStartFight.onClick.RemoveListener(StartBattle);
-        _buttonSkipStep.onClick.RemoveListener(StartSkipStep);
+        _buttonStartFight.FightClicked -= StartBattle;
+        _buttonStartFight.SkipClicked -= StartSkipStep;
         _cardsHand.Spawned -= AddUnit;
         _spellsRecorder.WasSpellCast -= AddSpell;
         _enemySpawner.Spawned_get -= AddUnit;
@@ -295,7 +291,6 @@ public class BattleSystem : MonoBehaviour
 
             while (_unitFriend.Count > i && _unitFriend[i].DoingStep == true)
             {
-                print("Doing step " + _unitFriend[i].gameObject.name);
                 yield return null;
             }
         }

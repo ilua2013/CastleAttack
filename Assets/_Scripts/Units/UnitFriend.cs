@@ -239,7 +239,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     private void OnDie()
     {
         Mover.Die();
-        print("Dies friend");
+
         if (Fighter.FighterType == FighterType.MainWizzard)
         {
             GamesStatistics.RegisterFriendKill();

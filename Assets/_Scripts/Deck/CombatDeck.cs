@@ -58,7 +58,6 @@ public class CombatDeck : Deck
 
     public void ReturnCard(Card card)
     {
-        Debug.Log("Return");
         Add(card);
         CardReturned?.Invoke();
     }

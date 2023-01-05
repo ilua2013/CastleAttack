@@ -189,7 +189,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private void OnDie()
     {
         Mover.Die();
-        print("Dies enemy");
 
         if (Fighter.FighterType == FighterType.Build|| Fighter.FighterType == FighterType.MainTarget)
         {

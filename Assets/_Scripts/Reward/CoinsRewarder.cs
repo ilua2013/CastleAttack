@@ -36,7 +36,6 @@ public class CoinsRewarder : MonoBehaviour
     private void OnFinished()
     {
         ReceivedReward = _reward;
-        Debug.Log("OnFinished");
 
         _coinsWallet.Add(ReceivedReward, 0);
     }
@@ -44,7 +43,6 @@ public class CoinsRewarder : MonoBehaviour
     private void OnFailed()
     {
         ReceivedReward = _reward / 2;
-        Debug.Log("OnFailed " + ReceivedReward);
         _coinsWallet.Add(ReceivedReward, 0);
     }
 }

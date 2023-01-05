@@ -57,8 +57,6 @@ public class CardsRewarder : MonoBehaviour
             card.CardSave.Add(reward.Amount);
             card.Save();
 
-            Debug.Log("Вы получили карту - " + card.Name + " в кол-ве " + card.Amount + " штук");
-
             cards.Add(card);
         }
 

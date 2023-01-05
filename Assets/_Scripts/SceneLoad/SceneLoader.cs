@@ -33,6 +33,11 @@ public class SceneLoader : MonoBehaviour
         LoadScene(MenuIndex);
     }
 
+    public void LoadTutorial()
+    {
+        LoadScene(TutorialIndex);
+    }
+
     public void LoadNextLevel()
     {
         int levelIndex = TutorialIndex;

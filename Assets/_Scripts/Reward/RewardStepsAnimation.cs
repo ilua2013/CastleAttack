@@ -85,9 +85,6 @@ public class RewardStepsAnimation : MonoBehaviour
 
         _killCount.text = FormatCost(killCount);
         onComplete?.Invoke();
-
-        Debug.Log("Стоп");
-
     }
 
     private void OnRewarded(int coins)

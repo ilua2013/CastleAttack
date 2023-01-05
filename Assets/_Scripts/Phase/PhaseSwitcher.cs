@@ -96,8 +96,6 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnStepFinished()
     {
-        Debug.Log("Step Finished");
-
         //if (_battleSystem.CountEnemy <= 0)
         //    return;
 

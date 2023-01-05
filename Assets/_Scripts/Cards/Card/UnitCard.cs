@@ -33,9 +33,6 @@ public class UnitCard : Card
 
     public void ComeBack()
     {
-        Debug.Log("Comeback");
-        //if (Amount == 0)
-        //    CameBack?.Invoke(this);
         CameBack?.Invoke(this);
         Merge();
     }

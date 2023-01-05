@@ -53,20 +53,9 @@ public class WinPanel : MonoBehaviour
     {
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
 
-        if (SceneManager.GetActiveScene().buildIndex != SceneLoader.TutorialIndex)
-        {
-            Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
-            Saves.Save();
-        }
-
         _increaseButton.Init(_levelRewarder.RewardCards);
 
-        _cellWinAnimations.Play(() => 
-        _demolishAnimations.Play(() => 
-        {
-            _finishPanel.OpenPanel();
-            _stepsAnimation.Play(starsCount);
-        }));
+        PlayWinAnimation(starsCount);
 
         if (_isRewardWasOffered == false)
             _isRewardWasOffered = true;
@@ -76,6 +65,38 @@ public class WinPanel : MonoBehaviour
 #if !UNITY_EDITOR
         YandexMetrica.Send("RewardAdOffer");
 #endif
+
+        SaveProgress();
+    }
+
+    private void PlayWinAnimation(int starsCount)
+    {
+        _cellWinAnimations.Play(() =>
+        _demolishAnimations.Play(() =>
+        {
+            _finishPanel.OpenPanel();
+            _stepsAnimation.Play(starsCount);
+        }));
+    }
+
+    private void SaveProgress()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != SceneLoader.TutorialIndex)
+        {
+            if (!Saves.HasKey(SaveController.Params.Level))
+            {
+                Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+                Saves.Save();
+
+                return;
+            }
+
+            if (Saves.GetInt(SaveController.Params.Level) < SceneManager.GetActiveScene().buildIndex)
+            {
+                Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+                Saves.Save();
+            }
+        }
     }
 
     private int CalculateStarsCount(float remain)
