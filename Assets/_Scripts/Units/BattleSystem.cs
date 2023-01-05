@@ -39,6 +39,7 @@ public class BattleSystem : MonoBehaviour
     public event Action RemovedDie;
     public event Action TutorialStopedUnit;
     public event Action Lose;
+    public event Action ReadyToDie;
     public event Action Win;
     public event Action Revived;
 
@@ -71,7 +72,7 @@ public class BattleSystem : MonoBehaviour
         _spellsRecorder.WasSpellCast += AddSpell;
         _enemySpawner.Spawned_get += AddUnit;
         _wizzard.Fighter.Died += InvokeLose;
-        _wizzard.Fighter.ReadyToDie += InvokeLose;
+        _wizzard.Fighter.ReadyToDie += InvokeReadyToDie;
         _wizzard.Fighter.Revived += InvokeRevived;
     }
 
@@ -83,7 +84,7 @@ public class BattleSystem : MonoBehaviour
         _spellsRecorder.WasSpellCast -= AddSpell;
         _enemySpawner.Spawned_get -= AddUnit;
         _wizzard.Fighter.Died -= InvokeLose;
-        _wizzard.Fighter.ReadyToDie -= InvokeLose;
+        _wizzard.Fighter.ReadyToDie -= InvokeReadyToDie;
         _wizzard.Fighter.Revived -= InvokeRevived;
 
         foreach (var unit in _unitFriend)
@@ -182,8 +183,6 @@ public class BattleSystem : MonoBehaviour
                 CheckFinishStepSpells();
             }
 
-            //yield return new WaitForSeconds(0.2f);
-
             StartCoroutine(DoStepFriend());
 
             while (_doStepFriend)
@@ -194,8 +193,6 @@ public class BattleSystem : MonoBehaviour
                 yield return null;
                 CheckFinishStepFriend();
             }
-
-            //yield return new WaitForSeconds(0.1f);
 
             StartCoroutine(DoStepEnemy());
 
@@ -448,8 +445,21 @@ public class BattleSystem : MonoBehaviour
         Lose?.Invoke();
     }
 
+    private void InvokeReadyToDie()
+    {
+        ReadyToDie?.Invoke();
+    }
+
     private void InvokeRevived()
     {
+        StopDoStep();
+
+        foreach (var item in _unitFriend)
+            item.UpdateStep();
+
+        foreach (var item in _unitEnemy)
+            item.UpdateStep();
+
         Revived?.Invoke();
     }
 }

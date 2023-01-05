@@ -137,7 +137,7 @@ public class Fighter
 
     public void RecoveryHealth(int value)
     {
-        if (IsDead)
+        if (IsDead && FighterType == FighterType.MainWizzard)
             Revived?.Invoke();
 
         _health = Mathf.Clamp(_health + value, 0, MaxHealth);

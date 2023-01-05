@@ -42,6 +42,7 @@ public class PhaseSwitcher : MonoBehaviour
     {
         _battleSystem.Win += OnFinished;
         _battleSystem.Lose += OnFailed;
+        _battleSystem.ReadyToDie += OnReadyToDie;
         _battleSystem.Revived += OnRevived;
         _battleSystem.BattleStarted += OnStepStarted;
         _battleSystem.StepFinished += OnStepFinished;
@@ -53,6 +54,7 @@ public class PhaseSwitcher : MonoBehaviour
     {
         _battleSystem.Win -= OnFinished;
         _battleSystem.Lose -= OnFailed;
+        _battleSystem.ReadyToDie -= OnReadyToDie;
         _battleSystem.Revived -= OnRevived;
         _battleSystem.BattleStarted -= OnStepStarted;
         _battleSystem.StepFinished -= OnStepFinished;
@@ -78,14 +80,20 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnRevived()
     {
-        CurrentPhase = PhaseType.Battle;
-        Switch(PhaseType.Battle);
+        CurrentPhase = PhaseType.SelectionCard;
+        Switch(PhaseType.SelectionCard);
     }
 
     private void OnFailed()
     {
         Switch(PhaseType.Lose);
         CurrentPhase = PhaseType.Lose;
+    }
+
+    private void OnReadyToDie()
+    {
+        Switch(PhaseType.ReadyToDie);
+        CurrentPhase = PhaseType.ReadyToDie;
     }
 
     private void OnFinished()
@@ -96,8 +104,8 @@ public class PhaseSwitcher : MonoBehaviour
 
     private void OnStepFinished()
     {
-        //if (_battleSystem.CountEnemy <= 0)
-        //    return;
+        if (CurrentPhase == PhaseType.ReadyToDie)
+            return;
 
         Switch(PhaseType.SelectionCard);
         CurrentPhase = PhaseType.SelectionCard;

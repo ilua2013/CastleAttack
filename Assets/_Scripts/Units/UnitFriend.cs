@@ -314,8 +314,12 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
         {
             Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
+            if (phase == null)
+                yield break;
+
             yield return new WaitForSeconds(phase.Delay);
             yield break;
+
             if (phase.IsActive && phase.PhaseType == PhaseType.SelectionCard)
             {
                 if (_coroutineRotateTo != null)

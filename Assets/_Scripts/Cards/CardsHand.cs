@@ -114,6 +114,14 @@ public class CardsHand : MonoBehaviour, IPhaseHandler
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
+        if (phase == null)
+        {
+            foreach (Card card in _cards)
+                card.Activate(false);
+
+            yield break;
+        }
+
         yield return new WaitForSeconds(phase.Delay);
 
         foreach (Card card in _cards)

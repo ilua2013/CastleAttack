@@ -19,6 +19,9 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
+        if (phase == null)
+            yield break;
+
         yield return new WaitForSeconds(phase.Delay);
 
         if (phase.IsActive)

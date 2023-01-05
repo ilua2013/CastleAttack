@@ -69,6 +69,12 @@ public class StartFightButton : MonoBehaviour, IPhaseHandler
     {
         Phase phase = _phases.FirstOrDefault((phase) => phase.PhaseType == phaseType);
 
+        if (phase == null)
+        {
+            Activate(false);
+            yield break;
+        }
+
         yield return new WaitForSeconds(phase.Delay);
 
         Activate(phase.IsActive);

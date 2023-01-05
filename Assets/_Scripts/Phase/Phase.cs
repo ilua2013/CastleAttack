@@ -10,6 +10,7 @@ public enum PhaseType
     CardPlacement,
     Win,
     Lose,
+    ReadyToDie,
 }
 
 [Serializable]
