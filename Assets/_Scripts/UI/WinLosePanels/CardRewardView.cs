@@ -10,8 +10,16 @@ public class CardRewardView : MonoBehaviour
     [SerializeField] private Transform _cardContainer;
     [SerializeField] private TMP_Text _amountText;
 
+    public Card Card { get; private set; }
+    public int Amount { get; private set; }
+
     public void Fill(Card card, int amount)
     {
+        Card = card;
+        Amount = amount;
+
+        gameObject.SetActive(true);
+
         card.gameObject.SetActive(true);
         card.transform.SetParent(_cardContainer);
 
@@ -19,5 +27,10 @@ public class CardRewardView : MonoBehaviour
         card.transform.localPosition = _offset;
 
         _amountText.text = $"x{amount}";
+    }
+
+    public void Clear()
+    {
+        gameObject.SetActive(false);
     }
 }

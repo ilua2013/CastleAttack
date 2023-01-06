@@ -13,18 +13,21 @@ public class WheelFortune : MonoBehaviour
     [SerializeField] private Vector2 _angleClamp;
     [SerializeField] private float _speed;
     [SerializeField] private Transform _arrow;
+    [SerializeField] private CoinsWallet _wallet;
+    [SerializeField] private Rewarder _coinsRewarder;
 
     private bool _isRewarded;
     private int _factor = 1;
-    private CoinsWallet _wallet;
-    private CoinsRewarder _coinsRewarder;
 
     public event Action<int> Rewarded;
 
-    private void Awake()
+    private void OnValidate()
     {
-        _wallet = FindObjectOfType<CoinsWallet>(true);
-        _coinsRewarder = FindObjectOfType<CoinsRewarder>(true);
+        if (_wallet == null)
+            _wallet = FindObjectOfType<CoinsWallet>(true);
+
+        if (_coinsRewarder == null)
+            _coinsRewarder = FindObjectOfType<Rewarder>(true);
     }
 
     private void Start()
@@ -56,9 +59,9 @@ public class WheelFortune : MonoBehaviour
 
     private void OnRewarded()
     {
-        _wallet.Add(_coinsRewarder.ReceivedReward * _factor, 0);
-        _panel.SetAward(_coinsRewarder.ReceivedReward * _factor);
-        Rewarded?.Invoke(_coinsRewarder.ReceivedReward * _factor);
+        _wallet.Add(_coinsRewarder.ReceivedCoins * _factor, 0);
+        _panel.SetAward(_coinsRewarder.ReceivedCoins * _factor);
+        Rewarded?.Invoke(_coinsRewarder.ReceivedCoins * _factor);
 
         _panel.gameObject.SetActive(true);
         gameObject.SetActive(false);

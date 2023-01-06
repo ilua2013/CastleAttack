@@ -14,7 +14,7 @@ public class MapLevels : MonoBehaviour
     [Header("Animations Current Level")]
     [SerializeField] private Animator _animatorCurrentLevel;
     [Header("Panel Start Level")]
-    [SerializeField] private RectTransform _panelStartLevel;
+    [SerializeField] private PanelStartLevelView _panelStartLevel;
     [SerializeField] private Button _buttonPlay;
     [SerializeField] private Button _buttonClosePanel;
     [SerializeField] private float _speedAnimation;
@@ -27,7 +27,9 @@ public class MapLevels : MonoBehaviour
     {
         _levels = GetComponentsInChildren<LevelOnMap>().ToList();
         _sceneLoader = FindObjectOfType<SceneLoader>();
-        _panelStartLevel.localScale = Vector3.zero;
+
+        if (_panelStartLevel == null)
+            _panelStartLevel = FindObjectOfType<PanelStartLevelView>(true);
 
         if (_setTransformToZero)
             transform.localScale = Vector3.zero;
@@ -43,9 +45,7 @@ public class MapLevels : MonoBehaviour
 
     private void Awake()
     {
-        //_panelStartLevel.parent = GetComponentInParent<Canvas>().transform;
-        _panelStartLevel.localScale = Vector3.zero;
-
+        _panelStartLevel.transform.localScale = Vector3.zero;
         transform.localScale = Vector3.zero;
     }
 
@@ -107,14 +107,14 @@ public class MapLevels : MonoBehaviour
     {
         _currentLevel = levelOnMap;
 
-        StartCoroutine(AnimationSize(_panelStartLevel,Vector3.one));
+        _panelStartLevel.Init(levelOnMap.Level);
+        StartCoroutine(AnimationSize(_panelStartLevel.transform, Vector3.one));
     }
 
     private void ClosePanelLevel()
     {
         _currentLevel = null;
-
-        StartCoroutine(AnimationSize(_panelStartLevel,Vector3.zero));
+        StartCoroutine(AnimationSize(_panelStartLevel.transform, Vector3.zero));
     }
 
     private void LoadLevel()
@@ -126,11 +126,11 @@ public class MapLevels : MonoBehaviour
         _sceneLoader.LoadScene(_currentLevel.IndexScene);
     }
 
-    private IEnumerator AnimationSize(Transform transform,Vector3 targetScale)
+    private IEnumerator AnimationSize(Transform rectTransform, Vector3 targetScale)
     {
-        while(transform.localScale != targetScale)
+        while (rectTransform.localScale != targetScale)
         {
-            transform.localScale = Vector3.MoveTowards(transform.localScale, targetScale, _speedAnimation * Time.deltaTime);
+            rectTransform.localScale = Vector3.MoveTowards(rectTransform.localScale, targetScale, _speedAnimation * Time.deltaTime);
             _content.localPosition = Vector3.zero;
             yield return null;
         }

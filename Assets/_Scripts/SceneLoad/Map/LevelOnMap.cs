@@ -19,6 +19,8 @@ public class LevelOnMap : MonoBehaviour
 
     private Button _button;
 
+    public int Level => IndexScene - 2;
+
     public event Action<LevelOnMap> Clicked;
 
     private void OnValidate()

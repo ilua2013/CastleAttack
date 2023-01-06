@@ -24,7 +24,7 @@ public class CardAnonimusView : MonoBehaviour
         _card = GetComponent<Card>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (_card.CardSave.Amount < 1)
             ReskinToAnonymous();
@@ -32,7 +32,7 @@ public class CardAnonimusView : MonoBehaviour
             ReskinToInitial();
     }
 
-    private void ReskinToAnonymous()
+    public void ReskinToAnonymous()
     {
         _description.enabled = false;
         _AnonymousDescription.enabled = true;
@@ -44,7 +44,7 @@ public class CardAnonimusView : MonoBehaviour
         _anonymousIcon.SetActive(true);
     }
 
-    private void ReskinToInitial()
+    public void ReskinToInitial()
     {
         _description.enabled = true;
         _AnonymousDescription.enabled = false;

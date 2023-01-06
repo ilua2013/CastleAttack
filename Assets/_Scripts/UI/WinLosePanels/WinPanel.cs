@@ -13,7 +13,7 @@ public class WinPanel : MonoBehaviour
     [SerializeField] private RewardStepsAnimation _stepsAnimation;
     [SerializeField] private DemolishAnimations _demolishAnimations;
     [SerializeField] private CellWinAnimations _cellWinAnimations;
-    [SerializeField] private CardsRewarder _levelRewarder;
+    [SerializeField] private Rewarder _levelRewarder;
 
     private FinishPanel _finishPanel;
     private bool _isRewardWasOffered;
@@ -27,7 +27,7 @@ public class WinPanel : MonoBehaviour
             _cellWinAnimations = FindObjectOfType<CellWinAnimations>(true);
 
         if (_levelRewarder == null)
-            _levelRewarder = FindObjectOfType<CardsRewarder>(true);
+            _levelRewarder = FindObjectOfType<Rewarder>(true);
 
         foreach (var item in FindObjectsOfType<UnitFriend>())
             if (item.Fighter.FighterType == FighterType.MainWizzard)

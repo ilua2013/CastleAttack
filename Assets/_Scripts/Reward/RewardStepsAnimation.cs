@@ -15,12 +15,12 @@ public class RewardStepsAnimation : MonoBehaviour
     [SerializeField] private TMP_Text _killCount;
     [SerializeField] private Sprite _starSprite;
     [SerializeField] private WheelFortune _fortune;
+    [SerializeField] private Rewarder _reward;
 
-    private CoinsRewarder _coinsRewarder;
-
-    private void Awake()
+    private void OnValidate()
     {
-        _coinsRewarder = FindObjectOfType<CoinsRewarder>();
+        if (_reward == null)
+            _reward = FindObjectOfType<Rewarder>();
     }
 
     private void OnEnable()
@@ -37,7 +37,7 @@ public class RewardStepsAnimation : MonoBehaviour
     {
         //StartCoroutine(AnimateStars(starsCount, () => 
         StartCoroutine(AnimateKill(GamesStatistics.KilledEnemy, () => 
-        StartCoroutine(AnimateCoins(_coinsRewarder.ReceivedReward))));
+        StartCoroutine(AnimateCoins(_reward.ReceivedCoins))));
     }
 
     private IEnumerator AnimateStars(int count, Action onComplete = null)

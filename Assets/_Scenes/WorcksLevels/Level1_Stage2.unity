@@ -693,8 +693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delayFirstStep: 1.5
   _wizzard: {fileID: 732907202}
-  _buttonStartFight: {fileID: 615015956}
-  _buttonSkipStep: {fileID: 1353735471}
+  _buttonStartFight: {fileID: 1353735471}
   _cardsHand: {fileID: 1353735470}
   _enemySpawner: {fileID: 949943198}
   _spellsRecorder: {fileID: 291344450}
@@ -8043,17 +8042,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 498138, guid: 731eb2202f8de58428448813aa7f1a75, type: 3}
   m_PrefabInstance: {fileID: 611271387}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &615015956 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2423276408432858973, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
-  m_PrefabInstance: {fileID: 1353735468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &624614859
 GameObject:
   m_ObjectHideFlags: 0
@@ -11448,18 +11436,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3063490437280621150, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _reward
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 3063490437280621150, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _coinsWallet
-      value: 
-      objectReference: {fileID: 1967759672}
-    - target: {fileID: 3063490437280621150, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _battleSystem
-      value: 
-      objectReference: {fileID: 187189581}
     - target: {fileID: 3271667106641520893, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -11505,6 +11481,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
+      propertyPath: _coinsWallet
+      value: 
+      objectReference: {fileID: 1967759672}
+    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
       propertyPath: _deckBuilder
       value: 
       objectReference: {fileID: 1353735473}
@@ -11516,26 +11496,6 @@ PrefabInstance:
       propertyPath: _cardRewardPanel
       value: 
       objectReference: {fileID: 1353735472}
-    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _rewards.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _rewards.Array.data[0].<Amount>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _rewards.Array.data[1].<Amount>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _rewards.Array.data[0].<CardName>k__BackingField
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 3271667106641520894, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
-      propertyPath: _rewards.Array.data[1].<CardName>k__BackingField
-      value: 19
-      objectReference: {fileID: 0}
     - target: {fileID: 3271667106641520895, guid: d53d357f3ff49eb48a5bf8ce041cba90, type: 3}
       propertyPath: m_Name
       value: Rewarder
@@ -12445,13 +12405,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &1353735471 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 754621350894566082, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2423276408432858972, guid: 413398833d075624d94ca64d27d39bfe, type: 3}
   m_PrefabInstance: {fileID: 1353735468}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 67d5b7212a8d4714587d56463b07bca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1353735472 stripped

@@ -12,24 +12,25 @@ public class LosePanel : MonoBehaviour
     [SerializeField] private TMP_Text _coins;
     [SerializeField] private RewardRespawnButton _respawnButton;
     [SerializeField] private BattleSystem _battleSystem;
+    [SerializeField] private Rewarder _coinsRewarder;
 
     private FinishPanel _finishPanel;
     private UnitFriend _wizzard;
 
     private bool _isReviveWasOffered;
-    private CoinsRewarder _coinsRewarder;
 
     private void OnValidate()
     {
         if (_battleSystem == null)
             _battleSystem = FindObjectOfType<BattleSystem>();
+
+        if (_coinsRewarder == null)
+            _coinsRewarder = FindObjectOfType<Rewarder>();
     }
 
     private void Awake()
     {
-        _coinsRewarder = FindObjectOfType<CoinsRewarder>();
         _finishPanel = GetComponent<FinishPanel>();
-
         _wizzard = _battleSystem.Wizzard;
     }
 
@@ -68,7 +69,7 @@ public class LosePanel : MonoBehaviour
         _battleSystem.StopDoStep();
         _finishPanel.OpenPanel();
 
-        StartCoroutine(AnimateCoins(_coinsRewarder.ReceivedReward));
+        StartCoroutine(AnimateCoins(_coinsRewarder.ReceivedCoins));
 
         if (_isReviveWasOffered == false)
             _isReviveWasOffered = true;

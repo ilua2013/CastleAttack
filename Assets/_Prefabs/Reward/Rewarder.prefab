@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3271667106641520893}
   - component: {fileID: 3271667106641520894}
-  - component: {fileID: 3063490437280621150}
   m_Layer: 0
   m_Name: Rewarder
   m_TagString: Untagged
@@ -45,22 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c4ca472670d2b4183b8798286233d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rewards: []
+  _levelRewardData: {fileID: 11400000, guid: 65e4b1762614eb646b4309f5e9efac93, type: 2}
   _battleSystem: {fileID: 0}
   _deckBuilder: {fileID: 0}
-  _cardRewardPanel: {fileID: 0}
---- !u!114 &3063490437280621150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3271667106641520895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f818a5490768f8d4db17f66af456ed30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _reward: 0
-  _battleSystem: {fileID: 0}
   _coinsWallet: {fileID: 0}
+  _cardRewardPanel: {fileID: 0}
