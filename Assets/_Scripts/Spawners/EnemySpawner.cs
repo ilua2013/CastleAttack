@@ -7,11 +7,12 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private BattleSystem _battleSystem;
-    [SerializeField] private List<Wave> _waves;
+    [SerializeField] private LevelEnemiesData _levelEnemiesData;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
     [Header("StartUnit")]
     [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[] { };
 
+    private List<Wave> _waves = new List<Wave>();
     private int _currentWave = 0;
 
     public int WaveCount => _waves.Count;
@@ -22,15 +23,25 @@ public class EnemySpawner : MonoBehaviour
     public event Action<UnitEnemy> Spawned_get;
 
     [Serializable]
-    private class Wave
+    public class Wave
     {
         public UnitEnemy[] UnitEnemies = new UnitEnemy[] { };
+
+        public Wave(UnitEnemy[] unitEnemies)
+        {
+            UnitEnemies = unitEnemies;
+        }
     }
 
     private void OnValidate()
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
         _enemysStart = GetComponentsInChildren<UnitEnemy>();
+
+        if (_levelEnemiesData == null)
+            _levelEnemiesData = Resources.Load("Configs/LevelEnemies") as LevelEnemiesData;
+
+        //_levelEnemiesData.
 
         if (_enemysStart != null)
         {
