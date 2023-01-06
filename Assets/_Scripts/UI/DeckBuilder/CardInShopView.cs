@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -77,6 +74,7 @@ public class CardInShopView : MonoBehaviour
         OnCoinsChanged(0, 0);
 
         card.transform.localScale = Vector3.one;
+        card.transform.localScale = Vector3.one * .85f;
 
         if (isNew)
             CardOpened?.Invoke(_card);
