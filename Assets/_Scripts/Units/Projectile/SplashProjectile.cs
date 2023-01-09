@@ -27,10 +27,15 @@ public class SplashProjectile : MonoBehaviour
         Cell left = cell.Left;
         Cell right = cell.Right;
 
-        if (left != null && left.CurrentUnit != null)
+        if (IsUnitExists(left))
             left.CurrentUnit.Fighter.TakeDamage(_arrow.Fighter);
 
-        if (right != null && right.CurrentUnit != null)
+        if (IsUnitExists(right))
             right.CurrentUnit.Fighter.TakeDamage(_arrow.Fighter);
+    }
+
+    private bool IsUnitExists(Cell cell)
+    {
+        return cell != null && cell.CurrentUnit != null && cell.CurrentUnit is UnitFriend;
     }
 }
