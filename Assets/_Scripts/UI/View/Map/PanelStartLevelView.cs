@@ -7,7 +7,7 @@ using UnityEngine;
 public class PanelStartLevelView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _levelText;
-    [SerializeField] private TMP_Text _coinsText;
+    [SerializeField] private CoinsAwardCard _coinsCard;
     [SerializeField] private Transform _panel;
     [SerializeField] private CardRewardView _rewardViewPrefab;
     [SerializeField] private LevelRewardData _levelRewardData;
@@ -35,7 +35,7 @@ public class PanelStartLevelView : MonoBehaviour
     private void FillTexts(int level, int coins)
     {
         _levelText.text = $"{_levelTextInitial} {level}";
-        _coinsText.text = coins.ToString();
+        _coinsCard.Init(coins);
     }
 
     private void ClearCardReward()

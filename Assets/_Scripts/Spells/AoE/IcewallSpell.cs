@@ -13,11 +13,13 @@ public class IcewallSpell : Spell
     private void OnEnable()
     {
         Dispelled += OnDispelled;
+        WasCast += OnCast;
     }
 
     private void OnDisable()
     {
         Dispelled -= OnDispelled;
+        WasCast -= OnCast;
     }
 
     protected override void Affect(Cell cell, UnitStats stats, float delay)
@@ -27,8 +29,6 @@ public class IcewallSpell : Spell
 
     private IEnumerator Freeze(Cell cell, float delay)
     {
-        _animator.Play(Growth);
-
         yield return new WaitForSeconds(delay);
 
         List<UnitEnemy> enemies = cell.GetEnemyUnits(DistanceAttacks);
@@ -37,6 +37,11 @@ public class IcewallSpell : Spell
             enemy.SkipStep();
 
         Tick();
+    }
+
+    private void OnCast(Cell cell, UnitStats stats)
+    {
+        _animator.Play(Growth);
     }
 
     private void OnDispelled(Spell spell)

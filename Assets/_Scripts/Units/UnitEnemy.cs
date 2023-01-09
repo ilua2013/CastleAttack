@@ -160,12 +160,6 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     private UnitFriend TryAttack()
     {
         List<UnitFriend> units = Mover.CurrentCell.GetFriendUnits(_distanceAttack);
-        if (Fighter.FighterType == FighterType.Catapult)
-        {
-            List<Cell> cells = Mover.CurrentCell.GetCellsDistanceAttack(_distanceAttack);          
-            List<UnitFriend> unitsCatapult = Mover.CurrentCell.GetFriendUnitsCatapult(_distanceAttackCatapult, cells);            
-            units.AddRange(unitsCatapult);
-        }
 
         foreach (var item in units)
             return item;

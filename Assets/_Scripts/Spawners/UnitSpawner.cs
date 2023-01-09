@@ -9,8 +9,7 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
     [SerializeField] private SpawnerType _type;
     [SerializeField] private SoundEffectPlayer _sounds;
     [SerializeField] private Transform _spawnPoint;
-
-    private Cell _cell;
+    [SerializeField] private Cell _cell;
 
     public UnitFriend Spawned { get; private set; }
     public Vector3 SpawnPoint => _spawnPoint.position;
@@ -20,13 +19,9 @@ public class UnitSpawner : MonoBehaviour, ICardApplicable
     public event Action<IUnit> SpawnedUnit_get;
     public event Action SpawnedUnit;
 
-    private void Awake()
-    {
-        _cell = GetComponent<Cell>();
-    }
-
     private void OnValidate()
     {
+        _cell = GetComponent<Cell>();
         _spawnPoint = transform;
     }
 

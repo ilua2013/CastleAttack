@@ -23,7 +23,7 @@ public class CardRewardView : MonoBehaviour
         card.gameObject.SetActive(true);
         card.transform.SetParent(_cardContainer);
 
-        card.transform.localScale = Vector3.one;
+        card.transform.localScale = Vector3.one * 1.5f;
         card.transform.localPosition = _offset;
 
         _amountText.text = $"x{amount}";

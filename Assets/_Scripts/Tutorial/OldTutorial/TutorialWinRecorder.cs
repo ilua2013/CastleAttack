@@ -30,8 +30,6 @@ public class TutorialWinRecorder : MonoBehaviour
 
     private void OnWinPanelOpened()
     {
-        Debug.Log("Save tutor");
-
         Saves.SetBool(SaveController.Params.IsTutorialCompleted, true);
         Saves.Save();
     }
