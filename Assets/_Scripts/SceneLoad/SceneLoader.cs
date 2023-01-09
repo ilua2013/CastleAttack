@@ -10,7 +10,16 @@ public class SceneLoader : MonoBehaviour
     public const int TutorialIndex = 1;
     public const int MenuIndex = 2;
     public const int FirstLevelIndex = 3;
+    public List<LevelCellSize> IndexSceneCellSize = new List<LevelCellSize>()
+    {
+        new LevelCellSize(0, 3, new CellSize(5,3)),
+        new LevelCellSize(3, 4, new CellSize(6,4)),
+        new LevelCellSize(8, 5, new CellSize(6,5)),
+        new LevelCellSize(11, 6, new CellSize(7,5)),
+        new LevelCellSize(15, 7, new CellSize(8,6)),
+    };
 
+    [SerializeField] private LevelEnemiesData _levelEnemiesData;
     [SerializeField] private Image _background;
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private TextMeshProUGUI _loadingPercent;
@@ -19,6 +28,9 @@ public class SceneLoader : MonoBehaviour
 
     private void OnValidate()
     {
+        if (_levelEnemiesData == null)
+            _levelEnemiesData = Resources.Load("Configs/LevelEnemies") as LevelEnemiesData;
+
         _background.enabled = false;
         _progressSlider.gameObject.SetActive(false);
     }
@@ -57,7 +69,21 @@ public class SceneLoader : MonoBehaviour
         LoadScene(levelIndex);
     }
 
-    public void LoadScene(int index)
+    public void LoadLevel(int level)
+    {
+        print("LoadLevel - " + level);
+        for (int i = IndexSceneCellSize.Count - 1; i >= 0; i--)
+        {
+            if(level >= IndexSceneCellSize[i].Level)
+            {
+                print("Load Scene with index - " + IndexSceneCellSize[i].Index);
+                LoadScene(IndexSceneCellSize[i].Index);
+                break;
+            }
+        }
+    }
+
+    private void LoadScene(int index)
     {
         _background.enabled = true;
         _progressSlider.gameObject.SetActive(true);
@@ -84,5 +110,19 @@ public class SceneLoader : MonoBehaviour
         _load.allowSceneActivation = true;
 
         _load = null;
+    }
+}
+
+public class LevelCellSize
+{
+    public int Level;
+    public int Index;
+    public CellSize CellSize;
+
+    public LevelCellSize(int levelNumber, int index, CellSize cellSize)
+    {
+        Level = levelNumber;
+        Index = index;
+        CellSize = cellSize;
     }
 }

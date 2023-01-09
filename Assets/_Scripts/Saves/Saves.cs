@@ -207,6 +207,12 @@ public static class Saves
 {
     private static Dictionary _saves = new Dictionary();
 
+    public static int SelectedLevel
+    {
+        get => PlayerPrefs.GetInt("SelectedLevel", 0);
+        set => PlayerPrefs.SetInt("SelectedLevel", value);
+    }
+
     static Saves()
     {
         string json = "";

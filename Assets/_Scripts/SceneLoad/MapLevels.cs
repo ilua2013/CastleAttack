@@ -38,7 +38,7 @@ public class MapLevels : MonoBehaviour
 
         foreach (var item in _levels)
         {
-            item.IndexScene = indexNumber;
+            item.LevelNumber = indexNumber;
             indexNumber++;
         }
     }
@@ -106,6 +106,7 @@ public class MapLevels : MonoBehaviour
     private void SelectLevel(LevelOnMap levelOnMap)
     {
         _currentLevel = levelOnMap;
+        Saves.SelectedLevel = _currentLevel.Level;
 
         _panelStartLevel.Init(levelOnMap.Level);
         StartCoroutine(AnimationSize(_panelStartLevel.transform, Vector3.one));
@@ -114,6 +115,8 @@ public class MapLevels : MonoBehaviour
     private void ClosePanelLevel()
     {
         _currentLevel = null;
+        Saves.SelectedLevel = 0;
+
         StartCoroutine(AnimationSize(_panelStartLevel.transform, Vector3.zero));
     }
 
@@ -123,7 +126,7 @@ public class MapLevels : MonoBehaviour
             Debug.LogError("CURRENT LEVEL IS NULL");
 
         _panelStartLevel.gameObject.SetActive(false);
-        _sceneLoader.LoadScene(_currentLevel.IndexScene);
+        _sceneLoader.LoadLevel(_currentLevel.Level);
     }
 
     private IEnumerator AnimationSize(Transform rectTransform, Vector3 targetScale)

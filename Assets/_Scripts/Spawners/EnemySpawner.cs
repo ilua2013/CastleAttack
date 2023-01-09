@@ -50,7 +50,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        _levelEnemiesData.SetWaves(_waves, SceneManager.GetActiveScene().buildIndex - 2);
+        //_levelEnemiesData.SetWaves(_waves, SceneManager.GetActiveScene().buildIndex - 2);
+        print("Loaded Level - " + Saves.SelectedLevel);
+        _levelEnemiesData.SetWaves(_waves, Saves.SelectedLevel);
         EnemySpawn();
     }
 

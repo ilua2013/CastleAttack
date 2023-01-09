@@ -4,7 +4,7 @@ using System;
 
 public class LevelOnMap : MonoBehaviour
 {
-    public int IndexScene;
+    public int LevelNumber;
     [Header("Sprite Button")]
     [SerializeField] private Image _imageButton;
     [SerializeField] private Sprite _spriteOpenLevel;
@@ -19,13 +19,13 @@ public class LevelOnMap : MonoBehaviour
 
     private Button _button;
 
-    public int Level => IndexScene - 2;
+    public int Level => LevelNumber - 2;
 
     public event Action<LevelOnMap> Clicked;
 
     private void OnValidate()
     {
-        GetComponentInChildren<Text>(true).text = (IndexScene - 2).ToString();
+        GetComponentInChildren<Text>(true).text = (LevelNumber - 2).ToString();
 
         //if (_stars.Length != 3)
         //    _stars = new Image[3];

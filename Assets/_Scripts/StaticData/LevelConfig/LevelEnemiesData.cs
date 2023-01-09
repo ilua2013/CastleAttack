@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static EnemySpawner;
 using Random = System.Random;
 
@@ -31,6 +32,7 @@ public class LevelEnemiesData : ScriptableObject
 public class EnemiesData
 {
     public int Level;
+    public CellSize CellSize;
     public int WavesCount;
     public EnemyType[] EnemyTypes;
 
@@ -98,5 +100,26 @@ public class EnemyType
             enemies[i] = EnemyPrefab;
 
         return enemies;
+    }
+}
+
+[Serializable]
+public class CellSize
+{
+    public int Height;
+    public int Weight;
+
+    public CellSize(int height, int weight)
+    {
+        Height = height;
+        Weight = weight;
+    }
+
+    public static bool CheckEqualSize(CellSize one, CellSize two)
+    {
+        if (one.Height == two.Height && one.Weight == two.Weight)
+            return true;
+        else
+            return false;
     }
 }
