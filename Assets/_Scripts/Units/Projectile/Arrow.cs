@@ -9,6 +9,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] private float _height = 2f;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private Transform target;
+    [SerializeField] private Transform _arrowRenderer;
 
     public Fighter Fighter { get; private set; }
 
@@ -49,7 +50,8 @@ public class Arrow : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = Vector3.zero;
+        if (_arrowRenderer != null)
+            _arrowRenderer.localScale = Vector3.zero;
 
         onFlyed?.Invoke();
         Reached?.Invoke(cell);
