@@ -4,39 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static EnemySpawner;
+using Random = System.Random;
 
 [CreateAssetMenu(fileName = "LevelEnemies", menuName = "Configs/Level/Enemies")]
 public class LevelEnemiesData : ScriptableObject
 {
-    [Header("Clear config")]
-    public bool ClearAll;
-
-    [Space]
-    public int LevelCount;
     public List<EnemiesData> EnemiesData = new List<EnemiesData>();
-
-    private void OnValidate()
-    {
-        if (ClearAll)
-        {
-            EnemiesData.Clear();
-
-            for (int i = 0; i < LevelCount; i++)
-                EnemiesData.Add(new EnemiesData(i));
-
-            ClearAll = false;
-        }
-    }
 
     public void SetWaves(List<Wave> waves, int level)
     {
+        level = Mathf.Max(level, 0);
+
         EnemiesData data = EnemiesData.FirstOrDefault((item) => item.Level == level);
 
         if (data == null)
             throw new ArgumentException($"Level {level} does not exists");
 
-        for (int i = 0; i < data.Waves; i++)
-            waves.Add(new Wave(data.GetRandomEnemies()));
+        data.GenerateWaves();
+
+        for (int i = 0; i < data.WavesCount; i++)
+            waves.Add(new Wave(data.Waves[i].UnitEnemies));
     }
 }
 
@@ -44,29 +31,56 @@ public class LevelEnemiesData : ScriptableObject
 public class EnemiesData
 {
     public int Level;
-    public int Waves;
+    public int WavesCount;
     public EnemyType[] EnemyTypes;
 
-    private Dictionary<int, UnitEnemy[]> _enemies = new Dictionary<int, UnitEnemy[]>();
+    [HideInInspector] private List<Wave> _waves = new List<Wave>();
+    [HideInInspector] private List<UnitEnemy> _enemies = new List<UnitEnemy>();
+
+    public List<Wave> Waves => _waves;
 
     public EnemiesData(int level)
     {
         Level = level;
     }
-
-    public UnitEnemy[] GetRandomEnemies()
+    
+    public void GenerateWaves()
     {
-        List<UnitEnemy> enemies = new List<UnitEnemy>();
+        CollectEnemies();
+        Shuffle();
+        CollectWaves();
+    }
 
-        for (int i = 0; i < EnemyTypes.Length; i++)
-            enemies.AddRange(EnemyTypes[i].GetEnemies());
+    private void CollectWaves()
+    {
+        _waves = new List<Wave>();
 
-        for (int i = 0; i < enemies.Count; i++)
+        var splitEnemies = _enemies.ToArray().Split(WavesCount);
+
+        foreach (var enemies in splitEnemies)
+            _waves.Add(new Wave(enemies.ToArray()));
+    }
+
+    private void CollectEnemies()
+    {
+        _enemies = new List<UnitEnemy>();
+
+        foreach (EnemyType type in EnemyTypes)
+            _enemies.AddRange(type.GetEnemies());
+    }
+
+    private void Shuffle()
+    {
+        Random random = new Random();
+
+        for (int i = _enemies.Count - 1; i >= 1; i--)
         {
-            //_enemies.Add()
-        }
+            int j = random.Next(i + 1);
 
-        return enemies.ToArray();
+            UnitEnemy temp = _enemies[j];
+            _enemies[j] = _enemies[i];
+            _enemies[i] = temp;
+        }
     }
 }
 

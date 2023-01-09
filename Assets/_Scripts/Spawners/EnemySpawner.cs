@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
-{
+{ 
     [SerializeField] private BattleSystem _battleSystem;
     [SerializeField] private LevelEnemiesData _levelEnemiesData;
     [SerializeField] private List<UnitSpawner> _cellsEnemySpawner;
-    [Header("StartUnit")]
-    [SerializeField] private UnitEnemy[] _enemysStart = new UnitEnemy[] { };
 
     private List<Wave> _waves = new List<Wave>();
     private int _currentWave = 0;
@@ -36,19 +35,9 @@ public class EnemySpawner : MonoBehaviour
     private void OnValidate()
     {
         _battleSystem = FindObjectOfType<BattleSystem>();
-        _enemysStart = GetComponentsInChildren<UnitEnemy>();
 
         if (_levelEnemiesData == null)
             _levelEnemiesData = Resources.Load("Configs/LevelEnemies") as LevelEnemiesData;
-
-        //_levelEnemiesData.
-
-        if (_enemysStart != null)
-        {
-            for (int i = 0; i < _enemysStart.Length; i++)
-                if (_enemysStart[i].transform.parent != transform)
-                    _enemysStart[i].transform.parent = transform;
-        }
 
         _cellsEnemySpawner.Clear();
 
@@ -57,6 +46,12 @@ public class EnemySpawner : MonoBehaviour
             if (item.SpawnerType == SpawnerType.Enemy && item.TryGetComponent(out Cell cell) && cell.CellIs != CellIs.Boss && _cellsEnemySpawner.Contains(item) == false)
                 _cellsEnemySpawner.Add(item);
         }
+    }
+
+    private void Awake()
+    {
+        _levelEnemiesData.SetWaves(_waves, SceneManager.GetActiveScene().buildIndex - 2);
+        EnemySpawn();
     }
 
     private void Start()
@@ -72,17 +67,10 @@ public class EnemySpawner : MonoBehaviour
     public void Init()
     {
         _battleSystem.StepFinished += EnemySpawn;
-
-        foreach (var item in _enemysStart)
-        {
-            item.Init(null, null);
-            Spawned_get?.Invoke(item);
-        }
     }
 
     public void TutorialEnemy(UnitEnemy[] unitEnemies)
     {
-        _enemysStart = unitEnemies;
         Init();
     }
 

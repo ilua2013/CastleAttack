@@ -95,13 +95,16 @@ public class Fighter
         if (_type == FighterType.Archer || _type == FighterType.Catapult)
         {
             Arrow arrow = _unit.SpawnArrow(_arrow, transform);
-            arrow.FlyTo(fighter.transform.position, () =>
+            Cell cell = fighter.Unit.Mover.CurrentCell;
+            float delay = 0.15f;
+
+            arrow.FlyTo(fighter.transform.position, fighter, () =>
             {
                 onEnd?.Invoke();
             }, () =>
             {
                 isFatal = fighter.TakeDamage(this);
-            }, 0.15f);
+            }, delay, cell);
 
             Attacked?.Invoke();
             Attacked_get?.Invoke(fighter.transform);

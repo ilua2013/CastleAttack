@@ -60,6 +60,7 @@ public class Rewarder : MonoBehaviour
 
     private void AwardCards(RewardData reward, List<Card> cards)
     {
+        Debug.Log(reward);
         if (reward.Card != null)
         {
             Card card = _deckBuilder.GetCard(reward.Card.Name);

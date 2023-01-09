@@ -582,7 +582,6 @@ public class Cell : MonoBehaviour
         {
             switch (distanceAttack[i].Side)
             {
-              
                 case CellNeighbor.Left:
                     CheckStateUnitFriend(GetLeftCellsForCatapult(distanceAttack[i].Distance, cellsed[cellsed.Count - 1]), friends);
                     break;             

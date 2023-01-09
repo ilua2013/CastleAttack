@@ -10,12 +10,17 @@ public class Arrow : MonoBehaviour
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private Transform target;
 
-    public void FlyTo(Vector3 target, Action onEnd = null, Action onFlyed = null, float delay = 0)
+    public Fighter Fighter { get; private set; }
+
+    public event Action<Cell> Reached;
+
+    public void FlyTo(Vector3 target, Fighter fighter, Action onEnd = null, Action onFlyed = null, float delay = 0, Cell cell = null)
     {
-        StartCoroutine(Fly(target, delay, onEnd, onFlyed));
+        Fighter = fighter;
+        StartCoroutine(Fly(target, delay, onEnd, onFlyed, cell));
     }
 
-    private IEnumerator Fly(Vector3 target, float delay = 0, Action onEnd = null, Action onFlyed = null)
+    private IEnumerator Fly(Vector3 target, float delay = 0, Action onEnd = null, Action onFlyed = null, Cell cell = null)
     {
         yield return new WaitForSeconds(delay);
 
@@ -47,6 +52,7 @@ public class Arrow : MonoBehaviour
         transform.localScale = Vector3.zero;
 
         onFlyed?.Invoke();
+        Reached?.Invoke(cell);
 
         yield return new WaitForSeconds(0.75f);
 
