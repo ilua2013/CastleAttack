@@ -2,38 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Collider))]
 public class ForceObject : MonoBehaviour
 {
     [SerializeField] private float _lifeTime;
-    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Rigidbody[] _rigidbody;
+    [SerializeField] private ParticleSystem _particleExploision;
 
-    private Collider _collider;
-
-    public Rigidbody Rigidbody => _rigidbody;
+    private Collider[] _colliders;
 
     private void OnValidate()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponentsInChildren<Rigidbody>();
+        _particleExploision = GetComponentInChildren<ParticleSystem>();
+
+        foreach (var item in _rigidbody)
+            item.isKinematic = true;
     }
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
+        _colliders = GetComponentsInChildren<Collider>();
     }
 
-    public void Force(float force, Vector3 direction)
+    public void Force(float force, Vector3 direction, Vector3 positionForce)
     {
         StartCoroutine(Live());
-        _rigidbody.AddForce(direction * force);
+
+        _particleExploision.Play();
+
+        foreach (var item in _colliders)
+            item.enabled = true;
+
+        foreach (var item in _rigidbody)
+        {
+            item.isKinematic = false;
+            //item.AddForce(direction * force);
+            //item.AddForceAtPosition(direction * force, item.transform.position + Random.insideUnitSphere);
+            //item.AddRelativeForce(Random.insideUnitSphere);
+            item.AddExplosionForce(force, positionForce, 100f);
+        }
     }
 
     private IEnumerator Live()
     {
         yield return new WaitForSeconds(_lifeTime);
 
-        _collider.enabled = false;
+        foreach (var item in _colliders)
+            item.enabled = false;
+
         Destroy(gameObject, 2f);
     }
 }

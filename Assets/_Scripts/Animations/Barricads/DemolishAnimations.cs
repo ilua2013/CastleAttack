@@ -6,17 +6,25 @@ using UnityEngine;
 
 public class DemolishAnimations : MonoBehaviour
 {
+    public bool playAnim;
     [SerializeField] private float _duration;
-    [SerializeField] private ParticleSystem _vfx;
+    [SerializeField] private float _delayBeetwenObject;
+    [SerializeField] private float _forceObject;
 
     private List<ForceObject> _forceObjects;
 
     private void Awake()
     {
         _forceObjects = GetComponentsInChildren<ForceObject>().ToList();
+    }
 
-        foreach (var obj in _forceObjects)
-            obj.Rigidbody.isKinematic = true;
+    private void Update()
+    {
+        if (playAnim)
+        {
+            playAnim = false;
+            Play();
+        }
     }
 
     public void Play(Action onEnd = null)
@@ -27,12 +35,12 @@ public class DemolishAnimations : MonoBehaviour
     private IEnumerator PlayAnimation(Action onEnd = null)
     {
         yield return new WaitForSeconds(0.5f);
-        _vfx.Play();
 
-        foreach (var obj in _forceObjects)
+        foreach (var item in _forceObjects)
         {
-            obj.Rigidbody.isKinematic = false;
-            obj.Force(UnityEngine.Random.Range(100f, 120f), Vector3.up * 7 + UnityEngine.Random.insideUnitSphere);
+            item.Force(_forceObject, Vector3.up * 4 + UnityEngine.Random.insideUnitSphere, transform.position + Vector3.down * 25);
+
+            yield return new WaitForSeconds(_delayBeetwenObject);
         }
 
         yield return new WaitForSeconds(_duration);
