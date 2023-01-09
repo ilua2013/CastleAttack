@@ -54,17 +54,13 @@ public class SceneLoader : MonoBehaviour
     {
         int levelIndex = TutorialIndex;
 
-        //if (Saves.HasKey(SaveController.Params.IsOpeningViewed))
-        //    if (Saves.GetBool(SaveController.Params.IsOpeningViewed))
-        //        levelIndex = TutorialIndex;
-
         if (Saves.HasKey(SaveController.Params.IsTutorialCompleted))
             if (Saves.GetBool(SaveController.Params.IsTutorialCompleted))
-                levelIndex = FirstLevelIndex;
+                levelIndex = MenuIndex;
 
-        if (Saves.HasKey(SaveController.Params.Level))
-            if (Saves.GetInt(SaveController.Params.Level) + 1 < SceneManager.sceneCountInBuildSettings)
-                levelIndex = Saves.GetInt(SaveController.Params.Level) + 1;
+        //if (Saves.HasKey(SaveController.Params.Level))
+        //    if (Saves.GetInt(SaveController.Params.Level) + 1 < SceneManager.sceneCountInBuildSettings)
+        //        levelIndex = Saves.GetInt(SaveController.Params.Level) + 1;
 
         LoadScene(levelIndex);
     }
