@@ -48,10 +48,11 @@ public class CellWinAnimations : MonoBehaviour
             foreach (CellView cell in GetRow(i))
             {
                 cell.RecolorToWin();
+
+                if (i == _cellSpawner.Rows - 2)
+                    onEnd?.Invoke();
             }
         }
-
-        onEnd?.Invoke();
     }
 
     private List<CellView> GetRow(int row)

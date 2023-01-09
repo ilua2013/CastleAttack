@@ -54,7 +54,7 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
         _background.gameObject.SetActive(isOpening);
 
         float distanceDelta = 0.001f;
-        float lerpTime = 3f;
+        float lerpTime = 3.5f;
 
         while (Vector3.Distance(_panel.localScale, to) > distanceDelta)
         {
