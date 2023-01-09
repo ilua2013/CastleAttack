@@ -5,11 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Arrow))]
 public class SplashProjectile : MonoBehaviour
 {
+    private const string DemolishAnimationState = "ZombieDemolish";
+
     [SerializeField] private Arrow _arrow;
+    [SerializeField] private Animator _animator;
 
     private void OnValidate()
     {
-        _arrow = GetComponent<Arrow>();
+        if (_arrow == null)
+            _arrow = GetComponent<Arrow>();
+
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -32,6 +39,8 @@ public class SplashProjectile : MonoBehaviour
 
         if (IsUnitExists(right))
             right.CurrentUnit.Fighter.TakeDamage(_arrow.Fighter);
+
+        _animator.Play(DemolishAnimationState);
     }
 
     private bool IsUnitExists(Cell cell)

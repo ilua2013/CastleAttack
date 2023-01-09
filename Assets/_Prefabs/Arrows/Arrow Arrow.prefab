@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7764464643050864754}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &5937723673645392673
 TrailRenderer:
@@ -153,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7368c7d5f6071c248bc3f744189c7d7b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7368c7d5f6071c248bc3f744189c7d7b, type: 3}
       propertyPath: m_LocalScale.x
@@ -201,6 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7368c7d5f6071c248bc3f744189c7d7b, type: 3}
+--- !u!4 &6329115594258013765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 7368c7d5f6071c248bc3f744189c7d7b, type: 3}
+  m_PrefabInstance: {fileID: 6329115594258138309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6772278334101192294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +269,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3907748128250166808, guid: 06141828e53cbdc4e8c43c83b2f996ce, type: 3}
+      propertyPath: _arrowRenderer
+      value: 
+      objectReference: {fileID: 6329115594258013765}
     - target: {fileID: 3907748128250166814, guid: 06141828e53cbdc4e8c43c83b2f996ce, type: 3}
       propertyPath: m_Name
       value: Arrow Arrow
