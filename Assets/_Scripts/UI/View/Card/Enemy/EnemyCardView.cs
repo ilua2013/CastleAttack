@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyCardView : MonoBehaviour
 {
-    private UnitEnemyType _typeId;
+    [SerializeField] private UnitEnemyType _typeId;
+    [SerializeField] private TMP_Text _amount;
 
-    public void Init(UnitEnemyType typeId)
+    public UnitEnemyType TypeId => _typeId;
+
+    public void Init(int amount)
     {
-        _typeId = typeId;
+        _amount.text = $"x{amount}";
     }
 }

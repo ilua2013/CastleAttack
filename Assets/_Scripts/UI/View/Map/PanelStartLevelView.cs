@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ public class PanelStartLevelView : MonoBehaviour
     [SerializeField] private CardRewardView _rewardViewPrefab;
     [Header("Enemies Panel")]
     [SerializeField] private Transform _enemiesPanel;
-    [SerializeField] private EnemyCardView _enemyCardPrefab;
+    [SerializeField] private EnemyCardViewContainer _enemiesContainer;
     [Header("Level data")]
     [SerializeField] private LevelRewardData _levelRewardData;
+    [SerializeField] private LevelEnemiesData _levelEnemiesData;
 
     private string _levelTextInitial;
     private List<CardRewardView> _rewardViews = new List<CardRewardView>();
+    private List<EnemyCardView> _enemyCards = new List<EnemyCardView>();
 
     private void Awake()
     {
@@ -28,13 +31,37 @@ public class PanelStartLevelView : MonoBehaviour
     public void Init(int level)
     {
         RewardData rewardData = _levelRewardData.GetAward(level);
+        EnemiesData enemiesData = _levelEnemiesData.GetEnemiesOnLevel(level);
 
+        FillCards(rewardData);
+        FillEnemies(enemiesData);
+
+        FillTexts(level, rewardData.Coins);
+    }
+
+    private void FillEnemies(EnemiesData data)
+    {
+        foreach (EnemyCardView view in _enemyCards)
+            view.gameObject.SetActive(false);
+
+        _enemyCards.Clear();
+
+        foreach (EnemyType type in data.EnemyTypes)
+        {
+            EnemyCardView view = _enemiesContainer.GetEnemyView(type.EnemyPrefab.TypeId);
+            _enemyCards.Add(view);
+
+            view.gameObject.SetActive(true);
+            view.Init(type.Amount);
+        }
+    }
+
+    private void FillCards(RewardData rewardData)
+    {
         if (rewardData.Card != null)
             FillCardReward(rewardData);
         else
             ClearCardReward();
-
-        FillTexts(level, rewardData.Coins);
     }
 
     private void FillTexts(int level, int coins)

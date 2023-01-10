@@ -55,9 +55,9 @@ public class WinPanel : MonoBehaviour
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
 
         _increaseButton.Init(_levelRewarder.RewardCards);
-        SaveProgress();
-
         _levelRewarder.Init();
+
+        SaveProgress();
 
         PlayWinAnimation(starsCount);
 

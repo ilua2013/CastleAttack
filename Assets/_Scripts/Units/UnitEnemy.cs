@@ -5,6 +5,7 @@ using System;
 
 public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
 {
+    [field: SerializeField] public UnitEnemyType TypeId { get; private set; }
     [field: SerializeField] public int MaxStep { get; private set; } = 1;
     [field: SerializeField] public float DelayToDie { get; private set; } = 2.5f;
     [field: SerializeField] private DistanceAttack[] _distanceAttack;

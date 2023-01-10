@@ -26,6 +26,16 @@ public class LevelEnemiesData : ScriptableObject
         for (int i = 0; i < data.WavesCount; i++)
             waves.Add(new Wave(data.Waves[i].UnitEnemies));
     }
+
+    public EnemiesData GetEnemiesOnLevel(int level)
+    {
+        EnemiesData data = EnemiesData.FirstOrDefault((item) => item.Level == level);
+
+        if (data == null)
+            throw new ArgumentException($"Level {level} does not exists");
+
+        return data;
+    }
 }
 
 [Serializable]
@@ -72,12 +82,14 @@ public class EnemiesData
         }
     }
 
-    private void CollectEnemies()
+    public List<UnitEnemy> CollectEnemies()
     {
         _enemies = new List<UnitEnemy>();
 
         foreach (EnemyType type in EnemyTypes)
             _enemies.AddRange(type.GetEnemies());
+
+        return _enemies;
     }
 
     private void Shuffle()
