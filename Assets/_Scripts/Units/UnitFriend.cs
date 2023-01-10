@@ -348,7 +348,7 @@ public class UnitFriend : MonoBehaviour, IUnit, IRadiusAttack, IPhaseHandler
     public Arrow SpawnArrow(Arrow arrow, Transform position)
     {
         Arrow spawned = Instantiate(arrow, position.position, Quaternion.identity);
-        spawned.transform.parent = position;
+        //spawned.transform.parent = position;
         return spawned;
     }
 }

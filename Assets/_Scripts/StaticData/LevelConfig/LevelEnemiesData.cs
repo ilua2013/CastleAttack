@@ -55,10 +55,19 @@ public class EnemiesData
     {
         _waves = new List<Wave>();
 
-        var splitEnemies = _enemies.ToArray().Split(WavesCount);
+        int size = _enemies.Count / WavesCount;
 
-        foreach (var enemies in splitEnemies)
-            _waves.Add(new Wave(enemies.ToArray()));
+        for (int i = 0; i < WavesCount; i++)
+        {
+            if (size > _enemies.Count)
+                size = _enemies.Count;
+
+            if (size * 2 > _enemies.Count)
+                size = _enemies.Count;
+
+            _waves.Add(new Wave(_enemies.GetRange(0, size).ToArray()));
+            _enemies.RemoveRange(0, size);
+        }
     }
 
     private void CollectEnemies()
