@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class FinishPanel : MonoBehaviour, IPhaseHandler
 {
+    public bool Win;
     [SerializeField] private Transform _panel;
     [SerializeField] private Transform _background;
     [SerializeField] private Phase[] _phases;
@@ -14,6 +15,15 @@ public class FinishPanel : MonoBehaviour, IPhaseHandler
 
     public event Action Opened;
     public event Action Closed;
+
+    private void Update()
+    {
+        if (Win)
+        {
+            Win = false;
+            OnOpen();
+        }
+    }
 
     public IEnumerator SwitchPhase(PhaseType phaseType)
     {

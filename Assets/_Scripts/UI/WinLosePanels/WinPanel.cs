@@ -54,6 +54,7 @@ public class WinPanel : MonoBehaviour
         int starsCount = CalculateStarsCount(_wizzard.Fighter.RemainingHealth);
 
         _increaseButton.Init(_levelRewarder.RewardCards);
+        SaveProgress();
 
         PlayWinAnimation(starsCount);
 
@@ -66,7 +67,6 @@ public class WinPanel : MonoBehaviour
         YandexMetrica.Send("RewardAdOffer");
 #endif
 
-        SaveProgress();
     }
 
     private void PlayWinAnimation(int starsCount)
@@ -83,19 +83,21 @@ public class WinPanel : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex != SceneLoader.TutorialIndex)
         {
-            if (!Saves.HasKey(SaveController.Params.Level))
-            {
-                Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+            //if (!Saves.HasKey(SaveController.Params.Level))
+            //{
+                print(Saves.SelectedLevel + " SelectedLevel SAVE");
+
+                Saves.SetInt(SaveController.Params.Level, Saves.SelectedLevel);
                 Saves.Save();
 
                 return;
-            }
+            //}
 
-            if (Saves.GetInt(SaveController.Params.Level) < SceneManager.GetActiveScene().buildIndex)
-            {
-                Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
-                Saves.Save();
-            }
+            //if (Saves.GetInt(SaveController.Params.Level) < SceneManager.GetActiveScene().buildIndex) // надо написать что делать в случае если все лвл пройдены
+            //{
+            //    Saves.SetInt(SaveController.Params.Level, SceneManager.GetActiveScene().buildIndex);
+            //    Saves.Save();
+            //}
         }
     }
 
