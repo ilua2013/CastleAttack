@@ -17,13 +17,13 @@ public class SoundEffectEnemy : MonoBehaviour
     private void OnEnable()
     {
         _unit.Fighter.Attacked += OnAttack;
-        _unit.Mover.Moved += OnMoved;
+        _unit.Mover.StartedMove += OnMoved;
     }
 
     private void OnDisable()
     {
         _unit.Fighter.Attacked -= OnAttack;
-        _unit.Mover.Moved -= OnMoved;
+        _unit.Mover.StartedMove -= OnMoved;
     }
 
     private void OnAttack()

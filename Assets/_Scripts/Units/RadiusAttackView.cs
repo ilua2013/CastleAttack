@@ -51,8 +51,9 @@ public class RadiusAttackView : MonoBehaviour
         if (_unitType != Unit.Spell)
         {
             _unitStep.UnitSteped += AllowedShow;
-            _unitStep.FinishedStep += FinishStepGlear;
+            _unitStep.FinishedStep += UnitDisable;
             _unitStep.StartedWalking += UnitDisable;
+            _unitStep.StepChanged += ShowRadius;
         }
 
         _radiusAttack = _unit.GetComponent<IRadiusAttack>();
@@ -67,8 +68,9 @@ public class RadiusAttackView : MonoBehaviour
         if (_unitType != Unit.Spell)
         {
             _unitStep.UnitSteped -= AllowedShow;
-            _unitStep.FinishedStep -= FinishStepGlear;
+            _unitStep.FinishedStep -= UnitDisable;
             _unitStep.StartedWalking -= UnitDisable;
+            _unitStep.StepChanged -= ShowRadius;
         }
         _radiusAttack.Inited -= InitedCells;
         if (_radiusAttack.Mover != null)
@@ -80,19 +82,11 @@ public class RadiusAttackView : MonoBehaviour
     private void AllowedShow(bool isSteped)
     {
         _isShow = isSteped;
+
         if (isSteped == false)
-        {
             UnitDisable();
-        }
-
-        else
-            ShowRadius();
-    }
-
-    private void FinishStepGlear()
-    {
-        //UnSelectionCells(_cells);
-        UnitDisable();
+        //else
+        //    ShowRadius();
     }
 
     private void OnMoved()

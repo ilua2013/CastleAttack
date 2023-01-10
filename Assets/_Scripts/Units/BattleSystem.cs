@@ -170,6 +170,12 @@ public class BattleSystem : MonoBehaviour
             _enemyFinishStep = false;
             _spellFinishStep = false;
 
+            foreach (var unitFriend in _unitFriend)
+                unitFriend.UnitsStartedWalking();
+
+            foreach (var unitEnemy in _unitEnemy)
+                unitEnemy.UnitsStartedWalking();
+
             yield return new WaitForSeconds(0.15f);
 
             StartCoroutine(DoStepSpell());
@@ -265,13 +271,6 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator DoStepFriend()
     {
         _doStepFriend = true;
-
-        foreach (var unitFriend in _unitFriend)        
-            unitFriend.UnitsStartedWalking();
-        
-        foreach (var unitEnemy in _unitEnemy)        
-            unitEnemy.UnitsStartedWalking();
-        
 
         for (int i = _unitFriend.Count - 1; i > -1; i--) // определяет верный порядок действий
         {

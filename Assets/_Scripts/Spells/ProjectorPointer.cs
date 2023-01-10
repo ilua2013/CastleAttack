@@ -44,7 +44,7 @@ public class ProjectorPointer : MonoBehaviour
             {
                 if (_previous != null)
                     _previous.UnSelectFriend();
-
+                print(111);
                 cell.SelectFriend();
                 _previous = cell;
             }

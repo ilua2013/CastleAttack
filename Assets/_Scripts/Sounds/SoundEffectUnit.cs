@@ -20,14 +20,14 @@ public class SoundEffectUnit : MonoBehaviour
     private void OnEnable()
     {
         _unit.Fighter.Attacked += OnAttack;
-        _unit.Mover.Moved += OnMoved;
+        _unit.Mover.StartedMove += OnMoved;
         _experience.LevelUp += OnLevelUp;
     }
 
     private void OnDisable()
     {
         _unit.Fighter.Attacked -= OnAttack;
-        _unit.Mover.Moved -= OnMoved;
+        _unit.Mover.StartedMove -= OnMoved;
         _experience.LevelUp -= OnLevelUp;
     }
 

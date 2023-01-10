@@ -16,12 +16,12 @@ public class RadiusAttackViewFriend : MonoBehaviour
 
     private void OnEnable()
     {       
-        _unitFriend.Mover.Moved += OnMoved;
+        _unitFriend.Mover.StartedMove += OnMoved;
     }
 
     private void OnDisable()
     {
-        _unitFriend.Mover.Moved -= OnMoved;       
+        _unitFriend.Mover.StartedMove -= OnMoved;       
         _cells.Clear();
     }
 

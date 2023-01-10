@@ -30,7 +30,7 @@ public class UnitAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        _mover.Moved += SetMove;
+        _mover.StartedMove += SetMove;
         _mover.Rooted += SetRoot;
         _mover.UnRooted += SetUnRoot;
         _fighter.RotatedToAttack += SetAttack;
@@ -40,7 +40,7 @@ public class UnitAnimator : MonoBehaviour
 
     private void OnDisable()
     {
-        _mover.Moved -= SetMove;
+        _mover.StartedMove -= SetMove;
         _mover.Rooted -= SetRoot;
         _mover.UnRooted -= SetUnRoot;
         _fighter.RotatedToAttack -= SetAttack;

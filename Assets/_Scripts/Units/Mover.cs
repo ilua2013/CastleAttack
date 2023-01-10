@@ -22,6 +22,7 @@ public class Mover
 
     public event Action ReachedHigherCell;
     public event Action ReachedTutorialHigherCell;
+    public event Action StartedMove;
     public event Action Moved;
     public event Action<Cell> CellChanged;
     public event Action Rooted;
@@ -98,9 +99,10 @@ public class Mover
             SetCurrentCell(cell,false);
             
             onEnd?.Invoke();
+            Moved?.Invoke();
         });
 
-        Moved?.Invoke();
+        StartedMove?.Invoke();
         CellChanged?.Invoke(cell);
     }
 

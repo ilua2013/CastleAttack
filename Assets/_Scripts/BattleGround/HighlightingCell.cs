@@ -6,11 +6,8 @@ public class HighlightingCell : MonoBehaviour
     [SerializeField] private GameObject _highlightFriend;
     [SerializeField] private GameObject _highlightEnemy;
     [SerializeField] private GameObject _highLightMiddle;
-    [SerializeField] private GameObject _highlightHalf;
     [SerializeField] private GameObject _highlightBlue;
 
-
-    private MeshRenderer _renderer;
     private bool _isSelect = false;
     private bool _isSelectEnemy = false;
     private bool _isSelectFriend = false;
@@ -26,26 +23,24 @@ public class HighlightingCell : MonoBehaviour
     {
         _highlightEnemy.SetActive(false);
         _highlightFriend.SetActive(false);
-        _highlightHalf.SetActive(false);
         _highLightMiddle.SetActive(false);
         _highlightBlue.SetActive(false);
-        _renderer = GetComponent<MeshRenderer>();
-        //_default = _renderer.material.color;
     }
 
     public void SelectFriend()
     {
         _isSelect = true;
         _isSelectFriend = true;
-        if (_isSelectEnemy == true && _isSelectFriend == true)
+
+        if (_isSelectEnemy == true)
         {
-            _highlightHalf.SetActive(true);
             _highLightMiddle.SetActive(true);
+            _highlightFriend.SetActive(false);
+            _highlightEnemy.SetActive(false);
         }
         else
-        {
             _highlightFriend.SetActive(true);
-        }
+
         ++_selectCountFriend;
     }
 
@@ -53,15 +48,16 @@ public class HighlightingCell : MonoBehaviour
     {
         _isSelect = true;
         _isSelectEnemy = true;
-        if (_isSelectEnemy == true && _isSelectFriend == true)
+
+        if (_isSelectFriend == true)
         {
-            _highlightHalf.SetActive(true);
             _highLightMiddle.SetActive(true);
+            _highlightFriend.SetActive(false);
+            _highlightEnemy.SetActive(false);
         }
         else
-        {
             _highlightEnemy.SetActive(true);
-        }
+
         ++_selectCountEnemy;
     }
 
@@ -71,9 +67,9 @@ public class HighlightingCell : MonoBehaviour
         _isSelectSpell = true;       
         _switchHighlight = 0;
         _highlightBlue.SetActive(true);
+
         if (_isSelectEnemy == true && _isSelectFriend == true)
         {
-            _highlightHalf.SetActive(false);
             _highLightMiddle.SetActive(false);
             _highlightFriend.SetActive(false);
             _highlightEnemy.SetActive(false);
@@ -81,7 +77,6 @@ public class HighlightingCell : MonoBehaviour
         }
         if (_isSelectEnemy == false && _isSelectFriend == true)
         {
-            _highlightHalf.SetActive(false);
             _highLightMiddle.SetActive(false);
             _highlightFriend.SetActive(false);
             _highlightEnemy.SetActive(false);
@@ -89,12 +84,12 @@ public class HighlightingCell : MonoBehaviour
         }
         if(_isSelectEnemy == true && _isSelectFriend == false)
         {
-            _highlightHalf.SetActive(false);
             _highLightMiddle.SetActive(false);
             _highlightFriend.SetActive(false);
             _highlightEnemy.SetActive(false);
             _switchHighlight = 3;
         }
+
         ++_selectCountSpell;       
     }
 
@@ -109,6 +104,12 @@ public class HighlightingCell : MonoBehaviour
             {
                 DefaultSelect();
             }
+            else if(_isSelectEnemy == true && _isSelectSpell == false)
+            {
+                _highlightFriend.SetActive(false);
+                _highLightMiddle.SetActive(false);
+                _highlightEnemy.SetActive(true);
+            }
         }
 
         if (_selectCountFriend < 0)
@@ -119,7 +120,6 @@ public class HighlightingCell : MonoBehaviour
 
             _highlightEnemy.SetActive(false);
             _highlightFriend.SetActive(false);
-            _highlightHalf.SetActive(false);
             _highLightMiddle.SetActive(false);
             _selectCountFriend = 0;
         }
@@ -136,7 +136,6 @@ public class HighlightingCell : MonoBehaviour
             switch (_switchHighlight)
             {
                 case 1:
-                    _highlightHalf.SetActive(true);
                     _highLightMiddle.SetActive(true);
                     break;
                 case 2:
@@ -165,6 +164,12 @@ public class HighlightingCell : MonoBehaviour
             {
                 DefaultSelect();
             }
+            else if (_isSelectEnemy == true && _isSelectSpell == false)
+            {
+                _highlightFriend.SetActive(true);
+                _highLightMiddle.SetActive(false);
+                _highlightEnemy.SetActive(false);
+            }
         }
     }
 
@@ -177,7 +182,6 @@ public class HighlightingCell : MonoBehaviour
         _highlightEnemy.SetActive(false);
         _highlightBlue.SetActive(false);
         _highlightFriend.SetActive(false);
-        _highlightHalf.SetActive(false);
         _highLightMiddle.SetActive(false);
     }
 }
