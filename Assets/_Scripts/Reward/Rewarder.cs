@@ -85,5 +85,5 @@ public class Rewarder : MonoBehaviour
         cards.Add(card);
     }
 
-    private int GetCurretLevel() => SceneManager.GetActiveScene().buildIndex - 2;
+    private int GetCurretLevel() => Saves.SelectedLevel;
 }
