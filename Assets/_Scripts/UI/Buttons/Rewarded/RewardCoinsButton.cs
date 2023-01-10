@@ -28,8 +28,8 @@ public class RewardCoinsButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
 
-        if (Saves.HasKey(SaveController.Params.Level))
-            _award = _levelRewardData.GetAward(Saves.GetInt(SaveController.Params.Level) - 2).Coins;
+        if (Saves.HasKey(SaveController.Params.SelectedLevel))
+            _award = _levelRewardData.GetAward(Saves.GetInt(SaveController.Params.SelectedLevel) - 2).Coins;
         else
             _award = 100;
 

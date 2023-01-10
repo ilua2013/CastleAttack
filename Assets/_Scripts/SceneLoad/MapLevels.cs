@@ -88,9 +88,9 @@ public class MapLevels : MonoBehaviour
     {
         int countCompletedLevel = 0;
 
-        if (Saves.HasKey(SaveController.Params.Level))
-            countCompletedLevel = Saves.GetInt(SaveController.Params.Level);
-        print(countCompletedLevel + " Count completed levels");
+        if (Saves.HasKey(SaveController.Params.CompletedLevel))
+            countCompletedLevel = Saves.GetInt(SaveController.Params.CompletedLevel);
+
         for (int i = 0; i < countCompletedLevel; i++)
             _levels[i].OpenLevel(3);
 
@@ -106,8 +106,8 @@ public class MapLevels : MonoBehaviour
     private void SelectLevel(LevelOnMap levelOnMap)
     {
         _currentLevel = levelOnMap;
-        Saves.SelectedLevel = _currentLevel.Level;
-        print(Saves.SelectedLevel + " SelectedLevel");
+        Saves.SelectedLevel = levelOnMap.Level;
+
         _panelStartLevel.Init(levelOnMap.Level);
         StartCoroutine(AnimationSize(_panelStartLevel.transform, Vector3.one));
     }

@@ -35,41 +35,44 @@ public class Rewarder : MonoBehaviour
 
     private void OnEnable()
     {
-        _battleSystem.Win += OnFinished;
         _battleSystem.Lose += OnFailed;
     }
 
     private void OnDisable()
     {
-        _battleSystem.Win -= OnFinished;
         _battleSystem.Lose -= OnFailed;
     }
 
-    private void OnFinished()
+    public void Init()
     {
-        RewardData reward = _levelRewardData.GetAward(GetCurretLevel());
-        List<Card> cards = new List<Card>();
-
-        AwardCards(reward, cards);
+        RewardData reward = _levelRewardData.GetAward(Saves.SelectedLevel);
 
         ReceivedCoins = reward.Coins;
-
-        _cardRewardPanel.ShowCards(cards.ToArray());
         _coinsWallet.Add(ReceivedCoins, 0);
+
+        if (Saves.HasKey(SaveController.Params.CompletedLevel))
+            if (Saves.GetInt(SaveController.Params.CompletedLevel) >= Saves.SelectedLevel)
+                return;
+
+        AwardCards(reward);
     }
 
-    private void AwardCards(RewardData reward, List<Card> cards)
+    private void AwardCards(RewardData reward)
     {
         if (reward.Card != null)
         {
+            List<Card> cards = new List<Card>();
+
             Card card = _deckBuilder.GetCard(reward.Card.Name);
             SaveAward(reward, cards, card);
+
+            _cardRewardPanel.ShowCards(cards.ToArray());
         }
     }
 
     private void OnFailed()
     {
-        RewardData reward = _levelRewardData.GetAward(GetCurretLevel());
+        RewardData reward = _levelRewardData.GetAward(Saves.SelectedLevel);
 
         ReceivedCoins = reward.Coins / 2;
         _coinsWallet.Add(ReceivedCoins, 0);
@@ -84,6 +87,4 @@ public class Rewarder : MonoBehaviour
         card.Save();
         cards.Add(card);
     }
-
-    private int GetCurretLevel() => Saves.SelectedLevel;
 }
