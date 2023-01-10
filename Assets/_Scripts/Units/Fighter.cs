@@ -95,7 +95,7 @@ public class Fighter
         if (_type == FighterType.Archer || _type == FighterType.Catapult)
         {
             Arrow arrow = _unit.SpawnArrow(_arrow, transform);
-            Cell cell = fighter.Unit.Mover.CurrentCell;
+            Cell cell = _unit.Mover.CurrentCell?.Bot?.Bot;
             float delay = 0.15f;
 
             arrow.FlyTo(fighter.transform.position, fighter, () =>

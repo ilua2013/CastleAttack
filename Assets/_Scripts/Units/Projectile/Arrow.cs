@@ -27,6 +27,9 @@ public class Arrow : MonoBehaviour
 
         transform.parent = null;
 
+        if (cell != null)
+            target = cell.transform.position;
+
         Vector3 targetPos = target - transform.position;
         Vector3 startPos = transform.position;
         Vector3 deltaPos;
@@ -46,7 +49,9 @@ public class Arrow : MonoBehaviour
 
             transform.position = startPos + targetPos * percent + new Vector3(0, height * _curve.Evaluate(percent), 0);
 
-            transform.forward = transform.position - deltaPos;
+            if (percent != 1)
+                transform.forward = transform.position - deltaPos;
+
             yield return null;
         }
 

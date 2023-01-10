@@ -161,8 +161,32 @@ public class UnitEnemy : MonoBehaviour, IUnit, IRadiusAttack
     {
         List<UnitFriend> units = Mover.CurrentCell.GetFriendUnits(_distanceAttack);
 
+        if (Fighter.FighterType == FighterType.Catapult)
+        {
+            UnitFriend unit = CatapultAttack();
+
+            if (unit != null)
+                units = new List<UnitFriend>() { unit };
+            else
+                units.Clear();
+        }
+
         foreach (var item in units)
             return item;
+
+        return null;
+    }
+
+    private UnitFriend CatapultAttack()
+    {
+        if (Mover.CurrentCell?.Bot?.Bot?.CurrentUnit is UnitFriend botUnit)
+            return botUnit;
+
+        if (Mover.CurrentCell?.Bot?.Bot?.Left?.CurrentUnit is UnitFriend leftUnit)
+            return leftUnit;
+
+        if (Mover.CurrentCell?.Bot?.Bot?.Right?.CurrentUnit is UnitFriend rightUnit)
+            return rightUnit;
 
         return null;
     }

@@ -9,6 +9,9 @@ public class SplashProjectile : MonoBehaviour
 
     [SerializeField] private Arrow _arrow;
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _vfx;
+    [SerializeField] private ParticleSystem _firstPiece;
+    [SerializeField] private ParticleSystem _secondPiece;
 
     private void OnValidate()
     {
@@ -27,6 +30,17 @@ public class SplashProjectile : MonoBehaviour
     private void OnDisable()
     {
         _arrow.Reached -= OnReached;
+    }
+
+    public void OnLandingAnimationEvent()
+    {
+        _vfx.Play();
+    }
+
+    public void OnPiecesLandingAnimationEvent()
+    {
+        _firstPiece.Play();
+        _secondPiece.Play();
     }
 
     private void OnReached(Cell cell)
